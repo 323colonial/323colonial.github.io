@@ -1,0 +1,213 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-02T16:03:10Z",
+  "title": "Design System: 323 Colonial",
+  "extensions": {
+    "colorMeta": {
+      "forest-ink": {
+        "role": "primary",
+        "displayName": "Forest Ink",
+        "canonical": "#26302a",
+        "tonalRamp": ["oklch(15% 0.017 158.8)", "oklch(27% 0.017 158.8)", "oklch(39% 0.017 158.8)", "oklch(51% 0.017 158.8)", "oklch(63% 0.017 158.8)", "oklch(75% 0.017 158.8)", "oklch(87% 0.017 158.8)", "oklch(95% 0.017 158.8)"]
+      },
+      "canopy-green": {
+        "role": "primary",
+        "displayName": "Canopy Green",
+        "canonical": "#2c3e33",
+        "tonalRamp": ["oklch(15% 0.030 157.6)", "oklch(27% 0.030 157.6)", "oklch(39% 0.030 157.6)", "oklch(51% 0.030 157.6)", "oklch(63% 0.030 157.6)", "oklch(75% 0.030 157.6)", "oklch(87% 0.030 157.6)", "oklch(95% 0.030 157.6)"]
+      },
+      "woodland-link": {
+        "role": "secondary",
+        "displayName": "Woodland Link",
+        "canonical": "#cfe0d4",
+        "tonalRamp": ["oklch(15% 0.024 155.1)", "oklch(27% 0.024 155.1)", "oklch(39% 0.024 155.1)", "oklch(51% 0.024 155.1)", "oklch(63% 0.024 155.1)", "oklch(75% 0.024 155.1)", "oklch(87% 0.024 155.1)", "oklch(95% 0.024 155.1)"]
+      },
+      "warm-paper": {
+        "role": "neutral",
+        "displayName": "Warm Paper",
+        "canonical": "#f7f5f1",
+        "tonalRamp": ["oklch(15% 0.006 84.6)", "oklch(27% 0.006 84.6)", "oklch(39% 0.006 84.6)", "oklch(51% 0.006 84.6)", "oklch(63% 0.006 84.6)", "oklch(75% 0.006 84.6)", "oklch(87% 0.006 84.6)", "oklch(95% 0.006 84.6)"]
+      },
+      "card-white": {
+        "role": "neutral",
+        "displayName": "Card White",
+        "canonical": "#ffffff",
+        "tonalRamp": ["oklch(15% 0.000 89.9)", "oklch(27% 0.000 89.9)", "oklch(39% 0.000 89.9)", "oklch(51% 0.000 89.9)", "oklch(63% 0.000 89.9)", "oklch(75% 0.000 89.9)", "oklch(87% 0.000 89.9)", "oklch(95% 0.000 89.9)"]
+      },
+      "sage-rule": {
+        "role": "neutral",
+        "displayName": "Sage Rule",
+        "canonical": "#b9c9bd",
+        "tonalRamp": ["oklch(15% 0.024 153.4)", "oklch(27% 0.024 153.4)", "oklch(39% 0.024 153.4)", "oklch(51% 0.024 153.4)", "oklch(63% 0.024 153.4)", "oklch(75% 0.024 153.4)", "oklch(87% 0.024 153.4)", "oklch(95% 0.024 153.4)"]
+      },
+      "fieldstone-border": {
+        "role": "neutral",
+        "displayName": "Fieldstone Border",
+        "canonical": "#c8c3b8",
+        "tonalRamp": ["oklch(15% 0.016 86.4)", "oklch(27% 0.016 86.4)", "oklch(39% 0.016 86.4)", "oklch(51% 0.016 86.4)", "oklch(63% 0.016 86.4)", "oklch(75% 0.016 86.4)", "oklch(87% 0.016 86.4)", "oklch(95% 0.016 86.4)"]
+      },
+      "caption-moss": {
+        "role": "neutral",
+        "displayName": "Caption Moss",
+        "canonical": "#4c5a50",
+        "tonalRamp": ["oklch(15% 0.024 154.3)", "oklch(27% 0.024 154.3)", "oklch(39% 0.024 154.3)", "oklch(51% 0.024 154.3)", "oklch(63% 0.024 154.3)", "oklch(75% 0.024 154.3)", "oklch(87% 0.024 154.3)", "oklch(95% 0.024 154.3)"]
+      },
+      "soft-sage-band": {
+        "role": "secondary",
+        "displayName": "Soft Sage Band",
+        "canonical": "#e7ede8",
+        "tonalRamp": ["oklch(15% 0.009 150.7)", "oklch(27% 0.009 150.7)", "oklch(39% 0.009 150.7)", "oklch(51% 0.009 150.7)", "oklch(63% 0.009 150.7)", "oklch(75% 0.009 150.7)", "oklch(87% 0.009 150.7)", "oklch(95% 0.009 150.7)"]
+      },
+      "weathered-note": {
+        "role": "neutral",
+        "displayName": "Weathered Note",
+        "canonical": "#5c564c",
+        "tonalRamp": ["oklch(15% 0.018 80.6)", "oklch(27% 0.018 80.6)", "oklch(39% 0.018 80.6)", "oklch(51% 0.018 80.6)", "oklch(63% 0.018 80.6)", "oklch(75% 0.018 80.6)", "oklch(87% 0.018 80.6)", "oklch(95% 0.018 80.6)"]
+      },
+      "quiet-stone-text": {
+        "role": "neutral",
+        "displayName": "Quiet Stone Text",
+        "canonical": "#7a736a",
+        "tonalRamp": ["oklch(15% 0.016 74.3)", "oklch(27% 0.016 74.3)", "oklch(39% 0.016 74.3)", "oklch(51% 0.016 74.3)", "oklch(63% 0.016 74.3)", "oklch(75% 0.016 74.3)", "oklch(87% 0.016 74.3)", "oklch(95% 0.016 74.3)"]
+      },
+      "alabaster": {
+        "role": "tertiary",
+        "displayName": "Alabaster",
+        "canonical": "#edeae1",
+        "tonalRamp": ["oklch(15% 0.012 91.5)", "oklch(27% 0.012 91.5)", "oklch(39% 0.012 91.5)", "oklch(51% 0.012 91.5)", "oklch(63% 0.012 91.5)", "oklch(75% 0.012 91.5)", "oklch(87% 0.012 91.5)", "oklch(95% 0.012 91.5)"]
+      },
+      "quilt-blue": {
+        "role": "tertiary",
+        "displayName": "Quilt Blue",
+        "canonical": "#7a8b94",
+        "tonalRamp": ["oklch(15% 0.024 230.8)", "oklch(27% 0.024 230.8)", "oklch(39% 0.024 230.8)", "oklch(51% 0.024 230.8)", "oklch(63% 0.024 230.8)", "oklch(75% 0.024 230.8)", "oklch(87% 0.024 230.8)", "oklch(95% 0.024 230.8)"]
+      },
+      "sea-glass": {
+        "role": "tertiary",
+        "displayName": "Sea Glass",
+        "canonical": "#cbd5cc",
+        "tonalRamp": ["oklch(15% 0.016 148.4)", "oklch(27% 0.016 148.4)", "oklch(39% 0.016 148.4)", "oklch(51% 0.016 148.4)", "oklch(63% 0.016 148.4)", "oklch(75% 0.016 148.4)", "oklch(87% 0.016 148.4)", "oklch(95% 0.016 148.4)"]
+      },
+      "fieldstone-grey": {
+        "role": "tertiary",
+        "displayName": "Fieldstone Grey",
+        "canonical": "#b0a99c",
+        "tonalRamp": ["oklch(15% 0.020 83.1)", "oklch(27% 0.020 83.1)", "oklch(39% 0.020 83.1)", "oklch(51% 0.020 83.1)", "oklch(63% 0.020 83.1)", "oklch(75% 0.020 83.1)", "oklch(87% 0.020 83.1)", "oklch(95% 0.020 83.1)"]
+      },
+      "pewter-green": {
+        "role": "tertiary",
+        "displayName": "Pewter Green",
+        "canonical": "#5b675c",
+        "tonalRamp": ["oklch(15% 0.023 147.6)", "oklch(27% 0.023 147.6)", "oklch(39% 0.023 147.6)", "oklch(51% 0.023 147.6)", "oklch(63% 0.023 147.6)", "oklch(75% 0.023 147.6)", "oklch(87% 0.023 147.6)", "oklch(95% 0.023 147.6)"]
+      },
+      "walnut-stain": {
+        "role": "tertiary",
+        "displayName": "Walnut Stain",
+        "canonical": "#4a3428",
+        "tonalRamp": ["oklch(15% 0.038 49.7)", "oklch(27% 0.038 49.7)", "oklch(39% 0.038 49.7)", "oklch(51% 0.038 49.7)", "oklch(63% 0.038 49.7)", "oklch(75% 0.038 49.7)", "oklch(87% 0.038 49.7)", "oklch(95% 0.038 49.7)"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Home hero title only." },
+      "headline": { "displayName": "Headline", "purpose": "Secondary-page mastheads." },
+      "title": { "displayName": "Title", "purpose": "Section headings above a sage rule." },
+      "body": { "displayName": "Body", "purpose": "Property narrative and planning explanation." },
+      "label": { "displayName": "Label", "purpose": "Navigation, captions, tables, quantities, and caveats." }
+    },
+    "shadows": [],
+    "motion": [],
+    "breakpoints": []
+  },
+  "components": [
+    {
+      "name": "Secondary Masthead",
+      "kind": "custom",
+      "refersTo": "masthead",
+      "description": "Evergreen page header pairing a warm serif title with factual metadata.",
+      "html": "<header class=\"ds-masthead\"><h1>323 Colonial — Quilt &amp; Stone</h1><p>Complete colour scheme · <a href=\"#\">planning and pricing only</a></p></header>",
+      "css": ".ds-masthead { background: #2c3e33; color: #fff; padding: 34px 40px 26px; border-radius: 0; } .ds-masthead h1 { margin: 0; font: 400 30px/normal Georgia, serif; letter-spacing: .5px; } .ds-masthead p { margin: 8px 0 0; font: 400 14px/normal system-ui, sans-serif; opacity: .85; } .ds-masthead a { color: #cfe0d4; } .ds-masthead a:hover { text-decoration: underline; } .ds-masthead a:focus-visible { outline: 2px solid #cfe0d4; outline-offset: 2px; }"
+    },
+    {
+      "name": "Section Navigation",
+      "kind": "nav",
+      "refersTo": "section-navigation",
+      "description": "Compact evergreen navigation that wraps naturally as space narrows.",
+      "html": "<nav class=\"ds-navigation\" aria-label=\"Property sections\"><a href=\"#\">The house</a><a href=\"#\">Kitchen</a><a href=\"#\">Floor plans</a><a href=\"#\">Sale-prep costs</a></nav>",
+      "css": ".ds-navigation { background: #2c3e33; color: #cfe0d4; padding: 10px 48px; font: 400 13px/normal system-ui, sans-serif; } .ds-navigation a { color: #cfe0d4; margin-right: 22px; text-decoration: none; } .ds-navigation a:hover { text-decoration: underline; } .ds-navigation a:focus-visible { outline: 2px solid #cfe0d4; outline-offset: 2px; }"
+    },
+    {
+      "name": "Section Heading",
+      "kind": "custom",
+      "refersTo": "section-heading",
+      "description": "Regular-weight serif heading grounded by a pale sage rule.",
+      "html": "<h2 class=\"ds-section-heading\">The house</h2>",
+      "css": ".ds-section-heading { max-width: 1100px; margin: 42px 48px 8px; padding: 0 0 8px; border-bottom: 1px solid #b9c9bd; color: #26302a; font: 400 22px/normal Georgia, serif; }"
+    },
+    {
+      "name": "Photo Card",
+      "kind": "card",
+      "refersTo": "image-card",
+      "description": "Square white record keeping image evidence and its caption visibly attached.",
+      "html": "<figure class=\"ds-photo-card\"><div class=\"ds-photo-card__image\" role=\"img\" aria-label=\"Property photograph\"></div><figcaption>The great room from the loft rail — white walls, oak, stone</figcaption></figure>",
+      "css": ".ds-photo-card { width: 340px; margin: 0; overflow: hidden; background: #fff; border: 1px solid #c8c3b8; border-radius: 0; } .ds-photo-card__image { aspect-ratio: 3 / 2; background: #b9c9bd; } .ds-photo-card figcaption { padding: 9px 13px; color: #4c5a50; font: 400 12.5px/normal system-ui, sans-serif; }"
+    },
+    {
+      "name": "Palette Swatch",
+      "kind": "card",
+      "refersTo": "palette-swatch",
+      "description": "Compact material record linking a color field to its paint name and room assignment.",
+      "html": "<div class=\"ds-swatch\"><div class=\"ds-swatch__color\"></div><div class=\"ds-swatch__text\"><strong>Pewter Green</strong>SW 6208 · entry and garage doors</div></div>",
+      "css": ".ds-swatch { width: 160px; overflow: hidden; background: #fff; border: 1px solid #c8c3b8; border-radius: 0; color: #26302a; font: 400 11px/normal system-ui, sans-serif; } .ds-swatch__color { height: 64px; background: #5b675c; } .ds-swatch__text { padding: 7px 9px; } .ds-swatch strong { display: block; margin-bottom: 2px; font-size: 12.5px; font-weight: 600; }"
+    },
+    {
+      "name": "Planning Table",
+      "kind": "custom",
+      "refersTo": "table-header",
+      "description": "Dense white data record with sage headers and right-aligned comparison values.",
+      "html": "<table class=\"ds-table\"><thead><tr><th>Item</th><th>DIY</th><th>Contracted</th></tr></thead><tbody><tr><td>Interior paint</td><td class=\"ds-table__number\">$220</td><td class=\"ds-table__number\">$800–$1,600</td></tr></tbody></table>",
+      "css": ".ds-table { border-collapse: collapse; background: #fff; color: #26302a; font: 400 13.5px/normal system-ui, sans-serif; font-variant-numeric: tabular-nums; } .ds-table th, .ds-table td { padding: 7px 14px; border: 1px solid #c8c3b8; text-align: left; } .ds-table th { background: #e7ede8; font-weight: 600; } .ds-table__number { text-align: right !important; white-space: nowrap; }"
+    },
+    {
+      "name": "Information Band",
+      "kind": "custom",
+      "refersTo": "information-band",
+      "description": "Full-width pale sage grouping for one major supporting topic.",
+      "html": "<section class=\"ds-information-band\"><h2>Fixtures &amp; finishes</h2><p>Hardware and plumbing finishes stay tied to verified owner decisions.</p></section>",
+      "css": ".ds-information-band { margin: 36px 0; padding: 6px 48px 22px; background: #e7ede8; border-top: 1px solid #b9c9bd; border-bottom: 1px solid #b9c9bd; color: #26302a; } .ds-information-band h2 { margin: 20px 0 8px; padding-bottom: 8px; border-bottom: 1px solid #b9c9bd; font: 400 22px/normal Georgia, serif; } .ds-information-band p { max-width: 840px; margin: 12px 0; font: 400 15.5px/1.65 Georgia, serif; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Woodland Survey",
+    "overview": "323 Colonial should feel like a carefully assembled house book made at the property: warm, domestic, and quietly aspirational, but always grounded in photographs, measurements, material choices, and owner decisions. Woodland greens, warm paper, fieldstone neutrals, oak-brown imagery, and an editorial serif make the site inviting without turning it into a sales fantasy.\n\nThe interface stays restrained so the house remains the subject. Photography establishes atmosphere; square-edged records, captions, swatches, and tables establish trust. Reject glossy luxury-listing hype: polish should come from proportion, legibility, and evidence rather than inflated claims or ornamental effects.",
+    "keyCharacteristics": [
+      "Property photography leads; interface color supports it.",
+      "Georgia serif carries place and domestic warmth; system sans-serif carries facts and metadata.",
+      "Warm paper, evergreen fields, sage rules, and fieldstone borders create quiet continuity.",
+      "Square corners, hairline borders, and no shadows keep records direct.",
+      "Dense planning information remains calm through consistent gutters, measures, and alignment."
+    ],
+    "rules": [
+      { "name": "The House Before UI Rule", "body": "Use interface greens and neutrals to frame photography; never recolor the interface with every room paint.", "section": "colors" },
+      { "name": "The Evidence Palette Rule", "body": "Paint colors identify actual material decisions. Do not use them decoratively where readers could mistake color for project status or meaning.", "section": "colors" },
+      { "name": "The Serif Speaks, Sans Certifies Rule", "body": "Use serif for the house narrative and section hierarchy; use sans-serif for navigation, labels, quantities, status, and evidence notes.", "section": "typography" },
+      { "name": "The Quiet Weight Rule", "body": "Hierarchy comes primarily from size, family, spacing, and rules. Avoid heavy display weights.", "section": "typography" },
+      { "name": "The No Shadow Rule", "body": "Separate surfaces with tone, whitespace, and a one-pixel fieldstone border; do not lift cards above the page.", "section": "elevation" },
+      { "name": "The One Plane Rule", "body": "Cards and tables belong to the document plane. Hover effects must not make static evidence appear draggable or interactive.", "section": "elevation" },
+      { "name": "The Square Record Rule", "body": "Keep informational surfaces square. Rounded containers would soften the documentary character and imply an application UI that does not exist here.", "section": "shapes" }
+    ],
+    "dos": [
+      "Do let property photography provide visual drama while interface surfaces stay restrained.",
+      "Do preserve the serif narrative and system-sans evidence split.",
+      "Do keep captions visibly attached to their image, swatch, plan, or table.",
+      "Do use warm paper, white records, evergreen fields, and one-pixel stone or sage boundaries consistently.",
+      "Do label visualisations and planning material clearly wherever imagery could be mistaken for completed work."
+    ],
+    "donts": [
+      "Don't introduce glossy luxury-listing styling, inflated promotional effects, or visual claims unsupported by the property record.",
+      "Don't round cards, add floating shadows, or turn static evidence into app-like tiles.",
+      "Don't use the Quilt & Stone room colors as arbitrary interface accents.",
+      "Don't replace real house imagery with generic real-estate stock photography.",
+      "Don't invent controls or component variants until a real interaction requires them."
+    ]
+  }
+}
