@@ -8,19 +8,19 @@ web
 
 ## Users
 
-Owner is primary user. Prospective realtors may receive site during sale preparation so they can understand house, planned work, likely listing presentation, and remaining decisions.
+Prospective buyers are primary users. Realtors and the owner use the site as supporting audiences when answering questions, arranging showings, and reviewing sale-prep records.
 
 ## Product purpose
 
-Prepare and market 323 Colonial for sale. Site keeps house presentation, sale-prep choices, budget ranges, floor plans, and basement potential in one place. Success means owner and prospective realtors can decide what work matters before listing without mistaking plans for completed work.
+Present 323 Colonial clearly enough for a prospective buyer to understand the house, trust the available evidence, and request information or a showing. Planning records keep colour decisions, budget ranges, floor plans, and basement potential available without competing with the buyer journey or implying planned work is complete.
 
 ## Positioning
 
-Site ties its claims to this property's photographs, owner decisions, cost notes, and CAD-derived plans. It shows both current evidence and planned changes instead of presenting a generic real-estate brochure.
+Site ties every property claim to real photography, verified house facts, owner decisions, cost notes, or CAD-derived plans. It separates current condition from planned work instead of presenting a generic or speculative real-estate brochure.
 
 ## Operating context
 
-Static site is published through GitHub Pages and shared by URL. Owner uses it while sale-prep work is still underway. Prospective realtors may review it before listing. Public-listing photography comes after work is complete.
+Static site is published through GitHub Pages and shared by URL before and during listing. Prospective buyers may visit directly or through a realtor. Prior-listing photography leads until new authorized listing photography is available after sale-prep work completes.
 
 ## Capabilities and constraints
 
@@ -46,7 +46,8 @@ Name is 323 Colonial. Voice is specific, factual, and restrained. Avoid listing 
 
 ## Product principles
 
+- Let prospective buyers see the actual house and reach a showing request quickly.
 - Separate present condition, planned work, and completed work.
 - Make every material claim traceable to house evidence or an owner decision.
-- Help owner and realtor compare sale impact against cost.
+- Keep planning and pricing records secondary but reachable.
 - Keep source plain enough to review without a framework or build tool.

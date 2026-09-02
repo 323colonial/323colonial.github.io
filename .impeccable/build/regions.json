@@ -1,0 +1,27 @@
+{
+  "regions": [
+    { "id": "masthead", "kind": "chrome", "box": { "x": 0, "y": 0, "w": 1, "h": 0.107 }, "note": "full-width dark forest navigation bar" },
+    { "id": "brand", "kind": "text", "box": { "x": 0.025, "y": 0.027, "w": 0.142, "h": 0.052 }, "note": "323 Colonial serif wordmark" },
+    { "id": "buyer-nav", "kind": "text", "box": { "x": 0.536, "y": 0.04, "w": 0.279, "h": 0.025 }, "note": "uppercase buyer navigation links" },
+    { "id": "header-showing", "kind": "control", "box": { "x": 0.836, "y": 0.022, "w": 0.145, "h": 0.063 }, "note": "warm-paper Request a showing button in masthead" },
+
+    { "id": "exterior-photo", "kind": "image", "box": { "x": 0, "y": 0.107, "w": 0.67, "h": 0.893 }, "bleed": true, "note": "verified prior-listing exterior photograph of 323 Colonial, cropped to broad left field" },
+    { "id": "photo-provenance", "kind": "text", "box": { "x": 0.374, "y": 0.945, "w": 0.282, "h": 0.036 }, "note": "text label disclosing verified source and retained Bright MLS watermark" },
+
+    { "id": "panel-upper-ground", "kind": "chrome", "box": { "x": 0.67, "y": 0.107, "w": 0.33, "h": 0.63 }, "note": "continuous warm-paper upper summary field" },
+    { "id": "location", "kind": "text", "box": { "x": 0.698, "y": 0.181, "w": 0.19, "h": 0.021 }, "note": "Berkeley Springs and West Virginia uppercase location label" },
+    { "id": "title-number", "kind": "text", "box": { "x": 0.698, "y": 0.231, "w": 0.07, "h": 0.055 }, "note": "large serif 323 title line" },
+    { "id": "title-name", "kind": "text", "box": { "x": 0.698, "y": 0.285, "w": 0.14, "h": 0.061 }, "note": "large serif Colonial title line" },
+    { "id": "property-deck", "kind": "text", "box": { "x": 0.698, "y": 0.366, "w": 0.23, "h": 0.064 }, "note": "serif A house in the woods above Berkeley Springs deck" },
+    { "id": "feature-frame", "kind": "chrome", "box": { "x": 0.698, "y": 0.487, "w": 0.273, "h": 0.11 }, "note": "hairline feature strip with three divided columns" },
+    { "id": "feature-facts", "kind": "text", "box": { "x": 0.698, "y": 0.509, "w": 0.27, "h": 0.048 }, "note": "Cathedral glass, Fieldstone chimney, Screened porch facts" },
+    { "id": "primary-showing", "kind": "control", "box": { "x": 0.699, "y": 0.637, "w": 0.143, "h": 0.06 }, "note": "dark forest primary Request a showing button" },
+    { "id": "showing-email", "kind": "text", "box": { "x": 0.698, "y": 0.71, "w": 0.12, "h": 0.018 }, "note": "realtor@stevenhay.com contact address" },
+    { "id": "planning-link", "kind": "text", "box": { "x": 0.852, "y": 0.659, "w": 0.1, "h": 0.027 }, "note": "secondary underlined Planning records link" },
+    { "id": "evidence-rule", "kind": "chrome", "box": { "x": 0.67, "y": 0.737, "w": 0.33, "h": 0.027 }, "note": "warm-paper divider zone with hairline separator above evidence records" },
+    { "id": "room-photo", "kind": "image", "box": { "x": 0.699, "y": 0.777, "w": 0.173, "h": 0.145 }, "bleed": true, "note": "verified prior-listing great-room photograph" },
+    { "id": "room-caption", "kind": "text", "box": { "x": 0.698, "y": 0.931, "w": 0.175, "h": 0.031 }, "note": "Real property evidence, Great room caption" },
+    { "id": "plan-image", "kind": "image", "box": { "x": 0.879, "y": 0.777, "w": 0.093, "h": 0.145 }, "bleed": true, "note": "main-floor reference plan sheet" },
+    { "id": "plan-caption", "kind": "text", "box": { "x": 0.879, "y": 0.931, "w": 0.1, "h": 0.043 }, "note": "Reference plan, not field-measured caption" }
+  ]
+}

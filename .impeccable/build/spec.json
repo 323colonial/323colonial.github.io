@@ -1,0 +1,1297 @@
+{
+  "tool": "comp-spec",
+  "version": 1,
+  "createdAt": "2026-09-02T20:21:46.866Z",
+  "comp": ".impeccable/mocks/monograph-variation-a.png",
+  "warnings": [
+    "region exterior-photo: \"bleed\": true set in the regions file (the clipped-artwork refusal is overridden: the page crops it there)",
+    "region room-photo: \"bleed\": true set in the regions file (the clipped-artwork refusal is overridden: the page crops it there)",
+    "region plan-image: \"bleed\": true set in the regions file (the clipped-artwork refusal is overridden: the page crops it there)"
+  ],
+  "uncoveredInkCells": [],
+  "compSize": {
+    "width": 1376,
+    "height": 768
+  },
+  "aspect": 1.7917,
+  "orientation": "landscape",
+  "palette": [
+    {
+      "hex": "#f7f6eb",
+      "coverage": 0.5645
+    },
+    {
+      "hex": "#183828",
+      "coverage": 0.153
+    },
+    {
+      "hex": "#87725b",
+      "coverage": 0.11
+    },
+    {
+      "hex": "#c0b261",
+      "coverage": 0.0959
+    },
+    {
+      "hex": "#d4dde8",
+      "coverage": 0.0765
+    }
+  ],
+  "bands": [
+    {
+      "y": 0.0282,
+      "strength": 0.2585
+    },
+    {
+      "y": 0.1127,
+      "strength": 1
+    },
+    {
+      "y": 0.6338,
+      "strength": 0.3104
+    },
+    {
+      "y": 0.7042,
+      "strength": 0.3439
+    },
+    {
+      "y": 0.7465,
+      "strength": 0.2523
+    },
+    {
+      "y": 0.7746,
+      "strength": 0.2224
+    },
+    {
+      "y": 0.9155,
+      "strength": 0.2656
+    },
+    {
+      "y": 0.9437,
+      "strength": 0.3987
+    },
+    {
+      "y": 0.9859,
+      "strength": 0.2386
+    }
+  ],
+  "regions": [
+    {
+      "id": "masthead",
+      "kind": "chrome",
+      "note": "full-width dark forest navigation bar",
+      "grid": null,
+      "box": {
+        "x": 0,
+        "y": 0,
+        "w": 1,
+        "h": 0.107
+      },
+      "px": {
+        "x": 0,
+        "y": 0,
+        "w": 1376,
+        "h": 82
+      },
+      "aspect": 16.7805,
+      "palette": [
+        {
+          "hex": "#183828",
+          "coverage": 0.8548
+        },
+        {
+          "hex": "#f5e9e6",
+          "coverage": 0.0974
+        },
+        {
+          "hex": "#79897a",
+          "coverage": 0.0414
+        },
+        {
+          "hex": "#4d5d57",
+          "coverage": 0.0043
+        },
+        {
+          "hex": "#b9bfb3",
+          "coverage": 0.002
+        }
+      ],
+      "detail": {
+        "energy": 25.6029
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null
+    },
+    {
+      "id": "brand",
+      "kind": "text",
+      "note": "323 Colonial serif wordmark",
+      "grid": null,
+      "box": {
+        "x": 0.025,
+        "y": 0.027,
+        "w": 0.142,
+        "h": 0.052
+      },
+      "px": {
+        "x": 34,
+        "y": 21,
+        "w": 195,
+        "h": 40
+      },
+      "aspect": 4.875,
+      "palette": [
+        {
+          "hex": "#183828",
+          "coverage": 0.7389
+        },
+        {
+          "hex": "#f4f3e5",
+          "coverage": 0.1925
+        },
+        {
+          "hex": "#b3b7ac",
+          "coverage": 0.0387
+        },
+        {
+          "hex": "#616e65",
+          "coverage": 0.0177
+        },
+        {
+          "hex": "#899189",
+          "coverage": 0.0122
+        }
+      ],
+      "detail": {
+        "energy": 52.6269
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 4,
+          "capHeightPx": 29.5,
+          "inkIsDark": false,
+          "allCaps": false,
+          "advance": 2.4746,
+          "advTall": 4.339,
+          "advX": null,
+          "gap": 0.0678,
+          "xRatio": 0.678,
+          "stemW": 0.1531,
+          "contrast": 1.4591,
+          "serif": null,
+          "densTall": 0.3671,
+          "densX": null,
+          "weight": 0.3671
+        },
+        "widthClass": "wide",
+        "weightClass": "regular"
+      }
+    },
+    {
+      "id": "buyer-nav",
+      "kind": "text",
+      "note": "uppercase buyer navigation links",
+      "grid": null,
+      "box": {
+        "x": 0.536,
+        "y": 0.04,
+        "w": 0.279,
+        "h": 0.025
+      },
+      "px": {
+        "x": 738,
+        "y": 31,
+        "w": 384,
+        "h": 19
+      },
+      "aspect": 20.2105,
+      "palette": [
+        {
+          "hex": "#183828",
+          "coverage": 0.8036
+        },
+        {
+          "hex": "#d2dbd1",
+          "coverage": 0.1004
+        },
+        {
+          "hex": "#495956",
+          "coverage": 0.0391
+        },
+        {
+          "hex": "#9ca69c",
+          "coverage": 0.0324
+        },
+        {
+          "hex": "#72817d",
+          "coverage": 0.0246
+        }
+      ],
+      "detail": {
+        "energy": 65.9482
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 32,
+          "capHeightPx": 9.4,
+          "inkIsDark": false,
+          "allCaps": true,
+          "advance": 0.7815,
+          "advTall": 0.7815,
+          "advX": null,
+          "gap": 0.2131,
+          "xRatio": null,
+          "stemW": 0.2139,
+          "contrast": 1.1343,
+          "serif": null,
+          "densTall": 0.5939,
+          "densX": null,
+          "weight": 0.5939
+        },
+        "widthClass": "wide",
+        "weightClass": "bold"
+      }
+    },
+    {
+      "id": "header-showing",
+      "kind": "control",
+      "note": "warm-paper Request a showing button in masthead",
+      "grid": null,
+      "box": {
+        "x": 0.836,
+        "y": 0.022,
+        "w": 0.145,
+        "h": 0.063
+      },
+      "px": {
+        "x": 1150,
+        "y": 17,
+        "w": 200,
+        "h": 48
+      },
+      "aspect": 4.1667,
+      "palette": [
+        {
+          "hex": "#f8e8e8",
+          "coverage": 0.8953
+        },
+        {
+          "hex": "#1b392a",
+          "coverage": 0.0523
+        },
+        {
+          "hex": "#babcba",
+          "coverage": 0.0271
+        },
+        {
+          "hex": "#6f7b71",
+          "coverage": 0.014
+        },
+        {
+          "hex": "#99a494",
+          "coverage": 0.0112
+        }
+      ],
+      "detail": {
+        "energy": 21.7109
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null
+    },
+    {
+      "id": "exterior-photo",
+      "kind": "image",
+      "note": "verified prior-listing exterior photograph of 323 Colonial, cropped to broad left field",
+      "grid": null,
+      "bleed": true,
+      "box": {
+        "x": 0,
+        "y": 0.107,
+        "w": 0.67,
+        "h": 0.893
+      },
+      "px": {
+        "x": 0,
+        "y": 82,
+        "w": 922,
+        "h": 686
+      },
+      "aspect": 1.344,
+      "palette": [
+        {
+          "hex": "#f0f0f0",
+          "coverage": 0.3812
+        },
+        {
+          "hex": "#89745e",
+          "coverage": 0.1683
+        },
+        {
+          "hex": "#bfb161",
+          "coverage": 0.1658
+        },
+        {
+          "hex": "#aac7e7",
+          "coverage": 0.1658
+        },
+        {
+          "hex": "#beac95",
+          "coverage": 0.1189
+        }
+      ],
+      "detail": {
+        "energy": 35.8046
+      },
+      "medium": "raster",
+      "plate": "assets/plates/exterior-photo.png",
+      "text": null
+    },
+    {
+      "id": "photo-provenance",
+      "kind": "text",
+      "note": "text label disclosing verified source and retained Bright MLS watermark",
+      "grid": null,
+      "box": {
+        "x": 0.374,
+        "y": 0.945,
+        "w": 0.282,
+        "h": 0.036
+      },
+      "px": {
+        "x": 515,
+        "y": 726,
+        "w": 388,
+        "h": 28
+      },
+      "aspect": 13.8571,
+      "palette": [
+        {
+          "hex": "#f1e7dc",
+          "coverage": 0.8263
+        },
+        {
+          "hex": "#888c83",
+          "coverage": 0.0634
+        },
+        {
+          "hex": "#c5b364",
+          "coverage": 0.0412
+        },
+        {
+          "hex": "#3c4b41",
+          "coverage": 0.0387
+        },
+        {
+          "hex": "#9c8e4a",
+          "coverage": 0.0305
+        }
+      ],
+      "detail": {
+        "energy": 36.75
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 53,
+          "capHeightPx": 7.2,
+          "inkIsDark": true,
+          "allCaps": true,
+          "advance": 0.7682,
+          "advTall": 0.7682,
+          "advX": null,
+          "gap": 0.2095,
+          "xRatio": null,
+          "stemW": 0.2472,
+          "contrast": 1.1782,
+          "serif": 0.3143,
+          "densTall": 0.6624,
+          "densX": null,
+          "weight": 0.6624
+        },
+        "widthClass": "normal",
+        "weightClass": "black"
+      }
+    },
+    {
+      "id": "panel-upper-ground",
+      "kind": "chrome",
+      "note": "continuous warm-paper upper summary field",
+      "grid": null,
+      "box": {
+        "x": 0.67,
+        "y": 0.107,
+        "w": 0.33,
+        "h": 0.63
+      },
+      "px": {
+        "x": 922,
+        "y": 82,
+        "w": 454,
+        "h": 484
+      },
+      "aspect": 0.938,
+      "palette": [
+        {
+          "hex": "#f8f8e8",
+          "coverage": 0.9126
+        },
+        {
+          "hex": "#193828",
+          "coverage": 0.0393
+        },
+        {
+          "hex": "#192929",
+          "coverage": 0.0277
+        },
+        {
+          "hex": "#cacbc3",
+          "coverage": 0.0114
+        },
+        {
+          "hex": "#96a696",
+          "coverage": 0.0091
+        }
+      ],
+      "detail": {
+        "energy": 21.2987
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null
+    },
+    {
+      "id": "location",
+      "kind": "text",
+      "note": "Berkeley Springs and West Virginia uppercase location label",
+      "grid": null,
+      "box": {
+        "x": 0.698,
+        "y": 0.181,
+        "w": 0.19,
+        "h": 0.021
+      },
+      "px": {
+        "x": 960,
+        "y": 139,
+        "w": 261,
+        "h": 16
+      },
+      "aspect": 16.3125,
+      "palette": [
+        {
+          "hex": "#f8f8e8",
+          "coverage": 0.7232
+        },
+        {
+          "hex": "#1b2b2a",
+          "coverage": 0.1365
+        },
+        {
+          "hex": "#9e9f9b",
+          "coverage": 0.0546
+        },
+        {
+          "hex": "#c9c9c2",
+          "coverage": 0.0468
+        },
+        {
+          "hex": "#4d5754",
+          "coverage": 0.039
+        }
+      ],
+      "detail": {
+        "energy": 89.7722
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 28,
+          "capHeightPx": 8.3,
+          "inkIsDark": true,
+          "allCaps": true,
+          "advance": 0.783,
+          "advTall": 0.783,
+          "advX": null,
+          "gap": 0.3313,
+          "xRatio": null,
+          "stemW": 0.2575,
+          "contrast": 1.2262,
+          "serif": null,
+          "densTall": 0.7149,
+          "densX": null,
+          "weight": 0.7149
+        },
+        "widthClass": "wide",
+        "weightClass": "black"
+      }
+    },
+    {
+      "id": "title-number",
+      "kind": "text",
+      "note": "large serif 323 title line",
+      "grid": null,
+      "box": {
+        "x": 0.698,
+        "y": 0.231,
+        "w": 0.07,
+        "h": 0.055
+      },
+      "px": {
+        "x": 960,
+        "y": 177,
+        "w": 96,
+        "h": 42
+      },
+      "aspect": 2.2857,
+      "palette": [
+        {
+          "hex": "#f7f7e8",
+          "coverage": 0.6494
+        },
+        {
+          "hex": "#192928",
+          "coverage": 0.2697
+        },
+        {
+          "hex": "#9fa39d",
+          "coverage": 0.0337
+        },
+        {
+          "hex": "#d1d1c8",
+          "coverage": 0.0292
+        },
+        {
+          "hex": "#5c6664",
+          "coverage": 0.018
+        }
+      ],
+      "detail": {
+        "energy": 25.4298
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 5,
+          "capHeightPx": 38.6,
+          "inkIsDark": true,
+          "allCaps": true,
+          "advance": 0.3371,
+          "advTall": 0.3371,
+          "advX": null,
+          "gap": 0.0259,
+          "xRatio": null,
+          "stemW": 0.1786,
+          "contrast": 1.4225,
+          "serif": null,
+          "densTall": 0.4121,
+          "densX": null,
+          "weight": 0.4121
+        },
+        "widthClass": "compressed",
+        "weightClass": "regular",
+        "chosen": {
+          "family": "Platypi",
+          "weight": 300,
+          "fontSizePx": 55,
+          "source": "catalog",
+          "estimatedSize": true,
+          "stamp": "1b6fc9156c34"
+        }
+      }
+    },
+    {
+      "id": "title-name",
+      "kind": "text",
+      "note": "large serif Colonial title line",
+      "grid": null,
+      "box": {
+        "x": 0.698,
+        "y": 0.285,
+        "w": 0.14,
+        "h": 0.061
+      },
+      "px": {
+        "x": 960,
+        "y": 219,
+        "w": 193,
+        "h": 47
+      },
+      "aspect": 4.1064,
+      "palette": [
+        {
+          "hex": "#f8f7e8",
+          "coverage": 0.6442
+        },
+        {
+          "hex": "#182828",
+          "coverage": 0.2758
+        },
+        {
+          "hex": "#babcb6",
+          "coverage": 0.0351
+        },
+        {
+          "hex": "#949a90",
+          "coverage": 0.0234
+        },
+        {
+          "hex": "#6d766d",
+          "coverage": 0.0214
+        }
+      ],
+      "detail": {
+        "energy": 49.4318
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "type": {
+        "comp": null,
+        "measuredAt": "2026-09-02T20:21:47.355Z",
+        "note": "no separable lettering in the crop; size by the region box"
+      }
+    },
+    {
+      "id": "property-deck",
+      "kind": "text",
+      "note": "serif A house in the woods above Berkeley Springs deck",
+      "grid": null,
+      "box": {
+        "x": 0.698,
+        "y": 0.366,
+        "w": 0.23,
+        "h": 0.064
+      },
+      "px": {
+        "x": 960,
+        "y": 281,
+        "w": 316,
+        "h": 49
+      },
+      "aspect": 6.449,
+      "palette": [
+        {
+          "hex": "#f7f7e7",
+          "coverage": 0.8174
+        },
+        {
+          "hex": "#1a2a29",
+          "coverage": 0.0855
+        },
+        {
+          "hex": "#80867f",
+          "coverage": 0.0361
+        },
+        {
+          "hex": "#b6bab1",
+          "coverage": 0.0361
+        },
+        {
+          "hex": "#45534c",
+          "coverage": 0.025
+        }
+      ],
+      "detail": {
+        "energy": 67.176
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "type": {
+        "comp": {
+          "lines": 2,
+          "glyphs": 32,
+          "capHeightPx": 17.9,
+          "inkIsDark": true,
+          "allCaps": false,
+          "advance": 0.611,
+          "advTall": 0.6729,
+          "advX": 0.572,
+          "gap": 0.0561,
+          "xRatio": 0.6721,
+          "stemW": 0.1556,
+          "contrast": 1.451,
+          "serif": 2.0825,
+          "densTall": 0.4413,
+          "densX": 0.5216,
+          "weight": 0.4413
+        },
+        "widthClass": "condensed",
+        "weightClass": "regular"
+      }
+    },
+    {
+      "id": "feature-frame",
+      "kind": "chrome",
+      "note": "hairline feature strip with three divided columns",
+      "grid": null,
+      "box": {
+        "x": 0.698,
+        "y": 0.487,
+        "w": 0.273,
+        "h": 0.11
+      },
+      "px": {
+        "x": 960,
+        "y": 374,
+        "w": 376,
+        "h": 84
+      },
+      "aspect": 4.4762,
+      "palette": [
+        {
+          "hex": "#f8f8e8",
+          "coverage": 0.8875
+        },
+        {
+          "hex": "#97a697",
+          "coverage": 0.063
+        },
+        {
+          "hex": "#192929",
+          "coverage": 0.022
+        },
+        {
+          "hex": "#3c4c42",
+          "coverage": 0.014
+        },
+        {
+          "hex": "#cbcbc3",
+          "coverage": 0.0135
+        }
+      ],
+      "detail": {
+        "energy": 25.3523
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null
+    },
+    {
+      "id": "feature-facts",
+      "kind": "text",
+      "note": "Cathedral glass, Fieldstone chimney, Screened porch facts",
+      "grid": null,
+      "box": {
+        "x": 0.698,
+        "y": 0.509,
+        "w": 0.27,
+        "h": 0.048
+      },
+      "px": {
+        "x": 960,
+        "y": 391,
+        "w": 372,
+        "h": 37
+      },
+      "aspect": 10.0541,
+      "palette": [
+        {
+          "hex": "#f7f7e8",
+          "coverage": 0.8624
+        },
+        {
+          "hex": "#96a096",
+          "coverage": 0.0469
+        },
+        {
+          "hex": "#192929",
+          "coverage": 0.0406
+        },
+        {
+          "hex": "#3b4b43",
+          "coverage": 0.0273
+        },
+        {
+          "hex": "#c7c7c2",
+          "coverage": 0.0228
+        }
+      ],
+      "detail": {
+        "energy": 56.5411
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "type": {
+        "comp": {
+          "lines": 2,
+          "glyphs": 36,
+          "capHeightPx": 13.1,
+          "inkIsDark": true,
+          "allCaps": false,
+          "advance": 0.6083,
+          "advTall": 0.6653,
+          "advX": 0.5703,
+          "gap": 0.076,
+          "xRatio": 0.6779,
+          "stemW": 0.172,
+          "contrast": 1.4198,
+          "serif": 1.8343,
+          "densTall": 0.5227,
+          "densX": 0.5947,
+          "weight": 0.5227
+        },
+        "widthClass": "condensed",
+        "weightClass": "medium"
+      }
+    },
+    {
+      "id": "primary-showing",
+      "kind": "control",
+      "note": "dark forest primary Request a showing button",
+      "grid": null,
+      "box": {
+        "x": 0.699,
+        "y": 0.637,
+        "w": 0.143,
+        "h": 0.06
+      },
+      "px": {
+        "x": 962,
+        "y": 489,
+        "w": 197,
+        "h": 46
+      },
+      "aspect": 4.2826,
+      "palette": [
+        {
+          "hex": "#183828",
+          "coverage": 0.9002
+        },
+        {
+          "hex": "#f1f0e3",
+          "coverage": 0.0551
+        },
+        {
+          "hex": "#b9c7b7",
+          "coverage": 0.0209
+        },
+        {
+          "hex": "#5e6e64",
+          "coverage": 0.0152
+        },
+        {
+          "hex": "#a4a6a4",
+          "coverage": 0.0086
+        }
+      ],
+      "detail": {
+        "energy": 22.6514
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null
+    },
+    {
+      "id": "showing-email",
+      "kind": "text",
+      "note": "realtor@stevenhay.com contact address",
+      "grid": null,
+      "box": {
+        "x": 0.698,
+        "y": 0.71,
+        "w": 0.12,
+        "h": 0.018
+      },
+      "px": {
+        "x": 960,
+        "y": 545,
+        "w": 165,
+        "h": 14
+      },
+      "aspect": 11.7857,
+      "palette": [
+        {
+          "hex": "#f7f7e7",
+          "coverage": 0.8545
+        },
+        {
+          "hex": "#737d74",
+          "coverage": 0.0945
+        },
+        {
+          "hex": "#babbb6",
+          "coverage": 0.0509
+        }
+      ],
+      "detail": {
+        "energy": 38.7941
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 20,
+          "capHeightPx": 7.3,
+          "inkIsDark": true,
+          "allCaps": true,
+          "advance": 0.7908,
+          "advTall": 0.7908,
+          "advX": null,
+          "gap": 0.2063,
+          "xRatio": null,
+          "stemW": 0.225,
+          "contrast": 1.1887,
+          "serif": 0.2604,
+          "densTall": 0.6123,
+          "densX": null,
+          "weight": 0.6123
+        },
+        "widthClass": "wide",
+        "weightClass": "bold"
+      }
+    },
+    {
+      "id": "planning-link",
+      "kind": "text",
+      "note": "secondary underlined Planning records link",
+      "grid": null,
+      "box": {
+        "x": 0.852,
+        "y": 0.659,
+        "w": 0.1,
+        "h": 0.027
+      },
+      "px": {
+        "x": 1172,
+        "y": 506,
+        "w": 138,
+        "h": 21
+      },
+      "aspect": 6.5714,
+      "palette": [
+        {
+          "hex": "#f8f7e8",
+          "coverage": 0.7764
+        },
+        {
+          "hex": "#989f9b",
+          "coverage": 0.0745
+        },
+        {
+          "hex": "#244032",
+          "coverage": 0.0714
+        },
+        {
+          "hex": "#4f605b",
+          "coverage": 0.0528
+        },
+        {
+          "hex": "#ccd2c6",
+          "coverage": 0.0248
+        }
+      ],
+      "detail": {
+        "energy": 36.2669
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 15,
+          "capHeightPx": 8.5,
+          "inkIsDark": true,
+          "allCaps": true,
+          "advance": 0.825,
+          "advTall": 0.825,
+          "advX": null,
+          "gap": 0.2357,
+          "xRatio": null,
+          "stemW": 0.2095,
+          "contrast": 1.1669,
+          "serif": null,
+          "densTall": 0.5945,
+          "densX": null,
+          "weight": 0.5945
+        },
+        "widthClass": "wide",
+        "weightClass": "bold"
+      }
+    },
+    {
+      "id": "evidence-rule",
+      "kind": "chrome",
+      "note": "warm-paper divider zone with hairline separator above evidence records",
+      "grid": null,
+      "box": {
+        "x": 0.67,
+        "y": 0.737,
+        "w": 0.33,
+        "h": 0.027
+      },
+      "px": {
+        "x": 922,
+        "y": 566,
+        "w": 454,
+        "h": 21
+      },
+      "aspect": 21.619,
+      "palette": [
+        {
+          "hex": "#f8f8e8",
+          "coverage": 0.8816
+        },
+        {
+          "hex": "#c8c8c8",
+          "coverage": 0.1184
+        }
+      ],
+      "detail": {
+        "energy": 7.3734
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null
+    },
+    {
+      "id": "room-photo",
+      "kind": "image",
+      "note": "verified prior-listing great-room photograph",
+      "grid": null,
+      "bleed": true,
+      "box": {
+        "x": 0.699,
+        "y": 0.777,
+        "w": 0.173,
+        "h": 0.145
+      },
+      "px": {
+        "x": 962,
+        "y": 597,
+        "w": 238,
+        "h": 111
+      },
+      "aspect": 2.1441,
+      "palette": [
+        {
+          "hex": "#c4c1c0",
+          "coverage": 0.308
+        },
+        {
+          "hex": "#b29b7f",
+          "coverage": 0.2956
+        },
+        {
+          "hex": "#89603b",
+          "coverage": 0.1506
+        },
+        {
+          "hex": "#a09c9c",
+          "coverage": 0.1244
+        },
+        {
+          "hex": "#5f4834",
+          "coverage": 0.1213
+        }
+      ],
+      "detail": {
+        "energy": 35.0838
+      },
+      "medium": "raster",
+      "plate": "assets/plates/room-photo.png",
+      "text": null
+    },
+    {
+      "id": "room-caption",
+      "kind": "text",
+      "note": "Real property evidence, Great room caption",
+      "grid": null,
+      "box": {
+        "x": 0.698,
+        "y": 0.931,
+        "w": 0.175,
+        "h": 0.031
+      },
+      "px": {
+        "x": 960,
+        "y": 715,
+        "w": 241,
+        "h": 24
+      },
+      "aspect": 10.0417,
+      "palette": [
+        {
+          "hex": "#f8f8e8",
+          "coverage": 0.8189
+        },
+        {
+          "hex": "#3e4e46",
+          "coverage": 0.0604
+        },
+        {
+          "hex": "#858785",
+          "coverage": 0.0542
+        },
+        {
+          "hex": "#c7c7be",
+          "coverage": 0.0372
+        },
+        {
+          "hex": "#9ca79a",
+          "coverage": 0.0294
+        }
+      ],
+      "detail": {
+        "energy": 32.2403
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 30,
+          "capHeightPx": 7.3,
+          "inkIsDark": true,
+          "allCaps": true,
+          "advance": 0.7891,
+          "advTall": 0.7891,
+          "advX": null,
+          "gap": 0.1715,
+          "xRatio": null,
+          "stemW": 0.2326,
+          "contrast": 1.121,
+          "serif": 0.2979,
+          "densTall": 0.6434,
+          "densX": null,
+          "weight": 0.6434
+        },
+        "widthClass": "wide",
+        "weightClass": "bold"
+      }
+    },
+    {
+      "id": "plan-image",
+      "kind": "image",
+      "note": "main-floor reference plan sheet",
+      "grid": null,
+      "bleed": true,
+      "box": {
+        "x": 0.879,
+        "y": 0.777,
+        "w": 0.093,
+        "h": 0.145
+      },
+      "px": {
+        "x": 1210,
+        "y": 597,
+        "w": 128,
+        "h": 111
+      },
+      "aspect": 1.1532,
+      "palette": [
+        {
+          "hex": "#f4f4f4",
+          "coverage": 0.9302
+        },
+        {
+          "hex": "#c1c1bc",
+          "coverage": 0.0691
+        },
+        {
+          "hex": "#888888",
+          "coverage": 0.0006
+        }
+      ],
+      "detail": {
+        "energy": 9.5229
+      },
+      "medium": "raster",
+      "plate": "assets/plates/plan-image.png",
+      "text": null
+    },
+    {
+      "id": "plan-caption",
+      "kind": "text",
+      "note": "Reference plan, not field-measured caption",
+      "grid": null,
+      "box": {
+        "x": 0.879,
+        "y": 0.931,
+        "w": 0.1,
+        "h": 0.043
+      },
+      "px": {
+        "x": 1210,
+        "y": 715,
+        "w": 138,
+        "h": 33
+      },
+      "aspect": 4.1818,
+      "palette": [
+        {
+          "hex": "#f7f7e8",
+          "coverage": 0.7564
+        },
+        {
+          "hex": "#838883",
+          "coverage": 0.0931
+        },
+        {
+          "hex": "#3a4a41",
+          "coverage": 0.0792
+        },
+        {
+          "hex": "#c3c5bd",
+          "coverage": 0.0614
+        },
+        {
+          "hex": "#1b2b2b",
+          "coverage": 0.0099
+        }
+      ],
+      "detail": {
+        "energy": 28.371
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "type": {
+        "comp": {
+          "lines": 2,
+          "glyphs": 29,
+          "capHeightPx": 7.2,
+          "inkIsDark": true,
+          "allCaps": true,
+          "advance": 0.803,
+          "advTall": 0.803,
+          "advX": null,
+          "gap": 0.1396,
+          "xRatio": null,
+          "stemW": 0.2346,
+          "contrast": 1.1744,
+          "serif": 0.2406,
+          "densTall": 0.6342,
+          "densX": null,
+          "weight": 0.6342
+        },
+        "widthClass": "wide",
+        "weightClass": "bold"
+      }
+    }
+  ]
+}

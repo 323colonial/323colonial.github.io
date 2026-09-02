@@ -1,0 +1,278 @@
+{
+  "tool": "build-phase",
+  "version": 2,
+  "startedAt": "2026-09-02T19:50:40.221Z",
+  "comp": ".impeccable/mocks/monograph-variation-a.png",
+  "direction": "16845a6f",
+  "breakpoint": "1376x768",
+  "artifact": null,
+  "phase": "review",
+  "phases": {
+    "comps": {
+      "status": "closed",
+      "openedAt": "2026-09-02T19:50:40.220Z",
+      "closedAt": "2026-09-02T20:03:16.331Z",
+      "attempts": 1,
+      "notes": [],
+      "gate": {
+        "ok": true,
+        "reasons": [],
+        "summary": "3 comps, 1 approved",
+        "approved": ".impeccable/mocks/monograph-variation-a.png",
+        "at": "2026-09-02T20:03:16.330Z"
+      },
+      "forced": null
+    },
+    "spec": {
+      "status": "closed",
+      "openedAt": "2026-09-02T20:03:16.368Z",
+      "closedAt": "2026-09-02T20:10:32.517Z",
+      "attempts": 1,
+      "notes": [],
+      "gate": {
+        "ok": true,
+        "reasons": [],
+        "summary": "21 regions, 3 plates, 12 text regions measured",
+        "at": "2026-09-02T20:10:32.517Z"
+      },
+      "forced": null
+    },
+    "plates": {
+      "status": "closed",
+      "openedAt": "2026-09-02T20:10:32.517Z",
+      "closedAt": "2026-09-02T20:23:46.617Z",
+      "attempts": 3,
+      "notes": [],
+      "gate": {
+        "ok": true,
+        "reasons": [],
+        "summary": "3/3 plates",
+        "at": "2026-09-02T20:23:46.616Z"
+      },
+      "forced": null
+    },
+    "hero": {
+      "status": "closed",
+      "openedAt": "2026-09-02T20:23:46.617Z",
+      "closedAt": "2026-09-02T20:30:56.745Z",
+      "attempts": 1,
+      "notes": [],
+      "gate": {
+        "ok": true,
+        "reasons": [],
+        "summary": "hero 94% (match)",
+        "score": 0.9401,
+        "verdict": "match",
+        "report": ".impeccable/review/diff/hero/report.json",
+        "sideBySide": ".impeccable/review/diff/hero/side-by-side.png",
+        "worst": [
+          "brand drift 47%",
+          "title-number drift 56%",
+          "planning-link drift 58%"
+        ],
+        "worstIds": [
+          "brand",
+          "title-number",
+          "planning-link"
+        ],
+        "worstCrops": [
+          {
+            "id": "brand",
+            "verdict": "drift",
+            "score": {
+              "overall": 0.4734,
+              "structure": 0.3405,
+              "color": 0.5923,
+              "colorIntersection": 0.2117,
+              "paletteMatch": 0.7972,
+              "detail": 0.4739,
+              "detailRaw": 0.6041,
+              "detailAdded": 0.2604,
+              "bands": 0.84
+            },
+            "file": ".impeccable/review/diff/hero/regions/brand.png"
+          },
+          {
+            "id": "title-number",
+            "verdict": "drift",
+            "score": {
+              "overall": 0.5631,
+              "structure": 0.4651,
+              "color": 0.9603,
+              "colorIntersection": 0.9371,
+              "paletteMatch": 0.9728,
+              "detail": 0.4238,
+              "detailRaw": 0.5228,
+              "detailAdded": 0.1979,
+              "bands": 0.2691
+            },
+            "file": ".impeccable/review/diff/hero/regions/title-number.png"
+          },
+          {
+            "id": "planning-link",
+            "verdict": "drift",
+            "score": {
+              "overall": 0.5815,
+              "structure": 0.5127,
+              "color": 0.9565,
+              "colorIntersection": 0.9082,
+              "paletteMatch": 0.9825,
+              "detail": 0.2495,
+              "detailRaw": 0.3745,
+              "detailAdded": 0.25,
+              "bands": 0.4857
+            },
+            "file": ".impeccable/review/diff/hero/regions/planning-link.png"
+          }
+        ],
+        "advisories": [
+          "(advisory, above the 72% bar; fix in the polish pass before responsive) 3 readings:",
+          "  text photo-provenance: ink is #1a2a29 in the build, #888c83 in the comp; use the comp's colour",
+          "  text planning-link: ink is #192929 in the build, #989f9b in the comp; use the comp's colour",
+          "  control primary-showing: its rule sits 18px into the box in the comp and 1px in the build (-17px), so the strip is shorter than the comp's; match the height, not only the position"
+        ],
+        "regionVerdicts": {
+          "masthead": "drift",
+          "brand": "drift",
+          "buyer-nav": "drift",
+          "header-showing": "drift",
+          "exterior-photo": "match",
+          "photo-provenance": "drift",
+          "panel-upper-ground": "match",
+          "location": "match",
+          "title-number": "drift",
+          "title-name": "drift",
+          "property-deck": "match",
+          "feature-frame": "match",
+          "feature-facts": "match",
+          "primary-showing": "drift",
+          "showing-email": "match",
+          "planning-link": "drift",
+          "evidence-rule": "match",
+          "room-photo": "match",
+          "room-caption": "match",
+          "plan-image": "match",
+          "plan-caption": "match"
+        },
+        "at": "2026-09-02T20:30:56.744Z"
+      },
+      "forced": null,
+      "readingsSeen": {
+        "text photo-provenance: ink is #1a2a29 in the build, #888c83 in the comp; use the comp's colour": 1,
+        "text planning-link: ink is #192929 in the build, #989f9b in the comp; use the comp's colour": 1,
+        "control primary-showing: its rule sits 18px into the box in the comp and 1px in the build (-17px), so the strip is shorter than the comp's; match the height, not only the position": 1
+      },
+      "records": 1,
+      "history": [
+        {
+          "at": "2026-09-02T20:30:56.745Z",
+          "score": 0.9401,
+          "worstIds": [
+            "brand",
+            "title-number",
+            "planning-link"
+          ],
+          "regionVerdicts": {
+            "masthead": "drift",
+            "brand": "drift",
+            "buyer-nav": "drift",
+            "header-showing": "drift",
+            "exterior-photo": "match",
+            "photo-provenance": "drift",
+            "panel-upper-ground": "match",
+            "location": "match",
+            "title-number": "drift",
+            "title-name": "drift",
+            "property-deck": "match",
+            "feature-frame": "match",
+            "feature-facts": "match",
+            "primary-showing": "drift",
+            "showing-email": "match",
+            "planning-link": "drift",
+            "evidence-rule": "match",
+            "room-photo": "match",
+            "room-caption": "match",
+            "plan-image": "match",
+            "plan-caption": "match"
+          },
+          "artifactHash": "78f8f40c2458"
+        }
+      ]
+    },
+    "sections": {
+      "status": "closed",
+      "openedAt": "2026-09-02T20:30:56.745Z",
+      "closedAt": "2026-09-02T20:44:38.964Z",
+      "attempts": 1,
+      "notes": [],
+      "gate": {
+        "ok": true,
+        "reasons": [],
+        "summary": "no mechanical gate",
+        "at": "2026-09-02T20:44:38.963Z"
+      },
+      "forced": null
+    },
+    "motion": {
+      "status": "closed",
+      "openedAt": "2026-09-02T20:44:38.964Z",
+      "closedAt": "2026-09-02T20:45:15.776Z",
+      "attempts": 1,
+      "notes": [],
+      "gate": {
+        "ok": true,
+        "reasons": [],
+        "summary": "no mechanical gate",
+        "at": "2026-09-02T20:45:15.776Z"
+      },
+      "forced": null
+    },
+    "responsive": {
+      "status": "closed",
+      "openedAt": "2026-09-02T20:45:15.776Z",
+      "closedAt": "2026-09-02T20:52:56.969Z",
+      "attempts": 2,
+      "notes": [],
+      "gate": {
+        "ok": true,
+        "reasons": [],
+        "summary": "desktop 94% (match)",
+        "score": 0.9401,
+        "sideBySide": ".impeccable/review/diff/desktop/side-by-side.png",
+        "at": "2026-09-02T20:52:56.969Z"
+      },
+      "forced": null
+    },
+    "review": {
+      "status": "closed",
+      "openedAt": "2026-09-02T20:52:56.969Z",
+      "closedAt": "2026-09-02T21:51:46.897Z",
+      "attempts": 0,
+      "notes": [],
+      "gate": null,
+      "forced": null
+    }
+  },
+  "finish": {
+    "disposition": "ship",
+    "at": "2026-09-02T21:51:46.897Z",
+    "phaseAtFinish": "review"
+  },
+  "plates": {
+    "exterior-photo": {
+      "status": "ok",
+      "score": 0.7571,
+      "size": "1536x1152"
+    },
+    "room-photo": {
+      "status": "ok",
+      "score": 0.8538,
+      "size": "1280x960"
+    },
+    "plan-image": {
+      "status": "ok",
+      "score": 0.8579,
+      "size": "3400x2200"
+    }
+  }
+}

@@ -1,0 +1,822 @@
+{
+  "tool": "comp-diff",
+  "version": 1,
+  "createdAt": "2026-09-02T20:30:56.511Z",
+  "label": "hero",
+  "comp": ".impeccable/mocks/monograph-variation-a.png",
+  "build": ".impeccable/review/hero-repro.png",
+  "spec": ".impeccable/build/spec.json",
+  "compSize": "1376x768",
+  "buildSize": "1376x768",
+  "align": "top",
+  "overall": 0.9401,
+  "verdict": "match",
+  "scores": {
+    "overall": 0.9401,
+    "structure": 0.9865,
+    "color": 0.8548,
+    "colorIntersection": 0.8527,
+    "paletteMatch": 0.8559,
+    "detail": 0.9245,
+    "detailRaw": 0.9349,
+    "detailAdded": 0.0208,
+    "bands": 1
+  },
+  "palette": {
+    "comp": [
+      {
+        "hex": "#f7f6eb",
+        "coverage": 0.5263
+      },
+      {
+        "hex": "#183828",
+        "coverage": 0.1427
+      },
+      {
+        "hex": "#87725b",
+        "coverage": 0.1026
+      },
+      {
+        "hex": "#c0b261",
+        "coverage": 0.0894
+      },
+      {
+        "hex": "#d4dde8",
+        "coverage": 0.0713
+      },
+      {
+        "hex": "#beab94",
+        "coverage": 0.0678
+      }
+    ],
+    "build": [
+      {
+        "hex": "#f6f6eb",
+        "coverage": 0.5617
+      },
+      {
+        "hex": "#283728",
+        "coverage": 0.163
+      },
+      {
+        "hex": "#d3dce7",
+        "coverage": 0.0758
+      },
+      {
+        "hex": "#beb15f",
+        "coverage": 0.0714
+      },
+      {
+        "hex": "#a2c2e7",
+        "coverage": 0.0659
+      },
+      {
+        "hex": "#746354",
+        "coverage": 0.0621
+      }
+    ]
+  },
+  "regions": [
+    {
+      "id": "masthead",
+      "x": 0,
+      "y": 0,
+      "w": 1,
+      "h": 0.107,
+      "kind": "chrome",
+      "score": {
+        "overall": 0.7739,
+        "structure": 0.9356,
+        "color": 0.5007,
+        "colorIntersection": 0.034,
+        "paletteMatch": 0.752,
+        "detail": 0.835,
+        "detailRaw": 0.8662,
+        "detailAdded": 0.0625,
+        "bands": 0.75
+      },
+      "verdict": "drift",
+      "inkBox": {
+        "comp": {
+          "x": 0,
+          "y": 16,
+          "w": 1376,
+          "h": 66
+        },
+        "build": {
+          "x": 0,
+          "y": 16,
+          "w": 1376,
+          "h": 66
+        }
+      }
+    },
+    {
+      "id": "brand",
+      "x": 0.025,
+      "y": 0.027,
+      "w": 0.142,
+      "h": 0.052,
+      "kind": "text",
+      "score": {
+        "overall": 0.4734,
+        "structure": 0.3405,
+        "color": 0.5923,
+        "colorIntersection": 0.2117,
+        "paletteMatch": 0.7972,
+        "detail": 0.4739,
+        "detailRaw": 0.6041,
+        "detailAdded": 0.2604,
+        "bands": 0.84
+      },
+      "verdict": "drift",
+      "inkBox": {
+        "comp": {
+          "x": 1,
+          "y": 8,
+          "w": 194,
+          "h": 36
+        },
+        "build": {
+          "x": 1,
+          "y": 9,
+          "w": 195,
+          "h": 34
+        }
+      }
+    },
+    {
+      "id": "buyer-nav",
+      "x": 0.536,
+      "y": 0.04,
+      "w": 0.279,
+      "h": 0.025,
+      "kind": "text",
+      "score": {
+        "overall": 0.7975,
+        "structure": 0.897,
+        "color": 0.5146,
+        "colorIntersection": 0.0694,
+        "paletteMatch": 0.7543,
+        "detail": 0.8689,
+        "detailRaw": 0.8689,
+        "detailAdded": 0,
+        "bands": 0.9
+      },
+      "verdict": "drift",
+      "inkBox": {
+        "comp": {
+          "x": 0,
+          "y": 20,
+          "w": 383,
+          "h": 9
+        },
+        "build": {
+          "x": 0,
+          "y": 20,
+          "w": 381,
+          "h": 9
+        }
+      }
+    },
+    {
+      "id": "header-showing",
+      "x": 0.836,
+      "y": 0.022,
+      "w": 0.145,
+      "h": 0.063,
+      "kind": "control",
+      "score": {
+        "overall": 0.7379,
+        "structure": 0.9102,
+        "color": 0.4065,
+        "colorIntersection": 0.0458,
+        "paletteMatch": 0.6007,
+        "detail": 0.93,
+        "detailRaw": 0.93,
+        "detailAdded": 0,
+        "bands": 1
+      },
+      "verdict": "drift",
+      "inkBox": {
+        "comp": {
+          "x": 0,
+          "y": 0,
+          "w": 200,
+          "h": 48
+        },
+        "build": {
+          "x": 22,
+          "y": 0,
+          "w": 178,
+          "h": 48
+        }
+      }
+    },
+    {
+      "id": "exterior-photo",
+      "x": 0,
+      "y": 0.107,
+      "w": 0.67,
+      "h": 0.893,
+      "kind": "image",
+      "score": {
+        "overall": 0.9183,
+        "structure": 0.9965,
+        "color": 0.8877,
+        "colorIntersection": 0.9396,
+        "paletteMatch": 0.8598,
+        "detail": 0.8832,
+        "detailRaw": 0.8832,
+        "detailAdded": 0,
+        "bands": 1
+      },
+      "verdict": "match",
+      "inkBox": {
+        "comp": {
+          "x": 0,
+          "y": 0,
+          "w": 921,
+          "h": 686
+        },
+        "build": {
+          "x": 0,
+          "y": 0,
+          "w": 921,
+          "h": 686
+        }
+      }
+    },
+    {
+      "id": "photo-provenance",
+      "x": 0.374,
+      "y": 0.945,
+      "w": 0.282,
+      "h": 0.036,
+      "kind": "text",
+      "score": {
+        "overall": 0.7127,
+        "structure": 0.6674,
+        "color": 0.9101,
+        "colorIntersection": 0.8694,
+        "paletteMatch": 0.9319,
+        "detail": 0.5336,
+        "detailRaw": 0.6586,
+        "detailAdded": 0.25,
+        "bands": 0.7143
+      },
+      "verdict": "drift",
+      "inkBox": {
+        "comp": {
+          "x": 0,
+          "y": 0,
+          "w": 388,
+          "h": 48
+        },
+        "build": {
+          "x": 0,
+          "y": 0,
+          "w": 388,
+          "h": 48
+        }
+      }
+    },
+    {
+      "id": "panel-upper-ground",
+      "x": 0.67,
+      "y": 0.107,
+      "w": 0.33,
+      "h": 0.63,
+      "kind": "chrome",
+      "score": {
+        "overall": 0.9476,
+        "structure": 0.9111,
+        "color": 0.9691,
+        "colorIntersection": 0.9571,
+        "paletteMatch": 0.9755,
+        "detail": 0.9458,
+        "detailRaw": 0.951,
+        "detailAdded": 0.0104,
+        "bands": 1
+      },
+      "verdict": "match",
+      "inkBox": {
+        "comp": {
+          "x": 37,
+          "y": 60,
+          "w": 379,
+          "h": 413
+        },
+        "build": {
+          "x": 37,
+          "y": 60,
+          "w": 379,
+          "h": 413
+        }
+      }
+    },
+    {
+      "id": "location",
+      "x": 0.698,
+      "y": 0.181,
+      "w": 0.19,
+      "h": 0.021,
+      "kind": "text",
+      "score": {
+        "overall": 0.9982,
+        "structure": 1,
+        "color": 0.9959,
+        "colorIntersection": 0.9933,
+        "paletteMatch": 0.9973,
+        "detail": 0.9947,
+        "detailRaw": 0.9947,
+        "detailAdded": 0,
+        "bands": 1
+      },
+      "verdict": "match",
+      "inkBox": {
+        "comp": {
+          "x": 1,
+          "y": 19,
+          "w": 259,
+          "h": 8
+        },
+        "build": {
+          "x": 1,
+          "y": 19,
+          "w": 259,
+          "h": 8
+        }
+      }
+    },
+    {
+      "id": "title-number",
+      "x": 0.698,
+      "y": 0.231,
+      "w": 0.07,
+      "h": 0.055,
+      "kind": "text",
+      "score": {
+        "overall": 0.5631,
+        "structure": 0.4651,
+        "color": 0.9603,
+        "colorIntersection": 0.9371,
+        "paletteMatch": 0.9728,
+        "detail": 0.4238,
+        "detailRaw": 0.5228,
+        "detailAdded": 0.1979,
+        "bands": 0.2691
+      },
+      "verdict": "drift",
+      "inkBox": {
+        "comp": {
+          "x": 1,
+          "y": 4,
+          "w": 87,
+          "h": 44
+        },
+        "build": {
+          "x": 2,
+          "y": 9,
+          "w": 92,
+          "h": 39
+        }
+      }
+    },
+    {
+      "id": "title-name",
+      "x": 0.698,
+      "y": 0.285,
+      "w": 0.14,
+      "h": 0.061,
+      "kind": "text",
+      "score": {
+        "overall": 0.5934,
+        "structure": 0.3985,
+        "color": 0.9608,
+        "colorIntersection": 0.942,
+        "paletteMatch": 0.9709,
+        "detail": 0.6337,
+        "detailRaw": 0.691,
+        "detailAdded": 0.1146,
+        "bands": 0.5886
+      },
+      "verdict": "drift",
+      "inkBox": {
+        "comp": {
+          "x": 2,
+          "y": 0,
+          "w": 188,
+          "h": 47
+        },
+        "build": {
+          "x": 2,
+          "y": 0,
+          "w": 191,
+          "h": 48
+        }
+      }
+    },
+    {
+      "id": "property-deck",
+      "x": 0.698,
+      "y": 0.366,
+      "w": 0.23,
+      "h": 0.064,
+      "kind": "text",
+      "score": {
+        "overall": 0.9253,
+        "structure": 0.954,
+        "color": 0.9792,
+        "colorIntersection": 0.9638,
+        "paletteMatch": 0.9876,
+        "detail": 0.9125,
+        "detailRaw": 0.9125,
+        "detailAdded": 0,
+        "bands": 0.6667
+      },
+      "verdict": "match",
+      "inkBox": {
+        "comp": {
+          "x": 0,
+          "y": 2,
+          "w": 280,
+          "h": 47
+        },
+        "build": {
+          "x": 0,
+          "y": 1,
+          "w": 280,
+          "h": 48
+        }
+      }
+    },
+    {
+      "id": "feature-frame",
+      "x": 0.698,
+      "y": 0.487,
+      "w": 0.273,
+      "h": 0.11,
+      "kind": "chrome",
+      "score": {
+        "overall": 0.9787,
+        "structure": 0.9919,
+        "color": 0.9938,
+        "colorIntersection": 0.9894,
+        "paletteMatch": 0.9962,
+        "detail": 0.9326,
+        "detailRaw": 0.9378,
+        "detailAdded": 0.0104,
+        "bands": 1
+      },
+      "verdict": "match",
+      "inkBox": {
+        "comp": {
+          "x": 0,
+          "y": 0,
+          "w": 376,
+          "h": 84
+        },
+        "build": {
+          "x": 0,
+          "y": 0,
+          "w": 376,
+          "h": 84
+        }
+      }
+    },
+    {
+      "id": "feature-facts",
+      "x": 0.698,
+      "y": 0.509,
+      "w": 0.27,
+      "h": 0.048,
+      "kind": "text",
+      "score": {
+        "overall": 0.967,
+        "structure": 0.9808,
+        "color": 0.9763,
+        "colorIntersection": 0.9787,
+        "paletteMatch": 0.975,
+        "detail": 0.9284,
+        "detailRaw": 0.9388,
+        "detailAdded": 0.0208,
+        "bands": 0.9333
+      },
+      "verdict": "match",
+      "inkBox": {
+        "comp": {
+          "x": 0,
+          "y": 0,
+          "w": 336,
+          "h": 48
+        },
+        "build": {
+          "x": 0,
+          "y": 0,
+          "w": 336,
+          "h": 48
+        }
+      }
+    },
+    {
+      "id": "primary-showing",
+      "x": 0.699,
+      "y": 0.637,
+      "w": 0.143,
+      "h": 0.06,
+      "kind": "control",
+      "score": {
+        "overall": 0.7829,
+        "structure": 0.879,
+        "color": 0.5469,
+        "colorIntersection": 0.1216,
+        "paletteMatch": 0.7759,
+        "detail": 0.9799,
+        "detailRaw": 0.9799,
+        "detailAdded": 0,
+        "bands": 1
+      },
+      "verdict": "drift",
+      "inkBox": {
+        "comp": {
+          "x": 0,
+          "y": 0,
+          "w": 197,
+          "h": 48
+        },
+        "build": {
+          "x": 0,
+          "y": 0,
+          "w": 197,
+          "h": 48
+        }
+      }
+    },
+    {
+      "id": "showing-email",
+      "x": 0.698,
+      "y": 0.71,
+      "w": 0.12,
+      "h": 0.018,
+      "kind": "text",
+      "score": {
+        "overall": 0.8162,
+        "structure": 0.8197,
+        "color": 0.8702,
+        "colorIntersection": 0.76,
+        "paletteMatch": 0.9295,
+        "detail": 0.592,
+        "detailRaw": 0.717,
+        "detailAdded": 0.25,
+        "bands": 1
+      },
+      "verdict": "match",
+      "inkBox": {
+        "comp": {
+          "x": 0,
+          "y": 0,
+          "w": 166,
+          "h": 27
+        },
+        "build": {
+          "x": 1,
+          "y": 0,
+          "w": 165,
+          "h": 27
+        }
+      }
+    },
+    {
+      "id": "planning-link",
+      "x": 0.852,
+      "y": 0.659,
+      "w": 0.1,
+      "h": 0.027,
+      "kind": "text",
+      "score": {
+        "overall": 0.5815,
+        "structure": 0.5127,
+        "color": 0.9565,
+        "colorIntersection": 0.9082,
+        "paletteMatch": 0.9825,
+        "detail": 0.2495,
+        "detailRaw": 0.3745,
+        "detailAdded": 0.25,
+        "bands": 0.4857
+      },
+      "verdict": "drift",
+      "inkBox": {
+        "comp": {
+          "x": 1,
+          "y": 25,
+          "w": 133,
+          "h": 14
+        },
+        "build": {
+          "x": 1,
+          "y": 17,
+          "w": 132,
+          "h": 12
+        }
+      }
+    },
+    {
+      "id": "evidence-rule",
+      "x": 0.67,
+      "y": 0.737,
+      "w": 0.33,
+      "h": 0.027,
+      "kind": "chrome",
+      "score": {
+        "overall": 0.9842,
+        "structure": 0.9896,
+        "color": 0.9831,
+        "colorIntersection": 0.9591,
+        "paletteMatch": 0.996,
+        "detail": 0.9683,
+        "detailRaw": 0.9735,
+        "detailAdded": 0.0104,
+        "bands": 1
+      },
+      "verdict": "match",
+      "inkBox": {
+        "comp": {
+          "x": 38,
+          "y": 0,
+          "w": 378,
+          "h": 48
+        },
+        "build": {
+          "x": 38,
+          "y": 0,
+          "w": 378,
+          "h": 48
+        }
+      }
+    },
+    {
+      "id": "room-photo",
+      "x": 0.699,
+      "y": 0.777,
+      "w": 0.173,
+      "h": 0.145,
+      "kind": "image",
+      "score": {
+        "overall": 0.9851,
+        "structure": 1,
+        "color": 0.929,
+        "colorIntersection": 0.9508,
+        "paletteMatch": 0.9173,
+        "detail": 0.9986,
+        "detailRaw": 0.9986,
+        "detailAdded": 0,
+        "bands": 1
+      },
+      "verdict": "match",
+      "inkBox": {
+        "comp": {
+          "x": 0,
+          "y": 0,
+          "w": 238,
+          "h": 111
+        },
+        "build": {
+          "x": 0,
+          "y": 0,
+          "w": 238,
+          "h": 111
+        }
+      }
+    },
+    {
+      "id": "room-caption",
+      "x": 0.698,
+      "y": 0.931,
+      "w": 0.175,
+      "h": 0.031,
+      "kind": "text",
+      "score": {
+        "overall": 0.9966,
+        "structure": 1,
+        "color": 0.99,
+        "colorIntersection": 0.9817,
+        "paletteMatch": 0.9944,
+        "detail": 0.994,
+        "detailRaw": 0.994,
+        "detailAdded": 0,
+        "bands": 1
+      },
+      "verdict": "match",
+      "inkBox": {
+        "comp": {
+          "x": 0,
+          "y": 0,
+          "w": 238,
+          "h": 22
+        },
+        "build": {
+          "x": 0,
+          "y": 0,
+          "w": 238,
+          "h": 22
+        }
+      }
+    },
+    {
+      "id": "plan-image",
+      "x": 0.879,
+      "y": 0.777,
+      "w": 0.093,
+      "h": 0.145,
+      "kind": "image",
+      "score": {
+        "overall": 1,
+        "structure": 1,
+        "color": 1,
+        "colorIntersection": 1,
+        "paletteMatch": 1,
+        "detail": 1,
+        "detailRaw": 1,
+        "detailAdded": 0,
+        "bands": 1
+      },
+      "verdict": "match",
+      "inkBox": {
+        "comp": {
+          "x": 0,
+          "y": 0,
+          "w": 127,
+          "h": 111
+        },
+        "build": {
+          "x": 0,
+          "y": 0,
+          "w": 127,
+          "h": 111
+        }
+      }
+    },
+    {
+      "id": "plan-caption",
+      "x": 0.879,
+      "y": 0.931,
+      "w": 0.1,
+      "h": 0.043,
+      "kind": "text",
+      "score": {
+        "overall": 0.9956,
+        "structure": 0.9992,
+        "color": 0.9887,
+        "colorIntersection": 0.9855,
+        "paletteMatch": 0.9904,
+        "detail": 0.9922,
+        "detailRaw": 0.9922,
+        "detailAdded": 0,
+        "bands": 1
+      },
+      "verdict": "match",
+      "inkBox": {
+        "comp": {
+          "x": 0,
+          "y": 10,
+          "w": 122,
+          "h": 19
+        },
+        "build": {
+          "x": 0,
+          "y": 10,
+          "w": 122,
+          "h": 19
+        }
+      }
+    }
+  ],
+  "files": {
+    "sideBySide": ".impeccable/review/diff/hero/side-by-side.png",
+    "heatmap": ".impeccable/review/diff/hero/heatmap.png",
+    "regionFiles": [
+      ".impeccable/review/diff/hero/regions/masthead.png",
+      ".impeccable/review/diff/hero/regions/brand.png",
+      ".impeccable/review/diff/hero/regions/buyer-nav.png",
+      ".impeccable/review/diff/hero/regions/header-showing.png",
+      ".impeccable/review/diff/hero/regions/exterior-photo.png",
+      ".impeccable/review/diff/hero/regions/photo-provenance.png",
+      ".impeccable/review/diff/hero/regions/panel-upper-ground.png",
+      ".impeccable/review/diff/hero/regions/location.png",
+      ".impeccable/review/diff/hero/regions/title-number.png",
+      ".impeccable/review/diff/hero/regions/title-name.png",
+      ".impeccable/review/diff/hero/regions/property-deck.png",
+      ".impeccable/review/diff/hero/regions/feature-frame.png",
+      ".impeccable/review/diff/hero/regions/feature-facts.png",
+      ".impeccable/review/diff/hero/regions/primary-showing.png",
+      ".impeccable/review/diff/hero/regions/showing-email.png",
+      ".impeccable/review/diff/hero/regions/planning-link.png",
+      ".impeccable/review/diff/hero/regions/evidence-rule.png",
+      ".impeccable/review/diff/hero/regions/room-photo.png",
+      ".impeccable/review/diff/hero/regions/room-caption.png",
+      ".impeccable/review/diff/hero/regions/plan-image.png",
+      ".impeccable/review/diff/hero/regions/plan-caption.png"
+    ]
+  }
+}

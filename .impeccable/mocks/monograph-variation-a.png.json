@@ -1,0 +1,8 @@
+{
+  "prompt": "Browser-rendered 1376x768 buyer-first property website composition in the selected Mountain House Monograph direction. Broad verified prior-listing photo images/photo-00-cover.jpg leads at left; warm-paper editorial panel at right carries 323 Colonial, Berkeley Springs, three verified features, prominent Request a showing action with realtor@stevenhay.com, and secondary Planning records link. Real images/photo-06.jpg and images/plan-A-4.png form a small evidence row. Preserve source photography exactly; do not invent or alter the house.",
+  "createdAt": "2026-09-02T19:57:00Z",
+  "tool": "browser-screenshot",
+  "model": "semantic-html-css",
+  "refs": ["images/photo-00-cover.jpg", "images/photo-06.jpg", "images/plan-A-4.png"],
+  "approved": true
+}
