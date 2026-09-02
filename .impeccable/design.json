@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-02T16:03:10Z",
+  "generatedAt": "2026-09-02T17:35:59Z",
   "title": "Design System: 323 Colonial",
   "extensions": {
     "colorMeta": {
@@ -67,8 +67,8 @@
       "quiet-stone-text": {
         "role": "neutral",
         "displayName": "Quiet Stone Text",
-        "canonical": "#7a736a",
-        "tonalRamp": ["oklch(15% 0.016 74.3)", "oklch(27% 0.016 74.3)", "oklch(39% 0.016 74.3)", "oklch(51% 0.016 74.3)", "oklch(63% 0.016 74.3)", "oklch(75% 0.016 74.3)", "oklch(87% 0.016 74.3)", "oklch(95% 0.016 74.3)"]
+        "canonical": "#6d675f",
+        "tonalRamp": ["oklch(15% 0.014 75.3)", "oklch(27% 0.014 75.3)", "oklch(39% 0.014 75.3)", "oklch(51% 0.014 75.3)", "oklch(63% 0.014 75.3)", "oklch(75% 0.014 75.3)", "oklch(87% 0.014 75.3)", "oklch(95% 0.014 75.3)"]
       },
       "alabaster": {
         "role": "tertiary",
@@ -109,8 +109,11 @@
     },
     "typographyMeta": {
       "display": { "displayName": "Display", "purpose": "Home hero title only." },
+      "display-compact": { "displayName": "Compact Display", "purpose": "Home hero title below 340px." },
       "headline": { "displayName": "Headline", "purpose": "Secondary-page mastheads." },
-      "title": { "displayName": "Title", "purpose": "Section headings above a sage rule." },
+      "headline-compact": { "displayName": "Compact Headline", "purpose": "Secondary-page mastheads on narrow screens." },
+      "title": { "displayName": "Title", "purpose": "Home-page section headings above a sage rule." },
+      "title-compact": { "displayName": "Compact Title", "purpose": "Dense secondary-page section headings." },
       "body": { "displayName": "Body", "purpose": "Property narrative and planning explanation." },
       "label": { "displayName": "Label", "purpose": "Navigation, captions, tables, quantities, and caveats." }
     },

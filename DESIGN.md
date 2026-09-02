@@ -12,7 +12,7 @@ colors:
   caption-moss: "#4c5a50"
   soft-sage-band: "#e7ede8"
   weathered-note: "#5c564c"
-  quiet-stone-text: "#7a736a"
+  quiet-stone-text: "#6d675f"
   alabaster: "#edeae1"
   quilt-blue: "#7a8b94"
   sea-glass: "#cbd5cc"
@@ -26,15 +26,33 @@ typography:
     fontWeight: 400
     lineHeight: "normal"
     letterSpacing: "1px"
+  display-compact:
+    fontFamily: "Georgia, serif"
+    fontSize: "36px"
+    fontWeight: 400
+    lineHeight: "normal"
+    letterSpacing: "1px"
   headline:
     fontFamily: "Georgia, serif"
     fontSize: "30px"
     fontWeight: 400
     lineHeight: "normal"
     letterSpacing: "0.5px"
+  headline-compact:
+    fontFamily: "Georgia, serif"
+    fontSize: "27px"
+    fontWeight: 400
+    lineHeight: "normal"
+    letterSpacing: "0.5px"
   title:
     fontFamily: "Georgia, serif"
     fontSize: "22px"
+    fontWeight: 400
+    lineHeight: "normal"
+    letterSpacing: "normal"
+  title-compact:
+    fontFamily: "Georgia, serif"
+    fontSize: "19px"
     fontWeight: 400
     lineHeight: "normal"
     letterSpacing: "normal"
@@ -149,7 +167,7 @@ These property colors are evidence and content, not a general-purpose rainbow fo
 - **Fieldstone Border** (#c8c3b8): Card, swatch, and table outlines.
 - **Caption Moss** (#4c5a50): Image-caption and secondary card text.
 - **Weathered Note** (#5c564c): Explanatory notes and caveats.
-- **Quiet Stone Text** (#7a736a): Footer copy and lowest-emphasis metadata.
+- **Quiet Stone Text** (#6d675f): Footer copy and lowest-emphasis metadata.
 
 ### Named Rules
 
