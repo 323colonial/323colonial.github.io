@@ -1,6 +1,8 @@
 """Rebuild buyer-facing crops from original CAD rasters; requires ImageMagick.
 
-Geometry is unchanged. Coordinates use the 2000px-wide source preview scale.
+Main-floor kitchen opening/refrigerator recess corrected from owner confirmation
+and IMG_0242 Medium.jpeg; other geometry retained, original CAD rasters untouched.
+Coordinates use the 2000px-wide source preview scale.
 Areas come only from printed dimensions, rounded to the nearest 10 sq ft;
 these are selected spaces, not measured living-area or whole-floor totals.
 """
@@ -25,7 +27,10 @@ def build(sheet, name, crop, labels, masks=()):
     x, y, width, height = crop
     args += ["-crop", f"{round(width*SCALE)}x{round(height*SCALE)}+{round(x*SCALE)}+{round(y*SCALE)}",
              "+repage", "-strip", "-set", "comment",
-             f"Marketing crop of plan-A-{sheet}.png; original sketch/photo-derived geometry retained; not field-measured. Areas rounded from source dimensions.",
+             f"Marketing crop of plan-A-{sheet}.png; "
+             + ("kitchen opening and refrigerator recess owner/photo-corrected; other geometry retained; "
+                if sheet == 4 else "original sketch/photo-derived geometry retained; ")
+             + "not field-measured. Areas rounded from source dimensions.",
              str(ROOT / f"images/plan-{name}-marketing.png")]
     subprocess.run(args, check=True)
 
@@ -37,7 +42,11 @@ if __name__ == "__main__":
         ((607, 698, 685, 713), "~20 sq ft"),  # 6 ft 7.5 in × 3 ft 6 in
         ((120, 789, 209, 804), "~360 sq ft"),  # 10 × 36
         ((515, 920, 611, 934), "~70 sq ft"),  # 12 × 6
-    ], masks=[(286, 399, 346, 413), (795, 399, 852, 413), (960, 399, 1018, 413)])
+        ((534, 576, 590, 591), "FRIDGE"),  # Kitchen recess beside actual pantry.
+    ], masks=[(286, 399, 346, 413), (795, 399, 852, 413), (960, 399, 1018, 413),
+              # No wall facing stairs; peninsula is cabinetry, not a partition.
+              # Stop before actual pantry wall at x603; preserve half-bath walls.
+              (437, 608, 602, 616), (531, 558, 535, 608), (533, 558, 590, 562)])
     build(5, "second", (145, 515, 1070, 425), [
         ((502, 594, 576, 608), "~90 sq ft"),  # 10 ft 9 in × 8
         ((751, 569, 819, 584), "~30 sq ft"),  # 6 ft 6 in × 4 ft 9 in
