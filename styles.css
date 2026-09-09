@@ -372,7 +372,7 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .reference-notice p { max-width: 66ch; margin: 0; color: var(--muted); font: 400 13px/1.6 var(--font-label); }
 .plan-heading { grid-template-columns: .55fr 1.45fr; }
 .plan-sheet { margin: 0; border: 1px solid #b7b5aa; background: var(--white); }
-.plan-sheet img { width: 100%; }
+.plan-sheet img { width: 100%; height: auto; }
 .growth-note { display: grid; grid-template-columns: .55fr 1.45fr; gap: 7vw; padding: 74px 56px; background: var(--paper-strong); border-top: 1px solid var(--rule); }
 .growth-note h2 { font-size: 34px; }
 .growth-note p { max-width: 64ch; margin: 0; }
