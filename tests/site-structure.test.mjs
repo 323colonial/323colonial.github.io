@@ -69,6 +69,39 @@ test('planning routes disclose reference and estimate status', () => {
   assert.match(html['sale-prep.html'], /budgeting (?:range|estimate)/i);
 });
 
+test('approved paint palette replaces old selections without relabeling old renders', () => {
+  const brochure = html['brochure.html'];
+  for (const [name, code, room] of [
+    ['Alabaster', '7008', 'hallway'],
+    ['Debonair', '9139', 'primary bedroom'],
+    ['Sea Salt', '6204', 'primary and upstairs baths'],
+    ['Oyster Bay', '6206', 'upstairs bedroom'],
+    ['Pewter Green', '6208', 'front/back and garage doors'],
+  ]) {
+    assert.ok(brochure.includes(`<strong>${name}</strong><span>SW ${code} · ${room}`), `${name} swatch assignment`);
+    assert.ok(html['sale-prep.html'].includes(`SW ${code} ${name}`), `${name} sale-prep record`);
+  }
+  for (const file of ['brochure.html', 'sale-prep.html', 'index.html']) {
+    assert.match(html[file], /Dark Walnut solid stain/);
+    assert.match(html[file], /manufacturer and product (?:are )?not selected/i);
+    assert.match(html[file], /older visualisations/i);
+    assert.doesNotMatch(html[file], /Acacia Haze/);
+  }
+  for (const image of ['master-r6-vancourtland-king.png', 'bed2-r7-pewter-king.png', 'upbath-6-pewter.png']) {
+    const figure = brochure.match(new RegExp(`<figure[^>]*>(?:(?!<\\/figure>)[\\s\\S])*images/${image.replaceAll('.', '\\.')}[\\s\\S]*?<\\/figure>`))?.[0];
+    assert.match(figure || '', /Older visualisation/);
+    assert.match(figure || '', /not (?:Debonair|Oyster Bay|Sea Salt)/);
+  }
+  const takeoff = brochure.slice(brochure.indexOf('id="takeoff-heading"'));
+  assert.doesNotMatch(takeoff, /Van Courtland|Revere Pewter|White Dove/);
+  assert.match(html['sale-prep.html'], /Historical budget/);
+  assert.match(html['sale-prep.html'], /excludes hallway and bedroom repainting/);
+  const css = readFileSync('styles.css', 'utf8');
+  assert.match(css, /\.swatch--debonair .swatch-color \{ background: #90a0a6; \}/);
+  assert.match(css, /\.swatch--oyster-bay .swatch-color \{ background: #aeb3a9; \}/);
+  assert.match(brochure, /Screen swatches are approximate/);
+});
+
 test('product record names prospective buyers as primary', () => {
   const product = readFileSync('PRODUCT.md', 'utf8');
   assert.match(product, /Prospective buyers? (?:are|is) primary/i);

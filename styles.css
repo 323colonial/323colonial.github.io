@@ -347,9 +347,9 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .swatch strong { font-size: 13px; }
 .swatch span { color: var(--muted); font-size: 11px; line-height: 1.35; }
 .swatch--alabaster .swatch-color { background: #edeae1; }
-.swatch--quilt-blue .swatch-color { background: #7a8b94; }
+.swatch--debonair .swatch-color { background: #90a0a6; }
 .swatch--sea-glass .swatch-color { background: #cbd5cc; }
-.swatch--fieldstone .swatch-color { background: #b0a99c; }
+.swatch--oyster-bay .swatch-color { background: #aeb3a9; }
 .swatch--pewter-green .swatch-color { background: #5b675c; }
 .swatch--walnut .swatch-color { background: #4a3428; }
 
