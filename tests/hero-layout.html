@@ -20,7 +20,7 @@ for (const [width, height] of [[981, 768], [1080, 768], [1180, 768], [1320, 768]
   const failures = [];
   const check = (ok, message) => { if (!ok) failures.push(message); };
   const rect = selector => doc.querySelector(selector).getBoundingClientRect();
-  const selectors = ['.location', '.hero-title', '.hero-deck', '.hero-features', '.hero-action', '.planning-link', '.hero-evidence'];
+  const selectors = ['.location', '.hero-title', '.hero-deck', '.hero-buyer-facts', '.hero-features', '.hero-action', '.planning-link', '.hero-evidence'];
   // Title spans are positioned independently in the approved wide composition.
   selectors.splice(1, 1, '.r-title-number', '.r-title-name');
   const boxes = selectors.map(rect);
@@ -42,6 +42,17 @@ for (const [width, height] of [[981, 768], [1080, 768], [1180, 768], [1320, 768]
     const box = link.getBoundingClientRect();
     check(link.contains(doc.elementFromPoint(box.x + box.width / 2, box.y + box.height / 2)), `${selector} centre misses link`);
   }
+  const showing = doc.querySelector('[aria-labelledby="gallery-showing-heading"]');
+  check(doc.querySelector('#outdoors').nextElementSibling === showing && showing.nextElementSibling.id === 'planned-visuals', 'showing must follow outdoors before planned work');
+  const showingLink = showing.querySelector('a');
+  showingLink.focus();
+  showingLink.scrollIntoView({block: 'center', behavior: 'instant'});
+  const target = showingLink.getBoundingClientRect();
+  check(doc.activeElement === showingLink && getComputedStyle(showingLink).outlineStyle !== 'none', 'showing focus invisible');
+  check(getComputedStyle(showingLink).outlineColor !== getComputedStyle(showing).backgroundColor, 'showing focus matches background');
+  check(target.height >= 44 && target.width >= 44, 'showing touch target too small');
+  check(showingLink.contains(doc.elementFromPoint(target.x + target.width / 2, target.y + target.height / 2)), 'showing centre misses link');
+  check(target.left >= 0 && target.right <= width, 'showing escapes viewport');
   check(doc.documentElement.scrollWidth <= width, 'horizontal overflow');
   if (width > 980) {
     check(Math.abs(rect('.hero-photo').width / width - .67) < .01, 'desktop split changed');

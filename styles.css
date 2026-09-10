@@ -156,6 +156,15 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
   font: 400 23px/1.24 var(--font-serif);
 }
 
+.hero-buyer-facts {
+  position: absolute;
+  top: 260px;
+  right: 38px;
+  left: 38px;
+  margin: 0;
+  font: 400 13px/1.4 var(--font-label);
+}
+
 .hero-features {
   position: absolute;
   top: 292px;
@@ -306,6 +315,7 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .showing-band h2 { font-size: clamp(34px, 3.5vw, 50px); }
 .showing-band p { max-width: 42ch; margin: 0; color: #d2dbd1; font-size: 17px; line-height: 1.5; }
 .showing-band .button { min-width: 240px; }
+.showing-band .button:focus-visible { outline-color: var(--paper); }
 .site-footer { display: grid; grid-template-columns: .7fr 1.3fr; gap: 8vw; padding: 40px 56px 54px; color: var(--muted); font: 400 11px/1.6 var(--font-label); }
 .site-footer p { margin: 0; }
 
@@ -441,6 +451,7 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
   .location,
   .hero-title span,
   .hero-deck,
+  .hero-buyer-facts,
   .hero-features,
   .hero-action,
   .planning-link,
@@ -448,6 +459,7 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
   .location { margin-bottom: 18px; }
   .hero-title span { line-height: .88; }
   .hero-deck { width: min(100%, 520px); margin-top: 18px; font-size: 22px; }
+  .hero-buyer-facts { margin-top: 12px; }
   .hero-features { margin-top: 32px; }
   .hero-action { display: inline-grid; margin-top: 28px; }
   .planning-link { display: inline-block; margin: 28px 0 0 18px; vertical-align: top; }

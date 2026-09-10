@@ -24,6 +24,21 @@ test('home keeps feature words separated when mobile line breaks hide', () => {
   assert.match(page, /Screened<br>\s+porch/);
 });
 
+test('home introduces bedroom and bath facts before features', () => {
+  const intro = html['index.html'].split('<aside class="hero-summary">')[1].split('<ul')[0];
+  assert.match(intro, /2 bedrooms · 2 full baths · 1 half bath/);
+});
+
+test('home repeats showing action after outdoors and before planned work', () => {
+  const page = html['index.html'];
+  const afterOutdoors = page.slice(page.indexOf('id="outdoors"')).split('</section>')[1];
+  assert.match(afterOutdoors, /<section class="showing-band" aria-labelledby="gallery-showing-heading">/);
+  assert.match(afterOutdoors, /<h2 id="gallery-showing-heading">See 323 Colonial in person<\/h2>/);
+  assert.match(afterOutdoors, /<a class="button button--paper" href="mailto:realtor@stevenhay\.com\?subject=323%20Colonial%20showing">Request a showing<\/a>/);
+  assert.ok(page.indexOf('id="planned-visuals"') > page.indexOf('id="gallery-showing-heading"'));
+  assert.match(page, /id="showing-heading"/); // Keep final contact too.
+});
+
 test('home leads with current photography and separates planned visuals', () => {
   const page = html['index.html'];
   const current = page.indexOf('id="current-condition"');
