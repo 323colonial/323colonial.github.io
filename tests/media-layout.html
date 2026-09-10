@@ -1,0 +1,56 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Media layout regression</title>
+<h1>Media layout regression</h1>
+<p>Serve repository root, then open tests/media-layout.html. Every result must PASS.</p>
+<pre id="results">Running…</pre>
+<iframe title="Route under test" style="border:0"></iframe>
+<script type="module">
+const frame = document.querySelector('iframe');
+const results = [];
+for (const route of ['index', 'brochure', 'floorplans', 'sale-prep']) {
+  for (const width of [1376, 1080, 390]) {
+    frame.style.width = `${width}px`;
+    frame.style.height = '844px';
+    await new Promise(resolve => {
+      frame.onload = resolve;
+      frame.src = `../${route}.html?media-test=${width}`;
+    });
+    const doc = frame.contentDocument;
+    const failures = [];
+    const check = (ok, message) => { if (!ok) failures.push(message); };
+    const inside = (a, b) => a.left >= b.left - 1 && a.right <= b.right + 1 && a.top >= b.top - 1 && a.bottom <= b.bottom + 1;
+    await doc.fonts.ready;
+    const figures = [...doc.querySelectorAll('.media-record, .record-lead figure, .plan-sheet')];
+    check(figures.length > 0, 'no media found');
+    for (const figure of figures) {
+      const img = figure.querySelector('img');
+      img.loading = 'eager';
+      await img.decode().catch(() => check(false, `image decode: ${img.src}`));
+    }
+    for (const figure of figures) {
+      const caption = figure.querySelector('figcaption');
+      const img = figure.querySelector('img');
+      const name = caption.textContent.trim();
+      const imageBox = img.getBoundingClientRect();
+      const captionBox = caption.getBoundingClientRect();
+      check(inside(captionBox, figure.getBoundingClientRect()), `${name}: caption escapes record`);
+      check(imageBox.bottom <= captionBox.top + 1, `${name}: image overlaps caption`);
+      const ratio = frame.contentWindow.getComputedStyle(img).aspectRatio;
+      const expected = ratio.startsWith('auto') ? img.naturalWidth / img.naturalHeight : ratio.split('/').map(Number).reduce((a, b) => a / b);
+      check(Math.abs(imageBox.width / imageBox.height - expected) < .02, `${name}: image proportions changed`);
+      for (const target of [...caption.children, ...(caption.children.length ? [] : [caption]), ...figure.querySelectorAll('.status-label')]) {
+        target.scrollIntoView({block: 'center', behavior: 'instant'});
+        const box = target.getBoundingClientRect();
+        check(target.contains(doc.elementFromPoint(box.x + box.width / 2, box.y + box.height / 2)), `${name}: caption/status obscured`);
+        if (target.matches('.status-label')) check(inside(box, img.getBoundingClientRect()), `${name}: status outside image`);
+      }
+    }
+    check(doc.documentElement.scrollWidth <= width, 'horizontal overflow');
+    results.push(`${route} ${width}px (${figures.length} records): ${failures.length ? 'FAIL — ' + failures.join('; ') : 'PASS'}`);
+  }
+}
+document.querySelector('#results').textContent = results.join('\n');
+window.scrollTo({top: 0, behavior: 'instant'});
+document.title = results.some(result => result.includes('FAIL')) ? 'FAIL: media layout' : 'PASS: media layout';
+</script>
