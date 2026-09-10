@@ -40,6 +40,16 @@ test('floor-plan route leads with current photography before drawings', () => {
   assert.ok(firstPlan > currentPhoto, 'reference drawings must follow current-property photography');
 });
 
+test('floor-plan introduction links directly to both named sheets', () => {
+  const plans = html['floorplans.html'];
+  const intro = plans.match(/<header class="record-intro record-intro--plans">([\s\S]*?)<\/header>/)?.[1] || '';
+  assert.match(intro, /<nav[^>]*aria-label="Floor-plan sheets"/);
+  for (const [id, label] of [['main-floor', 'Main floor'], ['second-floor', 'Second floor']]) {
+    assert.match(intro, new RegExp(`<a[^>]*href="#${id}"[^>]*>${label}</a>`));
+    assert.match(plans, new RegExp(`<section[^>]*id="${id}"[^>]*aria-labelledby="${id}-heading"`));
+  }
+});
+
 test('public floorplans use marketing crops and approximate areas', () => {
   const plans = html['floorplans.html'];
   assert.match(plans, /images\/plan-main-marketing\.png/);

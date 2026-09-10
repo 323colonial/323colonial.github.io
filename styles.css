@@ -589,6 +589,14 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
   .estimate-copy { gap: 18px; }
 }
 
+/* Compact photo-first entry to the floor-plan sheets. */
+.record-intro--plans { padding-block: 32px; gap: 24px; }
+.plan-shortcuts { display: flex; flex-wrap: wrap; gap: 0 24px; }
+.record-lead--plans { padding-bottom: 32px; }
+.record-lead--plans figure { max-width: 320px; }
+.page--floorplans .reference-notice { margin-block: 0; padding: 24px clamp(20px, 4vw, 56px); }
+.page--floorplans .plan-section { padding-block: 32px; scroll-margin-top: 16px; }
+
 @media print {
   .listing-header,
   .record-nav,
