@@ -436,16 +436,7 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
   .swatches { grid-template-columns: repeat(3, 1fr); }
 }
 
-@media (max-width: 980px) {
-  body { overflow-x: hidden; }
-  .listing-header { flex-wrap: wrap; height: auto; min-height: 0; padding: 18px 24px 16px; }
-  .property-mark { font-size: 34px; }
-  .listing-header > .button { min-height: 42px; flex-basis: auto; padding-inline: 16px; font-size: 10px; }
-  .buyer-nav { order: 3; width: 100%; justify-content: space-between; gap: 12px; padding-top: 15px; border-top: 1px solid #718174; }
-
-  .property-hero { height: auto; overflow: visible; }
-  .hero-photo { position: relative; width: 100%; height: min(74vw, 560px); border-right: 0; border-bottom: 1px solid var(--rule); }
-  .photo-provenance { right: 12px; bottom: 12px; max-width: calc(100% - 24px); font-size: 8px; }
+@media (max-width: 1360px) {
   .hero-summary { position: relative; inset: auto; padding: 44px 24px 30px; }
   .location,
   .hero-title span,
@@ -455,12 +446,31 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
   .planning-link,
   .hero-evidence { position: static; }
   .location { margin-bottom: 18px; }
-  .hero-title span { font-size: clamp(45px, 12vw, 68px); line-height: .88; }
+  .hero-title span { line-height: .88; }
   .hero-deck { width: min(100%, 520px); margin-top: 18px; font-size: 22px; }
   .hero-features { margin-top: 32px; }
   .hero-action { display: inline-grid; margin-top: 28px; }
   .planning-link { display: inline-block; margin: 28px 0 0 18px; vertical-align: top; }
   .hero-evidence { margin-top: 34px; padding-top: 22px; }
+}
+
+@media (min-width: 981px) and (max-width: 1360px) {
+  .property-hero { display: grid; grid-template-columns: 67% 33%; height: auto; min-height: 638px; }
+  .hero-summary { grid-column: 2; }
+  .planning-link { display: flex; margin: 22px 0 0; }
+}
+
+@media (max-width: 980px) {
+  .hero-title span { font-size: clamp(45px, 12vw, 68px); }
+  body { overflow-x: hidden; }
+  .listing-header { flex-wrap: wrap; height: auto; min-height: 0; padding: 18px 24px 16px; }
+  .property-mark { font-size: 34px; }
+  .listing-header > .button { min-height: 42px; flex-basis: auto; padding-inline: 16px; font-size: 10px; }
+  .buyer-nav { order: 3; width: 100%; justify-content: space-between; gap: 12px; padding-top: 15px; border-top: 1px solid #718174; }
+
+  .property-hero { height: auto; overflow: visible; }
+  .hero-photo { position: relative; width: 100%; height: min(74vw, 560px); border-right: 0; border-bottom: 1px solid var(--rule); }
+  .photo-provenance { right: 12px; bottom: 12px; max-width: calc(100% - 24px); font-size: 8px; }
 
   .editorial-section { padding: 72px 32px; }
   .section-overview,

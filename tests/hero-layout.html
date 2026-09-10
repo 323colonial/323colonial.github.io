@@ -1,0 +1,56 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Hero layout regression</title>
+<h1>Hero layout regression</h1>
+<p>Serve repository root, then open tests/hero-layout.html. Every result must PASS.</p>
+<pre id="results">Running…</pre>
+<iframe title="Homepage under test" style="border:0"></iframe>
+<script type="module">
+const frame = document.querySelector('iframe');
+const results = [];
+for (const [width, height] of [[981, 768], [1080, 768], [1180, 768], [1320, 768], [1321, 768], [1360, 768], [1361, 768], [1376, 768], [1600, 900], [390, 844]]) {
+  frame.style.width = `${width}px`;
+  frame.style.height = `${height}px`;
+  await new Promise(resolve => {
+    frame.onload = resolve;
+    frame.src = `../index.html?hero-test=${width}`;
+  });
+  const doc = frame.contentDocument;
+  await doc.fonts.ready;
+  const failures = [];
+  const check = (ok, message) => { if (!ok) failures.push(message); };
+  const rect = selector => doc.querySelector(selector).getBoundingClientRect();
+  const selectors = ['.location', '.hero-title', '.hero-deck', '.hero-features', '.hero-action', '.planning-link', '.hero-evidence'];
+  // Title spans are positioned independently in the approved wide composition.
+  selectors.splice(1, 1, '.r-title-number', '.r-title-name');
+  const boxes = selectors.map(rect);
+  const summary = rect('.hero-summary');
+  for (let i = 0; i < boxes.length; i++) {
+    const a = boxes[i];
+    check(a.width > 0 && a.height > 0, `${selectors[i]} has no area`);
+    check(a.left >= summary.left && a.right <= summary.right + 1 && a.top >= summary.top && a.bottom <= summary.bottom + 1, `${selectors[i]} escapes summary`);
+    for (let j = i + 1; j < boxes.length; j++) {
+      // Wide title intentionally uses tight, overlapping line boxes.
+      if (i === 1 && j === 2) continue;
+      const b = boxes[j];
+      check(Math.min(a.right, b.right) <= Math.max(a.left, b.left) + 1 || Math.min(a.bottom, b.bottom) <= Math.max(a.top, b.top) + 1, `${selectors[i]} overlaps ${selectors[j]}`);
+    }
+  }
+  for (const selector of ['.hero-action .button', '.planning-link']) {
+    const link = doc.querySelector(selector);
+    link.scrollIntoView({block: 'center', behavior: 'instant'});
+    const box = link.getBoundingClientRect();
+    check(link.contains(doc.elementFromPoint(box.x + box.width / 2, box.y + box.height / 2)), `${selector} centre misses link`);
+  }
+  check(doc.documentElement.scrollWidth <= width, 'horizontal overflow');
+  if (width > 980) {
+    check(Math.abs(rect('.hero-photo').width / width - .67) < .01, 'desktop split changed');
+  } else {
+    check(rect('.hero-photo').bottom <= rect('.hero-summary').top + 1, 'mobile photo must precede summary');
+  }
+  results.push(`${width}×${height}: ${failures.length ? 'FAIL — ' + failures.join('; ') : 'PASS'}`);
+}
+document.querySelector('#results').textContent = results.join('\n');
+window.scrollTo({top: 0, behavior: 'instant'});
+document.title = results.some(result => result.includes('FAIL')) ? 'FAIL: hero layout' : 'PASS: hero layout';
+</script>
