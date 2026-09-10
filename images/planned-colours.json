@@ -1,0 +1,84 @@
+{
+  "bead": "colonial-bz5",
+  "palette_source": [
+    "brochure.html",
+    "styles.css"
+  ],
+  "edits": [
+    {
+      "source": "images/approach-green-trees.png",
+      "source_sha256": "1865938f9fa55a66fcce36d2e4765e98262895551860b7e7f33ad4feedf6433b",
+      "target": "images/approach-pewter-green.webp",
+      "model": "gemini-3-pro-image-preview",
+      "prompt": "Edit the supplied existing planned-work visualisation, not a new scene. Change ONLY the specified painted surfaces. Preserve camera angle, exact architecture, openings, glazing, hardware, furniture, bedding, floors, wood trim, ceiling colour, trees, landscaping, lighting and shadows. No staging additions, removals, text, swatches, labels, or collage. Maintain the source aspect ratio and composition. Render the requested paint as an approximate material colour under existing light, retaining texture, highlights and shadows. Return one photorealistic edited image.\nRepaint BOTH large garage overhead doors, the small pedestrian door on the right garage gable, and the visible front entry door under the porch in Sherwin-Williams SW 6208 Pewter Green, muted grey forest green, sRGB reference #5b675c. Make all painted door panels consistently this green, including their muntins, but preserve glass panes and hardware. Do not paint siding, window frames, stone or porch railings.",
+      "sha256": "25385c12c61f7a2cc9fad8de408d129259d4c6a5962c6ddbbd569d2e8bd4e24a",
+      "status": "Planned-work visualisation; approximate screen colour, not current condition",
+      "encoding": "WebP quality 88"
+    },
+    {
+      "source": "images/bed2-r7-pewter-king.png",
+      "source_sha256": "108271d899366f962100370cced2719878d3b4c08594087631c7aa5f1d22ba59",
+      "target": "images/bedroom-oyster-bay.webp",
+      "model": "gemini-3-pro-image-preview",
+      "prompt": "Edit the supplied existing planned-work visualisation, not a new scene. Change ONLY the specified painted surfaces. Preserve camera angle, exact architecture, openings, glazing, hardware, furniture, bedding, floors, wood trim, ceiling colour, trees, landscaping, lighting and shadows. No staging additions, removals, text, swatches, labels, or collage. Maintain the source aspect ratio and composition. Render the requested paint as an approximate material colour under existing light, retaining texture, highlights and shadows. Return one photorealistic edited image.\nRepaint ALL vertical bedroom walls including knee walls and window/gable wall in Sherwin-Williams SW 6206 Oyster Bay, muted grey-green, sRGB reference #aeb3a9. Replace the beige Revere Pewter walls with visibly soft green-grey. Keep the sloping and flat ceiling surfaces their existing warm white. Preserve furnishings, wall pictures, mirror, wood trim, and carpet.",
+      "sha256": "1043407d3a2287f2541ff41c18af6d90bc2f813068cc62dbd5b8c3ff041784de",
+      "status": "Planned-work visualisation; approximate screen colour, not current condition",
+      "encoding": "WebP quality 88"
+    },
+    {
+      "source": "images/entry-green-door.png",
+      "source_sha256": "30c4dd63bf866a665b2a0c852323f69d113189e0ec8c209f78765e05b5b72665",
+      "target": "images/entry-pewter-green.webp",
+      "model": "gemini-3-pro-image-preview",
+      "prompt": "Edit the supplied existing planned-work visualisation, not a new scene. Change ONLY the specified painted surfaces. Preserve camera angle, exact architecture, openings, glazing, hardware, furniture, bedding, floors, wood trim, ceiling colour, trees, landscaping, lighting and shadows. No staging additions, removals, text, swatches, labels, or collage. Maintain the source aspect ratio and composition. Render the requested paint as an approximate material colour under existing light, retaining texture, highlights and shadows. Return one photorealistic edited image.\nRepaint the front entry door panels in Sherwin-Williams SW 6208 Pewter Green, muted grey forest green, sRGB reference #5b675c. Preserve the oval decorative glass, brass hardware, and all surrounding wood and stone.",
+      "sha256": "064e4ef145bd680c9d394d7d14b94db545811449e9be240906be3ebfd1cb047e",
+      "status": "Planned-work visualisation; approximate screen colour, not current condition",
+      "encoding": "WebP quality 88"
+    },
+    {
+      "source": "images/master-r6-vancourtland-king.png",
+      "source_sha256": "5b1bb912b7497215a2694b867213d2fbd9e68d7ccb945251fc3620c7a52b7734",
+      "target": "images/primary-debonair.webp",
+      "model": "gemini-3-pro-image-preview",
+      "prompt": "Edit the supplied existing planned-work visualisation, not a new scene. Change ONLY the specified painted surfaces. Preserve camera angle, exact architecture, openings, glazing, hardware, furniture, bedding, floors, wood trim, ceiling colour, trees, landscaping, lighting and shadows. No staging additions, removals, text, swatches, labels, or collage. Maintain the source aspect ratio and composition. Render the requested paint as an approximate material colour under existing light, retaining texture, highlights and shadows. Return one photorealistic edited image.\nRepaint ALL blue painted bedroom walls in Sherwin-Williams SW 9139 Debonair, muted grey blue, sRGB reference #90a0a6. Replace the old darker blue with this lighter subdued blue-grey, preserving warm lamplight. Do not recolour bedding, ceiling, wood or floor.",
+      "sha256": "5c719a8daf9a0ca782ef7e44241db26275713b643e012aa53d1f383ee77385ca",
+      "status": "Planned-work visualisation; approximate screen colour, not current condition",
+      "encoding": "WebP quality 88"
+    },
+    {
+      "source": "images/upbath-6-pewter.png",
+      "source_sha256": "176de6c5d61166026c006ea878e4d90223e6fe32a3ba0151236ee79682f98727",
+      "target": "images/upbath-sea-salt.webp",
+      "model": "gemini-3-pro-image-preview",
+      "prompt": "Edit the supplied existing planned-work visualisation, not a new scene. Change ONLY the specified painted surfaces. Preserve camera angle, exact architecture, openings, glazing, hardware, furniture, bedding, floors, wood trim, ceiling colour, trees, landscaping, lighting and shadows. No staging additions, removals, text, swatches, labels, or collage. Maintain the source aspect ratio and composition. Render the requested paint as an approximate material colour under existing light, retaining texture, highlights and shadows. Return one photorealistic edited image.\nRepaint ALL painted bathroom walls, including painted walls visible in the large mirror reflection and medicine cabinet mirror, in Sherwin-Williams SW 6204 Sea Salt, pale green-grey, sRGB reference #cbd5cc. Replace beige/taupe with a visibly pale green-grey. Preserve the white ceiling and white shower surround, wood door, mirrors, trim, cabinet, granite, taps, toilet, towels and floor. Reflections must agree with the painted walls.",
+      "sha256": "8d4a8751f78b4032d0edd0d8a842670b94a8b1cf4c8735fe342e384bd4b1554d",
+      "status": "Planned-work visualisation; approximate screen colour, not current condition",
+      "encoding": "WebP quality 88"
+    }
+  ],
+  "reused": [
+    "mainbath-2-seasalt.png",
+    "mainbath-orb.png",
+    "mainbath-brass.png",
+    "mainbath-champagne.png"
+  ],
+  "limitations": "AI-edited planning concepts, not colour-certified samples or current-condition photographs. Existing staging retained. Validate physical paint chips in daylight.",
+  "preserved_evidence_sha256": {
+    "images/photo-03.jpg": "dec803d2d17e44b55366434ca073c556cd23ecf2f7012636ed22e0dae52e3f63",
+    "images/photo-29.jpg": "6274a3f0a18c9e61f02ca9585f2f1ac9e0243d47d627acfc6ea291d50b668002",
+    "images/photo-14.jpg": "9ea52cbb6e026349b5121584cb32cb8d60e3280c9ba55d34e6f29361cd5880a7",
+    "images/photo-04.jpg": "7103c89d025c532b26c4ce9f49deeb60f76f9b576f4d0c53839e5ea0edb9f36f",
+    "images/photo-06.jpg": "d9b1dc9ab26214a6095c19ce520c4c039d7be5dfb9a049b1411c9067fc11966b",
+    "images/photo-43.jpg": "893669808b64183d947277cb25ffdc7204fc3eb05ec3291c0cb19298ae1aeeb9",
+    "images/photo-47.jpg": "631bdc3edeaa5f78324ea68608bd051cd94340e1e2c0be5cc080a15e80a538fa",
+    "images/photo-22.jpg": "b305b1524d44520abb50b7639d71dbc1882fa43b53ace9757ae2b35827853b44",
+    "images/photo-00-cover.jpg": "e5144f4d3e11721cf5a466db29eb7b7df0399e1e71ebacbe998db5762192c8da",
+    "images/photo-09.jpg": "4709c5b437e5fc011188a1ec666e71b18f63a6409b2557efd6aa4041fdb3eb56",
+    "images/photo-35.jpg": "1c13f5dcc2a0e4536ae4dc1969b23f51d8e46ea5fb37e6577ea95430a81593b0",
+    "images/photo-21.jpg": "0bd74d861a80b4ef92637386de10ecc030dbb49c81fb3a799425f11772601e2b",
+    "images/photo-32.jpg": "95557de65620cb4d6f44d1ec5b00a38dfcc60df3769db572094b6d3114a765b9",
+    "assets/plates/room-photo.png": "3aae69cf11f0f7b1dbd4cc329f626bb40eb10763cea62ded2e3171bdd92c2f86",
+    "assets/plates/plan-image.png": "d62cc57036aa0e05461de9378fcaee05838c618d14a2242eddedcdae7dfc48de",
+    "assets/plates/exterior-photo.png": "58156161adb604347015421dfc72b4e063cd899fac8aaf80d5c46b92492abbb8"
+  }
+}

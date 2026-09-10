@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import test from 'node:test';
 
 const pages = ['index.html', 'brochure.html', 'floorplans.html', 'sale-prep.html'];
@@ -79,7 +80,7 @@ test('planning routes disclose reference and estimate status', () => {
   assert.match(html['sale-prep.html'], /budgeting (?:range|estimate)/i);
 });
 
-test('approved paint palette replaces old selections without relabeling old renders', () => {
+test('approved paint palette uses matching planned images, not superseded renders', () => {
   const brochure = html['brochure.html'];
   for (const [name, code, room] of [
     ['Alabaster', '7008', 'hallway'],
@@ -97,10 +98,28 @@ test('approved paint palette replaces old selections without relabeling old rend
     assert.match(html[file], /older visualisations/i);
     assert.doesNotMatch(html[file], /Acacia Haze/);
   }
-  for (const image of ['master-r6-vancourtland-king.png', 'bed2-r7-pewter-king.png', 'upbath-6-pewter.png']) {
-    const figure = brochure.match(new RegExp(`<figure[^>]*>(?:(?!<\\/figure>)[\\s\\S])*images/${image.replaceAll('.', '\\.')}[\\s\\S]*?<\\/figure>`))?.[0];
-    assert.match(figure || '', /Older visualisation/);
-    assert.match(figure || '', /not (?:Debonair|Oyster Bay|Sea Salt)/);
+  for (const [image, colour] of [
+    ['approach-pewter-green.webp', 'SW 6208 Pewter Green'],
+    ['entry-pewter-green.webp', 'SW 6208 Pewter Green'],
+    ['primary-debonair.webp', 'SW 9139 Debonair'],
+    ['mainbath-2-seasalt.png', 'SW 6204 Sea Salt'],
+    ['bedroom-oyster-bay.webp', 'SW 6206 Oyster Bay'],
+    ['upbath-sea-salt.webp', 'SW 6204 Sea Salt'],
+  ]) {
+    const figure = brochure.split('<figure').find((part) => part.split('</figure>')[0].includes(`images/${image}`))?.split('</figure>')[0] || '';
+    assert.ok(figure.includes(colour), `${image}: approved colour caption missing`);
+    assert.match(figure, /Planned-work visualisation/);
+    assert.doesNotMatch(figure, /older palette|Older visualisation|not (?:Debonair|Oyster Bay|Sea Salt)/);
+    assert.ok(readFileSync(`images/${image}`).length > 10000, `${image}: image missing or empty`);
+  }
+  assert.match(html['sale-prep.html'], /images\/approach-pewter-green\.webp/);
+  for (const page of Object.values(html)) {
+    assert.doesNotMatch(page, /images\/(?:master-r6-vancourtland-king|bed2-r7-pewter-king|upbath-6-pewter|approach-green-trees|entry-green-door)\.png/);
+  }
+  for (const file of ['brochure.html', 'sale-prep.html']) {
+    const current = html[file].search(/images\/photo-/);
+    const planned = html[file].indexOf('class="status-label">Planned-work visualisation');
+    assert.ok(current >= 0 && planned > current, `${file}: real photography must precede planned images`);
   }
   const takeoff = brochure.slice(brochure.indexOf('id="takeoff-heading"'));
   assert.doesNotMatch(takeoff, /Van Courtland|Revere Pewter|White Dove/);
@@ -110,6 +129,22 @@ test('approved paint palette replaces old selections without relabeling old rend
   assert.match(css, /\.swatch--debonair .swatch-color \{ background: #90a0a6; \}/);
   assert.match(css, /\.swatch--oyster-bay .swatch-color \{ background: #aeb3a9; \}/);
   assert.match(brochure, /Screen swatches are approximate/);
+});
+
+test('colour edits retain source provenance and immutable property evidence', () => {
+  const record = JSON.parse(readFileSync('images/planned-colours.json', 'utf8'));
+  const digest = (path) => createHash('sha256').update(readFileSync(path)).digest('hex');
+  for (const edit of record.edits) {
+    assert.equal(digest(edit.source), edit.source_sha256, `${edit.source}: source changed`);
+    assert.equal(digest(edit.target), edit.sha256, `${edit.target}: inspected output changed`);
+    assert.notEqual(edit.sha256, edit.source_sha256, 'old render merely renamed');
+    const image = readFileSync(edit.target);
+    assert.equal(image.subarray(8, 12).toString(), 'WEBP');
+    assert.ok(image.length < 400000, `${edit.target}: exceeds 400 KB budget`);
+  }
+  for (const [path, hash] of Object.entries(record.preserved_evidence_sha256)) {
+    assert.equal(digest(path), hash, `${path}: property evidence changed`);
+  }
 });
 
 test('product record names prospective buyers as primary', () => {
