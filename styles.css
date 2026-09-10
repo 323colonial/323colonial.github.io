@@ -357,7 +357,7 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .notice { display: grid; grid-template-columns: 1fr 1fr; gap: 34px; margin-bottom: 32px; padding: 24px; border: 1px solid var(--rule); }
 .notice p { margin: 0; color: var(--muted); font: 400 13px/1.55 var(--font-label); }
 .table-wrap { max-width: 100%; overflow-x: auto; }
-.data-table { width: 100%; border-collapse: collapse; background: var(--white); font: 400 13px/1.35 var(--font-label); font-variant-numeric: tabular-nums; }
+.data-table { width: 100%; border-collapse: collapse; background: var(--white); color: var(--forest-ink); font: 400 13px/1.35 var(--font-label); font-variant-numeric: tabular-nums; }
 .data-table th,
 .data-table td { padding: 12px 14px; border: 1px solid #b7b5aa; text-align: left; vertical-align: top; }
 .data-table th { background: #e1e7e0; color: var(--forest-ink); font-weight: 700; }

@@ -1,0 +1,65 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Table contrast regression</title>
+<h1>Table contrast regression</h1>
+<p>Serve repository root, then open tests/table-contrast.html. Every result must PASS.</p>
+<pre id="results">Running…</pre>
+<iframe title="Route under test" style="border:0"></iframe>
+<script type="module">
+const frame = document.querySelector('iframe');
+const results = [];
+const luminance = color => color.match(/[\d.]+/g).slice(0, 3).map(Number)
+  .map(value => value / 255).map(value => value <= .04045 ? value / 12.92 : ((value + .055) / 1.055) ** 2.4)
+  .reduce((sum, value, index) => sum + value * [.2126, .7152, .0722][index], 0);
+const contrast = (a, b) => (Math.max(luminance(a), luminance(b)) + .05) / (Math.min(luminance(a), luminance(b)) + .05);
+for (const route of ['sale-prep', 'brochure']) {
+  for (const width of [1376, 1080, 390]) {
+    frame.style.width = `${width}px`;
+    frame.style.height = '844px';
+    await new Promise(resolve => {
+      frame.onload = resolve;
+      frame.src = `../${route}.html?contrast-test=${width}`;
+    });
+    const doc = frame.contentDocument;
+    const style = element => frame.contentWindow.getComputedStyle(element);
+    // Current table surfaces are solid or transparent; reject partial alpha rather than guess.
+    const background = element => {
+      for (; element; element = element.parentElement) {
+        const color = style(element).backgroundColor;
+        if (color === 'rgba(0, 0, 0, 0)') continue;
+        if (!color.startsWith('rgb(')) throw new Error(`Unsupported background: ${color}`);
+        return color;
+      }
+      throw new Error('Missing opaque background');
+    };
+    const failures = [];
+    const check = (ok, message) => { if (!ok) failures.push(message); };
+    const tables = [...doc.querySelectorAll('.data-table')];
+    check(tables.length === (route === 'sale-prep' ? 5 : 1), 'table count');
+    let minimum = Infinity;
+    for (const table of tables) {
+      for (const cell of table.querySelectorAll('td, th')) {
+        const bg = background(cell);
+        const ratio = contrast(style(cell).color, bg);
+        minimum = Math.min(minimum, ratio);
+        check(ratio >= 4.5, `${cell.textContent.trim()}: ${ratio.toFixed(2)}:1`);
+        check(style(cell).color === 'rgb(23, 44, 36)', 'table forest ink');
+        check(bg === (cell.matches('th') ? 'rgb(225, 231, 224)' : 'rgb(255, 255, 255)'), 'table surface');
+      }
+    }
+    if (route === 'sale-prep') {
+      check(doc.querySelectorAll('.total-section tbody td').length === 12, 'historical body cell count');
+      const section = doc.querySelector('.total-section');
+      check(background(section) === 'rgb(24, 56, 40)', 'forest section background');
+      check(style(section.querySelector('h2')).color === 'rgb(247, 246, 235)', 'forest heading');
+      for (const note of section.querySelectorAll('p')) {
+        check(contrast(style(note).color, background(note)) >= 4.5, 'forest caveat contrast');
+      }
+    }
+    check(doc.documentElement.scrollWidth <= width, 'horizontal overflow');
+    results.push(`${route} ${width}px (${tables.length} tables, minimum ${minimum.toFixed(2)}:1): ${failures.length ? 'FAIL — ' + failures.join('; ') : 'PASS'}`);
+  }
+}
+document.querySelector('#results').textContent = results.join('\n');
+document.title = results.some(result => result.includes('FAIL')) ? 'FAIL: table contrast' : 'PASS: table contrast';
+</script>
