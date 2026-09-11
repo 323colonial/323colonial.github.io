@@ -42,8 +42,8 @@ for (const [width, height] of [[981, 768], [1080, 768], [1180, 768], [1320, 768]
     const box = link.getBoundingClientRect();
     check(link.contains(doc.elementFromPoint(box.x + box.width / 2, box.y + box.height / 2)), `${selector} centre misses link`);
   }
-  const showing = doc.querySelector('[aria-labelledby="gallery-showing-heading"]');
-  check(doc.querySelector('#outdoors').nextElementSibling === showing && showing.nextElementSibling.id === 'planned-visuals', 'showing must follow outdoors before planned work');
+  const showing = doc.querySelector('[aria-labelledby="showing-heading"]');
+  check(doc.querySelector('#outdoors').nextElementSibling === showing, 'showing must follow outdoors');
   const showingLink = showing.querySelector('a');
   showingLink.focus();
   showingLink.scrollIntoView({block: 'center', behavior: 'instant'});

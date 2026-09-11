@@ -2,7 +2,7 @@ from pathlib import Path
 import re
 
 
-PAGES = ("index.html", "brochure.html", "floorplans.html", "sale-prep.html")
+PAGES = ("index.html", "gallery.html", "brochure.html", "floorplans.html", "sale-prep.html")
 REQUIRED_TOKENS = (
     "--forest",
     "--forest-ink",

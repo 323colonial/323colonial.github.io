@@ -68,7 +68,8 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 }
 
 .buyer-nav a { text-decoration: none; }
-.buyer-nav a:hover { text-decoration: underline; }
+.buyer-nav a:hover,
+.buyer-nav a[aria-current="page"] { text-decoration: underline; }
 
 .button {
   display: inline-flex;

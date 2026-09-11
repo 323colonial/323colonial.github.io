@@ -1,12 +1,14 @@
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import test from 'node:test';
 
-const pages = ['index.html', 'brochure.html', 'floorplans.html', 'sale-prep.html'];
-const html = Object.fromEntries(pages.map((file) => [file, readFileSync(file, 'utf8')]));
+const publicPages = ['index.html', 'gallery.html', 'floorplans.html'];
+const ownerPages = ['brochure.html', 'sale-prep.html'];
+const pages = [...publicPages, ...ownerPages];
+const html = Object.fromEntries(pages.map((file) => [file, existsSync(file) ? readFileSync(file, 'utf8') : '']));
 
-for (const file of pages) {
+for (const file of publicPages) {
   test(`${file} exposes buyer navigation and showing contact`, () => {
     assert.match(html[file], /aria-label="Buyer navigation"/);
     assert.match(html[file], /mailto:realtor@stevenhay\.com/);
@@ -29,23 +31,50 @@ test('home introduces bedroom and bath facts before features', () => {
   assert.match(intro, /2 bedrooms · 2 full baths · 1 half bath/);
 });
 
-test('home repeats showing action after outdoors and before planned work', () => {
-  const page = html['index.html'];
-  const afterOutdoors = page.slice(page.indexOf('id="outdoors"')).split('</section>')[1];
-  assert.match(afterOutdoors, /<section class="showing-band" aria-labelledby="gallery-showing-heading">/);
-  assert.match(afterOutdoors, /<h2 id="gallery-showing-heading">See 323 Colonial in person<\/h2>/);
-  assert.match(afterOutdoors, /<a class="button button--paper" href="mailto:realtor@stevenhay\.com\?subject=323%20Colonial%20showing">Request a showing<\/a>/);
-  assert.ok(page.indexOf('id="planned-visuals"') > page.indexOf('id="gallery-showing-heading"'));
-  assert.match(page, /id="showing-heading"/); // Keep final contact too.
+test('public sitemap contains three destinations, not owner records', () => {
+  for (const file of publicPages) {
+    const nav = html[file].match(/<nav[^>]*aria-label="Buyer navigation"[^>]*>([\s\S]*?)<\/nav>/)?.[1] || '';
+    const links = [...nav.matchAll(/<a\b([^>]*)>([^<]+)<\/a>/g)];
+    assert.deepEqual(links.map((link) => link[2]), ['The house', 'Gallery', 'Floor plans'], file);
+    assert.deepEqual(links.map((link) => link[1].match(/href="([^"]+)"/)[1]), publicPages, file);
+    assert.equal(links.filter((link) => link[1].includes('aria-current="page"')).length, 1, file);
+    assert.match(links[publicPages.indexOf(file)][1], /aria-current="page"/);
+    assert.doesNotMatch(html[file], /brochure\.html|sale-prep\.html|Planning records|Working notes|Paint takeoff|Budgeting|product (?:TBD|not selected)|Planned-work visualisation/i);
+  }
 });
 
-test('home leads with current photography and separates planned visuals', () => {
+test('home describes finished rooms and outdoor living without adding bedrooms', () => {
   const page = html['index.html'];
-  const current = page.indexOf('id="current-condition"');
-  const planned = page.indexOf('id="planned-visuals"');
-  assert.ok(current >= 0, 'current-condition section missing');
-  assert.ok(planned > current, 'planned visuals must follow current condition');
-  assert.match(page.slice(planned), /Planned-work visualisation/i);
+  for (const fact of [/red oak/i, /granite/i, /Venetian Bronze/, /antiqued.brass/i, /Debonair/, /Oyster Bay/, /Sea Salt/, /Dark Walnut/, /hot tub[\s\S]*open dark sky/i, /unfinished walk-out basement/i]) assert.match(page, fact);
+  assert.doesNotMatch(page.replace(/<[^>]*>/g, ''), /will be|planned|sale-prep|honestly shown|overflow sleeping/i);
+  const afterOutdoors = page.slice(page.indexOf('id="outdoors"')).split('</section>')[1];
+  assert.match(afterOutdoors, /class="showing-band"/);
+  assert.match(afterOutdoors, />Request a showing<\/a>/);
+});
+
+test('public photographs retain provenance and every edited image has attached disclosure', () => {
+  for (const file of publicPages) {
+    assert.match(html[file], /Prior-listing photo/i);
+    assert.match(html[file], /Bright MLS/);
+    for (const figure of html[file].matchAll(/<figure\b[\s\S]*?<\/figure>/g)) {
+      const src = figure[0].match(/<img[^>]*src="([^"]+)"/)?.[1];
+      if (!src || /(?:photo-|plan-)/.test(src) || src === 'assets/plates/room-photo.png') continue;
+      assert.match(figure[0], /<span class="status-label">Digitally simulated image<\/span>/, `${file}: ${src}`);
+    }
+  }
+  assert.match(html['index.html'], /assets\/plates\/exterior-photo\.png/);
+  assert.match(html['gallery.html'], /images\/primary-debonair\.webp/);
+  assert.match(html['gallery.html'], /images\/deck-hottub-v3\.png/);
+  assert.match(html['gallery.html'], /colours and staging are approximate/i);
+});
+
+test('owner records remain separate and preserve purchasing caveats', () => {
+  for (const file of ownerPages) {
+    assert.match(html[file], /<meta name="robots" content="noindex, nofollow">/);
+    assert.match(html[file], /aria-label="Owner records"/);
+    assert.doesNotMatch(html[file], /aria-label="Buyer navigation"/);
+    assert.match(html[file], /manufacturer and product (?:are )?not selected/i);
+  }
 });
 
 test('floor-plan route leads with current photography before drawings', () => {
@@ -107,7 +136,7 @@ test('approved paint palette uses matching planned images, not superseded render
     assert.ok(brochure.includes(`<strong>${name}</strong><span>SW ${code} · ${room}`), `${name} swatch assignment`);
     assert.ok(html['sale-prep.html'].includes(`SW ${code} ${name}`), `${name} sale-prep record`);
   }
-  for (const file of ['brochure.html', 'sale-prep.html', 'index.html']) {
+  for (const file of ownerPages) {
     assert.match(html[file], /Dark Walnut solid stain/);
     assert.match(html[file], /manufacturer and product (?:are )?not selected/i);
     assert.match(html[file], /older visualisations/i);

@@ -1,6 +1,6 @@
 ---
 name: 323 Colonial
-description: Buyer-first property monograph led by verified photography and plainly labeled planning records.
+description: Buyer-first property monograph with three public destinations and clearly labeled simulated imagery.
 direction: Mountain House Monograph
 colors:
   forest: "#183828"
@@ -21,13 +21,13 @@ shape: "Square corners, hairline rules, no shadows"
 
 ## Direction
 
-**Mountain House Monograph** presents 323 Colonial as a specific house with evidence, not a generic lifestyle concept. Prospective buyers see actual-property photography first, concise facts second, then planning records. Warm paper and forest ink give the site a restrained book-like character; square records and compact labels make claims easy to verify.
+**Mountain House Monograph** presents 323 Colonial as a specific house with evidence, not a generic lifestyle concept. Prospective buyers see actual-property photography first, followed by rooms, finishes, outdoor living and reference floor plans. Owner records sit outside public navigation. Warm paper and forest ink give the site a restrained book-like character; square records and compact labels make claims easy to verify.
 
 ## Evidence hierarchy
 
-1. **Current property:** prior-listing photography of actual 323 Colonial leads every route. Retain and disclose the Bright MLS watermark.
-2. **Property facts:** dates, room relationships, materials, and current-condition notes follow photography.
-3. **Planned work:** AI-edited imagery is secondary and always labeled **Planned-work visualisation**.
+1. **House photography:** prior-listing photography of actual 323 Colonial leads public routes. Retain and disclose the Bright MLS watermark and note that earlier finishes may be shown.
+2. **Property facts:** room relationships, materials and approved finished-house descriptions follow photography. Publication requires owner/realtor confirmation that advertised upgrades are complete; see `PRODUCT.md`.
+3. **Digital simulation:** public AI-edited imagery is always labeled **Digitally simulated image**, with approximate colours/staging disclosed. Owner records retain their planned-work labels and caveats.
 4. **Reference material:** floor and basement drawings are orientation, planning, and pricing aids only. State that they are not field-measured, construction, or permit documents.
 5. **Estimates:** use budgeting ranges and preserve estimate-not-quote caveats.
 
@@ -63,24 +63,24 @@ Serif tells the property story. Sans-serif certifies facts and status.
 At the approved 1376×768 viewport, the masthead is a narrow forest band. Hero below uses a 67/33 split:
 
 - left: verified exterior photograph with provenance label;
-- right: location, stacked `323 Colonial` title, short deck, three features, showing CTA, secondary planning link, real-room evidence, and reference-plan evidence.
+- right: location, stacked `323 Colonial` title, short deck, three features, showing CTA, gallery link, house photograph, and reference-plan preview.
 
 At 980px and below, masthead wraps and hero becomes a vertical document. Photography remains first. At 390px, every section uses one readable column except paired evidence thumbnails.
 
 ### Editorial sections
 
-Sections alternate warm-paper and forest fields. Headings align with short explanatory text; photography uses an asymmetrical ledger on desktop and single-column records on mobile. Planning links form a quiet bordered index rather than competing with showing actions.
+Sections alternate warm-paper and forest fields. Headings align with short explanatory text; photography uses an asymmetrical ledger on desktop and single-column records on mobile. Gallery and floor-plan links extend the buyer journey without competing with showing actions.
 
-### Planning routes
+### Public and owner routes
 
-Planning pages share buyer masthead first and compact planning navigation second. Introductory current-property photography precedes plans, visualisations, or estimates. Tables reflow to viewport width on mobile rather than creating nested horizontal scrolling.
+The house, Gallery and Floor plans share one buyer masthead, an active-page indicator and a showing action. Gallery groups living spaces, bedrooms/baths, outdoors and seasonal photography. Floor plans retain direct sheet anchors and reference limits. Owner colour/budget pages retain their URLs but use separate owner navigation and noindex metadata, with no inbound links from public pages. Tables reflow to viewport width on mobile rather than creating nested horizontal scrolling.
 
 ## Components
 
 ### Buyer masthead
 
 - Property mark at left.
-- Primary buyer navigation: The house, Rooms, Outdoors, Floor plans.
+- Primary buyer navigation: The house, Gallery, Floor plans.
 - Paper showing control at right.
 - Mobile interactive targets are at least 44px high.
 
@@ -90,7 +90,7 @@ Planning pages share buyer masthead first and compact planning navigation second
 
 ### Media records
 
-Photography and visualisations use the same square-edged record frame but different status language. Captions stay attached to images. Planned-work status must be visible on the image and repeated in nearby copy when ambiguity remains.
+Photography and simulations use the same square-edged record frame but different status language. Captions stay attached to images. Public edited images carry a visible **Digitally simulated image** overlay, never a claim of unedited photographic evidence. Prior-listing photos retain provenance; footer and gallery introduction explain earlier finishes and approximate simulation/staging.
 
 ### Plans
 
@@ -109,14 +109,14 @@ Every route starts with a keyboard-visible skip link to main content. Links and 
 ### Do
 
 - Lead with photographs of actual 323 Colonial.
-- Name image provenance and current/planned/reference status.
+- Name image provenance and simulated/reference status.
 - Keep buyer navigation and showing actions visually primary.
 - Use factual room, material, and outdoor descriptions.
 - Repeat limitations where plans or estimates could be mistaken for promises.
 
 ### Do not
 
-- Present AI imagery as existing condition.
+- Present AI imagery as unedited photographic evidence or publish finished-house copy before upgrade confirmation.
 - Present rough drawings as measurements or construction documents.
 - Promote planning records above current-property evidence.
 - Use inflated luxury-listing language or unsupported claims.
