@@ -45,7 +45,7 @@ test('public sitemap contains three destinations, not owner records', () => {
 
 test('home describes finished rooms and outdoor living without adding bedrooms', () => {
   const page = html['index.html'];
-  for (const fact of [/red oak/i, /granite/i, /Venetian Bronze/, /antiqued.brass/i, /Debonair/, /Oyster Bay/, /Sea Salt/, /Dark Walnut/, /hot tub[\s\S]*open dark sky/i, /unfinished walk-out basement/i]) assert.match(page, fact);
+  for (const fact of [/red oak/i, /granite/i, /Venetian Bronze/, /antiqued.brass/i, /Debonair/, /Oyster Bay/, /Sea Salt/, /Traditional Mahogany/, /hot tub[\s\S]*open dark sky/i, /unfinished walk-out basement/i]) assert.match(page, fact);
   assert.doesNotMatch(page.replace(/<[^>]*>/g, ''), /will be|planned|sale-prep|honestly shown|overflow sleeping/i);
   const afterOutdoors = page.slice(page.indexOf('id="outdoors"')).split('</section>')[1];
   assert.match(afterOutdoors, /class="showing-band"/);
@@ -67,7 +67,7 @@ test('home restores paint swatches in a compact room detail', () => {
     [2, 'Sea Salt', 'SW 6204', 'Both full baths'],
     [3, 'Oyster Bay', 'SW 6206', 'Upstairs bedroom and walk-in'],
     [4, 'Pewter Green', 'SW 6208', 'Front, back and garage doors'],
-    [5, 'Dark Walnut', 'Solid stain', 'Deck floor'],
+    [5, 'Traditional Mahogany', 'SW 3080', 'Deck floor'],
   ]) {
     for (const text of [name, code, room]) assert.ok(swatches[index][1].includes(text), text);
     assert.match(swatches[index][1], /class="swatch-color" aria-hidden="true"/);
@@ -95,7 +95,7 @@ test('owner records remain separate and preserve purchasing caveats', () => {
     assert.match(html[file], /<meta name="robots" content="noindex, nofollow">/);
     assert.match(html[file], /aria-label="Owner records"/);
     assert.doesNotMatch(html[file], /aria-label="Buyer navigation"/);
-    assert.match(html[file], /manufacturer and product (?:are )?not selected/i);
+    assert.match(html[file], /Confirm product compatibility/i);
   }
 });
 
@@ -159,8 +159,8 @@ test('approved paint palette uses matching planned images, not superseded render
     assert.ok(html['sale-prep.html'].includes(`SW ${code} ${name}`), `${name} sale-prep record`);
   }
   for (const file of ownerPages) {
-    assert.match(html[file], /Dark Walnut solid stain/);
-    assert.match(html[file], /manufacturer and product (?:are )?not selected/i);
+    assert.match(html[file], /Traditional Mahogany/);
+    assert.match(html[file], /SuperDeck Exterior Waterborne Solid Color Deck Stain/);
     assert.match(html[file], /older visualisations/i);
     assert.doesNotMatch(html[file], /Acacia Haze/);
   }
@@ -187,14 +187,52 @@ test('approved paint palette uses matching planned images, not superseded render
     const planned = html[file].indexOf('class="status-label">Planned-work visualisation');
     assert.ok(current >= 0 && planned > current, `${file}: real photography must precede planned images`);
   }
-  const takeoff = brochure.slice(brochure.indexOf('id="takeoff-heading"'));
-  assert.doesNotMatch(takeoff, /Van Courtland|Revere Pewter|White Dove/);
+  const finishes = brochure.slice(brochure.indexOf('id="takeoff-heading"'));
+  assert.match(finishes, /Paint &amp; finish specification/);
+  assert.doesNotMatch(finishes, /Van Courtland|Revere Pewter|White Dove/);
   assert.match(html['sale-prep.html'], /Historical budget/);
   assert.match(html['sale-prep.html'], /excludes hallway and bedroom repainting/);
   const css = readFileSync('styles.css', 'utf8');
   assert.match(css, /\.swatch--debonair .swatch-color \{ background: #90a0a6; \}/);
   assert.match(css, /\.swatch--oyster-bay .swatch-color \{ background: #aeb3a9; \}/);
   assert.match(brochure, /Screen swatches are approximate/);
+});
+
+test('finish schedule records approved products without obsolete paint quantities', () => {
+  const product = readFileSync('PRODUCT.md', 'utf8');
+  const publicSwatches = html['index.html'].match(/<div class="swatch swatch--[^\"]+">[\s\S]*?<\/p><\/div>/g);
+  const rows = [...html['brochure.html'].matchAll(/<tr>[\s\S]*?<\/tr>/g)].map(([row]) => row);
+  for (const [name, code, surface, finish] of [
+    ['Alabaster', '7008', /hallway/i, 'Emerald Interior Matte'],
+    ['Debonair', '9139', /primary bedroom/i, 'Emerald Interior Matte'],
+    ['Sea Salt', '6204', /both full baths/i, 'Duration Home Satin'],
+    ['Oyster Bay', '6206', /upstairs bedroom/i, 'Emerald Interior Matte'],
+    ['Pewter Green', '6208', /front, back and garage doors/i, 'Emerald Urethane Trim Enamel Satin'],
+    ['Traditional Mahogany', '3080', /deck floor/i, 'SuperDeck Exterior Waterborne Solid Color Deck Stain'],
+  ]) {
+    const row = rows.find((row) => row.includes(name)) || '';
+    assert.match(row, surface, `${name}: owner surface`);
+    for (const text of [name, `SW ${code}`, finish]) {
+      assert.ok(row.includes(text), `${name}: owner ${text}`);
+      assert.ok(publicSwatches.find((swatch) => swatch.includes(name))?.includes(text), `${name}: public ${text}`);
+      assert.ok(product.split('\n').find((line) => line.startsWith('|') && line.includes(name))?.includes(text), `${name}: durable ${text}`);
+    }
+  }
+  for (const content of [product, html['brochure.html']]) {
+    assert.match(content, /Sherwin-Williams/);
+    assert.match(content, /814 S Loudoun St, Winchester, VA 22601-4597/);
+    assert.match(content, /Confirm product compatibility/);
+    assert.doesNotMatch(content, /\bgal(?:lon)?s?\b|\bqt\b|Paint takeoff/i);
+  }
+  const painting = html['sale-prep.html'].split('aria-labelledby="painting-heading"')[1].split('</section>')[0];
+  assert.doesNotMatch(painting, /\bgal(?:lon)?s?\b|\bqt\b|product (?:TBD|not selected)/i);
+  for (const file of ['index.html', 'gallery.html', ...ownerPages]) {
+    for (const [figure] of html[file].matchAll(/<figure\b[\s\S]*?<\/figure>/g)) {
+      if (/images\/(?:deck-3-walnut|deck-hottub-v3)\.png/.test(figure)) {
+        assert.match(figure, /Earlier walnut concept; not an exact Traditional Mahogany match/, `${file}: deck disclosure`);
+      }
+    }
+  }
 });
 
 test('colour edits retain source provenance and immutable property evidence', () => {

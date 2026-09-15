@@ -37,6 +37,26 @@ Static site uses GitHub Pages. This rewrite is local, not authorization to push 
 
 Name is 323 Colonial. Voice is specific, factual, and restrained. Avoid listing hype. "Quilt & Stone" names confirmed colour scheme. Existing greens, warm white, stone grey, oak, and fieldstone come from house and its setting, but visual implementation belongs in DESIGN.md rather than this record.
 
+## Approved finish specification · 15 September 2026
+
+Sherwin-Williams · 814 S Loudoun St, Winchester, VA 22601-4597.
+
+| Surface | Colour | Product and sheen |
+| --- | --- | --- |
+| Hallway | SW 7008 Alabaster | Emerald Interior Matte |
+| Primary bedroom | SW 9139 Debonair | Emerald Interior Matte |
+| Upstairs bedroom and walk-in | SW 6206 Oyster Bay | Emerald Interior Matte |
+| Both full baths | SW 6204 Sea Salt | Duration Home Satin |
+| Front, back and garage doors | SW 6208 Pewter Green | Emerald Urethane Trim Enamel Satin |
+| Deck floor | SW 3080 Traditional Mahogany | SuperDeck Exterior Waterborne Solid Color Deck Stain |
+
+- Matte supersedes the earlier flat preference. Door enamel and satin sheen carry forward the earlier discussion; the latest list confirms the door colour only.
+- Omit paint purchase quantities. Great-room and loft whites stay for sale; half bath remains as-is. Kitchen Alabaster and porch finish remain earlier scope, not additions to this purchase specification. Basement work remains separate.
+- Owner reports mostly sound, faded deck coating with little peeling. Confirm product compatibility, cleaning, prep, primer and tint base with the Winchester store; no base or formula is verified here.
+- [Traditional Mahogany SW 3080](https://www.sherwin-williams.com/homeowners/color/find-and-explore-colors/stain-colors/SW3080-traditional-mahogany) replaces Dark Walnut for the deck. The approximate CSS swatch references the [manufacturer’s screen swatch](https://sherwin.scene7.com/is/image/sw/db3080tradmahogany_s); verify physical chips in daylight.
+- Existing walnut deck and porch simulations are earlier concepts, not exact Traditional Mahogany matches. Preserve assets and provenance; disclose that mismatch beside deck images rather than relabeling their pixels as newly recoloured.
+- `brochure.html` holds the owner purchase specification; `index.html#paint-colors` holds the buyer finish schedule. Historical sale-prep prices remain estimates, not current product quotes. The pre-publication completion and photography gate still applies.
+
 ## Evidence on hand
 
 - `images/photo-*.jpg`: prior-listing photographs. MLS watermark remains, so public listing needs new photography.

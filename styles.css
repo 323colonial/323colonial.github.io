@@ -369,7 +369,8 @@ summary:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .swatch--sea-glass .swatch-color { background: #cbd5cc; }
 .swatch--oyster-bay .swatch-color { background: #aeb3a9; }
 .swatch--pewter-green .swatch-color { background: #5b675c; }
-.swatch--walnut .swatch-color { background: #4a3428; }
+/* Approximate screen sample from Sherwin-Williams db3080tradmahogany_s; verify a physical chip. */
+.swatch--mahogany .swatch-color { background: #49372d; }
 
 .planned-record { background: var(--paper-strong); }
 .notice { display: grid; grid-template-columns: 1fr 1fr; gap: 34px; margin-bottom: 32px; padding: 24px; border: 1px solid var(--rule); }
