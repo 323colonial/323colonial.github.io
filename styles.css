@@ -17,7 +17,8 @@ html { background: var(--paper); scroll-behavior: smooth; }
 body { margin: 0; background: var(--paper); color: var(--forest-ink); font-family: var(--font-serif); }
 img { display: block; max-width: 100%; }
 a { color: inherit; text-underline-offset: .28em; text-decoration-thickness: 1px; }
-a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
+a:focus-visible,
+summary:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 ::selection { background: #c9d6ca; color: var(--forest-ink); }
 
 .skip-link {
@@ -350,6 +351,12 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .record-heading p,
 .plan-heading p,
 .estimate-heading p { max-width: 58ch; margin: 0; color: var(--muted); font: 400 14px/1.55 var(--font-label); }
+
+.paint-palette { margin-top: 28px; border-block: 1px solid var(--rule); }
+.paint-palette summary { padding: 18px 0; cursor: pointer; font: 400 20px/1.4 var(--font-serif); }
+.paint-palette summary:hover { text-decoration: underline; text-underline-offset: .28em; }
+.paint-palette .table-note { margin: 8px 0 20px; }
+.paint-palette .swatches { margin-bottom: 24px; }
 
 .swatches { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1px; background: var(--rule); border: 1px solid var(--rule); }
 .swatch { min-width: 0; background: var(--white); }

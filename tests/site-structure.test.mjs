@@ -52,6 +52,28 @@ test('home describes finished rooms and outdoor living without adding bedrooms',
   assert.match(afterOutdoors, />Request a showing<\/a>/);
 });
 
+test('home restores paint swatches in a compact room detail', () => {
+  const rooms = html['index.html'].split('id="rooms"')[1].split('</section>')[0];
+  const detail = rooms.match(/<details class="paint-palette" id="paint-colors">([\s\S]*?)<\/details>/)?.[1];
+  assert.ok(detail, 'collapsed paint detail missing from room section');
+  assert.match(detail, /<summary>Paint colors &amp; finishes<\/summary>/);
+  assert.match(detail, /Sherwin-Williams/);
+  assert.match(detail, /Screen swatches are approximate; verify physical chips in daylight/);
+  const swatches = [...detail.matchAll(/<div class="swatch swatch--[^\"]+">([\s\S]*?)<\/p><\/div>/g)];
+  assert.equal(swatches.length, 6);
+  for (const [index, name, code, room] of [
+    [0, 'Alabaster', 'SW 7008', 'Hallway'],
+    [1, 'Debonair', 'SW 9139', 'Main-floor bedroom'],
+    [2, 'Sea Salt', 'SW 6204', 'Both full baths'],
+    [3, 'Oyster Bay', 'SW 6206', 'Upstairs bedroom and walk-in'],
+    [4, 'Pewter Green', 'SW 6208', 'Front, back and garage doors'],
+    [5, 'Dark Walnut', 'Solid stain', 'Deck floor'],
+  ]) {
+    for (const text of [name, code, room]) assert.ok(swatches[index][1].includes(text), text);
+    assert.match(swatches[index][1], /class="swatch-color" aria-hidden="true"/);
+  }
+});
+
 test('public photographs retain provenance and every edited image has attached disclosure', () => {
   for (const file of publicPages) {
     assert.match(html[file], /Prior-listing photo/i);
