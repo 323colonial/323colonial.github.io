@@ -4,3 +4,12 @@
 *.db
 .beads-credential-key
 .beads/proxieddb/
+
+# Local OS and Python output
+.DS_Store
+__pycache__/
+*.py[co]
+
+# Generated local output; keep plans, skills, and design assets visible
+/.pi/artifacts/
+/.impeccable/critique/
