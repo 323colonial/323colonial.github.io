@@ -9,6 +9,7 @@ colors:
   rule: "#98a096"
   muted: "#536059"
   white: "#ffffff"
+  viewer-backdrop: "rgb(10 24 17 / 90%)"
 typography:
   display:
     fontFamily: "Georgia, Times New Roman, serif"
@@ -20,8 +21,57 @@ typography:
     fontFamily: "Georgia, Times New Roman, serif"
     fontSize: "18px"
     lineHeight: 1.65
+  headline:
+    fontFamily: "Georgia, Times New Roman, serif"
+    fontSize: "clamp(28px, 2.5vw, 36px)"
+    fontWeight: 400
+    lineHeight: 1.15
+    letterSpacing: "-0.02em"
+  story-title:
+    fontFamily: "Georgia, Times New Roman, serif"
+    fontSize: "28px"
+    fontWeight: 400
+    lineHeight: 1.15
+  story-title-mobile:
+    fontFamily: "Georgia, Times New Roman, serif"
+    fontSize: "25px"
+    fontWeight: 400
+    lineHeight: 1.15
+  contact-title:
+    fontFamily: "Georgia, Times New Roman, serif"
+    fontSize: "30px"
+    fontWeight: 400
+    lineHeight: 1.15
+    letterSpacing: "-0.02em"
+  property-mark:
+    fontFamily: "Georgia, Times New Roman, serif"
+    fontSize: "26px"
+    lineHeight: 1.65
+  property-mark-mobile:
+    fontFamily: "Georgia, Times New Roman, serif"
+    fontSize: "23px"
+    lineHeight: 1.65
   label:
     fontFamily: "Arial, sans-serif"
+    fontSize: "14px"
+  note:
+    fontFamily: "Arial, sans-serif"
+    fontSize: "12px"
+  location:
+    fontFamily: "Arial, sans-serif"
+    fontSize: "13px"
+    lineHeight: 1.4
+  detail:
+    fontFamily: "Arial, sans-serif"
+    fontSize: "16px"
+  quick-facts:
+    fontFamily: "Arial, sans-serif"
+    fontSize: "19px"
+  price:
+    fontFamily: "Arial, sans-serif"
+    fontSize: "32px"
+    fontWeight: 700
+    lineHeight: 1.2
 rounded:
   default: "0"
 components:
@@ -33,6 +83,16 @@ components:
     backgroundColor: "{colors.paper}"
     textColor: "{colors.forest}"
     padding: "12px 20px"
+  text-link:
+    textColor: "{colors.ink}"
+    typography: "{typography.label}"
+  buyer-navigation:
+    textColor: "{colors.ink}"
+    typography: "{typography.label}"
+    padding: "8px 0"
+  photo-note:
+    textColor: "{colors.muted}"
+    typography: "{typography.note}"
 ---
 
 # Design System: 323 Colonial
@@ -41,7 +101,7 @@ components:
 
 **Photo-led property listing** retains the forest/warm-paper identity while using familiar property-listing structure. Actual property photography, scannable facts and brokerage contact take priority over owner planning. The approved brief pins this conventional presentation; no new decorative identity or scroll choreography.
 
-Buyer pages use `listing.css`. Legacy `floorplans.html`, `brochure.html` and `sale-prep.html` retain their original `styles.css` and Mountain House Monograph layout, unchanged and unlinked from buyer navigation. Historical Impeccable comps/build state/sidecar describe that earlier composition, not the current public layout; separate tool/sidecar maintenance is outside this task.
+Buyer pages use `listing.css`. Legacy `floorplans.html`, `brochure.html` and `sale-prep.html` retain their original `styles.css` and Mountain House Monograph layout, unchanged and unlinked from buyer navigation. Historical Impeccable comps/build state describe that earlier composition, not the current public layout. `.impeccable/design.json` extends this document with current buyer component previews and breakpoints; it does not govern legacy pages.
 
 ## Colors
 
@@ -52,6 +112,8 @@ Palette contrast on paper: ink 13.60:1, forest 11.83:1, muted 6.07:1. Use paper 
 ## Typography
 
 Georgia gives headings and exact listing prose a restrained residential character. Arial makes facts, captions, navigation, price and controls easy to scan. Both use installed system fonts; no remote font requests.
+
+Machine-readable roles above capture the current `listing.css` sizes, not a new CSS token layer. Each role includes its font family for standalone previews; label and note sizes serve several contexts with different line heights. Detail text is 16px, quick facts 19px (16px on mobile), property mark 26px (23px on mobile), masthead location 13px and contact heading 30px.
 
 Body is 18px with 1.65 line height; paragraph measure is bounded at 68ch. H1 scales from 32–44px; h2 from 28–36px; story headings are 28px, reducing to 25px on mobile. Captions are 14px and essential placeholder/concept labels 12px; compact mosaic captions use 12px. Price uses bold 32px sans-serif and tabular numbers.
 
