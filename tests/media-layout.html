@@ -41,6 +41,7 @@ for (const route of ['index', 'gallery', 'brochure', 'floorplans', 'sale-prep'])
       const expected = ratio.startsWith('auto') ? img.naturalWidth / img.naturalHeight : ratio.split('/').map(Number).reduce((a, b) => a / b);
       check(frame.contentWindow.getComputedStyle(img).objectFit === 'contain' || Math.abs(imageBox.width / imageBox.height - expected) < .02, `${name}: image proportions changed`);
       for (const target of [...caption.children, ...(caption.children.length ? [] : [caption]), ...figure.querySelectorAll('.status-label')]) {
+        if (target.matches('.photo-number')) continue; // Photo counters are intentionally hidden.
         target.scrollIntoView({block: 'center', behavior: 'instant'});
         const box = target.getBoundingClientRect();
         check(target.contains(doc.elementFromPoint(box.x + box.width / 2, box.y + box.height / 2)), `${name}: caption/status obscured`);

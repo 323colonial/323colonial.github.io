@@ -101,7 +101,7 @@ dd { font: 16px/1.5 Arial, sans-serif; margin: 0; }
 .gallery-intro { padding-block: 40px; max-width: 760px; }
 .gallery-intro p:last-child { margin-bottom: 0; }
 .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px 24px; align-items: start; }
-.photo-number { display: block; font-size: 12px; color: var(--muted); margin-bottom: 4px; font-variant-numeric: tabular-nums; }
+.photo-number { display: none; }
 figure[id] { scroll-margin-top: calc(var(--header-height) + 24px); }
 dialog { width: min(1100px, calc(100% - 32px)); max-height: calc(100dvh - 32px); padding: 20px 24px; border: 1px solid var(--rule); background: var(--paper); color: var(--ink); }
 dialog::backdrop { background: rgb(25 31 27 / 90%); }
