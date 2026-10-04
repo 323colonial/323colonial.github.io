@@ -1,0 +1,81 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Buyer quality regression</title>
+<h1>Buyer quality regression</h1>
+<p>Serve repository root, then open this page. Every result must PASS.</p>
+<pre id="results" style="white-space:pre-wrap">Running…</pre>
+<iframe title="Buyer page under test" style="height:844px;border:0"></iframe>
+<script type="module">
+const frame = document.querySelector('iframe');
+const results = [];
+const luminance = color => color.match(/[\d.]+/g).slice(0, 3).map(Number)
+  .map(value => value / 255).map(value => value <= .04045 ? value / 12.92 : ((value + .055) / 1.055) ** 2.4)
+  .reduce((sum, value, index) => sum + value * [.2126, .7152, .0722][index], 0);
+const contrast = (a, b) => (Math.max(luminance(a), luminance(b)) + .05) / (Math.min(luminance(a), luminance(b)) + .05);
+for (const route of ['index', 'gallery']) {
+  for (const width of [320, 390, 700, 701, 1000, 1001, 1264, 1440]) {
+    frame.style.width = `${width}px`;
+    await new Promise(resolve => { frame.onload = resolve; frame.src = `../${route}.html?quality=${width}`; });
+    const doc = frame.contentDocument;
+    const win = frame.contentWindow;
+    const failures = [];
+    const check = (ok, message) => { if (!ok) failures.push(message); };
+    const style = element => win.getComputedStyle(element);
+    try {
+      const background = element => {
+        for (; element; element = element.parentElement) {
+          const color = style(element).backgroundColor;
+          if (color === 'rgba(0, 0, 0, 0)') continue;
+          if (!color.startsWith('rgb(')) throw new Error(`Unsupported background: ${color}`);
+          return color;
+        }
+        throw new Error('Missing opaque background');
+      };
+      const checkFocus = element => {
+        element.focus();
+        const css = style(element);
+        check(element.matches(':focus-visible') && css.outlineStyle !== 'none' &&
+          parseFloat(css.outlineWidth) >= 2 && contrast(css.outlineColor, background(element.parentElement)) >= 3,
+          `focus contrast: ${element.textContent.trim()}`);
+      };
+      for (const link of doc.querySelectorAll('.masthead a, .contact a')) checkFocus(link);
+      for (const link of doc.querySelectorAll('.buyer-nav a')) {
+        const box = link.getBoundingClientRect();
+        check(box.width >= 44 && box.height >= 44, `44px target: ${link.textContent}`);
+      }
+      // Resolve the site's optional leading media condition and let CSS evaluate the slot length.
+      const probe = doc.createElement('div');
+      probe.style.cssText = 'position:absolute;height:0;visibility:hidden';
+      doc.body.append(probe);
+      const mismatches = [];
+      for (const image of doc.querySelectorAll('main img[srcset]')) {
+        const option = image.sizes.split(',').find(value => {
+          const condition = value.trim().match(/^\([^)]+\)/);
+          return !condition || win.matchMedia(condition[0]).matches;
+        });
+        const size = option?.trim().replace(/^\([^)]+\)\s*/, '');
+        if (!size || !win.CSS.supports('width', size)) throw new Error(`Invalid sizes: ${image.sizes}`);
+        probe.style.width = size;
+        if (Math.abs(probe.getBoundingClientRect().width - image.getBoundingClientRect().width) > 1) {
+          mismatches.push(image.getAttribute('src'));
+        }
+      }
+      probe.remove();
+      check(!mismatches.length, `image sizes: ${mismatches.length} mismatches`);
+      for (const note of doc.querySelectorAll('.media-record .photo-note')) {
+        check(note.closest('figure').querySelector('a').getAttribute('aria-label').includes(note.textContent.trim()),
+          `link disclosure: ${note.textContent}`);
+      }
+      if (route === 'gallery') {
+        doc.querySelector('[data-gallery-image]').click();
+        for (const control of doc.querySelectorAll('dialog button, dialog a')) checkFocus(control);
+        doc.querySelector('dialog').close();
+      }
+      check(doc.documentElement.scrollWidth <= width, 'horizontal overflow');
+    } catch (error) { failures.push(error.message); }
+    results.push(`${route} ${width}px: ${failures.length ? 'FAIL — ' + failures.join('; ') : 'PASS'}`);
+  }
+}
+document.querySelector('#results').textContent = results.join('\n');
+document.title = results.some(row => row.includes('FAIL')) ? 'FAIL: buyer quality' : 'PASS: buyer quality';
+</script>
