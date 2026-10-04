@@ -8,6 +8,7 @@ test('git ignores local output without hiding durable project state', () => {
     '__pycache__/cache', 'tests/__pycache__/cache',
     'module.pyc', 'tests/module.pyc', 'tests/module.pyo',
     '.pi/artifacts/run/output.png', '.impeccable/critique/report.md',
+    'node_modules/generated-package.json',
     '.dolt/data', 'local.db', '.beads-credential-key', '.beads/proxieddb/data',
   ];
   const durable = [
@@ -19,6 +20,7 @@ test('git ignores local output without hiding durable project state', () => {
     'nested/.pi/artifacts/source.png', 'nested/.impeccable/critique/source.md',
     'assets/new-image.png', 'images/new-image.webp',
     'index.html', 'styles.css', 'PRODUCT.md', 'test_design.py',
+    'flake.nix', 'flake.lock', 'package.json', 'package-lock.json',
   ];
   const result = spawnSync('git', [
     '-c', 'core.excludesFile=/dev/null', 'check-ignore', '--no-index', '--stdin',
