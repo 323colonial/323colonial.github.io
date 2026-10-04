@@ -8,35 +8,38 @@
 <script type="module">
 const frame = document.querySelector('iframe');
 const results = [];
-for (const [width, height] of [[1440, 900], [1376, 768], [1080, 768], [768, 1024], [700, 844], [390, 844], [320, 640]]) {
+for (const [width, height] of [[1440, 1000], [1376, 768], [1080, 768], [801, 844], [800, 844], [768, 1024], [700, 844], [390, 844], [320, 640]]) {
   frame.style.width = `${width}px`;
   frame.style.height = `${height}px`;
   await new Promise(resolve => { frame.onload = resolve; frame.src = `../index.html?layout-test=${width}`; });
-  const doc = frame.contentDocument;
-  const win = frame.contentWindow;
+  const doc = frame.contentDocument, win = frame.contentWindow;
   await doc.fonts.ready;
+  await new Promise(resolve => win.requestAnimationFrame(() => win.requestAnimationFrame(resolve)));
   const failures = [];
   const check = (ok, text) => { if (!ok) failures.push(text); };
   const box = element => element.getBoundingClientRect();
   check(doc.documentElement.scrollWidth <= width, 'horizontal overflow');
   check(doc.querySelector('.hero-photo img').getAttribute('src') === 'assets/listing/01.webp', 'wrong hero');
+  check(Math.abs(box(doc.querySelector('.hero-photo')).width - width) <= 1, 'hero not full width');
   check(doc.querySelectorAll('.listing-copy').length === 7, 'seven paragraphs missing');
-  for (const section of doc.querySelectorAll('.story')) {
+  for (const [i, section] of [...doc.querySelectorAll('.story')].entries()) {
     const text = box(section.querySelector('.story-copy'));
     const photos = box(section.querySelector('.story-photos'));
-    check(width <= 700 ? text.bottom <= photos.top : text.right <= photos.left, 'text/photo overlap');
-    check(photos.width > 0 && photos.height > 0, 'inline photographs hidden');
+    check(width <= 800 ? text.bottom <= photos.top : i % 2 ? photos.right <= text.left : text.right <= photos.left, 'text/photo overlap or wrong side');
+    check(photos.width > 0 && photos.height > 0, 'photographs hidden');
+    if (section.classList.contains('is-scrolling')) {
+      const photoStage = section.querySelector(width <= 800 ? '.story-photos' : '.story-stage');
+      check(box(photoStage).height + parseFloat(win.getComputedStyle(photoStage).top) <= height, 'sticky content taller than viewport');
+    }
   }
-  for (const image of doc.querySelectorAll('img')) {
-    check(win.getComputedStyle(image).position !== 'sticky' && win.getComputedStyle(image).animationName === 'none', 'moving photograph');
-  }
-  for (const link of doc.querySelectorAll('.button, .buyer-nav a, .text-link')) {
+  for (const link of doc.querySelectorAll('.listing-summary .text-link, .masthead summary, .property-identity a')) {
     check(box(link).height >= 44, 'touch target shorter than 44px');
     check(box(link).left >= 0 && box(link).right <= width, 'link escapes viewport');
   }
-  const link = doc.querySelector('.contact .button');
+  const contact = doc.querySelector('.showing-contact');
+  contact.open = true;
+  const link = contact.querySelector('.button');
   link.focus();
-  link.scrollIntoView({block: 'center', behavior: 'instant'});
   const target = box(link);
   check(doc.activeElement === link && win.getComputedStyle(link).outlineStyle !== 'none', 'focus invisible');
   check(link.contains(doc.elementFromPoint(target.x + target.width / 2, target.y + target.height / 2)), 'contact hit target obscured');

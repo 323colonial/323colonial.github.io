@@ -1,0 +1,56 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Narrative scroll regression</title>
+<h1>Narrative scroll regression</h1>
+<pre id="results">Running…</pre>
+<iframe title="Listing under test" style="width:1440px;height:1000px;border:0"></iframe>
+<script type="module">
+const frame = document.querySelector('iframe');
+await new Promise(resolve => { frame.onload = resolve; frame.src = '../index.html'; });
+const doc = frame.contentDocument, win = frame.contentWindow;
+const results = [];
+const check = (ok, name) => results.push(`${ok ? 'PASS' : 'FAIL'}: ${name}`);
+const settle = () => new Promise(resolve => win.requestAnimationFrame(() => win.requestAnimationFrame(resolve)));
+try {
+  const story = doc.querySelector('.story');
+  const stage = story.querySelector('.story-stage');
+  check(Boolean(stage), 'narrative stage exists');
+  if (!stage) throw new Error('Missing narrative stage');
+  await settle();
+  const header = doc.querySelector('.masthead');
+  const facts = doc.querySelector('.listing-summary');
+  const top = parseFloat(win.getComputedStyle(stage).top);
+  const start = story.offsetTop + parseFloat(win.getComputedStyle(story).paddingTop) - top;
+  win.scrollTo(0, start + 2);
+  await settle();
+  check(Math.abs(header.getBoundingClientRect().top) < 1, 'address remains fixed');
+  check(Math.abs(facts.getBoundingClientRect().top - header.getBoundingClientRect().bottom) < 2, 'facts dock under header');
+  check(story.querySelector('.story-photos figure:not([hidden])')?.dataset.position === '3', 'first relevant photo');
+  win.scrollTo(0, start + story.offsetHeight - stage.offsetHeight - 2);
+  await settle();
+  check(story.querySelector('.story-photos figure:not([hidden])')?.dataset.position === '11', 'vertical scroll advances photo');
+  win.scrollTo(0, start + 2);
+  await settle();
+  check(story.querySelector('.story-photos figure:not([hidden])')?.dataset.position === '3', 'reverse scroll restores photo');
+  const second = doc.querySelectorAll('.story')[1];
+  check(story.querySelector('.story-copy').getBoundingClientRect().left < story.querySelector('.story-photos').getBoundingClientRect().left && second.querySelector('.story-copy').getBoundingClientRect().left > second.querySelector('.story-photos').getBoundingClientRect().left, 'paragraph sides alternate');
+  const plan = doc.querySelector('[data-photo="31"]');
+  plan.click();
+  const viewer = doc.querySelector('#photo-viewer');
+  check(viewer.open && doc.querySelector('#viewer-caption').textContent.includes('not existing finished space'), 'contextual plan opens with disclosure');
+  viewer.close();
+  await settle();
+  check(doc.activeElement === plan, 'popup restores contextual opener focus');
+  doc.querySelector('[data-all-photos]').click();
+  check(doc.querySelector('#all-photos').open && doc.querySelectorAll('#all-photos [data-gallery-image]').length === 33, 'all 33 photos in popup');
+  doc.querySelector('#all-photos [data-gallery-image]').click();
+  check(viewer.open, 'catalog opens enlarged viewer');
+  viewer.close();
+  doc.querySelector('#all-photos').close();
+  doc.querySelector('#details').scrollIntoView();
+  await settle();
+  check(win.getComputedStyle(doc.querySelector('#details')).position === 'static', 'property details scroll normally');
+} catch (error) { check(false, error.message); }
+document.querySelector('#results').textContent = results.join('\n');
+document.title = results.some(row => row.startsWith('FAIL')) ? 'FAIL: narrative scroll' : 'PASS: narrative scroll';
+</script>

@@ -39,7 +39,9 @@ if (typeof viewer.showModal === 'function') {
     document.getElementById(id).insertAdjacentElement(side === 0 ? 'afterbegin' : 'beforeend', preview);
     previews.push(preview);
   });
-  links.forEach((link, index) => {
+  const triggers = [...links, ...document.querySelectorAll('[data-photo]')];
+  triggers.forEach(link => {
+    const index = link.hasAttribute('data-photo') ? Number(link.dataset.photo) - 1 : links.indexOf(link);
     link.addEventListener('click', event => {
       if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
       event.preventDefault();
@@ -60,4 +62,18 @@ if (typeof viewer.showModal === 'function') {
   viewer.addEventListener('close', () => opener?.focus({preventScroll: true}));
   image.addEventListener('error', () => { error.hidden = false; });
   image.addEventListener('load', () => { error.hidden = true; });
+}
+
+const catalog = document.querySelector('#all-photos');
+if (catalog && typeof catalog.showModal === 'function') {
+  let catalogOpener;
+  document.querySelectorAll('[data-all-photos]').forEach(link => {
+    link.addEventListener('click', event => {
+      if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      catalogOpener = link;
+      catalog.showModal();
+    });
+  });
+  catalog.addEventListener('close', () => catalogOpener?.focus({preventScroll: true}));
 }

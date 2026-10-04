@@ -1,96 +1,275 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-04T00:47:04Z",
+  "generatedAt": "2026-10-04T23:38:58.862767+00:00",
   "title": "Design System: 323 Colonial",
   "extensions": {
     "colorMeta": {
-      "forest": { "role": "primary", "displayName": "Forest" },
-      "ink": { "role": "neutral", "displayName": "Ink" },
-      "paper": { "role": "neutral", "displayName": "Warm Paper" },
-      "paper-strong": { "role": "neutral", "displayName": "Strong Paper" },
-      "rule": { "role": "neutral", "displayName": "Rule Grey" },
-      "muted": { "role": "neutral", "displayName": "Muted Green-Grey" },
-      "white": { "role": "neutral", "displayName": "White" },
-      "viewer-backdrop": { "role": "neutral", "displayName": "Viewer Backdrop" }
+      "greek-villa": {
+        "role": "neutral",
+        "displayName": "Greek Villa"
+      },
+      "pewter-green": {
+        "role": "primary",
+        "displayName": "Pewter Green"
+      },
+      "debonair": {
+        "role": "secondary",
+        "displayName": "Debonair"
+      },
+      "sea-salt": {
+        "role": "secondary",
+        "displayName": "Sea Salt"
+      },
+      "accessible-beige": {
+        "role": "secondary",
+        "displayName": "Accessible Beige"
+      },
+      "mahogany": {
+        "role": "primary",
+        "displayName": "Mahogany"
+      },
+      "cedar": {
+        "role": "secondary",
+        "displayName": "Cedar"
+      },
+      "stone": {
+        "role": "neutral",
+        "displayName": "Stone"
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink"
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Muted"
+      },
+      "image-field": {
+        "role": "neutral",
+        "displayName": "Image Field"
+      },
+      "viewer-backdrop": {
+        "role": "neutral",
+        "displayName": "Viewer Backdrop"
+      }
     },
     "typographyMeta": {
-      "display": { "displayName": "Display", "purpose": "Listing address and gallery page title." },
-      "body": { "displayName": "Body", "purpose": "Exact approved listing narrative." },
-      "headline": { "displayName": "Headline", "purpose": "Buyer section headings." },
-      "story-title": { "displayName": "Story Title", "purpose": "Headings beside inline property photographs." },
-      "story-title-mobile": { "displayName": "Mobile Story Title", "purpose": "Story heading size at 700px and below." },
-      "contact-title": { "displayName": "Contact Title", "purpose": "Serif heading in the brokerage contact band." },
-      "property-mark": { "displayName": "Property Mark", "purpose": "323 Colonial masthead link." },
-      "property-mark-mobile": { "displayName": "Mobile Property Mark", "purpose": "Masthead link size at 700px and below." },
-      "label": { "displayName": "Label", "purpose": "Controls, navigation, captions, listing status and agent details." },
-      "note": { "displayName": "Note", "purpose": "Essential photo labels, compact captions, dates, detail labels and footer." },
-      "location": { "displayName": "Location", "purpose": "Masthead location, hidden at 1000px and below." },
-      "detail": { "displayName": "Detail", "purpose": "Address, property detail values and mobile quick facts." },
-      "quick-facts": { "displayName": "Quick Facts", "purpose": "Desktop bedroom, bathroom, area and acreage summary." },
-      "price": { "displayName": "Price", "purpose": "Asking price with tabular numerals." }
+      "property-mark": {
+        "displayName": "Property Mark",
+        "purpose": "Persistent address link."
+      },
+      "property-mark-mobile": {
+        "displayName": "Property Mark Mobile",
+        "purpose": "Address at 800px and below."
+      },
+      "property-mark-small": {
+        "displayName": "Property Mark Small",
+        "purpose": "Address at 360px and below."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Property details and gallery heading only."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Base body and mobile narrative."
+      },
+      "narrative": {
+        "displayName": "Narrative",
+        "purpose": "Desktop approved narrative paragraphs; 18px at 800px and below."
+      },
+      "location": {
+        "displayName": "Location",
+        "purpose": "Locality below address; 12px at 800px and below."
+      },
+      "header-detail": {
+        "displayName": "Header Detail",
+        "purpose": "Desktop agent and public listing link."
+      },
+      "control": {
+        "displayName": "Control",
+        "purpose": "Buttons, disclosure summary and action links."
+      },
+      "control-mobile": {
+        "displayName": "Control Mobile",
+        "purpose": "Showing summary and all-photos link at 800px and below."
+      },
+      "supporting": {
+        "displayName": "Supporting",
+        "purpose": "Contact panel and separate laundry link."
+      },
+      "caption": {
+        "displayName": "Caption",
+        "purpose": "Hero, narrative and gallery captions."
+      },
+      "viewer-caption": {
+        "displayName": "Viewer Caption",
+        "purpose": "Enlarged caption and image-load error."
+      },
+      "metadata": {
+        "displayName": "Metadata",
+        "purpose": "Concept note, photo number, detail label, date, scroll cue and mobile locality."
+      },
+      "footer": {
+        "displayName": "Footer",
+        "purpose": "Dated listing footer."
+      },
+      "status": {
+        "displayName": "Status",
+        "purpose": "Coming Soon status in docking facts."
+      },
+      "detail": {
+        "displayName": "Detail",
+        "purpose": "Property detail values."
+      },
+      "quick-facts": {
+        "displayName": "Quick Facts",
+        "purpose": "Desktop facts labels; small annotation is 12px."
+      },
+      "quick-facts-mobile": {
+        "displayName": "Quick Facts Mobile",
+        "purpose": "Facts labels at 800px and below."
+      },
+      "fact-value": {
+        "displayName": "Fact Value",
+        "purpose": "Desktop fact numbers; regular weight despite strong markup."
+      },
+      "fact-value-compact": {
+        "displayName": "Fact Value Compact",
+        "purpose": "Fact numbers at 1100px and below."
+      },
+      "fact-value-mobile": {
+        "displayName": "Fact Value Mobile",
+        "purpose": "Fact numbers at 800px and below."
+      },
+      "price": {
+        "displayName": "Price",
+        "purpose": "Asking price with tabular numerals."
+      },
+      "price-mobile": {
+        "displayName": "Price Mobile",
+        "purpose": "Asking price at 800px and below."
+      },
+      "viewer-title": {
+        "displayName": "Viewer Title",
+        "purpose": "Dialog heading and photo count."
+      },
+      "viewer-control": {
+        "displayName": "Viewer Control",
+        "purpose": "Full-size link; 12px at 700px and below. Buttons retain control typography."
+      }
     },
     "shadows": [],
-    "motion": [],
+    "motion": [
+      {
+        "name": "native-scroll-photo-step",
+        "value": "Math.max(240, innerHeight * .5)",
+        "purpose": "Discrete forward/reverse photo selection from passive scroll updates; no timed animation. Disabled for reduced motion or insufficient fit; focused photos remain visible."
+      }
+    ],
     "breakpoints": [
-      { "name": "tablet", "value": "1000px" },
-      { "name": "mobile", "value": "700px" }
+      {
+        "name": "compact-header",
+        "value": "1100px"
+      },
+      {
+        "name": "two-column-gallery",
+        "value": "1000px"
+      },
+      {
+        "name": "stacked-narrative",
+        "value": "800px"
+      },
+      {
+        "name": "single-column-gallery",
+        "value": "700px"
+      },
+      {
+        "name": "narrow-header",
+        "value": "360px"
+      }
     ]
   },
   "components": [
     {
-      "name": "Primary Brokerage Link",
+      "name": "Brokerage action",
       "kind": "button",
       "refersTo": "button-primary",
-      "description": "Forest action on warm paper, with a 44px minimum target.",
-      "html": "<a class=\"ds-button\" href=\"tel:3048857645\">Contact listing brokerage</a>",
-      "css": ".ds-button { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 12px 20px; background: var(--forest, #183828); color: var(--paper, #f7f6eb); border: 1px solid var(--forest, #183828); font: 700 14px/1.65 Arial, sans-serif; text-decoration: none; text-align: center; cursor: pointer; } .ds-button:hover { background: var(--ink, #172c24); text-decoration: underline; } .ds-button:focus-visible { outline: 3px solid var(--forest, #183828); outline-offset: 4px; }"
+      "description": "Mahogany action; 44px minimum target.",
+      "html": "<a class=\"ds-button\" href=\"tel:3048857645\">Call brokerage · 304-885-7645</a>",
+      "css": ".ds-button { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 10px 18px; border: 1px solid var(--mahogany, #593a32); background: var(--mahogany, #593a32); color: var(--paper, #f0ece2); font: 700 14px/1.5 Arial, sans-serif; text-decoration: none; text-align: center; cursor: pointer; } .ds-button:hover { background: var(--ink, #252d29); text-decoration: underline; } .ds-button:focus-visible { outline: 3px solid var(--mahogany, #593a32); outline-offset: 4px; }"
     },
     {
-      "name": "Paper Brokerage Link",
+      "name": "Showing disclosure",
+      "kind": "custom",
+      "refersTo": "showing-disclosure",
+      "description": "Native showing disclosure and paper contact-panel excerpt; no simulated modal behavior.",
+      "html": "<div class=\"ds-header\"><details class=\"ds-showing\"><summary>See in person</summary><div class=\"ds-contact\"><p>Liz McDonald · Listing agent<br>Dandridge Realty Group LLC</p></div></details></div>",
+      "css": ".ds-header { position: relative; background: var(--pewter-green, #5e6259); color: var(--paper, #f0ece2); padding: 18px 40px; } .ds-showing summary { min-height: 44px; padding: 12px 16px; border: 1px solid var(--paper, #f0ece2); font: 700 14px/1.5 Arial, sans-serif; white-space: nowrap; cursor: pointer; } .ds-contact { position: absolute; right: 40px; top: calc(100% - 1px); width: min(380px, calc(100vw - 32px)); padding: 24px; border: 1px solid var(--stone, #969187); background: var(--paper, #f0ece2); color: var(--ink, #252d29); font: 14px/1.6 Arial, sans-serif; max-height: calc(100dvh - var(--header-height, 102px) - 16px); overflow: auto; } .ds-contact p { font-weight: 700; margin: 0 0 16px; } .ds-showing summary:focus-visible { outline: 3px solid var(--paper, #f0ece2); outline-offset: 4px; } @media (max-width: 800px) { .ds-header { padding: 12px 20px; } .ds-showing summary { font-size: 12px; padding: 10px; } .ds-contact { right: 16px; } }"
+    },
+    {
+      "name": "All photos link",
       "kind": "button",
-      "refersTo": "button-paper",
-      "description": "Paper action on the forest masthead and contact band.",
-      "html": "<div class=\"ds-forest\"><a class=\"ds-button-paper\" href=\"tel:3048857645\">Contact listing brokerage</a></div>",
-      "css": ".ds-forest { background: var(--forest, #183828); padding: 16px; } .ds-button-paper { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 12px 20px; background: var(--paper, #f7f6eb); color: var(--forest, #183828); border: 1px solid var(--forest, #183828); font: 700 14px/1.65 Arial, sans-serif; text-decoration: none; text-align: center; cursor: pointer; } .ds-button-paper:hover { background: var(--paper-strong, #f3f0e6); text-decoration: underline; } .ds-button-paper:focus-visible { outline: 3px solid var(--paper, #f7f6eb); outline-offset: 4px; }"
+      "refersTo": "gallery-link",
+      "description": "Catalog trigger with direct gallery fallback.",
+      "html": "<a class=\"ds-gallery-link\" href=\"gallery.html\">View all 33 photos</a>",
+      "css": ".ds-gallery-link { display: inline-flex; align-items: center; min-height: 44px; color: var(--mahogany, #593a32); font: 700 14px/1.5 Arial, sans-serif; text-underline-offset: .2em; } .ds-gallery-link:hover { text-decoration-thickness: 2px; } .ds-gallery-link:focus-visible { outline: 3px solid var(--mahogany, #593a32); outline-offset: 4px; } @media (max-width: 800px) { .ds-gallery-link { font-size: 12px; } }"
     },
     {
-      "name": "Text Link",
-      "kind": "button",
-      "refersTo": "text-link",
-      "description": "Underlined gallery or public-listing link; inherits surrounding text color on the site.",
-      "html": "<a class=\"ds-text-link\" href=\"gallery.html\">View all 33 photos</a>",
-      "css": ".ds-text-link { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; color: var(--ink, #172c24); font: 700 14px/1.5 Arial, sans-serif; text-underline-offset: .2em; } .ds-text-link:hover { text-decoration-thickness: 2px; } .ds-text-link:focus-visible { outline: 3px solid var(--forest, #183828); outline-offset: 4px; }"
+      "name": "Docking price and status",
+      "kind": "custom",
+      "refersTo": "docking-facts",
+      "description": "Price/status excerpt from the docking facts bar; static panel preview.",
+      "html": "<div class=\"ds-facts\"><p class=\"ds-price\">$499,000</p><p class=\"ds-status\">Coming Soon</p></div>",
+      "css": ".ds-facts { padding: 18px 40px; background: var(--paper, #f0ece2); color: var(--ink, #252d29); border-bottom: 1px solid var(--cedar, #8b523c); font-family: Arial, sans-serif; } .ds-price { font-size: 30px; line-height: 1.2; font-weight: 700; margin: 0 0 4px; font-variant-numeric: tabular-nums; } .ds-status { font-size: 12px; line-height: 1.65; margin: 0; color: var(--mahogany, #593a32); } @media (max-width: 800px) { .ds-facts { padding: 12px 20px; } .ds-price { font-size: 25px; } }"
     },
     {
-      "name": "Buyer Navigation",
-      "kind": "nav",
-      "refersTo": "buyer-navigation",
-      "description": "Home / Photos page links below the masthead in normal flow on both routes; current page is bold and underlined.",
-      "html": "<nav class=\"ds-navigation\" aria-label=\"Buyer navigation\"><a href=\"index.html\">Home</a><a href=\"gallery.html\" aria-current=\"page\">Photos</a></nav>",
-      "css": ".ds-navigation { display: flex; flex-wrap: wrap; gap: 8px 32px; padding-block: 8px; border-block: 1px solid var(--rule, #98a096); color: var(--ink, #172c24); font: 400 14px/1.65 Arial, sans-serif; } .ds-navigation a { display: flex; align-items: center; min-width: 44px; min-height: 44px; color: inherit; text-decoration: none; text-underline-offset: .2em; } .ds-navigation a:hover, .ds-navigation a[aria-current=\"page\"] { text-decoration: underline; } .ds-navigation a[aria-current=\"page\"] { font-weight: 700; } .ds-navigation a:hover { text-decoration-thickness: 2px; } .ds-navigation a:focus-visible { outline: 3px solid var(--forest, #183828); outline-offset: 4px; } @media (max-width: 700px) { .ds-navigation { gap: 0 24px; } }"
+      "name": "Scroll cue",
+      "kind": "custom",
+      "refersTo": "scroll-cue",
+      "description": "Visible only when native-scroll sequencing fits; counter excerpt.",
+      "html": "<p class=\"ds-cue\">Scroll to explore <span>1 / 5</span></p>",
+      "css": ".ds-cue { display: flex; justify-content: space-between; gap: 12px; border-top: 1px solid var(--stone, #969187); margin: 16px 0 0; padding-top: 10px; color: var(--ink, #252d29); font: 12px/1.5 Arial, sans-serif; } .ds-cue span { font-variant-numeric: tabular-nums; }"
     },
     {
-      "name": "Essential Photo Label",
+      "name": "Concept disclosure",
       "kind": "custom",
       "refersTo": "photo-note",
-      "description": "Short disclosure attached to placeholder or conceptual imagery; not a routine source label.",
-      "html": "<span class=\"ds-photo-note\">Placeholder photo — not this property.</span>",
-      "css": ".ds-photo-note { display: block; margin-top: 6px; color: var(--muted, #536059); font: 400 12px/1.5 Arial, sans-serif; }"
+      "description": "Essential attached note for photo 31 only.",
+      "html": "<span class=\"ds-photo-note\">Conceptual basement plan — not existing finished space.</span>",
+      "css": ".ds-photo-note { display: block; margin-top: 6px; color: var(--muted, #50564f); font: 12px/1.5 Arial, sans-serif; }"
     }
   ],
   "narrative": {
-    "overview": "Photo-led property listing retains the forest/warm-paper identity while using familiar property-listing structure. Actual property photography, scannable facts and brokerage contact take priority over owner planning. The approved brief pins this conventional presentation; no new decorative identity or scroll choreography.",
-    "rules": [],
+    "northStar": "House-color property narrative",
+    "overview": "House colors frame real property photography and uninterrupted Georgia prose. Persistent address/contact access and compact Arial facts support a quiet, photo-led walk through the home. The owner-pinned composition is implemented in `index.html` and `gallery.html`, not a conventional listing mosaic.",
+    "keyCharacteristics": [
+      "Full-width photographs and alternating, heading-free narrative.",
+      "House-color fields, square controls and fine rules; no shadows.",
+      "Native scrolling with fit-aware inline fallbacks."
+    ],
+    "rules": [
+      {
+        "name": "The House Palette Rule",
+        "body": "These are screen approximations of the owner's colors, not physical paint-match specifications. CSS aliases resolve forest to Pewter Green, paper to Greek Villa, paper-strong to Accessible Beige and rule to stone.",
+        "section": "colors"
+      },
+      {
+        "name": "The Native Scroll Rule",
+        "body": "Scroll position selects discrete captioned photographs; it does not animate or capture scrolling. On desktop the whole narrative stage sticks below header and facts plus 24px; on mobile only the photo sequence sticks, with 16px clearance after the paragraph. Steps are `max(240px, half the viewport height)`. Forward and reverse scrolling update the count, and a focused photo stays visible until focus leaves it.",
+        "section": "layout"
+      }
+    ],
     "dos": [
-      "Do preserve exact approved prose, caption order, image provenance and watermarks.",
-      "Do distinguish listing facts, third-party placeholder imagery and conceptual drawings.",
-      "Do show the listing date once in each footer and keep brokerage contact explicit.",
-      "Do keep buyer styling isolated from legacy pages and assets."
+      "Do preserve the seven approved paragraphs, exact captions, watermarks and conceptual-plan disclosure.",
+      "Do keep contact access, visible keyboard focus and ordinary links available.",
+      "Do use the existing system fonts, static assets and dependency-free enhancement.",
+      "Do keep buyer styling isolated from unchanged legacy pages and assets."
     ],
     "donts": [
-      "Don't present a placeholder, simulation or plan as evidence of existing property condition.",
-      "Don't reintroduce owner paint planning or rough main/upstairs drawings into buyer navigation.",
-      "Don't add animation, sticky changing images, autoplay, remote fonts or runtime dependencies."
+      "Don't replace the approved composition with a mosaic, story headings, Home / Photos navbar or closing contact band.",
+      "Don't crop property evidence with cover-fit or present the conceptual plan as existing finished space.",
+      "Don't intercept scrolling, add timed autoplay, fades or parallax, or remove reduced-motion and short-screen fallbacks."
     ]
   }
 }

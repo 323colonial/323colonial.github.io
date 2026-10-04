@@ -9,7 +9,6 @@
 const frame = document.querySelector('iframe');
 const results = [];
 const approved = await fetch('fixtures/approved-listing.json').then(response => response.json());
-const navPositions = new Map();
 const luminance = color => color.match(/[\d.]+/g).slice(0, 3).map(Number)
   .map(value => value / 255).map(value => value <= .04045 ? value / 12.92 : ((value + .055) / 1.055) ** 2.4)
   .reduce((sum, value, index) => sum + value * [.2126, .7152, .0722][index], 0);
@@ -40,33 +39,15 @@ for (const route of ['index', 'gallery']) {
           parseFloat(css.outlineWidth) >= 2 && contrast(css.outlineColor, background(element.parentElement)) >= 3,
           `focus contrast: ${element.textContent.trim()}`);
       };
-      for (const link of doc.querySelectorAll('.masthead a, .contact a')) checkFocus(link);
-      win.scrollTo(0, 0);
-      const nav = doc.querySelector('.buyer-nav');
-      const links = [...nav.querySelectorAll('a')];
-      check(links.map(link => link.textContent).join('|') === 'Home|Photos', 'navigation labels');
-      check(links.map(link => link.getAttribute('href')).join('|') === 'index.html|gallery.html', 'page destinations');
-      const current = nav.querySelectorAll('[aria-current]');
-      check(current.length === 1 && current[0].getAttribute('aria-current') === 'page' &&
-        current[0].getAttribute('href') === `${route}.html`, 'current page');
-      check(current.length === 1 && style(current[0]).textDecorationLine.includes('underline') &&
-        Number(style(current[0]).fontWeight) >= 700, 'visible current page');
-      const top = nav.getBoundingClientRect().top;
-      check(Math.abs(top - doc.querySelector('.masthead').getBoundingClientRect().bottom) <= 1 &&
-        nav.getBoundingClientRect().bottom <= doc.querySelector('main').getBoundingClientRect().top, 'navigation before content');
-      if (route === 'index') navPositions.set(width, top);
-      else check(Math.abs(top - navPositions.get(width)) <= 1, 'same placement across pages');
+      doc.querySelector('.showing-contact').open = true;
+      for (const link of doc.querySelectorAll('.masthead a, .masthead summary')) {
+        if (link.getBoundingClientRect().width) checkFocus(link);
+      }
+      doc.querySelector('.showing-contact').open = false;
       win.scrollTo(0, 500);
       await new Promise(resolve => win.requestAnimationFrame(resolve));
-      check(Math.abs(nav.getBoundingClientRect().top + win.scrollY - top) <= 1 &&
-        !['sticky', 'fixed'].includes(style(nav).position), 'normal-flow navigation');
-      for (const link of links) {
-        checkFocus(link);
-        const box = link.getBoundingClientRect();
-        check(box.width >= 44 && box.height >= 44, `44px target: ${link.textContent}`);
-        check(box.top >= 0 && box.bottom <= win.innerHeight &&
-          link.contains(doc.elementFromPoint(box.x + box.width / 2, box.y + box.height / 2)), 'navigation focus unobscured');
-      }
+      check(!doc.querySelector('.buyer-nav'), 'redundant navigation removed');
+      check(doc.querySelector('.masthead').getBoundingClientRect().top === 0, 'fixed header');
       const preserved = route === 'index' ? [...doc.querySelectorAll('.listing-copy')].map(p => p.textContent) :
         [...doc.querySelectorAll('.gallery-grid .caption-text')].map(caption => caption.textContent);
       check(JSON.stringify(preserved) === JSON.stringify(route === 'index' ? approved.paragraphs :
@@ -77,6 +58,7 @@ for (const route of ['index', 'gallery']) {
       doc.body.append(probe);
       const mismatches = [];
       for (const image of doc.querySelectorAll('main img[srcset]')) {
+        if (!image.getBoundingClientRect().width) continue;
         const option = image.sizes.split(',').find(value => {
           const condition = value.trim().match(/^\([^)]+\)/);
           return !condition || win.matchMedia(condition[0]).matches;
@@ -104,6 +86,6 @@ for (const route of ['index', 'gallery']) {
     results.push(`${route} ${width}px: ${failures.length ? 'FAIL — ' + failures.join('; ') : 'PASS'}`);
   }
 }
-document.querySelector('#results').textContent = 'Checks: page destinations, Home / Photos labels, current-page state, matching normal-flow placement, focus/targets, frozen copy/captions, image sizes, disclosures.\n\n' + results.join('\n');
+document.querySelector('#results').textContent = 'Checks: fixed header, removed navigation, focus contrast, frozen copy/captions, image sizes, disclosures.\n\n' + results.join('\n');
 document.title = results.some(row => row.includes('FAIL')) ? 'FAIL: buyer quality' : 'PASS: buyer quality';
 </script>

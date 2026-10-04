@@ -5,20 +5,20 @@ primary_target: "index.html"
 related_targets: ["gallery.html"]
 ---
 
-# Buyer property listing
+# Buyer property narrative
 
-Mode: Persuade. Approved colonial-5bv brief supersedes earlier monograph composition. Weekend/second-home buyers; exact DOCX prose and ordered photographs. Local-only implementation.
+Mode: Persuade. User-directed revision, colonial-aap. Preserve seven approved paragraphs, original imagery, and listing facts. Local-only.
 
 ## Direction contract
 
-THESIS: Conventional photo-led property listing; refuse renovation scrapbook and owner-planning detours.
+THESIS: Walk through the home through photographs and uninterrupted prose, not labeled marketing blocks.
 
-OWN-WORLD: Pinned forest and warm paper, Georgia narrative, Arial facts, square photographs, restrained rules.
+OWN-WORLD: Greek Villa paper, Pewter Green masthead, Sea Salt and Debonair fields, Accessible Beige details, mahogany controls and cedar rules. Georgia prose; Arial facts.
 
-STORY: See house, scan dated price and facts, read exact seven paragraphs beside matching photographs, explore 33 photos, contact brokerage.
+STORY: See the house, scan facts, explore alternating photo narratives, enlarge details, contact brokerage.
 
-FIRST VIEWPORT: Compact forest masthead with brokerage action; Home / Photos navigation follows immediately on both routes, in normal flow with current page marked. DOCX view 1 dominates photo mosaic beside great room and porch; address, price and key facts follow.
+FIRST VIEWPORT: Fixed address and smaller locality at left; brokerage and showing access at right. Full-bleed exterior below. Facts dock beneath the header as the hero leaves.
 
-FORM: User-pinned Redfin/Zillow listing structure, no new seed or concept round. Native enlarged photo viewer with keyboard controls is sole interaction; no scroll effects, sticky photos, autoplay or invented motion.
+FORM: Exact user-pinned composition; no concept roll. Native scroll advances captioned images beside alternating paragraphs. No scroll capture or autoplay. Short screens and reduced motion retain ordinary photo browsing. All 33 photos have narrative homes and modal access.
 
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance

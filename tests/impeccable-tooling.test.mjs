@@ -24,18 +24,19 @@ test('Impeccable sidecar describes current listing tokens and breakpoints', () =
   assert.equal(sidecar.schemaVersion, 2);
   assert.deepEqual(Object.keys(sidecar.extensions.colorMeta).sort(), Object.keys(design.colors).sort());
   assert.deepEqual(Object.keys(sidecar.extensions.typographyMeta).sort(), Object.keys(design.typography).sort());
-  assert.deepEqual(sidecar.extensions.breakpoints.map(item => item.value), ['1000px', '700px']);
+  assert.deepEqual(sidecar.extensions.breakpoints.map(item => item.value), ['1100px', '1000px', '800px', '700px', '360px']);
   // Panel previews read each role independently; they cannot inherit from prose.
   for (const [name, role] of Object.entries(design.typography)) {
     assert.ok(role.fontFamily, `Missing preview font: ${name}`);
   }
-  assert.equal(design.typography['story-title-mobile'].lineHeight, 1.15);
-  assert.equal(design.typography['contact-title'].letterSpacing, '-0.02em');
-  assert.equal(design.typography['property-mark-mobile'].lineHeight, 1.65);
+  assert.equal(design.typography.narrative.lineHeight, 1.65);
+  assert.equal(design.typography.metadata.fontSize, '12px');
+  assert.equal(design.typography['property-mark-mobile'].lineHeight, 1.15);
+  assert.equal(design.colors['pewter-green'], '#5e6259');
   for (const component of sidecar.components) {
     assert.ok(design.components[component.refersTo], `Unknown component: ${component.refersTo}`);
   }
   assert.deepEqual(sidecar.extensions.shadows, []);
-  assert.deepEqual(sidecar.extensions.motion, []);
+  assert.equal(sidecar.extensions.motion[0].name, 'native-scroll-photo-step');
   assert.doesNotMatch(JSON.stringify(sidecar), /Quilt|Woodland Survey|Planning Table|Palette Swatch/);
 });

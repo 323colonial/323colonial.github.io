@@ -62,6 +62,24 @@ class Listing(unittest.TestCase):
         hero = next(img for img in page.all('img') if img.attrs.get('fetchpriority') == 'high')
         self.assertEqual(hero.attrs['src'], 'assets/listing/01.webp')
 
+    def test_narrative_photo_coverage_and_popouts(self):
+        page = Page('index.html').root
+        self.assertEqual([h.text() for h in page.all('h1')], ['323 Colonial Dr'])
+        self.assertFalse(page.all('h3'))
+        self.assertNotIn('About the home', page.text())
+        self.assertNotIn('A closer look', page.text())
+        stories = [s for s in page.all('section') if s.cls('story')]
+        self.assertEqual(len(stories), 7)
+        covered = {1}
+        for story in stories:
+            covered.update(int(a.attrs['data-photo']) for a in story.all('a') if 'data-photo' in a.attrs)
+        self.assertEqual(covered, set(range(1, 34)), 'Every photo has a narrative home')
+        plan = next(a for a in page.all('a') if a.attrs.get('data-photo') == '31')
+        self.assertIn('additional finished living space', plan.text())
+        self.assertIn('conceptual', plan.attrs['aria-label'].lower())
+        self.assertIn(plan.text(), plan.attrs['aria-label'], 'Speech input can target the visible link wording')
+        self.assertEqual({d.attrs['id'] for d in page.all('dialog')}, {'all-photos', 'photo-viewer'})
+
     def test_gallery_order_captions_and_disclosures(self):
         page = Page('gallery.html').root
         figures = [f for f in page.all('figure') if 'data-position' in f.attrs]
@@ -86,15 +104,12 @@ class Listing(unittest.TestCase):
     def test_public_navigation_and_listing_snapshot(self):
         for file in ('index.html', 'gallery.html'):
             page = Page(file).root
-            nav = next(n for n in page.all('nav') if n.attrs.get('aria-label') == 'Buyer navigation')
-            self.assertEqual([a.text() for a in nav.all('a')], ['Home', 'Photos'])
-            self.assertEqual([a.attrs['href'] for a in nav.all('a')], ['index.html', 'gallery.html'])
-            current = [a for a in nav.all('a') if 'aria-current' in a.attrs]
-            self.assertEqual([(a.attrs['href'], a.attrs['aria-current']) for a in current], [(file, 'page')])
-            siblings = [e for e in nav.parent.children if isinstance(e, Element)]
-            self.assertEqual(nav.parent.tag, 'body')
-            self.assertEqual(siblings[siblings.index(nav) - 1].tag, 'header')
-            self.assertEqual(siblings[siblings.index(nav) + 1].tag, 'main')
+            self.assertFalse(page.all('nav'), 'Redundant Home / Photos navigation removed')
+            header = page.all('header')[0]
+            self.assertIn('323 Colonial Dr', header.text())
+            self.assertIn('Berkeley Springs, WV 25411', header.text())
+            self.assertIn('Liz McDonald', header.text())
+            self.assertIn('Dandridge Realty Group LLC', header.text())
             self.assertIn('tel:3048857645', [a.attrs.get('href') for a in page.all('a')])
             self.assertIn('https://www.redfin.com/WV/Berkeley-Springs/323-Colonial-Dr-25411/home/21971085', [a.attrs.get('href') for a in page.all('a')])
             self.assertIn('Liz McDonald', page.text())
@@ -116,9 +131,7 @@ class Listing(unittest.TestCase):
             self.assertEqual(text.count('October 3, 2026'), 1, 'Only footer carries listing date')
             self.assertIn('Listing information as of October 3, 2026.', text)
             notes = [s.text() for s in page.all('span') if s.cls('photo-note')]
-            expected = []
-            if filename == 'gallery.html':
-                expected.append('Conceptual basement plan — not existing finished space.')
+            expected = ['Conceptual basement plan — not existing finished space.']
             self.assertEqual(notes, expected)
 
     def test_real_hot_tub_and_greenhouse_names(self):

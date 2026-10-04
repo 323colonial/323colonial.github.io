@@ -12,13 +12,15 @@ Prospective buyers are primary users. Realtors and the owner use the site as sup
 
 ## Product purpose
 
-Present a conventional photo-led listing for weekend and second-home buyers: understand the house, explore 33 ordered photographs, and contact the listing brokerage. Preserve the forest/warm-paper identity; Redfin/Zillow-style clarity replaces the renovation scrapbook.
+Present a photo-led narrative for weekend and second-home buyers: understand the house through seven exact paragraphs and coordinated photographs, explore all 33 images, and contact the listing brokerage. The owner-directed layout uses house colors, a full-width hero, fixed address/contact header and docking listing facts.
 
 ## Approved public brief · revised 4 October 2026
 
-- `index.html`: listing overview, about the home, property details, photo preview and contact. `gallery.html`: complete 33-position gallery with accessible enlarged viewing. Primary navigation is **Home / Photos**, linking to these two pages from the same normal-flow position below the masthead, with the current page marked (colonial-bqj). No sticky changing images, scroll effects or autoplay.
+- Current owner revision (colonial-aap) supersedes colonial-bqj layout: `index.html` has a full-width exterior hero, docking price/status/facts, seven heading-free alternating narrative/photo sections, then normal-flow Property Details. The persistent header reads **323 Colonial Dr**, with **Berkeley Springs, WV 25411** beneath; agent, brokerage, public listing and showing/call access live there. No duplicate address block, About heading, story subheadings, Home / Photos navbar, closing contact band or A closer look section.
+- Vertical native scrolling advances relevant captioned photographs; no scroll interception, timed autoplay, fades or parallax. Desktop paragraphs alternate sides. Mobile paragraphs precede their sticky photo sequence. Reduced motion or insufficient viewport height shows ordinary inline photographs instead. No-JavaScript links still work.
+- **View all 33 photos** opens a native gallery dialog; each thumbnail opens the shared enlarged viewer. `gallery.html` remains the ordered direct-link and no-JavaScript fallback. Contextual prose links open photos 15, 19, 24, 31 and 32; a separate laundry link opens 20. Hero plus narrative slides cover every other position. Photo 31 remains explicitly conceptual.
 - Preserve the **seven Replacement Listing Text paragraphs verbatim and in order**, from the owner-approved `Listing Feedback 323 Colonial Dr.docx` (colonial-5me). Copy is frozen in `tests/fixtures/approved-listing.json`, including the owner-reconfirmed **up to 7-gigabit** claim despite the contemporaneous MLS 5-gigabit wording.
-- Match each passage with captioned inline property imagery at all viewport sizes. Hero is preferred position 1, listing ID 5/72. Gallery follows the DOCX preferred positions/captions, not “OTHER PHOTOS.”
+- Match each passage with captioned property imagery at all viewport sizes. Hero is preferred position 1, listing ID 5/72, shown full width without cropping. Narrative sequencing follows the paragraph subject; the gallery retains DOCX preferred position/caption order, not “OTHER PHOTOS.”
 - Slot 6 uses the owner-supplied actual salt-water hot-tub photograph embedded in the revised DOCX, without a placeholder warning. The superseded [Olympic Hot Tub source](https://olympichottub.com/wp-content/uploads/2023/10/Hot-Spring-Flair-wBluetooth-Music-Chehalis_1.jpg) remains at `assets/listing/hottub-placeholder-source.jpg`, unused and unchanged; original house simulation `images/deck-hottub-v3.png` also remains untouched.
 - Owner-supplied laundry and basement images are actual photographs. Only position 31, the basement marketing plan, carries the short label **Conceptual basement plan — not existing finished space**. No expanded basement proposal or new basement page.
 - Per the final user request, remove routine “Listing photograph”, “Owner photograph”, seasonal/source caveats and repeated snapshot warnings from buyer pages. Retain exact DOCX captions and only the essential basement concept label. One footer per page reads **Listing information as of October 3, 2026.**
@@ -44,7 +46,7 @@ Secondary destination: [public Redfin listing](https://www.redfin.com/WV/Berkele
 
 ## Operating context and boundaries
 
-Static HTML/CSS and small progressive-enhancement `gallery.js`; no framework, dependency or build/runtime service. Native image links work without JavaScript. Public `listing.css` is isolated from legacy `styles.css`.
+Static HTML/CSS and small progressive-enhancement `gallery.js` / `listing.js`; no framework, dependency or build/runtime service. Native image and gallery links work without JavaScript. `listing.js` measures the header/facts and enables sticky photo sequences only when content fits; it respects reduced motion and preserves focused photo links. Public `listing.css` is isolated from legacy `styles.css`.
 
 This implementation is local-only: no push or deployment authorized. Before later publication, owner/brokerage should reconfirm price, status, measurements, advertised improvements and photography rights. The dated snapshot is not a promise of present availability.
 
@@ -52,7 +54,7 @@ Legacy `floorplans.html`, `brochure.html`, `sale-prep.html`, shared `styles.css`
 
 ## Brand commitments
 
-Name is 323 Colonial. Forest/warm-paper palette, restrained identity, Georgia narrative and compact sans-serif facts remain pinned. Exact approved listing prose takes precedence over editorial rewriting. “Quilt & Stone” remains the historical owner finish record, not a buyer-navigation destination.
+Name is 323 Colonial. Owner's website palette: Sherwin-Williams Greek Villa, Pewter Green, Debonair, Sea Salt and Accessible Beige, plus mahogany brown, stone and red cedar tones. Website values are screen approximations, not physical paint-match specifications or changes to the historical finish schedule below. Georgia narrative and Arial facts remain pinned. Exact approved listing prose takes precedence over editorial rewriting; contextual links wrap existing words without changing them. “Quilt & Stone” remains the historical owner finish record, not a buyer-navigation destination.
 
 ## Approved finish specification · 15 September 2026
 
@@ -94,4 +96,4 @@ python3 test_marketing_plans.py
 python3 -m http.server 8765 --bind 127.0.0.1
 ```
 
-Open `tests/hero-layout.html`, `tests/media-layout.html`, `tests/gallery-viewer.html`, `tests/table-contrast.html` and `tests/buyer-quality.html` through the local server. Each must report PASS. The buyer-quality fixture checks navigation labels, page destinations, current state, matching normal-flow placement, frozen copy/captions, focus contrast, disclosure names, 44px navigation targets and responsive image-slot hints across both buyer routes and breakpoint edges. Manually verify native Tab/Shift+Tab focus containment, Escape dismissal and return focus, mobile/desktop presentation, and no-JavaScript image links. The listing regression freezes exact copy/order, contact facts, local links/assets, source/derivative hashes and byte-identical legacy preservation.
+Open `tests/hero-layout.html`, `tests/media-layout.html`, `tests/gallery-viewer.html`, `tests/table-contrast.html`, `tests/buyer-quality.html`, `tests/narrative-scroll.html` and `tests/listing-fallbacks.html` through the local server. Each must report PASS. Fixtures cover responsive geometry, alternating sides, sticky-content fit, docking facts, forward/reverse photo progression, gallery/plan dialogs, contact access, frozen copy/captions, focus contrast, responsive image slots and disabled-script/reduced-motion fallbacks. Manually verify native Tab/Shift+Tab behavior, Escape dismissal and return focus. The Python listing regression freezes exact copy/order, all-33 narrative coverage, contact facts, local links/assets, source/derivative hashes, accessible link naming and byte-identical legacy preservation.

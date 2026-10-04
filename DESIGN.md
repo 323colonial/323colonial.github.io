@@ -1,153 +1,268 @@
 ---
-name: 323 Colonial
-description: Photo-led property listing with a restrained forest and warm-paper identity.
+name: "323 Colonial"
+description: "House-color property narrative with full-width photography, docking facts and native-scroll photo sequences."
 colors:
-  forest: "#183828"
-  ink: "#172c24"
-  paper: "#f7f6eb"
-  paper-strong: "#f3f0e6"
-  rule: "#98a096"
-  muted: "#536059"
-  white: "#ffffff"
-  viewer-backdrop: "rgb(10 24 17 / 90%)"
+  greek-villa: "#f0ece2"
+  pewter-green: "#5e6259"
+  debonair: "#90a0a6"
+  sea-salt: "#cdd2ca"
+  accessible-beige: "#d1c7b8"
+  mahogany: "#593a32"
+  cedar: "#8b523c"
+  stone: "#969187"
+  ink: "#252d29"
+  muted: "#50564f"
+  image-field: "rgb(240 236 226 / 25%)"
+  viewer-backdrop: "rgb(25 31 27 / 90%)"
 typography:
-  display:
+  property-mark:
     fontFamily: "Georgia, Times New Roman, serif"
-    fontSize: "clamp(32px, 3.2vw, 44px)"
+    fontSize: "clamp(24px, 2.5vw, 34px)"
     fontWeight: 400
     lineHeight: 1.15
     letterSpacing: "-0.025em"
-  body:
+  property-mark-mobile:
     fontFamily: "Georgia, Times New Roman, serif"
-    fontSize: "18px"
-    lineHeight: 1.65
+    fontSize: "25px"
+    fontWeight: 400
+    lineHeight: 1.15
+    letterSpacing: "-0.025em"
+  property-mark-small:
+    fontFamily: "Georgia, Times New Roman, serif"
+    fontSize: "22px"
+    fontWeight: 400
+    lineHeight: 1.15
+    letterSpacing: "-0.025em"
   headline:
     fontFamily: "Georgia, Times New Roman, serif"
     fontSize: "clamp(28px, 2.5vw, 36px)"
     fontWeight: 400
     lineHeight: 1.15
     letterSpacing: "-0.02em"
-  story-title:
+  body:
     fontFamily: "Georgia, Times New Roman, serif"
-    fontSize: "28px"
+    fontSize: "18px"
     fontWeight: 400
-    lineHeight: 1.15
-  story-title-mobile:
-    fontFamily: "Georgia, Times New Roman, serif"
-    fontSize: "25px"
-    fontWeight: 400
-    lineHeight: 1.15
-  contact-title:
-    fontFamily: "Georgia, Times New Roman, serif"
-    fontSize: "30px"
-    fontWeight: 400
-    lineHeight: 1.15
-    letterSpacing: "-0.02em"
-  property-mark:
-    fontFamily: "Georgia, Times New Roman, serif"
-    fontSize: "26px"
     lineHeight: 1.65
-  property-mark-mobile:
+  narrative:
     fontFamily: "Georgia, Times New Roman, serif"
-    fontSize: "23px"
+    fontSize: "clamp(18px, 1.48vw, 23px)"
+    fontWeight: 400
     lineHeight: 1.65
-  label:
-    fontFamily: "Arial, sans-serif"
-    fontSize: "14px"
-  note:
-    fontFamily: "Arial, sans-serif"
-    fontSize: "12px"
   location:
     fontFamily: "Arial, sans-serif"
     fontSize: "13px"
-    lineHeight: 1.4
+    fontWeight: 400
+    lineHeight: 1.5
+  header-detail:
+    fontFamily: "Arial, sans-serif"
+    fontSize: "13px"
+    fontWeight: 400
+    lineHeight: 1.6
+  control:
+    fontFamily: "Arial, sans-serif"
+    fontSize: "14px"
+    fontWeight: 700
+    lineHeight: 1.5
+  control-mobile:
+    fontFamily: "Arial, sans-serif"
+    fontSize: "12px"
+    fontWeight: 700
+    lineHeight: 1.5
+  supporting:
+    fontFamily: "Arial, sans-serif"
+    fontSize: "14px"
+    fontWeight: 400
+    lineHeight: 1.6
+  caption:
+    fontFamily: "Arial, sans-serif"
+    fontSize: "13px"
+    fontWeight: 400
+    lineHeight: 1.5
+  viewer-caption:
+    fontFamily: "Arial, sans-serif"
+    fontSize: "14px"
+    fontWeight: 400
+    lineHeight: 1.5
+  metadata:
+    fontFamily: "Arial, sans-serif"
+    fontSize: "12px"
+    fontWeight: 400
+    lineHeight: 1.5
+  footer:
+    fontFamily: "Arial, sans-serif"
+    fontSize: "12px"
+    fontWeight: 400
+    lineHeight: 1.6
+  status:
+    fontFamily: "Arial, sans-serif"
+    fontSize: "12px"
+    fontWeight: 400
+    lineHeight: 1.65
   detail:
     fontFamily: "Arial, sans-serif"
     fontSize: "16px"
+    fontWeight: 400
+    lineHeight: 1.5
   quick-facts:
     fontFamily: "Arial, sans-serif"
-    fontSize: "19px"
+    fontSize: "15px"
+    fontWeight: 400
+    lineHeight: 1.45
+  quick-facts-mobile:
+    fontFamily: "Arial, sans-serif"
+    fontSize: "12px"
+    fontWeight: 400
+    lineHeight: 1.45
+  fact-value:
+    fontFamily: "Arial, sans-serif"
+    fontSize: "20px"
+    fontWeight: 400
+    lineHeight: 1.45
+  fact-value-compact:
+    fontFamily: "Arial, sans-serif"
+    fontSize: "18px"
+    fontWeight: 400
+    lineHeight: 1.45
+  fact-value-mobile:
+    fontFamily: "Arial, sans-serif"
+    fontSize: "16px"
+    fontWeight: 400
+    lineHeight: 1.45
   price:
     fontFamily: "Arial, sans-serif"
-    fontSize: "32px"
+    fontSize: "30px"
     fontWeight: 700
     lineHeight: 1.2
-rounded:
-  default: "0"
+  price-mobile:
+    fontFamily: "Arial, sans-serif"
+    fontSize: "25px"
+    fontWeight: 700
+    lineHeight: 1.2
+  viewer-title:
+    fontFamily: "Arial, sans-serif"
+    fontSize: "16px"
+    fontWeight: 700
+    lineHeight: 1.4
+  viewer-control:
+    fontFamily: "Arial, sans-serif"
+    fontSize: "14px"
+    fontWeight: 400
+    lineHeight: 1.4
 components:
   button-primary:
-    backgroundColor: "{colors.forest}"
-    textColor: "{colors.paper}"
-    padding: "12px 20px"
-  button-paper:
-    backgroundColor: "{colors.paper}"
-    textColor: "{colors.forest}"
-    padding: "12px 20px"
-  text-link:
+    backgroundColor: "{colors.mahogany}"
+    textColor: "{colors.greek-villa}"
+    typography: "{typography.control}"
+    padding: "10px 18px"
+  button-primary-hover:
+    backgroundColor: "{colors.ink}"
+    textColor: "{colors.greek-villa}"
+  showing-disclosure:
+    textColor: "{colors.greek-villa}"
+    typography: "{typography.control}"
+    padding: "12px 16px"
+  gallery-link:
+    textColor: "{colors.mahogany}"
+    typography: "{typography.control}"
+  contact-panel:
+    backgroundColor: "{colors.greek-villa}"
     textColor: "{colors.ink}"
-    typography: "{typography.label}"
-  buyer-navigation:
+    typography: "{typography.supporting}"
+    padding: "24px"
+    width: "min(380px, calc(100vw - 32px))"
+  docking-facts:
+    backgroundColor: "{colors.greek-villa}"
     textColor: "{colors.ink}"
-    typography: "{typography.label}"
-    padding: "8px 0"
+    padding: "18px 40px"
+  narrative-photo-field:
+    backgroundColor: "{colors.image-field}"
+  scroll-cue:
+    textColor: "{colors.ink}"
+    typography: "{typography.metadata}"
   photo-note:
     textColor: "{colors.muted}"
-    typography: "{typography.note}"
+    typography: "{typography.metadata}"
+  photo-dialog:
+    backgroundColor: "{colors.greek-villa}"
+    textColor: "{colors.ink}"
+    padding: "20px 24px"
+    width: "min(1100px, calc(100% - 32px))"
 ---
 
 # Design System: 323 Colonial
 
 ## Overview
 
-**Photo-led property listing** retains the forest/warm-paper identity while using familiar property-listing structure. Actual property photography, scannable facts and brokerage contact take priority over owner planning. The approved brief pins this conventional presentation; no new decorative identity or scroll choreography.
+**Creative North Star: "House-color property narrative"**
 
-Buyer pages use `listing.css`. Legacy `floorplans.html`, `brochure.html` and `sale-prep.html` retain their original `styles.css` and Mountain House Monograph layout, unchanged and unlinked from buyer navigation. Historical Impeccable comps/build state describe that earlier composition, not the current public layout. `.impeccable/design.json` extends this document with current buyer component previews and breakpoints; it does not govern legacy pages.
+House colors frame real property photography and uninterrupted Georgia prose. Persistent address/contact access and compact Arial facts support a quiet, photo-led walk through the home. The owner-pinned composition is implemented in `index.html` and `gallery.html`, not a conventional listing mosaic.
+
+**Key Characteristics:**
+- Full-width photographs and alternating, heading-free narrative.
+- House-color fields, square controls and fine rules; no shadows.
+- Native scrolling with fit-aware inline fallbacks.
+
+Source: `listing.css`, `listing.js` and `gallery.js`; surface contract: `.impeccable/surfaces/index-html.md`. Supplied desktop/mobile finish-review captures in `.impeccable/review/` confirm the composition. This document governs buyer pages, not legacy `styles.css` or historical Impeccable comps.
 
 ## Colors
 
-Forest anchors masthead, contact band and primary controls. Warm paper is the page field; ink carries primary text. Muted green-grey carries photo numbers and essential labels; rule grey separates sections and facts. Strong paper supports the enlarged-image field.
+### Primary
+Pewter Green anchors the persistent masthead. Mahogany carries buttons, status, action links, selection and focus; Greek Villa provides their light counterpart.
 
-Palette contrast on paper: ink 13.60:1, forest 11.83:1, muted 6.07:1. Use paper text on forest; do not substitute low-contrast grey for contact-band copy.
+### Secondary
+Sea Salt, Debonair and Accessible Beige are broad narrative fields. The seven fields run Sea Salt, Greek Villa, Accessible Beige, Debonair, Greek Villa, Debonair, Accessible Beige.
+
+### Neutral
+Greek Villa is the page, facts and dialog field; Accessible Beige also backs enlarged images. Ink is primary text, muted green-grey is metadata, stone makes fine separators, and cedar marks the facts bar's lower edge. Translucent Greek Villa fills contain-fit narrative image slots; the dark translucent viewer backdrop separates modal focus.
+
+**The House Palette Rule.** These are screen approximations of the owner's colors, not physical paint-match specifications. CSS aliases resolve forest to Pewter Green, paper to Greek Villa, paper-strong to Accessible Beige and rule to stone.
 
 ## Typography
 
-Georgia gives headings and exact listing prose a restrained residential character. Arial makes facts, captions, navigation, price and controls easy to scan. Both use installed system fonts; no remote font requests.
+Georgia with Times New Roman/serif fallback carries address, section headings and prose; Arial/sans-serif carries facts, captions and controls. No font downloads. Frontmatter records literal source roles, including responsive variants, rather than inventing a new scale.
 
-Machine-readable roles above capture the current `listing.css` sizes, not a new CSS token layer. Each role includes its font family for standalone previews; label and note sizes serve several contexts with different line heights. Detail text is 16px, quick facts 19px (16px on mobile), property mark 26px (23px on mobile), masthead location 13px and contact heading 30px.
-
-Body is 18px with 1.65 line height; paragraph measure is bounded at 68ch. H1 scales from 32–44px; h2 from 28–36px; story headings are 28px, reducing to 25px on mobile. Captions are 14px and essential concept labels 12px; compact mosaic captions use 12px. Price uses bold 32px sans-serif and tabular numbers.
+Narrative is regular-weight fluid type, bounded to 65ch and reset to body size on mobile. Only Property details and the gallery introduction have section headings; the seven narrative passages have none. Price and counters use tabular numerals. Metadata bottoms out at 12px, including mobile facts annotations and dates; there are no 10px or 11px text roles. Captions remain distinct from the smaller essential concept note.
 
 ## Layout
 
-Content is capped at 1200px with 32px desktop gutters and 16px mobile gutters. The home mosaic uses a 2:1 grid: specified exterior on the left, great room and porch on the right. Address, price, key facts and dated status follow. Primary navigation sits immediately below the masthead and before content on both buyer pages, in normal document flow; it scrolls away without sticking or relocating.
+- **Persistent header:** CSS `position: sticky; top: 0`, not fixed positioning. Desktop minimum height 102px, padding 18px 40px; address/locality left, agent/public listing/showing disclosure right. Script measures actual header and facts heights for sticky offsets and anchor clearance.
+- **Hero and facts:** one full-width exterior at intrinsic aspect ratio, caption below. Facts begin after it in normal flow, then dock beneath the header. No duplicate address block. Desktop facts use a flex row; mobile uses two columns with facts spanning a second row.
+- **Narrative:** full-width fields with 56px 40px padding, 64px column gap, 45% text / 55% photos after gaps; even rows reverse sides. No 1200px cap here. Unenhanced photos stack with 28px gaps. At 800px and below, padding is 40px 20px and each paragraph precedes its photos.
+- **Details:** normal-flow closing section, 72px 40px padding; three-column definition list with 32px gaps and ruled cells. At 800px and below, padding becomes 48px 20px and the list has two columns with 20px gaps.
+- **Gallery and footer:** centered container capped at 1200px, 32px side gutters; gutters become 16px at 700px. Gallery starts at three columns with 40px row / 24px column gaps, drops to two at 1000px and one at 700px (32px gaps). Dialog width is capped at 1100px with 16px viewport margins; mobile padding is 16px.
 
-Story sections use equal text/photo columns, 56px apart; paired images share the photo column. At 700px and below, text and all matching captioned images stack in reading order. Supporting hero photos stay paired. Gallery uses three columns, two at 1000px, one at 700px. Images retain natural proportions; there is no CSS cover-cropping of watermarks or evidence. Responsive `sizes` follow each mosaic, story, preview and gallery slot, including gutters, gaps and the 1200px content cap. `tests/buyer-quality.html` checks these hints against rendered widths at each breakpoint.
+Responsive max-width boundaries: **1100px** hides the header agent and compacts facts; **1000px** changes gallery columns and limits summary action width; **800px** switches header, facts, narrative and details layouts (header minimum 88px); **700px** changes gallery, container and viewer layout; **360px** tightens header gutters and stacks the facts annotation. Hidden header information remains available through the showing disclosure.
 
-Major sections separate by 64px desktop / 40px mobile. Story rows use 40px desktop / 32px mobile vertical padding. Contact is a two-column forest band, stacking on mobile. No sticky photographs, scroll effects, smooth-scroll animation or autoplay.
+**The Native Scroll Rule.** Scroll position selects discrete captioned photographs; it does not animate or capture scrolling. On desktop the whole narrative stage sticks below header and facts plus 24px; on mobile only the photo sequence sticks, with 16px clearance after the paragraph. Steps are `max(240px, half the viewport height)`. Forward and reverse scrolling update the count, and a focused photo stays visible until focus leaves it.
+
+Reduced motion, less than 300px available height, or desktop copy taller than the available space disables sequencing for that section. All its photographs then remain inline. No JavaScript also leaves inline photos and working gallery links. Print removes sticky positioning and exposes every narrative photo. There are no timed transitions, autoplay, fades or parallax.
 
 ## Elevation & Depth
 
-Flat surfaces, no shadows. Hairline rules and forest fields establish hierarchy. Native modal viewer uses a dark-green backdrop (`rgb(10 24 17 / 90%)`) solely to distinguish protected viewing focus from the inert page behind it.
+No shadows or blur. Tonal fields and 1px rules provide separation. The header layers above docking facts (z-index 20 / 10); its bordered contact panel opens below it. Native dialogs use the browser top layer and the recorded translucent backdrop. The contact panel and dialogs scroll within viewport-height limits.
 
 ## Shapes
 
-Square image frames and controls, no rounded cards. Photographs are content, not background decoration. Aspect ratios stay intrinsic, including portrait-like source imagery and the conceptual drawing.
+Square controls and image frames, without rounded cards or decorative clipping. Hero and inline photos retain natural proportions; sequenced and enlarged images use contain-fit. Source watermarks and image borders remain pixels, not new UI decoration.
 
 ## Components
 
-- **Navigation:** Home / Photos link to `index.html` / `gallery.html`, without section fragments. Sans-serif links have 44px minimum width and height and wrap on narrow screens. Exactly one `aria-current="page"` link stays bold and underlined. Brokerage contact remains a separate masthead action; contextual photo links retain their specific gallery targets.
-- **Brokerage controls:** forest on paper or paper on forest, 44px minimum height, explicit brokerage wording. Hover darkens the field or adds an underline.
-- **Focus:** visible 3px forest outline on paper, paper outline within the forest masthead/contact band, with 4px offset; each route begins with a keyboard-visible skip link.
-- **Photo records:** image link and exact approved caption. Routine source notes are omitted; provenance stays in the asset manifest. Only the conceptual basement plan carries a short attached label: explicitly not existing finished space. Its image-link accessible name includes the same disclosure. Gallery numbers represent real sequence, not decoration. Position 6 is the actual salt-water hot-tub photograph, with no placeholder warning.
-- **Enlarged viewer:** native `<dialog>`, labeled title and caption, Previous / Next, Close, full-size fallback. Arrow keys navigate, Escape dismisses, focus returns to the opener. Image-load failure exposes recovery text. Images use contain-fit, never crop-fit.
-- **No-JavaScript fallback:** gallery image links open the optimized full-size asset directly. No framework or runtime fetch is required.
+- **Address/contact header:** address is the home link; locality stays visible. Native See in person disclosure contains agent, brokerage call and public listing links. Escape closes it and restores summary focus when no dialog is open; outside clicks close it.
+- **Actions:** mahogany buttons with paper text, 1px border and 44px minimum height. Hover switches to ink and underlines. Showing disclosure has a paper outline; text links use underlines, with mahogany assigned to the gallery action. Mobile disclosure/gallery action type uses the compact control role.
+- **Focus:** 3px mahogany outline with 4px offset; paper outline in the masthead, mahogany again inside its paper contact panel. Each page starts with a focus-revealed skip link.
+- **Docking facts:** price/status, four facts, all-photos action and expected date; cedar lower rule. No sticky contact band at the end.
+- **Narrative photo sequence:** exact caption beneath each visible image, then a stone-ruled Scroll to explore cue and current/total counter when enhancement fits. Contextual prose links open photos 15, 19, 24, 31 and 32; separate laundry link opens 20.
+- **Photo catalog/viewer:** View all 33 photos opens a native catalog dialog. Thumbnails and contextual links open the shared enlarged viewer with caption, Previous / Next, adjacent previews, full-size link and Close. Arrows navigate with wraparound; Escape dismisses and focus returns to the opener. Concept images are omitted from tiny adjacent previews. Failed loads expose recovery text. Without enhancement, `gallery.html` preserves ordered thumbnail links to full-size assets.
+- **Concept note:** only photo 31 carries “Conceptual basement plan — not existing finished space.” Its accessible links disclose that distinction while preserving visible link wording. Routine source/seasonal labels are absent; photo 6 is the actual hot tub.
+- **Property details/footer:** compact definition grid followed by one dated listing footer per page. No invented cards, inputs, tags or navigation primitives.
 
 ## Do's and Don'ts
 
-- **Do** preserve exact approved prose, caption order, image provenance and watermarks.
-- **Do** distinguish actual property photography and listing facts from conceptual drawings.
-- **Do** show the listing date once in each footer and keep brokerage contact explicit.
-- **Do** keep buyer styling isolated from legacy pages and assets.
-- **Don't** present a placeholder, simulation or plan as evidence of existing property condition.
-- **Don't** reintroduce owner paint planning or rough main/upstairs drawings into buyer navigation.
-- **Don't** add animation, sticky changing images, autoplay, remote fonts or runtime dependencies.
+- Do preserve the seven approved paragraphs, exact captions, watermarks and conceptual-plan disclosure.
+- Do keep contact access, visible keyboard focus and ordinary links available.
+- Do use the existing system fonts, static assets and dependency-free enhancement.
+- Do keep buyer styling isolated from unchanged legacy pages and assets.
+- Don't replace the approved composition with a mosaic, story headings, Home / Photos navbar or closing contact band.
+- Don't crop property evidence with cover-fit or present the conceptual plan as existing finished space.
+- Don't intercept scrolling, add timed autoplay, fades or parallax, or remove reduced-motion and short-screen fallbacks.

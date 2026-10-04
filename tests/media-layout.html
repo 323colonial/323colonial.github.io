@@ -21,7 +21,7 @@ for (const route of ['index', 'gallery', 'brochure', 'floorplans', 'sale-prep'])
     const check = (ok, message) => { if (!ok) failures.push(message); };
     const inside = (a, b) => a.left >= b.left - 1 && a.right <= b.right + 1 && a.top >= b.top - 1 && a.bottom <= b.bottom + 1;
     await doc.fonts.ready;
-    const figures = [...doc.querySelectorAll('.media-record, .record-lead figure, .plan-sheet')];
+    const figures = [...doc.querySelectorAll('.media-record, .record-lead figure, .plan-sheet')].filter(figure => figure.getBoundingClientRect().width > 0);
     check(figures.length > 0, 'no media found');
     for (const figure of figures) {
       const img = figure.querySelector('img');
@@ -29,6 +29,7 @@ for (const route of ['index', 'gallery', 'brochure', 'floorplans', 'sale-prep'])
       await img.decode().catch(() => check(false, `image decode: ${img.src}`));
     }
     for (const figure of figures) {
+      if (figure.closest('.story')) figure.querySelector('a').focus({preventScroll: true});
       const caption = figure.querySelector('figcaption');
       const img = figure.querySelector('img');
       const name = caption.textContent.trim();
@@ -38,7 +39,7 @@ for (const route of ['index', 'gallery', 'brochure', 'floorplans', 'sale-prep'])
       check(imageBox.bottom <= captionBox.top + 1, `${name}: image overlaps caption`);
       const ratio = frame.contentWindow.getComputedStyle(img).aspectRatio;
       const expected = ratio.startsWith('auto') ? img.naturalWidth / img.naturalHeight : ratio.split('/').map(Number).reduce((a, b) => a / b);
-      check(Math.abs(imageBox.width / imageBox.height - expected) < .02, `${name}: image proportions changed`);
+      check(frame.contentWindow.getComputedStyle(img).objectFit === 'contain' || Math.abs(imageBox.width / imageBox.height - expected) < .02, `${name}: image proportions changed`);
       for (const target of [...caption.children, ...(caption.children.length ? [] : [caption]), ...figure.querySelectorAll('.status-label')]) {
         target.scrollIntoView({block: 'center', behavior: 'instant'});
         const box = target.getBoundingClientRect();

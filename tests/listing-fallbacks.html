@@ -1,0 +1,33 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Listing fallback regression</title>
+<h1>Listing fallback regression</h1>
+<pre id="results">Running…</pre>
+<iframe title="Fallback listing" style="width:390px;height:844px;border:0"></iframe>
+<script type="module">
+const frame = document.querySelector('iframe');
+const source = await fetch('../index.html').then(r => r.text());
+const results = [];
+const check = (ok, name) => results.push(`${ok ? 'PASS' : 'FAIL'}: ${name}`);
+for (const mode of ['no JavaScript', 'reduced motion']) {
+  // Test the actual static page with script execution disabled, or a deterministic media preference.
+  if (mode === 'no JavaScript') frame.setAttribute('sandbox', 'allow-same-origin');
+  else frame.removeAttribute('sandbox');
+  const media = mode === 'reduced motion' ? `<script>const nativeMatchMedia = window.matchMedia; window.matchMedia = query => nativeMatchMedia.call(window, query === '(prefers-reduced-motion: reduce)' ? '(min-width: 0px)' : query);<\/script>` : '';
+  await new Promise(resolve => {
+    frame.onload = resolve;
+    frame.srcdoc = source.replace('<head>', `<head><base href="${new URL('../', location.href)}">${media}`);
+  });
+  const doc = frame.contentDocument;
+  await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+  check(!doc.querySelector('.is-scrolling'), `${mode}: no scroll choreography`);
+  check([...doc.querySelectorAll('.story-photos figure')].every(f => !f.hidden && f.getBoundingClientRect().height > 0), `${mode}: every narrative image visible`);
+  check(doc.querySelector('[data-all-photos]').getAttribute('href') === 'gallery.html', `${mode}: all-photo link has page fallback`);
+  check(doc.querySelector('[data-photo="31"]').getAttribute('href') === 'gallery.html#photo-31', `${mode}: plan link has disclosed gallery fallback`);
+  doc.querySelector('.showing-contact').open = true;
+  check(doc.querySelector('.contact-panel .button').getBoundingClientRect().height >= 44, `${mode}: brokerage action accessible`);
+  check(doc.documentElement.scrollWidth <= 390, `${mode}: no horizontal overflow`);
+}
+document.querySelector('#results').textContent = results.join('\n');
+document.title = results.some(row => row.startsWith('FAIL')) ? 'FAIL: listing fallbacks' : 'PASS: listing fallbacks';
+</script>

@@ -44,8 +44,8 @@ def main() -> None:
     assert not re.search(r"@media \(max-width: 640px\)[\s\S]*?\.data-table \{[^}]*min-width: 640px", css), "mobile tables still force horizontal scrolling"
 
     design = Path("DESIGN.md").read_text()
-    assert "Photo-led property listing" in design, "approved design direction is undocumented"
-    assert "#183828" in design, "shipped forest token is undocumented"
+    assert "House-color property narrative" in design, "approved design direction is undocumented"
+    assert "#5e6259" in design, "shipped Pewter Green token is undocumented"
     assert "The Woodland Survey" not in design, "superseded design direction remains"
 
     for page in PAGES:
