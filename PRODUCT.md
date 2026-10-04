@@ -12,30 +12,47 @@ Prospective buyers are primary users. Realtors and the owner use the site as sup
 
 ## Product purpose
 
-Present 323 Colonial clearly enough for a prospective buyer to understand the house, explore its rooms and outdoor living, and request a showing. Three public destinations—The house, Gallery and Floor plans—describe the finished house. Owner colour decisions and budgets remain separate from the buyer journey.
+Present a conventional photo-led listing for weekend and second-home buyers: understand the house, explore 33 ordered photographs, and contact the listing brokerage. Preserve the forest/warm-paper identity; Redfin/Zillow-style clarity replaces the renovation scrapbook.
 
-## Positioning
+## Approved public brief · 3 October 2026
 
-Site ties property claims to house photography, verified facts, approved owner improvements or reference plans. Buyer copy describes approved improvements as complete under a strict pre-publication confirmation gate; simulated images remain explicitly identified.
+- `index.html`: Overview / About the home / Property details / Photos / Contact. `gallery.html`: complete 33-position gallery with accessible enlarged viewing. No sticky changing images, scroll effects or autoplay.
+- Preserve the **seven Replacement Listing Text paragraphs verbatim and in order**, from the owner-approved `Listing Comments 323 Colonial Dr.docx`. Copy is frozen in `tests/fixtures/approved-listing.json`, including the owner-reconfirmed **up to 7-gigabit** claim despite the contemporaneous MLS 5-gigabit wording.
+- Match each passage with captioned inline property imagery at all viewport sizes. Hero is preferred position 1, listing ID 5/72. Gallery follows the DOCX preferred positions/captions, not “OTHER PHOTOS.”
+- Slot 6 uses the [owner-selected Olympic Hot Tub placeholder](https://olympichottub.com/wp-content/uploads/2023/10/Hot-Spring-Flair-wBluetooth-Music-Chehalis_1.jpg), replacing the initially approved simulation at the user’s request during implementation. Keep the short label **Placeholder photo — not this property**. Olympic Hot Tub source credit and URL stay in the provenance manifest; do not claim matching make/model or setting. Original downloaded JPEG is `assets/listing/hottub-placeholder-source.jpg`; original house simulation `images/deck-hottub-v3.png` remains untouched. Confirm reuse rights or replace with authorized property photography before any future public deployment.
+- Owner-supplied laundry and basement images are actual photographs. Only position 31, the basement marketing plan, carries the short label **Conceptual basement plan — not existing finished space**. No expanded basement proposal or new basement page.
+- Per the final user request, remove routine “Listing photograph”, “Owner photograph”, seasonal/source caveats and repeated snapshot warnings from buyer pages. Retain exact DOCX captions and only the two essential placeholder/concept labels. One footer per page reads **Listing information as of October 3, 2026.**
+- Prior-listing seasonal provenance remains in the manifest and Bright MLS watermarks remain in the pixels. Safe crop derivatives remove viewer chrome or specified distracting edges; originals stay untouched. Position 12's already-truncated windows cannot be restored by cropping and are not invented.
 
-## Operating context
+## Listing snapshot and contact
 
-Static site uses GitHub Pages. This rewrite is local, not authorization to push or publish. Before publication, the owner/realtor must confirm every advertised improvement is complete and provide authorized fresh listing photography. Until then, retained Bright MLS prior-listing images are identified as such and may show earlier finishes.
+Verified against Redfin / Bright MLS on **October 3, 2026**, not a live feed:
 
-## Capabilities and constraints
+| Fact | Value |
+| --- | --- |
+| Price | $499,000 USD |
+| Bedrooms / baths | 2 bedrooms; 2 full baths and 1 half bath |
+| Finished area | 2,081 sq ft above grade; 0 finished sq ft below grade |
+| Land | 2.90 estimated acres, including additional parcels |
+| Built / HOA | 2008 / none |
+| Status | Coming Soon; expected on market October 8, 2026 |
+| MLS | WVMO2008198 |
 
-- Keep site as static HTML and CSS with no build step.
-- Public navigation: The house (`index.html`), Gallery (`gallery.html`), Floor plans (`floorplans.html`), plus Request a showing via `realtor@stevenhay.com`.
-- Public AI-edited imagery carries the exact attached label **Digitally simulated image**. Colours and staging are approximate.
-- Do not publish finished-house copy until advertised upgrades are confirmed complete. The basement remains unfinished; preserve two bedrooms, two full baths and one half bath.
-- Owner records remain at `brochure.html` and `sale-prep.html`, unlinked from public pages, with owner navigation and `noindex, nofollow`. They are URL-accessible, not private or authenticated.
-- Describe budget figures as estimates, not quotes.
-- Preserve verified house facts and owner decisions.
-- Treat basement drawings as pricing information, not construction or permit documents.
+Primary CTA: **Contact listing brokerage**, `tel:3048857645`, displayed 304-885-7645. Listing agent: **Liz McDonald**, **Dandridge Realty Group LLC**. Phone is the brokerage office, not a direct Liz line or the separate Redfin tour-agent number.
+
+Secondary destination: [public Redfin listing](https://www.redfin.com/WV/Berkeley-Springs/323-Colonial-Dr-25411/home/21971085). Never publish the email-specific MLS portal URL. Status must not automatically become Active on the expected date.
+
+## Operating context and boundaries
+
+Static HTML/CSS and small progressive-enhancement `gallery.js`; no framework, dependency or build/runtime service. Native image links work without JavaScript. Public `listing.css` is isolated from legacy `styles.css`.
+
+This implementation is local-only: no push or deployment authorized. Before later publication, owner/brokerage should reconfirm price, status, measurements, advertised improvements and photography rights. The dated snapshot is not a promise of present availability.
+
+Legacy `floorplans.html`, `brochure.html`, `sale-prep.html`, shared `styles.css`, and all prior images/assets remain byte-identical and unlinked from the buyer journey. Owner records retain their noindex metadata and original planning/purchasing caveats; URL-accessible does not mean private. Old main/upstairs drawings and old finish simulations are not buyer content.
 
 ## Brand commitments
 
-Name is 323 Colonial. Voice is specific, factual, and restrained. Avoid listing hype. "Quilt & Stone" names confirmed colour scheme. Existing greens, warm white, stone grey, oak, and fieldstone come from house and its setting, but visual implementation belongs in DESIGN.md rather than this record.
+Name is 323 Colonial. Forest/warm-paper palette, restrained identity, Georgia narrative and compact sans-serif facts remain pinned. Exact approved listing prose takes precedence over editorial rewriting. “Quilt & Stone” remains the historical owner finish record, not a buyer-navigation destination.
 
 ## Approved finish specification · 15 September 2026
 
@@ -55,20 +72,26 @@ Sherwin-Williams · 814 S Loudoun St, Winchester, VA 22601-4597.
 - Owner reports mostly sound, faded deck coating with little peeling. Confirm product compatibility, cleaning, prep, primer and tint base with the Winchester store; no base or formula is verified here.
 - [Traditional Mahogany SW 3080](https://www.sherwin-williams.com/homeowners/color/find-and-explore-colors/stain-colors/SW3080-traditional-mahogany) replaces Dark Walnut for the deck. The approximate CSS swatch references the [manufacturer’s screen swatch](https://sherwin.scene7.com/is/image/sw/db3080tradmahogany_s); verify physical chips in daylight.
 - Existing walnut deck and porch simulations are earlier concepts, not exact Traditional Mahogany matches. Preserve assets and provenance; disclose that mismatch beside deck images rather than relabeling their pixels as newly recoloured.
-- `brochure.html` holds the owner purchase specification; `index.html#paint-colors` holds the buyer finish schedule. Historical sale-prep prices remain estimates, not current product quotes. The pre-publication completion and photography gate still applies.
+- `brochure.html` holds the owner purchase specification; the buyer finish schedule was removed from the public journey by colonial-5bv. Historical sale-prep prices remain estimates, not current product quotes. The pre-publication completion and photography gate still applies.
 
-## Evidence on hand
+## Evidence and regeneration
 
-- `images/photo-*.jpg`: prior-listing photographs. MLS watermark remains, so public listing needs new photography.
-- Other property imagery in `images/`: AI visualisations based on house photographs. Public captions identify digital simulation; owner records retain their planned-work status and original caveats.
-- `images/plan-A-4.png` and `images/plan-A-5.png`: rough main-floor and second-floor plans derived from sketch and photographs, not field measurements.
-- `sale-prep.html`: owner decisions and budgeting ranges for paint, faucets, cabinet hardware, and landscaping.
-- Basement drawing set and pricing history exist in separate CAD project and convey with house.
+- Original DOCX remains at `/Users/hays/Downloads/Listing Comments 323 Colonial Dr.docx`, unchanged; not copied into the public site. Approved document, embedded media and legacy file SHA-256 hashes live in `tests/fixtures/approved-listing.json`.
+- `assets/listing/manifest.json` maps all 33 positions to source relationship targets (or the approved placeholder URL/local source), exact captions, crop rectangles/decisions and output hashes. Derivatives are WebP at maximum 1600px and 720px, quality 78, with no upscaling or new generative edits.
+- Reproduce with installed ImageMagick: `python3 scripts/extract-listing.py '/path/to/Listing Comments 323 Colonial Dr.docx'`. Extraction rejects a source that differs from the approved hashes. No extraction is required to serve the committed website.
+- Legacy `images/photo-*.jpg`, simulation sources, `images/planned-colours.json`, old reference plans and `assets/plates/` remain untouched. Basement drawing/pricing history lives in a separate CAD project.
+- Existing Impeccable mock/build artifacts and design sidecar describe the superseded monograph composition; they are not authority over this approved brief. Sidecar/tool maintenance is outside this task.
 
-## Product principles
+## Verification
 
-- Let prospective buyers see the actual house and reach a showing request quickly.
-- Separate photographic evidence from digital simulation, and keep physical completion verification at the publication gate.
-- Make every material claim traceable to house evidence or an approved owner decision; never invent appliance brands, models or installation dates.
-- Keep owner planning and pricing records outside public navigation.
-- Keep source plain enough to review without a framework or build tool.
+Run from repository root:
+
+```sh
+node --test tests/*.test.mjs
+python3 tests/test_listing.py
+python3 test_design.py
+python3 test_marketing_plans.py
+python3 -m http.server 8765 --bind 127.0.0.1
+```
+
+Open `tests/hero-layout.html`, `tests/media-layout.html`, `tests/gallery-viewer.html` and `tests/table-contrast.html` through the local server. Each must report PASS. Manually verify native Tab/Shift+Tab focus containment, Escape dismissal and return focus, mobile/desktop presentation, and no-JavaScript image links. The listing regression freezes exact copy/order, contact facts, local links/assets, source/derivative hashes and byte-identical legacy preservation.

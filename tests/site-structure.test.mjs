@@ -3,7 +3,8 @@ import { existsSync, readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import test from 'node:test';
 
-const publicPages = ['index.html', 'gallery.html', 'floorplans.html'];
+// Legacy routes retain their original contract; tests/test_listing.py covers new buyer pages.
+const publicPages = ['floorplans.html'];
 const ownerPages = ['brochure.html', 'sale-prep.html'];
 const pages = [...publicPages, ...ownerPages];
 const html = Object.fromEntries(pages.map((file) => [file, existsSync(file) ? readFileSync(file, 'utf8') : '']));
@@ -18,77 +19,6 @@ for (const file of publicPages) {
     assert.doesNotMatch(html[file], /<style\b/i);
   });
 }
-
-test('home keeps feature words separated when mobile line breaks hide', () => {
-  const page = html['index.html'];
-  assert.match(page, /Cathedral<br>\s+glass/);
-  assert.match(page, /Fieldstone<br>\s+chimney/);
-  assert.match(page, /Screened<br>\s+porch/);
-});
-
-test('home introduces bedroom and bath facts before features', () => {
-  const intro = html['index.html'].split('<aside class="hero-summary">')[1].split('<ul')[0];
-  assert.match(intro, /2 bedrooms · 2 full baths · 1 half bath/);
-});
-
-test('public sitemap contains three destinations, not owner records', () => {
-  for (const file of publicPages) {
-    const nav = html[file].match(/<nav[^>]*aria-label="Buyer navigation"[^>]*>([\s\S]*?)<\/nav>/)?.[1] || '';
-    const links = [...nav.matchAll(/<a\b([^>]*)>([^<]+)<\/a>/g)];
-    assert.deepEqual(links.map((link) => link[2]), ['The house', 'Gallery', 'Floor plans'], file);
-    assert.deepEqual(links.map((link) => link[1].match(/href="([^"]+)"/)[1]), publicPages, file);
-    assert.equal(links.filter((link) => link[1].includes('aria-current="page"')).length, 1, file);
-    assert.match(links[publicPages.indexOf(file)][1], /aria-current="page"/);
-    assert.doesNotMatch(html[file], /brochure\.html|sale-prep\.html|Planning records|Working notes|Paint takeoff|Budgeting|product (?:TBD|not selected)|Planned-work visualisation/i);
-  }
-});
-
-test('home describes finished rooms and outdoor living without adding bedrooms', () => {
-  const page = html['index.html'];
-  for (const fact of [/red oak/i, /granite/i, /Venetian Bronze/, /antiqued.brass/i, /Debonair/, /Oyster Bay/, /Sea Salt/, /Traditional Mahogany/, /hot tub[\s\S]*open dark sky/i, /unfinished walk-out basement/i]) assert.match(page, fact);
-  assert.doesNotMatch(page.replace(/<[^>]*>/g, ''), /will be|planned|sale-prep|honestly shown|overflow sleeping/i);
-  const afterOutdoors = page.slice(page.indexOf('id="outdoors"')).split('</section>')[1];
-  assert.match(afterOutdoors, /class="showing-band"/);
-  assert.match(afterOutdoors, />Request a showing<\/a>/);
-});
-
-test('home restores paint swatches in a compact room detail', () => {
-  const rooms = html['index.html'].split('id="rooms"')[1].split('</section>')[0];
-  const detail = rooms.match(/<details class="paint-palette" id="paint-colors">([\s\S]*?)<\/details>/)?.[1];
-  assert.ok(detail, 'collapsed paint detail missing from room section');
-  assert.match(detail, /<summary>Paint colors &amp; finishes<\/summary>/);
-  assert.match(detail, /Sherwin-Williams/);
-  assert.match(detail, /Screen swatches are approximate; verify physical chips in daylight/);
-  const swatches = [...detail.matchAll(/<div class="swatch swatch--[^\"]+">([\s\S]*?)<\/p><\/div>/g)];
-  assert.equal(swatches.length, 6);
-  for (const [index, name, code, room] of [
-    [0, 'Alabaster', 'SW 7008', 'Hallway'],
-    [1, 'Debonair', 'SW 9139', 'Main-floor bedroom'],
-    [2, 'Sea Salt', 'SW 6204', 'Both full baths'],
-    [3, 'Oyster Bay', 'SW 6206', 'Upstairs bedroom and walk-in'],
-    [4, 'Pewter Green', 'SW 6208', 'Front, back and garage doors'],
-    [5, 'Traditional Mahogany', 'SW 3080', 'Deck floor'],
-  ]) {
-    for (const text of [name, code, room]) assert.ok(swatches[index][1].includes(text), text);
-    assert.match(swatches[index][1], /class="swatch-color" aria-hidden="true"/);
-  }
-});
-
-test('public photographs retain provenance and every edited image has attached disclosure', () => {
-  for (const file of publicPages) {
-    assert.match(html[file], /Prior-listing photo/i);
-    assert.match(html[file], /Bright MLS/);
-    for (const figure of html[file].matchAll(/<figure\b[\s\S]*?<\/figure>/g)) {
-      const src = figure[0].match(/<img[^>]*src="([^"]+)"/)?.[1];
-      if (!src || /(?:photo-|plan-)/.test(src) || src === 'assets/plates/room-photo.png') continue;
-      assert.match(figure[0], /<span class="status-label">Digitally simulated image<\/span>/, `${file}: ${src}`);
-    }
-  }
-  assert.match(html['index.html'], /assets\/plates\/exterior-photo\.png/);
-  assert.match(html['gallery.html'], /images\/primary-debonair\.webp/);
-  assert.match(html['gallery.html'], /images\/deck-hottub-v3\.png/);
-  assert.match(html['gallery.html'], /colours and staging are approximate/i);
-});
 
 test('owner records remain separate and preserve purchasing caveats', () => {
   for (const file of ownerPages) {
@@ -131,8 +61,7 @@ test('public floorplans use marketing crops and approximate areas', () => {
     assert.match(plans, new RegExp(`href="${path}"`), 'full-size plan must be accessible');
   }
   assert.doesNotMatch(plans, /Sheet A-|verify every dimension|Orientation and pricing only/i);
-  assert.equal((html['index.html'].match(/images\/plan-main-marketing\.png/g) || []).length, 2);
-  for (const file of ['index.html', 'floorplans.html']) {
+  for (const file of ['floorplans.html']) {
     assert.doesNotMatch(html[file], /(?:images\/plan-A-[45]|assets\/plates\/plan-image)\.png/);
   }
 });
@@ -200,7 +129,6 @@ test('approved paint palette uses matching planned images, not superseded render
 
 test('finish schedule records approved products without obsolete paint quantities', () => {
   const product = readFileSync('PRODUCT.md', 'utf8');
-  const publicSwatches = html['index.html'].match(/<div class="swatch swatch--[^\"]+">[\s\S]*?<\/p><\/div>/g);
   const rows = [...html['brochure.html'].matchAll(/<tr>[\s\S]*?<\/tr>/g)].map(([row]) => row);
   for (const [name, code, surface, finish] of [
     ['Alabaster', '7008', /hallway/i, 'Emerald Interior Matte'],
@@ -214,7 +142,6 @@ test('finish schedule records approved products without obsolete paint quantitie
     assert.match(row, surface, `${name}: owner surface`);
     for (const text of [name, `SW ${code}`, finish]) {
       assert.ok(row.includes(text), `${name}: owner ${text}`);
-      assert.ok(publicSwatches.find((swatch) => swatch.includes(name))?.includes(text), `${name}: public ${text}`);
       assert.ok(product.split('\n').find((line) => line.startsWith('|') && line.includes(name))?.includes(text), `${name}: durable ${text}`);
     }
   }
@@ -226,7 +153,7 @@ test('finish schedule records approved products without obsolete paint quantitie
   }
   const painting = html['sale-prep.html'].split('aria-labelledby="painting-heading"')[1].split('</section>')[0];
   assert.doesNotMatch(painting, /\bgal(?:lon)?s?\b|\bqt\b|product (?:TBD|not selected)/i);
-  for (const file of ['index.html', 'gallery.html', ...ownerPages]) {
+  for (const file of ownerPages) {
     for (const [figure] of html[file].matchAll(/<figure\b[\s\S]*?<\/figure>/g)) {
       if (/images\/(?:deck-3-walnut|deck-hottub-v3)\.png/.test(figure)) {
         assert.match(figure, /Earlier walnut concept; not an exact Traditional Mahogany match/, `${file}: deck disclosure`);

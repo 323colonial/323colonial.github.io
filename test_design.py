@@ -44,18 +44,19 @@ def main() -> None:
     assert not re.search(r"@media \(max-width: 640px\)[\s\S]*?\.data-table \{[^}]*min-width: 640px", css), "mobile tables still force horizontal scrolling"
 
     design = Path("DESIGN.md").read_text()
-    assert "Mountain House Monograph" in design, "approved design direction is undocumented"
+    assert "Photo-led property listing" in design, "approved design direction is undocumented"
     assert "#183828" in design, "shipped forest token is undocumented"
     assert "The Woodland Survey" not in design, "superseded design direction remains"
 
     for page in PAGES:
         html = Path(page).read_text()
         assert '<meta name="viewport" content="width=device-width, initial-scale=1">' in html, f"{page}: viewport metadata missing"
-        assert '<link rel="stylesheet" href="styles.css">' in html, f"{page}: shared stylesheet missing"
+        css_file = 'listing.css' if page in ('index.html', 'gallery.html') else 'styles.css'
+        assert f'<link rel="stylesheet" href="{css_file}">' in html, f"{page}: stylesheet missing"
         assert not re.search(r"<style\b", html, re.I), f"{page}: embedded stylesheet remains"
         assert not re.search(r"\sstyle=", html, re.I), f"{page}: inline style remains"
 
-    print(f"PASS: Mountain House Monograph system wired across {len(PAGES)} pages")
+    print(f"PASS: isolated buyer and legacy styles wired across {len(PAGES)} pages")
 
 
 if __name__ == "__main__":

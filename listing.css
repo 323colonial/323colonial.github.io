@@ -1,0 +1,139 @@
+:root {
+  --forest: #183828;
+  --ink: #172c24;
+  --paper: #f7f6eb;
+  --paper-strong: #f3f0e6;
+  --muted: #536059;
+  --rule: #98a096;
+  --white: #fff;
+}
+* { box-sizing: border-box; }
+html { background: var(--paper); color: var(--ink); scrollbar-color: var(--muted) var(--paper); }
+body { margin: 0; font: 18px/1.65 Georgia, 'Times New Roman', serif; }
+::selection { background: var(--forest); color: var(--paper); }
+a { color: inherit; text-underline-offset: .2em; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 3px solid currentColor; outline-offset: 4px; }
+button, .button, nav, .address, .quick-facts, .price-block, .photo-note, figcaption, dt, dd, .agent, .site-footer, .market-date {
+  font-family: Arial, sans-serif;
+}
+button, .button { font-size: 14px; font-weight: 700; cursor: pointer; }
+button, .button, .text-link { min-height: 44px; display: inline-flex; align-items: center; justify-content: center; }
+button, .button { padding: 12px 20px; background: var(--forest); color: var(--paper); border: 1px solid var(--forest); text-decoration: none; text-align: center; }
+button:hover, .button:hover { background: var(--ink); text-decoration: underline; }
+.button-paper { background: var(--paper); color: var(--forest); }
+.button-paper:hover { background: var(--paper-strong); }
+.text-link { font: 700 14px/1.5 Arial, sans-serif; }
+.skip-link { position: absolute; top: -100px; left: 16px; padding: 12px 20px; background: var(--paper); z-index: 2; }
+.skip-link:focus { top: 12px; }
+.container { width: min(1200px, calc(100% - 64px)); margin-inline: auto; }
+.masthead { display: flex; align-items: center; gap: 24px; background: var(--forest); color: var(--paper); padding: 14px max(32px, calc((100vw - 1200px) / 2)); }
+.property-mark { display: inline-flex; align-items: center; min-height: 44px; font-size: 26px; white-space: nowrap; text-decoration: none; }
+.masthead-location { margin-right: auto; font: 13px/1.4 Arial, sans-serif; }
+main { padding-block: 28px 0; }
+h1, h2, h3 { font-weight: 400; line-height: 1.15; text-wrap: balance; margin: 0 0 16px; }
+h1 { font-size: clamp(32px, 3.2vw, 44px); letter-spacing: -.025em; }
+h2 { font-size: clamp(28px, 2.5vw, 36px); letter-spacing: -.02em; }
+h3 { font-size: 28px; }
+p { margin: 0 0 16px; }
+figure { margin: 0; min-width: 0; }
+img { display: block; width: 100%; height: auto; }
+.media-record > a { display: block; }
+.media-record > a:hover { outline: 2px solid var(--forest); outline-offset: 3px; }
+figcaption { padding-block: 10px 0; font-size: 14px; line-height: 1.45; }
+.caption-text, .photo-note { display: block; }
+.photo-note { color: var(--muted); font-size: 12px; line-height: 1.5; margin-top: 6px; }
+.photo-mosaic { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; align-items: start; }
+.supporting-photos { display: grid; gap: 20px; }
+.photo-mosaic figcaption { font-size: 12px; }
+.listing-summary { display: flex; justify-content: space-between; gap: 24px; margin-top: 28px; }
+.address { font-size: 16px; margin: -8px 0 12px; }
+.quick-facts { margin-bottom: 0; font-size: 19px; }
+.quick-facts span { margin-inline: 8px; color: var(--muted); }
+.quick-facts strong { font-weight: 700; }
+.price { font-size: 32px; line-height: 1.2; font-weight: 700; margin: 0 0 8px; font-variant-numeric: tabular-nums; }
+.price-block { text-align: right; }
+.listing-status { font-size: 14px; margin-bottom: 0; }
+.market-date { font-size: 12px; color: var(--muted); margin: 12px 0 24px; }
+.buyer-nav { display: flex; flex-wrap: wrap; gap: 8px 32px; padding-block: 8px; border-block: 1px solid var(--rule); font-size: 14px; }
+.buyer-nav a { display: flex; align-items: center; min-height: 44px; text-decoration: none; }
+.buyer-nav a:hover, .buyer-nav a[aria-current] { text-decoration: underline; }
+.about, .details, .photo-preview { margin-top: 64px; }
+.story { display: grid; grid-template-columns: 1fr 1fr; align-items: start; gap: 56px; padding-block: 40px; border-bottom: 1px solid var(--rule); }
+.story-copy p { max-width: 68ch; margin-bottom: 0; }
+.story-photos { display: grid; gap: 24px; }
+.story-photos:has(figure:nth-child(2)) { grid-template-columns: 1fr 1fr; }
+.detail-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 32px; margin: 24px 0 16px; }
+.detail-grid > div { border-bottom: 1px solid var(--rule); padding-block: 16px; }
+dt { font-size: 12px; color: var(--muted); margin-bottom: 4px; }
+dd { font-size: 16px; margin: 0; }
+.section-title { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; }
+.preview-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.contact { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 64px; padding: 40px; background: var(--forest); color: var(--paper); }
+.contact h2 { font-size: 30px; }
+.contact p { font-size: 16px; }
+.contact .agent { font-size: 14px; margin-bottom: 0; }
+.contact-actions { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; }
+.contact .button { background: var(--paper); color: var(--forest); }
+.contact .button:hover { background: var(--paper-strong); }
+.site-footer { padding-block: 28px 40px; font-size: 12px; color: var(--muted); }
+.site-footer p { max-width: 110ch; }
+.gallery-intro { padding-block: 40px; max-width: 760px; }
+.gallery-intro p:last-child { margin-bottom: 0; }
+.gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px 24px; align-items: start; }
+.photo-number { display: block; font-size: 12px; color: var(--muted); margin-bottom: 4px; font-variant-numeric: tabular-nums; }
+figure[id] { scroll-margin-top: 24px; }
+dialog { width: min(1100px, calc(100% - 32px)); max-height: calc(100dvh - 32px); padding: 20px 24px; border: 1px solid var(--rule); background: var(--paper); color: var(--ink); }
+dialog::backdrop { background: rgb(10 24 17 / 90%); }
+body:has(dialog[open]) { overflow: hidden; }
+.viewer-bar, .viewer-controls { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.viewer-bar { margin-bottom: 16px; }
+.viewer-bar h2 { font: 700 16px/1.4 Arial, sans-serif; margin: 0; }
+.viewer-bar form { margin: 0; }
+.viewer-figure img { height: min(58dvh, 650px); object-fit: contain; background: var(--paper-strong); }
+.viewer-figure figcaption { font-size: 14px; }
+.viewer-controls { margin-top: 16px; font: 14px/1.4 Arial, sans-serif; }
+.viewer-controls a { display: inline-flex; align-items: center; min-height: 44px; text-align: center; }
+#viewer-error { font: 14px/1.5 Arial, sans-serif; margin-top: 16px; }
+@media (max-width: 1000px) {
+  .masthead-location { display: none; }
+  .property-mark { margin-right: auto; }
+  .story { gap: 32px; }
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+  .contact { padding: 32px; gap: 32px; }
+}
+@media (max-width: 700px) {
+  .container { width: calc(100% - 32px); }
+  .masthead { padding: 12px 16px; gap: 12px; flex-wrap: wrap; }
+  .property-mark { font-size: 23px; }
+  .masthead .button { padding: 10px 12px; font-size: 12px; }
+  main { padding-top: 16px; }
+  .photo-mosaic { display: block; }
+  .supporting-photos { grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 20px; }
+  .listing-summary { display: block; margin-top: 28px; }
+  .price-block { text-align: left; margin-top: 20px; }
+  .quick-facts { font-size: 16px; }
+  .quick-facts span { margin-inline: 3px; }
+  .buyer-nav { gap: 0 24px; }
+  .about, .details, .photo-preview { margin-top: 40px; }
+  .story { grid-template-columns: 1fr; gap: 24px; padding-block: 32px; }
+  .story-photos:has(figure:nth-child(2)) { grid-template-columns: 1fr; }
+  h3 { font-size: 25px; }
+  .detail-grid { grid-template-columns: repeat(2, 1fr); gap: 0 20px; }
+  .preview-grid, .gallery-grid { grid-template-columns: 1fr; gap: 32px; }
+  .section-title { display: block; margin-bottom: 16px; }
+  .section-title h2 { margin-bottom: 4px; }
+  .contact { grid-template-columns: 1fr; padding: 24px; gap: 24px; margin-top: 40px; }
+  .gallery-intro { padding-block: 32px; }
+  dialog { padding: 16px; }
+  .viewer-figure img { height: min(44dvh, 420px); }
+  .viewer-controls { gap: 12px; }
+  .viewer-controls button { padding: 10px 12px; }
+  .viewer-controls a { font-size: 12px; }
+}
+@media print {
+  .masthead, .buyer-nav, dialog { display: none; }
+  .container { width: 100%; }
+  .story, figure { break-inside: avoid; }
+  .contact { color: var(--ink); background: none; padding: 0; }
+}

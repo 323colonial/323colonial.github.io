@@ -1,0 +1,880 @@
+{
+  "document": "Listing Comments 323 Colonial Dr.docx",
+  "document_sha256": "7ff1a2691a613c6c7da5d1ed861668c71653f28f290ca81bb2734e3318428f95",
+  "approval": "colonial-5bv, 2026-10-03",
+  "processing": "ImageMagick; explicit crops only, no generative edits; WebP quality 78; max 1600px and 720px; no upscaling. Source document retained outside repository.",
+  "photos": [
+    {
+      "position": 1,
+      "id": "5/72",
+      "caption": "Distinctive, locally built mountain home on 2.9 wooded acres.",
+      "source": "word/media/image31.png",
+      "source_sha256": "a2aeeb93ada3c41e1f44d5e5a821b6b0d4d677348e4c3dfad0d5527f4fd233d3",
+      "comment": "Caption: Distinctive, locally built mountain home on 2.9 wooded acres.",
+      "crop_xywh": [
+        24,
+        24,
+        1726,
+        1144
+      ],
+      "crop_note": "Remove screenshot viewer chrome only; retain complete photograph and MLS watermark.",
+      "provenance": "Listing photograph",
+      "derivatives": [
+        {
+          "path": "assets/listing/01.webp",
+          "width": 1600,
+          "height": 1060,
+          "sha256": "d855319ffdb8eb05d1a9099803dd964fbe58c1b12702275d88350b9ae63414fb"
+        },
+        {
+          "path": "assets/listing/01-small.webp",
+          "width": 720,
+          "height": 477,
+          "sha256": "4bfe5e000fcbf3a30151f73ef1f36586b63dc425bd2565942a2c9ccf0fdc862f"
+        }
+      ]
+    },
+    {
+      "position": 2,
+      "id": "9/72",
+      "caption": "Soaring great room with hardwood floors, wood-burning stove and walls of windows.",
+      "source": "word/media/image26.png",
+      "source_sha256": "a1774b417905b582ba845b76e59953614628ac989dcce697256024901ac84232",
+      "comment": "Caption: Soaring great room with hardwood floors, wood-burning stove and walls of windows.",
+      "crop_xywh": [
+        14,
+        18,
+        1726,
+        1148
+      ],
+      "crop_note": "Remove screenshot viewer chrome only; retain complete photograph and MLS watermark.",
+      "provenance": "Listing photograph",
+      "derivatives": [
+        {
+          "path": "assets/listing/02.webp",
+          "width": 1600,
+          "height": 1064,
+          "sha256": "81488656cbe688522ff77023f65b74c8c335419885d4a6b8793fc9f68e57171f"
+        },
+        {
+          "path": "assets/listing/02-small.webp",
+          "width": 720,
+          "height": 479,
+          "sha256": "b39db0f49eaaddd12a95414517fc648cc942dc7b05a350042eb677a7fa7dca6c"
+        }
+      ]
+    },
+    {
+      "position": 3,
+      "id": "Previous Listing",
+      "caption": "Tucked into 2.9 wooded acres in the Appalachian Mountains.",
+      "source": "word/media/image17.jpg",
+      "source_sha256": "a30401713c9934f240c9a117192b75954a77fc5f7f6831b33d2b09032994564a",
+      "comment": "Caption: Tucked into 2.9 wooded acres in the Appalachian Mountains.",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain original framing and any watermark.",
+      "provenance": "Prior-listing photograph",
+      "derivatives": [
+        {
+          "path": "assets/listing/03.webp",
+          "width": 1280,
+          "height": 960,
+          "sha256": "5a1b79efb8d61725244d6b57887f05069740f035707f1b5d1897c47a43119e3d"
+        },
+        {
+          "path": "assets/listing/03-small.webp",
+          "width": 720,
+          "height": 540,
+          "sha256": "20cf24a93e0038951256924c7b75e44bceffced74c39dc75176b540e33f02435"
+        }
+      ]
+    },
+    {
+      "position": 4,
+      "id": "26/72",
+      "caption": "Screened porch with swinging daybed overlooking the wooded hillside.",
+      "source": "word/media/image33.png",
+      "source_sha256": "5e5024ef27f18bd4a8ec6ea67c2fc7b6c2807a2d7d30052613660dddcd43eb70",
+      "comment": "Caption: Screened porch with swinging daybed overlooking the wooded hillside.",
+      "crop_xywh": [
+        18,
+        12,
+        1726,
+        1144
+      ],
+      "crop_note": "Remove screenshot viewer chrome only; retain complete photograph and MLS watermark.",
+      "provenance": "Listing photograph",
+      "derivatives": [
+        {
+          "path": "assets/listing/04.webp",
+          "width": 1600,
+          "height": 1060,
+          "sha256": "6f82e5e99e3b557cec35b2438c84efb186a0b1a1e5a2fede2dd917d7acb42bbb"
+        },
+        {
+          "path": "assets/listing/04-small.webp",
+          "width": 720,
+          "height": 477,
+          "sha256": "b8863d069aed565d77df8f642864f8235912150a3c1ec4e5b38a868b255837d0"
+        }
+      ]
+    },
+    {
+      "position": 5,
+      "id": "20/72",
+      "caption": "Chef’s kitchen with granite countertops, breakfast-bar island and dual-fuel range.",
+      "source": "word/media/image24.png",
+      "source_sha256": "596529de7b6a63742fd3e4a2c016f553dcf9d3585e87e8259462f50c8dfc3951",
+      "comment": "Caption: Chef’s kitchen with granite countertops, breakfast-bar island and dual-fuel range.",
+      "crop_xywh": [
+        10,
+        12,
+        1726,
+        1149
+      ],
+      "crop_note": "Remove screenshot viewer chrome only; retain complete photograph and MLS watermark.",
+      "provenance": "Listing photograph",
+      "derivatives": [
+        {
+          "path": "assets/listing/05.webp",
+          "width": 1600,
+          "height": 1065,
+          "sha256": "94c8cfbf4247714b143ae6e2bacfc445d71aa39ed5ac7aabdc405b0051675d78"
+        },
+        {
+          "path": "assets/listing/05-small.webp",
+          "width": 720,
+          "height": 479,
+          "sha256": "3ad5e1b3a7b22aae268aa0e2de0b94dea9e76a3e08cc767cbe7b2a1be6f9e461"
+        }
+      ]
+    },
+    {
+      "position": 6,
+      "id": "NEW",
+      "caption": "Hot tub on the open deck, surrounded by woods.",
+      "source": "assets/listing/hottub-placeholder-source.jpg",
+      "source_sha256": "1c3768fe623ff14d67ba1ee5aac17b9d4a54be7b1d96976ca378286118cfe38d",
+      "comment": "Caption: Hot tub on the open deck, surrounded by woods.<TO COME!>Photo: Hot tub. Open, full of water, ideally jets running.",
+      "source_url": "https://olympichottub.com/wp-content/uploads/2023/10/Hot-Spring-Flair-wBluetooth-Music-Chehalis_1.jpg",
+      "approval_note": "User-selected placeholder replaces previously approved simulation during colonial-5bv implementation. Not this property; no claim of same make/model or installation. Original simulation remains preserved.",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain original framing and any watermark.",
+      "provenance": "Placeholder photo — not this property",
+      "derivatives": [
+        {
+          "path": "assets/listing/06.webp",
+          "width": 1361,
+          "height": 1301,
+          "sha256": "4366f5353758d4ac24fdbe73ca32bb33310263fbd1558aa4b42c866d6e13f0ac"
+        },
+        {
+          "path": "assets/listing/06-small.webp",
+          "width": 720,
+          "height": 688,
+          "sha256": "df0bc455336f2d18b1224f13e1fbc83a9196f975bc3ac57a6087644a04c12867"
+        }
+      ]
+    },
+    {
+      "position": 7,
+      "id": "39/72",
+      "caption": "Spa-like main-level primary bath with oversized jetted soaking tub and separate shower.",
+      "source": "word/media/image15.png",
+      "source_sha256": "b6e6303466909cce6c93e567b1b1dc97edc652ea7795cb7dec5dc8c87f449a5d",
+      "comment": "Caption: Spa-like main-level primary bath with oversized jetted soaking tub and separate shower.",
+      "crop_xywh": [
+        34,
+        25,
+        1726,
+        1147
+      ],
+      "crop_note": "Remove screenshot viewer chrome only; retain complete photograph and MLS watermark.",
+      "provenance": "Listing photograph",
+      "derivatives": [
+        {
+          "path": "assets/listing/07.webp",
+          "width": 1600,
+          "height": 1063,
+          "sha256": "fab560aa22d0a6463be348dd8f3d54b82935ccc8921fb834966409d70bf5ad7d"
+        },
+        {
+          "path": "assets/listing/07-small.webp",
+          "width": 720,
+          "height": 478,
+          "sha256": "4698fdb781a59c920156f071a3ba4820a7fdad54470d233629f9a9d53f73828c"
+        }
+      ]
+    },
+    {
+      "position": 8,
+      "id": "Previous Listing",
+      "caption": "Brilliant fall color across the surrounding woods and Appalachian ridges.",
+      "source": "word/media/image2.jpg",
+      "source_sha256": "bd5d78c80b354e39264332fa2dfb150b25e24826c4588e1c83be8219d123dfe1",
+      "comment": "Caption: Brilliant fall color across the surrounding woods and Appalachian ridges.",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain original framing and any watermark.",
+      "provenance": "Prior-listing photograph",
+      "derivatives": [
+        {
+          "path": "assets/listing/08.webp",
+          "width": 1280,
+          "height": 720,
+          "sha256": "27228ac07050aa6a76701497a8a897203a71502b5e92f5f9692d814ff4b03c7b"
+        },
+        {
+          "path": "assets/listing/08-small.webp",
+          "width": 720,
+          "height": 405,
+          "sha256": "35540dfb5ccb57cc694c15a4b82ba3781596252a98f2902884065bb6ce86ce5c"
+        }
+      ]
+    },
+    {
+      "position": 9,
+      "id": "Previous Listing",
+      "caption": "The house tucked into the woods after a snowfall.",
+      "source": "word/media/image6.jpg",
+      "source_sha256": "dec803d2d17e44b55366434ca073c556cd23ecf2f7012636ed22e0dae52e3f63",
+      "comment": "Caption: The house tucked into the woods after a snowfall.",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain original framing and any watermark.",
+      "provenance": "Prior-listing photograph",
+      "derivatives": [
+        {
+          "path": "assets/listing/09.webp",
+          "width": 1280,
+          "height": 960,
+          "sha256": "819656d8613f3dfbebb187fa2499c017f6189aa56084195231c3bac4fb818608"
+        },
+        {
+          "path": "assets/listing/09-small.webp",
+          "width": 720,
+          "height": 540,
+          "sha256": "930f4cf635102c655788cd69bb7b4f650eaae33f8605a806d91afa6424a43d51"
+        }
+      ]
+    },
+    {
+      "position": 10,
+      "id": "65/72",
+      "caption": "Woodland firepit for evenings beneath the trees.",
+      "source": "word/media/image37.png",
+      "source_sha256": "4c6f47737880895aaab85ab88531346038b2473a148c876d7c749ed35976532d",
+      "comment": "Caption: Woodland firepit for evenings beneath the trees.",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain original framing and any watermark.",
+      "provenance": "Listing photograph",
+      "derivatives": [
+        {
+          "path": "assets/listing/10.webp",
+          "width": 1600,
+          "height": 1065,
+          "sha256": "b9c42664b0dff65d042849b853772e91c523ad06325994d0764ac0fe9af58c46"
+        },
+        {
+          "path": "assets/listing/10-small.webp",
+          "width": 720,
+          "height": 479,
+          "sha256": "aa91f499f3198aaa121f80800058c16f6dd570f8c9a7e7bc60395d1bd6868408"
+        }
+      ]
+    },
+    {
+      "position": 11,
+      "id": "4/72",
+      "caption": "Attached two-car garage with high-voltage outlet for EV charging.",
+      "source": "word/media/image16.png",
+      "source_sha256": "c0dd5d3e9824703c765639df4114b8e2a912455e038a76cd27ef3adb82fc9065",
+      "comment": "Caption: Attached two-car garage with high-voltage outlet for EV charging.",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain original framing and any watermark.",
+      "provenance": "Listing photograph",
+      "derivatives": [
+        {
+          "path": "assets/listing/11.webp",
+          "width": 1464,
+          "height": 982,
+          "sha256": "d3717d7d7f571ae00cc96d4160c23792854eac7dcd838f4dbc325dce6fdb9c0c"
+        },
+        {
+          "path": "assets/listing/11-small.webp",
+          "width": 720,
+          "height": 483,
+          "sha256": "637c382076de9fcb44e838d0fd93de853664b9d29bb39d308ca331f2d8a022b4"
+        }
+      ]
+    },
+    {
+      "position": 12,
+      "id": "43/72",
+      "caption": "The upper loft overlooks the open great room below.",
+      "source": "word/media/image14.png",
+      "source_sha256": "eaff941524f98d8e1577674263e01d4a1ba562e263378c222d25957183d0193e",
+      "comment": "Caption: The upper loft overlooks the open great room below.Action Item (Daindridge): Is there a version where the trapezoidal windows are not truncated/cropped?",
+      "crop_xywh": null,
+      "crop_note": "Retained as supplied: already-truncated windows cannot be recovered by cropping. No invented pixels.",
+      "provenance": "Listing photograph",
+      "derivatives": [
+        {
+          "path": "assets/listing/12.webp",
+          "width": 1460,
+          "height": 982,
+          "sha256": "12346a85505b5fe8055f323e9e5c690bf6ef8bb0314496bfd8cbdb0729c3df2c"
+        },
+        {
+          "path": "assets/listing/12-small.webp",
+          "width": 720,
+          "height": 484,
+          "sha256": "bf047586abcd4b2665111498623f79e5eea6fb5eb05bceb864ca6a7d384ed53d"
+        }
+      ]
+    },
+    {
+      "position": 13,
+      "id": "10/72",
+      "caption": "Stone hearth and wood-burning stove anchor the light-filled great room.",
+      "source": "word/media/image23.png",
+      "source_sha256": "9d3ace8f3154c5e7e28a01624ed3b9a7d058652729455de85121e7fa2b2b8b63",
+      "comment": "Caption: Stone hearth and wood-burning stove anchor the light-filled great room.",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain original framing and any watermark.",
+      "provenance": "Listing photograph",
+      "derivatives": [
+        {
+          "path": "assets/listing/13.webp",
+          "width": 1600,
+          "height": 1072,
+          "sha256": "1d13393d58acb908d946d89471963e1f0fce2867405366849ab46a28ccb7969f"
+        },
+        {
+          "path": "assets/listing/13-small.webp",
+          "width": 720,
+          "height": 482,
+          "sha256": "ff7d550b0c4f709e5404ffb2e113be7ec242d7e08de67805b261f6e1db683a69"
+        }
+      ]
+    },
+    {
+      "position": 14,
+      "id": "18/72",
+      "caption": "Open dining area designed for gathering and conversation.",
+      "source": "word/media/image12.png",
+      "source_sha256": "b983051596cfb399d4f47adf72c433e780f1bd1bf529773e28eaefb733df7112",
+      "comment": "Caption: Open dining area designed for gathering and conversation.Action Item (Daindridge): Crop the corner of the countertop and cabinet on the right.",
+      "crop_xywh": [
+        3,
+        9,
+        1307,
+        960
+      ],
+      "crop_note": "Trim partial countertop/cabinet at right; retain dining furniture and MLS watermark.",
+      "provenance": "Listing photograph",
+      "derivatives": [
+        {
+          "path": "assets/listing/14.webp",
+          "width": 1307,
+          "height": 960,
+          "sha256": "ef68746d3f052b7e6122b2d8bf440b429991a8c19169f0a23db470053c09fbdc"
+        },
+        {
+          "path": "assets/listing/14-small.webp",
+          "width": 720,
+          "height": 529,
+          "sha256": "45297967559c9c2f1f2095491e775489939ba188514dadca870a807ac8daac2e"
+        }
+      ]
+    },
+    {
+      "position": 15,
+      "id": "22/72",
+      "caption": "New dual-fuel range with gas cooktop and electric double oven.",
+      "source": "word/media/image27.png",
+      "source_sha256": "3ea6166cf18f7cee4ada6ad411d914e0d7f13e96ca0c6b6a4f557a4c2e1a4157",
+      "comment": "Caption: New dual-fuel range with gas cooktop and electric double oven.",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain original framing and any watermark.",
+      "provenance": "Listing photograph",
+      "derivatives": [
+        {
+          "path": "assets/listing/15.webp",
+          "width": 1154,
+          "height": 774,
+          "sha256": "d23ccd8b94cc26da68807384bf399c64c1280bb8319ea7b21eb3958743446998"
+        },
+        {
+          "path": "assets/listing/15-small.webp",
+          "width": 720,
+          "height": 483,
+          "sha256": "4822117ff4cec62a0de6d86312fa7452f4ddb80f01164a4046a1405b5bdda37c"
+        }
+      ]
+    },
+    {
+      "position": 16,
+      "id": "11/72",
+      "caption": "Open deck for grilling, dining and relaxing among the trees.",
+      "source": "word/media/image28.png",
+      "source_sha256": "993a86ff595e4f2071bd88450a20f454e8d504003a7b48442e9a9e20a4e8a7f0",
+      "comment": "Caption: Open deck for grilling, dining and relaxing among the trees.Action Item (Daindridge): Crop the right railing and edging on the right.",
+      "crop_xywh": [
+        7,
+        10,
+        1393,
+        958
+      ],
+      "crop_note": "Trim partial right-edge railing; retain grill, deck and MLS watermark.",
+      "provenance": "Listing photograph",
+      "derivatives": [
+        {
+          "path": "assets/listing/16.webp",
+          "width": 1393,
+          "height": 958,
+          "sha256": "2dd4cea4a1e6474a9b170b0d9bcd78a354c589443c109c2ac0891000bd232576"
+        },
+        {
+          "path": "assets/listing/16-small.webp",
+          "width": 720,
+          "height": 495,
+          "sha256": "fc4de06149bde3de433021b236a90abbbec4a5419426c3589040998ae3fca1da"
+        }
+      ]
+    },
+    {
+      "position": 17,
+      "id": "29/72",
+      "caption": "The screened porch stretches along the hillside for three-season outdoor living.",
+      "source": "word/media/image19.png",
+      "source_sha256": "5c04698a99a2f974032db5923c5ad76a21f0ccca08125d0d4bc211acb70e20ae",
+      "comment": "Caption: The screened porch stretches along the hillside for three-season outdoor living.",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain original framing and any watermark.",
+      "provenance": "Listing photograph",
+      "derivatives": [
+        {
+          "path": "assets/listing/17.webp",
+          "width": 1454,
+          "height": 970,
+          "sha256": "88ff1c002d1fee035215b2b08b0f44c45a7f55f75efd733e9dca2cca8c5696d5"
+        },
+        {
+          "path": "assets/listing/17-small.webp",
+          "width": 720,
+          "height": 480,
+          "sha256": "a4c76064c1ecedc05f29d6d430fb9bee34b538cca51c34b3f31b12c8e5af3d8c"
+        }
+      ]
+    },
+    {
+      "position": 18,
+      "id": "34/72",
+      "caption": "Main-floor primary suite with hardwood floors and wooded views.",
+      "source": "word/media/image8.png",
+      "source_sha256": "599639094591d4395e3c5d70c7cb95c003067f9224e43d62ba2d995e6e5ae641",
+      "comment": "Caption: Main-floor primary suite with hardwood floors and wooded views.",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain original framing and any watermark.",
+      "provenance": "Listing photograph",
+      "derivatives": [
+        {
+          "path": "assets/listing/18.webp",
+          "width": 1454,
+          "height": 974,
+          "sha256": "b29db00023475ef901d6feaac7976ff5e7f2c016a80880fcfe79bede0a683fb3"
+        },
+        {
+          "path": "assets/listing/18-small.webp",
+          "width": 720,
+          "height": 482,
+          "sha256": "4eb1f78e78b467855a03fe4e8054db49ad61145130490538fad7a991a2a03568"
+        }
+      ]
+    },
+    {
+      "position": 19,
+      "id": "37/72",
+      "caption": "Jetted soaking tub and separate walk-in shower.",
+      "source": "word/media/image10.png",
+      "source_sha256": "0bf08e65daf790c3e065e1384392963c09bbfbcf4f072f32eff1fa04575feb00",
+      "comment": "Caption: Jetted soaking tub and separate walk-in shower.",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain original framing and any watermark.",
+      "provenance": "Listing photograph",
+      "derivatives": [
+        {
+          "path": "assets/listing/19.webp",
+          "width": 1454,
+          "height": 976,
+          "sha256": "5844ce8f11385e2bf32e85e692c5595c1683680db71903a0baa549d5e9d1de2b"
+        },
+        {
+          "path": "assets/listing/19-small.webp",
+          "width": 720,
+          "height": 483,
+          "sha256": "2a51bbaae009f3039fb4f29974fd0251f59b908860071e3b0b7ae99cde34fad2"
+        }
+      ]
+    },
+    {
+      "position": 20,
+      "id": "NEW; Owner Supplied",
+      "caption": "Convenient main-level laundry closet.",
+      "source": "word/media/image4.png",
+      "source_sha256": "a9cba662535eea460efe80516b317b808f39f04311d780818686f6b2b4e5ab6f",
+      "comment": "Caption: Convenient main-level laundry closet.",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain original framing and any watermark.",
+      "provenance": "Owner photograph",
+      "derivatives": [
+        {
+          "path": "assets/listing/20.webp",
+          "width": 1600,
+          "height": 1270,
+          "sha256": "e15b4d799349801e7f64874c84e98ce70b0c05e4a5e5b485322366a26d317e2a"
+        },
+        {
+          "path": "assets/listing/20-small.webp",
+          "width": 720,
+          "height": 571,
+          "sha256": "47829c1c053f094846db97f5bd1a4b1c5d10515dfbeba9efa4994bd9bf06a8ae"
+        }
+      ]
+    },
+    {
+      "position": 21,
+      "id": "46/72",
+      "caption": "Spacious upstairs loft creates a second living area.",
+      "source": "word/media/image29.png",
+      "source_sha256": "07234375f734b38200a6450735fc0b03dd4468779342f3f5eec09485dec3fa64",
+      "comment": "Caption: Spacious upstairs loft creates a second living area.",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain original framing and any watermark.",
+      "provenance": "Listing photograph",
+      "derivatives": [
+        {
+          "path": "assets/listing/21.webp",
+          "width": 1460,
+          "height": 974,
+          "sha256": "591dd0ea531cfec5f11a46cad21b15a17e2053fa73982f3742b1b0d0efe593b1"
+        },
+        {
+          "path": "assets/listing/21-small.webp",
+          "width": 720,
+          "height": 480,
+          "sha256": "a4e5545b042c3bae40f10859b8837406277f905a5b11f2f4c2f6fbe661517947"
+        }
+      ]
+    },
+    {
+      "position": 22,
+      "id": "47/72",
+      "caption": "Room for a home theater, office, play space or reading retreat.",
+      "source": "word/media/image18.png",
+      "source_sha256": "87ecbdf1dfa6baa8c898d1de9d278789f8ed047233571a4da3c9914a52eae442",
+      "comment": "Caption: Room for a home theater, office, play space or reading retreat.",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain original framing and any watermark.",
+      "provenance": "Listing photograph",
+      "derivatives": [
+        {
+          "path": "assets/listing/22.webp",
+          "width": 1452,
+          "height": 976,
+          "sha256": "8a7cb5a27047e812ea01555a4451100fcbe380a44947db80e4513a97aa576467"
+        },
+        {
+          "path": "assets/listing/22-small.webp",
+          "width": 720,
+          "height": 484,
+          "sha256": "a249d17785cb05a2e5a1303f7515ccf2736b5fa5b18eea841c81bd26f231991d"
+        }
+      ]
+    },
+    {
+      "position": 23,
+      "id": "48/72",
+      "caption": "Oversized second bedroom on the private upper level.",
+      "source": "word/media/image7.png",
+      "source_sha256": "b69f25dc9b228ccb913d44ce4a58da7c66cfa883e67f1a3927c1a1ef454ad75d",
+      "comment": "Caption: Oversized second bedroom on the private upper level.Action Item (Daindridge): crop the ceiling vent",
+      "crop_xywh": [
+        5,
+        50,
+        1442,
+        917
+      ],
+      "crop_note": "Trim top ceiling vent; retain full room evidence and MLS watermark.",
+      "provenance": "Listing photograph",
+      "derivatives": [
+        {
+          "path": "assets/listing/23.webp",
+          "width": 1442,
+          "height": 917,
+          "sha256": "f04f920bb8efb5c51cf4b67fb4291022b365aab019e5b84438cefc5fe5b3b600"
+        },
+        {
+          "path": "assets/listing/23-small.webp",
+          "width": 720,
+          "height": 458,
+          "sha256": "9daa90966f076b5570d09dfcbe7fd0391536cb74137ba86841454ddf824c11ea"
+        }
+      ]
+    },
+    {
+      "position": 24,
+      "id": "51/72",
+      "caption": "Full bath completes the self-contained upper guest level.",
+      "source": "word/media/image36.png",
+      "source_sha256": "61e96fc0080ba87d5ea3fa261b630031d503d515b829c90c065032e1016a2989",
+      "comment": "Caption: Full bath completes the self-contained upper guest level.",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain original framing and any watermark.",
+      "provenance": "Listing photograph",
+      "derivatives": [
+        {
+          "path": "assets/listing/24.webp",
+          "width": 1456,
+          "height": 980,
+          "sha256": "a5e88e09d594790da0f0cc3022bd67f905fadcca9b8ea27bf373c7d29cd640c3"
+        },
+        {
+          "path": "assets/listing/24-small.webp",
+          "width": 720,
+          "height": 485,
+          "sha256": "3281ad93087f29b9f74a73571d5449f2b319ae242d418aa1e8f817ef6c72880f"
+        }
+      ]
+    },
+    {
+      "position": 25,
+      "id": "Previous Listing",
+      "caption": "Fenced raised-bed garden with adjacent shed.",
+      "source": "word/media/image11.png",
+      "source_sha256": "ed08a7bdef59ff50577a2f2d06ed00f9bfc5476dc33fd50b346bb904af34328d",
+      "comment": "Caption: Fenced raised-bed garden with adjacent shed.",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain original framing and any watermark.",
+      "provenance": "Prior-listing photograph",
+      "derivatives": [
+        {
+          "path": "assets/listing/25.webp",
+          "width": 1146,
+          "height": 850,
+          "sha256": "f6cdd7dfe10481686ff11ef6fd7cd23d81a58a9baf2bb6e09dacabd68ef8a4c3"
+        },
+        {
+          "path": "assets/listing/25-small.webp",
+          "width": 720,
+          "height": 534,
+          "sha256": "97bd88f093fb3d02a3248d4120b79d99ada37cb9aeadb1cc19a5c61ee16565f9"
+        }
+      ]
+    },
+    {
+      "position": 26,
+      "id": "57/72",
+      "caption": "Established fruit and nut trees are scattered throughout the property.",
+      "source": "word/media/image34.png",
+      "source_sha256": "ee750b34d1a79c073bab33ccc6a6b1d84871e4e0f63dc9a6ca75e97be806d2ea",
+      "comment": "Caption: Established fruit and nut trees are scattered throughout the property.",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain original framing and any watermark.",
+      "provenance": "Listing photograph",
+      "derivatives": [
+        {
+          "path": "assets/listing/26.webp",
+          "width": 1454,
+          "height": 970,
+          "sha256": "84f9a3eb8a770fd6b68fc091cda710469f7b603c0bd754aa04ea019a97e2b4c8"
+        },
+        {
+          "path": "assets/listing/26-small.webp",
+          "width": 720,
+          "height": 480,
+          "sha256": "1fcbab721c6d4d6297319d4f3fe824666e0cfa561ff50b9695f8dd66957c4276"
+        }
+      ]
+    },
+    {
+      "position": 27,
+      "id": "63/72",
+      "caption": "Paths and gathering spaces make the most of the wooded setting.",
+      "source": "word/media/image38.png",
+      "source_sha256": "dff1707207cde6232659644cba4cf3e26e80325e98252a4e6c496837f59072a5",
+      "comment": "Caption: Paths and gathering spaces make the most of the wooded setting.Action Item (Daindridge): Crop out the deck on the right edge of the photo.",
+      "crop_xywh": [
+        9,
+        6,
+        1661,
+        1150
+      ],
+      "crop_note": "Trim partial deck at right; retain paths, trees, firepit and MLS watermark.",
+      "provenance": "Listing photograph",
+      "derivatives": [
+        {
+          "path": "assets/listing/27.webp",
+          "width": 1600,
+          "height": 1108,
+          "sha256": "735b9ce852dc48aea5088152bb692e86316fbcda564f74be83fefb34dbb3857c"
+        },
+        {
+          "path": "assets/listing/27-small.webp",
+          "width": 720,
+          "height": 498,
+          "sha256": "97d4a7ec374f107ce0ffa13eeffa1f346c1181b86b1831ff048691c83acac895"
+        }
+      ]
+    },
+    {
+      "position": 28,
+      "id": "Previous Listing",
+      "caption": "Nearly three wooded acres, with mountain scenery in every direction. Porches and decks wrap the home.",
+      "source": "word/media/image9.png",
+      "source_sha256": "3539d8c69e5d489bf84c468a90343a581e80598a00c09a300b9890917b5f40ae",
+      "comment": "Caption: Nearly three wooded acres, with mountain scenery in every direction. Porches and decks wrap the home.",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain original framing and any watermark.",
+      "provenance": "Prior-listing photograph",
+      "derivatives": [
+        {
+          "path": "assets/listing/28.webp",
+          "width": 1346,
+          "height": 896,
+          "sha256": "869bf57d49f81b82254e9b4421cc603f257cb063103e18009468405059f00f61"
+        },
+        {
+          "path": "assets/listing/28-small.webp",
+          "width": 720,
+          "height": 479,
+          "sha256": "028ee6d597e8b386a87f6be7137cbec5dcbe8c9f1c555ed1495045e0ada2c0af"
+        }
+      ]
+    },
+    {
+      "position": 29,
+      "id": "13/72",
+      "caption": "Open deck provides big sky views.",
+      "source": "word/media/image25.png",
+      "source_sha256": "73ead32964439b55adeadc948562431fbbdb3613a8044b02e4588e7af13a0da1",
+      "comment": "Caption: Open deck provides big sky views.",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain original framing and any watermark.",
+      "provenance": "Listing photograph",
+      "derivatives": [
+        {
+          "path": "assets/listing/29.webp",
+          "width": 1458,
+          "height": 976,
+          "sha256": "dcad56623d17799ffe6c0763a3d16f58e672d6205fc57ebcae05629c54e8d313"
+        },
+        {
+          "path": "assets/listing/29-small.webp",
+          "width": 720,
+          "height": 482,
+          "sha256": "117f3fa96865a341680596dd7e32d4a7a0b991a75d565b3318b5a49da25ca8f6"
+        }
+      ]
+    },
+    {
+      "position": 30,
+      "id": "NEW; Owner Supplied",
+      "caption": "Full walkout basement with abundant storage and potential for additional finished living space.",
+      "source": "word/media/image5.png",
+      "source_sha256": "cec9e1174011fec2fa2ed18e48adc834bbec289280449e4259809015e5006c23",
+      "comment": "Caption: Full walkout basement with abundant storage and potential for additional finished living space.",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain original framing and any watermark.",
+      "provenance": "Owner photograph",
+      "derivatives": [
+        {
+          "path": "assets/listing/30.webp",
+          "width": 1600,
+          "height": 913,
+          "sha256": "3733c946dcf9891f4f1a4e0c915bc29690f9392ac7708143302ac02be0af282e"
+        },
+        {
+          "path": "assets/listing/30-small.webp",
+          "width": 720,
+          "height": 411,
+          "sha256": "47bd9886469cfb381ff84f0d119ddc9379f0cdb800687c632663b41b29fa0ff3"
+        }
+      ]
+    },
+    {
+      "position": 31,
+      "id": "NEW; Owner Supplied",
+      "caption": "The basement can be renovated into a separate living space with a walk-out bedroom, basement den, home theater, and second fireplace.",
+      "source": "word/media/image1.png",
+      "source_sha256": "2c9ff7aeb82af7d9f6e7b92e2407c83f72e9fdf4cfe78013b8b8ec72622bb756",
+      "comment": "Caption: The basement can be renovated into a separate living space with a walk-out bedroom, basement den, home theater, and second fireplace.",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain original framing and any watermark.",
+      "provenance": "Conceptual example only",
+      "derivatives": [
+        {
+          "path": "assets/listing/31.webp",
+          "width": 1600,
+          "height": 1046,
+          "sha256": "db521f2a3da8cc6f64a8cbc1d7828722ee2f32d277ddfad146bacb3b0f617392"
+        },
+        {
+          "path": "assets/listing/31-small.webp",
+          "width": 720,
+          "height": 471,
+          "sha256": "e54ac19ea235fe4622f006b290784f99467ec6d89b70bac859a0428b231881c4"
+        }
+      ]
+    },
+    {
+      "position": 32,
+      "id": "3/72",
+      "caption": "Approximate boundaries of the 2.9-acre wooded property.",
+      "source": "word/media/image21.png",
+      "source_sha256": "246cd6aa6c5af75b0205c2434fa0002211cab88a4d82e989ebb5da1b7a7d9dc5",
+      "comment": "Caption: Approximate boundaries of the 2.9-acre wooded property.Photo: Informational property-boundary aerial.",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain original framing and any watermark.",
+      "provenance": "Listing photograph",
+      "derivatives": [
+        {
+          "path": "assets/listing/32.webp",
+          "width": 1456,
+          "height": 832,
+          "sha256": "fbea4be18f5080f0846f1e371741d07adabc615d6c542e1337f357a00a163247"
+        },
+        {
+          "path": "assets/listing/32-small.webp",
+          "width": 720,
+          "height": 411,
+          "sha256": "7290dba08b81c122431089348a20a43a8a79b19c0d3b70898713e4b4ff1bd882"
+        }
+      ]
+    },
+    {
+      "position": 33,
+      "id": "72/72",
+      "caption": "Nearly three wooded acres with mountain scenery in every direction.",
+      "source": "word/media/image13.png",
+      "source_sha256": "d76680e4894d639bdeab962a319f6b027a0917c9f3da8cd90aca1d259ececc4c",
+      "comment": "Caption: Nearly three wooded acres with mountain scenery in every direction.",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain original framing and any watermark.",
+      "provenance": "Listing photograph",
+      "derivatives": [
+        {
+          "path": "assets/listing/33.webp",
+          "width": 1454,
+          "height": 824,
+          "sha256": "e1a69c6753a108a9d16eece034be9883e072296103f5c01830a6017fbbf7d98c"
+        },
+        {
+          "path": "assets/listing/33-small.webp",
+          "width": 720,
+          "height": 408,
+          "sha256": "80e98ff42534fd07b2d8e2060db3481e6988afae818bb2724b1a079e7cf2389d"
+        }
+      ]
+    }
+  ]
+}

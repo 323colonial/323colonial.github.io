@@ -1,123 +1,91 @@
 ---
 name: 323 Colonial
-description: Buyer-first property monograph with three public destinations and clearly labeled simulated imagery.
-direction: Mountain House Monograph
+description: Photo-led property listing with a restrained forest and warm-paper identity.
 colors:
   forest: "#183828"
-  forest-ink: "#172c24"
-  warm-paper: "#f7f6eb"
-  strong-paper: "#f3f0e6"
+  ink: "#172c24"
+  paper: "#f7f6eb"
+  paper-strong: "#f3f0e6"
   rule: "#98a096"
   muted: "#536059"
   white: "#ffffff"
 typography:
-  display: "Georgia, Times New Roman, serif"
-  body: "Georgia, serif"
-  label: "Arial, sans-serif"
-shape: "Square corners, hairline rules, no shadows"
+  display:
+    fontFamily: "Georgia, Times New Roman, serif"
+    fontSize: "clamp(32px, 3.2vw, 44px)"
+    fontWeight: 400
+    lineHeight: 1.15
+    letterSpacing: "-0.025em"
+  body:
+    fontFamily: "Georgia, Times New Roman, serif"
+    fontSize: "18px"
+    lineHeight: 1.65
+  label:
+    fontFamily: "Arial, sans-serif"
+rounded:
+  default: "0"
+components:
+  button-primary:
+    backgroundColor: "{colors.forest}"
+    textColor: "{colors.paper}"
+    padding: "12px 20px"
+  button-paper:
+    backgroundColor: "{colors.paper}"
+    textColor: "{colors.forest}"
+    padding: "12px 20px"
 ---
 
 # Design System: 323 Colonial
 
-## Direction
+## Overview
 
-**Mountain House Monograph** presents 323 Colonial as a specific house with evidence, not a generic lifestyle concept. Prospective buyers see actual-property photography first, followed by rooms, finishes, outdoor living and reference floor plans. Owner records sit outside public navigation. Warm paper and forest ink give the site a restrained book-like character; square records and compact labels make claims easy to verify.
+**Photo-led property listing** retains the forest/warm-paper identity while using familiar property-listing structure. Actual property photography, scannable facts and brokerage contact take priority over owner planning. The approved brief pins this conventional presentation; no new decorative identity or scroll choreography.
 
-## Evidence hierarchy
+Buyer pages use `listing.css`. Legacy `floorplans.html`, `brochure.html` and `sale-prep.html` retain their original `styles.css` and Mountain House Monograph layout, unchanged and unlinked from buyer navigation. Historical Impeccable comps/build state/sidecar describe that earlier composition, not the current public layout; separate tool/sidecar maintenance is outside this task.
 
-1. **House photography:** prior-listing photography of actual 323 Colonial leads public routes. Retain and disclose the Bright MLS watermark and note that earlier finishes may be shown.
-2. **Property facts:** room relationships, materials and approved finished-house descriptions follow photography. Publication requires owner/realtor confirmation that advertised upgrades are complete; see `PRODUCT.md`.
-3. **Digital simulation:** public AI-edited imagery is always labeled **Digitally simulated image**, with approximate colours/staging disclosed. Owner records retain their planned-work labels and caveats.
-4. **Reference material:** floor and basement drawings are orientation, planning, and pricing aids only. State that they are not field-measured, construction, or permit documents.
-5. **Estimates:** use budgeting ranges and preserve estimate-not-quote caveats.
+## Colors
 
-Never use invented architecture as property evidence.
+Forest anchors masthead, contact band and primary controls. Warm paper is the page field; ink carries primary text. Muted green-grey carries photo numbers and essential labels; rule grey separates sections and facts. Strong paper supports the enlarged-image field.
 
-## Visual tokens
-
-Tokens live in `styles.css`.
-
-- **Forest `#183828`:** mastheads, showing bands, and high-emphasis controls.
-- **Forest ink `#172c24`:** headings and body text.
-- **Warm paper `#f7f6eb`:** page field.
-- **Strong paper `#f3f0e6`:** summary and planning bands.
-- **Rule `#98a096`:** dividers and record boundaries.
-- **Muted `#536059`:** caveats, captions, and secondary metadata.
-- **White `#ffffff`:** image and table records.
-
-Interface stays flat: no gradients, shadows, rounded cards, or decorative color detached from property evidence.
+Palette contrast on paper: ink 13.60:1, forest 11.83:1, muted 6.07:1. Use paper text on forest; do not substitute low-contrast grey for contact-band copy.
 
 ## Typography
 
-- **Display:** Georgia, then Times New Roman or generic serif. Use light visual weight, tight tracking, and compressed line-height for the property mark and large headings.
-- **Body:** Georgia or generic serif for narrative and descriptive copy.
-- **Labels:** Arial or generic sans-serif for navigation, facts, provenance, status, tables, and controls.
-- **Dependency rule:** fonts use local system stacks; pages make no remote font request.
+Georgia gives headings and exact listing prose a restrained residential character. Arial makes facts, captions, navigation, price and controls easy to scan. Both use installed system fonts; no remote font requests.
 
-Serif tells the property story. Sans-serif certifies facts and status.
+Body is 18px with 1.65 line height; paragraph measure is bounded at 68ch. H1 scales from 32–44px; h2 from 28–36px; story headings are 28px, reducing to 25px on mobile. Captions are 14px and essential placeholder/concept labels 12px; compact mosaic captions use 12px. Price uses bold 32px sans-serif and tabular numbers.
 
 ## Layout
 
-### Home hero
+Content is capped at 1200px with 32px desktop gutters and 16px mobile gutters. The home mosaic uses a 2:1 grid: specified exterior on the left, great room and porch on the right. Address, price, key facts and dated status follow. Section navigation stays in normal document flow.
 
-At the approved 1376×768 viewport, the masthead is a narrow forest band. Hero below uses a 67/33 split:
+Story sections use equal text/photo columns, 56px apart; paired images share the photo column. At 700px and below, text and all matching captioned images stack in reading order. Supporting hero photos stay paired. Gallery uses three columns, two at 1000px, one at 700px. Images retain natural proportions; there is no CSS cover-cropping of watermarks or evidence.
 
-- left: verified exterior photograph with provenance label;
-- right: location, stacked `323 Colonial` title, short deck, three features, showing CTA, gallery link, house photograph, and reference-plan preview.
+Major sections separate by 64px desktop / 40px mobile. Story rows use 40px desktop / 32px mobile vertical padding. Contact is a two-column forest band, stacking on mobile. No sticky photographs, scroll effects, smooth-scroll animation or autoplay.
 
-At 980px and below, masthead wraps and hero becomes a vertical document. Photography remains first. At 390px, every section uses one readable column except paired evidence thumbnails.
+## Elevation & Depth
 
-### Editorial sections
+Flat surfaces, no shadows. Hairline rules and forest fields establish hierarchy. Native modal viewer uses a dark-green backdrop (`rgb(10 24 17 / 90%)`) solely to distinguish protected viewing focus from the inert page behind it.
 
-Sections alternate warm-paper and forest fields. Headings align with short explanatory text; photography uses an asymmetrical ledger on desktop and single-column records on mobile. Gallery and floor-plan links extend the buyer journey without competing with showing actions.
+## Shapes
 
-### Public and owner routes
-
-The house, Gallery and Floor plans share one buyer masthead, an active-page indicator and a showing action. Gallery groups living spaces, bedrooms/baths, outdoors and seasonal photography. Floor plans retain direct sheet anchors and reference limits. Owner colour/budget pages retain their URLs but use separate owner navigation and noindex metadata, with no inbound links from public pages. Tables reflow to viewport width on mobile rather than creating nested horizontal scrolling.
+Square image frames and controls, no rounded cards. Photographs are content, not background decoration. Aspect ratios stay intrinsic, including portrait-like source imagery and the conceptual drawing.
 
 ## Components
 
-### Buyer masthead
+- **Navigation:** Overview / About the home / Property details / Photos / Contact. Sans-serif links wrap on narrow screens; Photos indicates the gallery’s current page.
+- **Brokerage controls:** forest on paper or paper on forest, 44px minimum height, explicit brokerage wording. Hover darkens the field or adds an underline.
+- **Focus:** visible 3px current-colour outline with 4px offset; each route begins with a keyboard-visible skip link.
+- **Photo records:** image link and exact approved caption. Routine source notes are omitted; provenance stays in the asset manifest. Only placeholder/concept images carry short attached labels. Gallery numbers represent real sequence, not decoration. Placeholder photo is explicitly not this property; conceptual plan is explicitly not existing finished space.
+- **Enlarged viewer:** native `<dialog>`, labeled title and caption, Previous / Next, Close, full-size fallback. Arrow keys navigate, Escape dismisses, focus returns to the opener. Image-load failure exposes recovery text. Images use contain-fit, never crop-fit.
+- **No-JavaScript fallback:** gallery image links open the optimized full-size asset directly. No framework or runtime fetch is required.
 
-- Property mark at left.
-- Primary buyer navigation: The house, Gallery, Floor plans.
-- Paper showing control at right.
-- Mobile interactive targets are at least 44px high.
+## Do's and Don'ts
 
-### Showing controls
-
-`Request a showing` is the dominant action and uses `realtor@stevenhay.com`. Forest controls appear on paper; paper controls appear on forest. Square border, uppercase sans label, visible keyboard focus.
-
-### Media records
-
-Photography and simulations use the same square-edged record frame but different status language. Captions stay attached to images. Public edited images carry a visible **Digitally simulated image** overlay, never a claim of unedited photographic evidence. Prior-listing photos retain provenance; footer and gallery introduction explain earlier finishes and approximate simulation/staging.
-
-### Plans
-
-Plan sheets sit on white paper with a hairline border. Captions repeat `reference`, `not field-measured`, and intended planning/pricing use. Plans never lead a route ahead of current-property photography.
-
-### Tables
-
-Tables use white cells, pale green headers, one-pixel boundaries, and tabular numbers. Desktop preserves comparison alignment. Mobile uses fixed layout, wrapping labels, and compact cells without horizontal scrolling.
-
-### Focus and motion
-
-Every route starts with a keyboard-visible skip link to main content. Links and controls use a two-pixel `:focus-visible` outline with offset. Scroll-linked hero drift runs only when reduced motion is not requested; content and meaning never depend on motion.
-
-## Content rules
-
-### Do
-
-- Lead with photographs of actual 323 Colonial.
-- Name image provenance and simulated/reference status.
-- Keep buyer navigation and showing actions visually primary.
-- Use factual room, material, and outdoor descriptions.
-- Repeat limitations where plans or estimates could be mistaken for promises.
-
-### Do not
-
-- Present AI imagery as unedited photographic evidence or publish finished-house copy before upgrade confirmation.
-- Present rough drawings as measurements or construction documents.
-- Promote planning records above current-property evidence.
-- Use inflated luxury-listing language or unsupported claims.
-- Add remote fonts, frameworks, or runtime dependencies.
+- **Do** preserve exact approved prose, caption order, image provenance and watermarks.
+- **Do** distinguish listing facts, third-party placeholder imagery and conceptual drawings.
+- **Do** show the listing date once in each footer and keep brokerage contact explicit.
+- **Do** keep buyer styling isolated from legacy pages and assets.
+- **Don't** present a placeholder, simulation or plan as evidence of existing property condition.
+- **Don't** reintroduce owner paint planning or rough main/upstairs drawings into buyer navigation.
+- **Don't** add animation, sticky changing images, autoplay, remote fonts or runtime dependencies.

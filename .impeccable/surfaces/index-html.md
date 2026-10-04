@@ -2,23 +2,23 @@
 version: 1
 slug: "index-html"
 primary_target: "index.html"
-related_targets: ["gallery.html","floorplans.html"]
+related_targets: ["gallery.html"]
 ---
 
-# Buyer property presentation
+# Buyer property listing
 
-Mode: Persuade. Prospective buyers should understand the finished house, explore Gallery and Floor plans, and request a showing. Real prior-listing photography and verified facts lead; AI-edited imagery carries “Digitally simulated image” labels. Owner records stay outside the buyer journey. Finished-house copy must not be published until the owner/realtor confirms advertised upgrades are complete.
+Mode: Persuade. Approved colonial-5bv brief supersedes earlier monograph composition. Weekend/second-home buyers; exact DOCX prose and ordered photographs. Local-only implementation.
 
 ## Direction contract
 
-THESIS: A mountain-house monograph makes property evidence desirable; refuse generic listing hero and card grid.
+THESIS: Conventional photo-led property listing; refuse renovation scrapbook and owner-planning detours.
 
-OWN-WORLD: Forest masthead, warm-paper field, dark green ink, editorial serif, compact sans labels, square photo and plan records, hairline rules.
+OWN-WORLD: Pinned forest and warm paper, Georgia narrative, Arial facts, square photographs, restrained rules.
 
-STORY: See the house, grasp defining features and finishes, explore the gallery and reference floor plans, then request a showing.
+STORY: See house, scan dated price and facts, read exact seven paragraphs beside matching photographs, explore 33 photos, contact brokerage.
 
-FIRST VIEWPORT: Narrow forest masthead above a 67/33 split. Actual exterior fills left. Right stacks location, two-line title, three facts, showing CTA, email, then small real-room and plan records.
+FIRST VIEWPORT: Compact forest masthead; DOCX view 1 dominates photo mosaic beside great room and porch. Address, price, key facts and brokerage action follow; section navigation stays in normal flow.
 
-FORM: Mountain House Monograph, top-ranked grounded pick, seed 16845a6f. Memorable moment: actual house nearly fills the viewport beside concise field notes.
+FORM: User-pinned Redfin/Zillow listing structure, no new seed or concept round. Native enlarged photo viewer with keyboard controls is sole interaction; no scroll effects, sticky photos, autoplay or invented motion.
 
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
