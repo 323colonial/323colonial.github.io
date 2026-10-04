@@ -17,7 +17,7 @@ OWN-WORLD: Pinned forest and warm paper, Georgia narrative, Arial facts, square 
 
 STORY: See house, scan dated price and facts, read exact seven paragraphs beside matching photographs, explore 33 photos, contact brokerage.
 
-FIRST VIEWPORT: Compact forest masthead; DOCX view 1 dominates photo mosaic beside great room and porch. Address, price, key facts and brokerage action follow; section navigation stays in normal flow.
+FIRST VIEWPORT: Compact forest masthead with brokerage action; Home / Photos navigation follows immediately on both routes, in normal flow with current page marked. DOCX view 1 dominates photo mosaic beside great room and porch; address, price and key facts follow.
 
 FORM: User-pinned Redfin/Zillow listing structure, no new seed or concept round. Native enlarged photo viewer with keyboard controls is sole interaction; no scroll effects, sticky photos, autoplay or invented motion.
 

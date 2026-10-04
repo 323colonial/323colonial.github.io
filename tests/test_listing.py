@@ -92,7 +92,14 @@ class Listing(unittest.TestCase):
         for file in ('index.html', 'gallery.html'):
             page = Page(file).root
             nav = next(n for n in page.all('nav') if n.attrs.get('aria-label') == 'Buyer navigation')
-            self.assertEqual([a.text() for a in nav.all('a')], ['Overview', 'About the home', 'Property details', 'Photos', 'Contact'])
+            self.assertEqual([a.text() for a in nav.all('a')], ['Home', 'Photos'])
+            self.assertEqual([a.attrs['href'] for a in nav.all('a')], ['index.html', 'gallery.html'])
+            current = [a for a in nav.all('a') if 'aria-current' in a.attrs]
+            self.assertEqual([(a.attrs['href'], a.attrs['aria-current']) for a in current], [(file, 'page')])
+            siblings = [e for e in nav.parent.children if isinstance(e, Element)]
+            self.assertEqual(nav.parent.tag, 'body')
+            self.assertEqual(siblings[siblings.index(nav) - 1].tag, 'header')
+            self.assertEqual(siblings[siblings.index(nav) + 1].tag, 'main')
             self.assertIn('tel:3048857645', [a.attrs.get('href') for a in page.all('a')])
             self.assertIn('https://www.redfin.com/WV/Berkeley-Springs/323-Colonial-Dr-25411/home/21971085', [a.attrs.get('href') for a in page.all('a')])
             self.assertIn('Liz McDonald', page.text())

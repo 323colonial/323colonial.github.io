@@ -58,7 +58,8 @@ figcaption { padding-block: 10px 0; font-size: 14px; line-height: 1.45; }
 .market-date { font-size: 12px; color: var(--muted); margin: 12px 0 24px; }
 .buyer-nav { display: flex; flex-wrap: wrap; gap: 8px 32px; padding-block: 8px; border-block: 1px solid var(--rule); font-size: 14px; }
 .buyer-nav a { display: flex; align-items: center; min-width: 44px; min-height: 44px; text-decoration: none; }
-.buyer-nav a:hover, .buyer-nav a[aria-current] { text-decoration: underline; }
+.buyer-nav a:hover, .buyer-nav a[aria-current="page"] { text-decoration: underline; }
+.buyer-nav a[aria-current="page"] { font-weight: 700; }
 .about, .details, .photo-preview { margin-top: 64px; }
 .story { display: grid; grid-template-columns: 1fr 1fr; align-items: start; gap: 56px; padding-block: 40px; border-bottom: 1px solid var(--rule); }
 .story-copy p { max-width: 68ch; margin-bottom: 0; }

@@ -119,7 +119,7 @@ Body is 18px with 1.65 line height; paragraph measure is bounded at 68ch. H1 sca
 
 ## Layout
 
-Content is capped at 1200px with 32px desktop gutters and 16px mobile gutters. The home mosaic uses a 2:1 grid: specified exterior on the left, great room and porch on the right. Address, price, key facts and dated status follow. Section navigation stays in normal document flow.
+Content is capped at 1200px with 32px desktop gutters and 16px mobile gutters. The home mosaic uses a 2:1 grid: specified exterior on the left, great room and porch on the right. Address, price, key facts and dated status follow. Primary navigation sits immediately below the masthead and before content on both buyer pages, in normal document flow; it scrolls away without sticking or relocating.
 
 Story sections use equal text/photo columns, 56px apart; paired images share the photo column. At 700px and below, text and all matching captioned images stack in reading order. Supporting hero photos stay paired. Gallery uses three columns, two at 1000px, one at 700px. Images retain natural proportions; there is no CSS cover-cropping of watermarks or evidence. Responsive `sizes` follow each mosaic, story, preview and gallery slot, including gutters, gaps and the 1200px content cap. `tests/buyer-quality.html` checks these hints against rendered widths at each breakpoint.
 
@@ -135,7 +135,7 @@ Square image frames and controls, no rounded cards. Photographs are content, not
 
 ## Components
 
-- **Navigation:** Overview / About the home / Property details / Photos / Contact. Sans-serif links have 44px minimum width and height and wrap on narrow screens; Photos indicates the gallery’s current page.
+- **Navigation:** Home / Photos link to `index.html` / `gallery.html`, without section fragments. Sans-serif links have 44px minimum width and height and wrap on narrow screens. Exactly one `aria-current="page"` link stays bold and underlined. Brokerage contact remains a separate masthead action; contextual photo links retain their specific gallery targets.
 - **Brokerage controls:** forest on paper or paper on forest, 44px minimum height, explicit brokerage wording. Hover darkens the field or adds an underline.
 - **Focus:** visible 3px forest outline on paper, paper outline within the forest masthead/contact band, with 4px offset; each route begins with a keyboard-visible skip link.
 - **Photo records:** image link and exact approved caption. Routine source notes are omitted; provenance stays in the asset manifest. Only placeholder/concept images carry short attached labels. Gallery numbers represent real sequence, not decoration. Placeholder photo is explicitly not this property; conceptual plan is explicitly not existing finished space. Their image-link accessible names include those same short disclosures.
