@@ -94,6 +94,9 @@ body:has(dialog[open]) { overflow: hidden; }
 .viewer-figure figcaption { font-size: 14px; }
 .viewer-controls { margin-top: 16px; font: 14px/1.4 Arial, sans-serif; }
 .viewer-controls a { display: inline-flex; align-items: center; min-height: 44px; text-align: center; }
+.viewer-controls button { gap: 10px; padding: 8px 12px; }
+.viewer-preview { width: 64px; height: 48px; object-fit: contain; }
+.viewer-preview[hidden] { display: none; }
 #viewer-error { font: 14px/1.5 Arial, sans-serif; margin-top: 16px; }
 @media (max-width: 1000px) {
   .masthead-location { display: none; }
@@ -127,9 +130,11 @@ body:has(dialog[open]) { overflow: hidden; }
   .gallery-intro { padding-block: 32px; }
   dialog { padding: 16px; }
   .viewer-figure img { height: min(44dvh, 420px); }
-  .viewer-controls { gap: 12px; }
-  .viewer-controls button { padding: 10px 12px; }
-  .viewer-controls a { font-size: 12px; }
+  .viewer-controls { align-items: stretch; gap: 8px; }
+  .viewer-controls button { flex-direction: column; gap: 4px; padding: 8px; }
+  #next-photo { flex-direction: column-reverse; }
+  .viewer-preview { width: 40px; height: 32px; }
+  .viewer-controls a { flex: 1; justify-content: center; font-size: 12px; }
 }
 @media print {
   .masthead, .buyer-nav, dialog { display: none; }

@@ -5,6 +5,7 @@ const caption = document.querySelector('#viewer-caption');
 const title = document.querySelector('#viewer-title');
 const fullSize = document.querySelector('#full-size');
 const error = document.querySelector('#viewer-error');
+const previews = [];
 let current = 0;
 let opener;
 
@@ -20,10 +21,24 @@ function showPhoto(index) {
     .filter(child => !child.classList.contains('photo-number'))
     .map(child => child.cloneNode(true)));
   title.textContent = `Photo ${current + 1} of ${links.length}`;
+  previews.forEach((preview, side) => {
+    const adjacent = links[(current + (side === 0 ? -1 : 1) + links.length) % links.length];
+    // Placeholder and concept images belong beside their full disclosure, never in a tiny preview.
+    preview.hidden = Boolean(adjacent.parentElement.querySelector('.photo-note'));
+    if (!preview.hidden) preview.src = adjacent.querySelector('img').getAttribute('src');
+  });
 }
 
 // Keep ordinary image links working with no JS or without native dialog support.
 if (typeof viewer.showModal === 'function') {
+  ['previous-photo', 'next-photo'].forEach((id, side) => {
+    const preview = new Image(64, 48);
+    preview.alt = '';
+    preview.className = 'viewer-preview';
+    preview.addEventListener('error', () => { preview.hidden = true; });
+    document.getElementById(id).insertAdjacentElement(side === 0 ? 'afterbegin' : 'beforeend', preview);
+    previews.push(preview);
+  });
   links.forEach((link, index) => {
     link.addEventListener('click', event => {
       if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;

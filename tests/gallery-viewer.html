@@ -21,11 +21,19 @@ try {
     check(dialog.open, `open photo ${index + 1}`);
   };
   const image = doc.querySelector('#viewer-image');
+  const previousPreview = () => doc.querySelector('#previous-photo img');
+  const nextPreview = () => doc.querySelector('#next-photo img');
+  const previewMatches = (preview, index) => preview && !preview.hidden &&
+    preview.getAttribute('src') === links[index].querySelector('img').getAttribute('src');
   open(5);
+  check(previewMatches(previousPreview(), 4) && previewMatches(nextPreview(), 6), 'adjacent previews use existing small property images');
+  check(previousPreview()?.alt === '' && nextPreview()?.alt === '', 'decorative previews preserve button names');
   check(doc.activeElement.textContent === 'Close', 'initial focus on Close');
   check(doc.querySelector('#viewer-caption').textContent.includes('Placeholder photo — not this property'), 'placeholder disclosure in viewer');
   doc.querySelector('#next-photo').click();
   check(image.getAttribute('src') === 'assets/listing/07.webp', 'Next advances in approved order');
+  check(previousPreview()?.hidden === true, 'placeholder is not previewed without its disclosure');
+  check(previewMatches(nextPreview(), 7), 'Next refreshes preview to following photo');
   dialog.dispatchEvent(new win.KeyboardEvent('keydown', {key: 'ArrowLeft', bubbles: true}));
   check(image.getAttribute('src') === 'assets/listing/06.webp', 'ArrowLeft returns previous image');
   image.dispatchEvent(new win.Event('error'));
@@ -39,12 +47,21 @@ try {
   open(0);
   doc.querySelector('#previous-photo').click();
   check(image.getAttribute('src') === 'assets/listing/33.webp', 'Previous wraps first to last');
+  check(previewMatches(previousPreview(), 31) && previewMatches(nextPreview(), 0), 'previews wrap with gallery order');
   doc.querySelector('#next-photo').click();
   check(image.getAttribute('src') === 'assets/listing/01.webp', 'Next wraps last to first');
   dialog.close();
   open(30);
   check(doc.querySelector('#viewer-caption').textContent.includes('Conceptual basement plan'), 'concept disclaimer in viewer');
   check(doc.querySelector('#full-size').getAttribute('href') === 'assets/listing/31.webp', 'full-size fallback matches selection');
+  doc.querySelector('#next-photo').click();
+  check(previousPreview()?.hidden === true, 'concept plan is not previewed without its disclosure');
+  doc.querySelector('#next-photo').click();
+  check(previewMatches(previousPreview(), 31), 'property preview returns after conceptual slot');
+  previousPreview()?.dispatchEvent(new win.Event('error'));
+  check(previousPreview()?.hidden === true, 'failed preview disappears without blocking navigation');
+  doc.querySelector('#previous-photo').click();
+  check(image.getAttribute('src') === 'assets/listing/32.webp', 'navigation survives preview failure');
   dialog.close();
   const modified = new win.MouseEvent('click', {bubbles: true, cancelable: true, ctrlKey: true});
   // Cancel browser navigation after gallery handler has had its chance to ignore modified clicks.
