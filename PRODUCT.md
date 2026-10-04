@@ -14,14 +14,14 @@ Prospective buyers are primary users. Realtors and the owner use the site as sup
 
 Present a conventional photo-led listing for weekend and second-home buyers: understand the house, explore 33 ordered photographs, and contact the listing brokerage. Preserve the forest/warm-paper identity; Redfin/Zillow-style clarity replaces the renovation scrapbook.
 
-## Approved public brief · 3 October 2026
+## Approved public brief · revised 4 October 2026
 
 - `index.html`: listing overview, about the home, property details, photo preview and contact. `gallery.html`: complete 33-position gallery with accessible enlarged viewing. Primary navigation is **Home / Photos**, linking to these two pages from the same normal-flow position below the masthead, with the current page marked (colonial-bqj). No sticky changing images, scroll effects or autoplay.
-- Preserve the **seven Replacement Listing Text paragraphs verbatim and in order**, from the owner-approved `Listing Comments 323 Colonial Dr.docx`. Copy is frozen in `tests/fixtures/approved-listing.json`, including the owner-reconfirmed **up to 7-gigabit** claim despite the contemporaneous MLS 5-gigabit wording.
+- Preserve the **seven Replacement Listing Text paragraphs verbatim and in order**, from the owner-approved `Listing Feedback 323 Colonial Dr.docx` (colonial-5me). Copy is frozen in `tests/fixtures/approved-listing.json`, including the owner-reconfirmed **up to 7-gigabit** claim despite the contemporaneous MLS 5-gigabit wording.
 - Match each passage with captioned inline property imagery at all viewport sizes. Hero is preferred position 1, listing ID 5/72. Gallery follows the DOCX preferred positions/captions, not “OTHER PHOTOS.”
-- Slot 6 uses the [owner-selected Olympic Hot Tub placeholder](https://olympichottub.com/wp-content/uploads/2023/10/Hot-Spring-Flair-wBluetooth-Music-Chehalis_1.jpg), replacing the initially approved simulation at the user’s request during implementation. Keep the short label **Placeholder photo — not this property**. Olympic Hot Tub source credit and URL stay in the provenance manifest; do not claim matching make/model or setting. Original downloaded JPEG is `assets/listing/hottub-placeholder-source.jpg`; original house simulation `images/deck-hottub-v3.png` remains untouched. Confirm reuse rights or replace with authorized property photography before any future public deployment.
+- Slot 6 uses the owner-supplied actual salt-water hot-tub photograph embedded in the revised DOCX, without a placeholder warning. The superseded [Olympic Hot Tub source](https://olympichottub.com/wp-content/uploads/2023/10/Hot-Spring-Flair-wBluetooth-Music-Chehalis_1.jpg) remains at `assets/listing/hottub-placeholder-source.jpg`, unused and unchanged; original house simulation `images/deck-hottub-v3.png` also remains untouched.
 - Owner-supplied laundry and basement images are actual photographs. Only position 31, the basement marketing plan, carries the short label **Conceptual basement plan — not existing finished space**. No expanded basement proposal or new basement page.
-- Per the final user request, remove routine “Listing photograph”, “Owner photograph”, seasonal/source caveats and repeated snapshot warnings from buyer pages. Retain exact DOCX captions and only the two essential placeholder/concept labels. One footer per page reads **Listing information as of October 3, 2026.**
+- Per the final user request, remove routine “Listing photograph”, “Owner photograph”, seasonal/source caveats and repeated snapshot warnings from buyer pages. Retain exact DOCX captions and only the essential basement concept label. One footer per page reads **Listing information as of October 3, 2026.**
 - Prior-listing seasonal provenance remains in the manifest and Bright MLS watermarks remain in the pixels. Safe crop derivatives remove viewer chrome or specified distracting edges; originals stay untouched. Position 12's already-truncated windows cannot be restored by cropping and are not invented.
 
 ## Listing snapshot and contact
@@ -76,9 +76,9 @@ Sherwin-Williams · 814 S Loudoun St, Winchester, VA 22601-4597.
 
 ## Evidence and regeneration
 
-- Original DOCX remains at `/Users/hays/Downloads/Listing Comments 323 Colonial Dr.docx`, unchanged; not copied into the public site. Approved document, embedded media and legacy file SHA-256 hashes live in `tests/fixtures/approved-listing.json`.
-- `assets/listing/manifest.json` maps all 33 positions to source relationship targets (or the approved placeholder URL/local source), exact captions, crop rectangles/decisions and output hashes. Derivatives are WebP at maximum 1600px and 720px, quality 78, with no upscaling or new generative edits.
-- Reproduce with installed ImageMagick: `python3 scripts/extract-listing.py '/path/to/Listing Comments 323 Colonial Dr.docx'`. Extraction rejects a source that differs from the approved hashes. No extraction is required to serve the committed website.
+- Approved revised DOCX remains at `/Users/hays/Downloads/Listing Feedback 323 Colonial Dr.docx`, unchanged; not copied into the public site. Approved document, embedded media and legacy file SHA-256 hashes live in `tests/fixtures/approved-listing.json`.
+- `assets/listing/manifest.json` maps all 33 positions to embedded source relationship targets, exact captions, crop rectangles/decisions and output hashes. Derivatives are WebP at maximum 1600px and 720px, quality 78, with no upscaling or new generative edits.
+- Reproduce with installed ImageMagick: `python3 scripts/extract-listing.py '/path/to/Listing Feedback 323 Colonial Dr.docx'`. Extraction rejects a source that differs from the approved hashes. No extraction is required to serve the committed website.
 - Legacy `images/photo-*.jpg`, simulation sources, `images/planned-colours.json`, old reference plans and `assets/plates/` remain untouched. Basement drawing/pricing history lives in a separate CAD project.
 - Existing Impeccable mock/build artifacts describe the superseded monograph composition; they are not authority over this approved brief. `DESIGN.md` and `.impeccable/design.json` describe the current buyer listing; legacy styling remains separate.
 

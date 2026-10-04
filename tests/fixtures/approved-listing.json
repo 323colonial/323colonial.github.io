@@ -1,10 +1,10 @@
 {
-  "document": "Listing Comments 323 Colonial Dr.docx",
-  "document_sha256": "7ff1a2691a613c6c7da5d1ed861668c71653f28f290ca81bb2734e3318428f95",
+  "document": "Listing Feedback 323 Colonial Dr.docx",
+  "document_sha256": "0c95beef596f1cd4a832b19133e6fbf24c10416e3c05b63510fb486725092183",
   "paragraphs": [
-    "Modern cabin in the woods, one mile from Cacapon Resort State Park. Built by a local craftsman, this one-of-a-kind home is full of thoughtful details, custom trimwork and little flourishes throughout. Nestled on 2.9 wooded acres in the Appalachian Mountains, this 2-bedroom, 2.5-bath retreat feels worlds away from city life, yet sits just about two hours from Washington, D.C., and Baltimore. Modern luxuries include a chef’s kitchen, up to 7-gigabit fiber internet with a Starlink satellite backup, and a spacious two-car garage with an outlet for fast Level 2 EV charging.",
-    "At the heart of the house is a soaring great room with hardwood floors, a wood-burning stove and floor-to-ceiling windows framing sweeping views of the surrounding woods. The open kitchen and dining area are designed for cooking and conversation, with a generous breakfast-bar island, granite countertops and a dual-fuel range with gas cooktop and electric double oven.",
-    "Nature is the star here, with porches and decks wrapping three sides of the house. Nap on the swinging daybed on the screened porch or watch for deer and foxes on the hillside; grill on the open deck, soak in the hot tub, or gather around the smokeless firepit after dark. Spring blooms with redbuds; summer draws hummingbirds by day and sets the hillside twinkling with fireflies at night. Fall turns the woods red and orange, while winter opens sweeping views through the bare trees and, every so often, blankets the property in sparkling snow.",
+    "Modern cabin in the woods, one mile from Cacapon Resort State Park. Built by a local craftsman, this one-of-a-kind home is full of thoughtful details, custom trimwork and little flourishes throughout. Nestled on 2.9 wooded acres in the Appalachian Mountains, this 2-bedroom, 2.5-bath retreat feels worlds away from city life, yet sits just about two hours from Washington, D.C., and Baltimore. Modern luxuries include a chef’s kitchen, up to 7-gigabit fiber internet with Starlink satellite backup, and a spacious two-car garage with an outlet for fast Level 2 EV charging.",
+    "At the heart of the house is a soaring great room with hardwood floors, wood-burning stove and floor-to-ceiling windows framing sweeping views of the surrounding woods. The open kitchen and dining area are designed for cooking and conversation, with a generous breakfast-bar island, granite countertops and a dual-fuel range with gas cooktop and electric double oven.",
+    "Nature is the star here, with porches and decks wrapping three sides of the house. Nap on the swinging daybed on the screened porch or watch for deer and foxes on the hillside; grill on the open deck, stargaze in the salt-water hot tub, or gather around the smokeless firepit after dark. Spring blooms with redbuds; summer draws hummingbirds by day and sets the hillside twinkling with fireflies at night. Fall turns the woods red and orange, while winter opens sweeping views through the bare trees and, every so often, blankets the property in sparkling snow.",
     "The main-floor primary suite has a walk-in closet and spa-like bath with an oversized jetted soaking tub and separate shower. Upstairs feels like a private guest floor, with an oversized bedroom, full bath and roomy loft that works beautifully as a home theater, office or play area.",
     "A fenced raised-bed garden sits beside a greenhouse, surrounded by established native fruit and nut trees, including mature persimmons that produce generously each fall. The full walkout basement offers abundant storage and potential for additional finished living space. Recent updates include a new outdoor HVAC unit, refrigerator with ice-maker and cold water, dishwasher and dual-fuel range; the exterior was painted in 2024. No HOA.",
     "Beyond home, the area offers an exceptional mix of outdoor adventure and small-town charm. Just down the road, 6,000-acre Cacapon Resort State Park offers a sandy swimming beach, hiking and mountain-biking trails, horseback riding, fishing, skeet-shooting, and a championship golf course. Its two lakes are stocked with trout each spring, while the nearby crystal-clear Cacapon River is ideal for paddling, tubing and fly-fishing. Head north to historic Berkeley Springs, a quirky spa and arts town built around mineral springs, or south to Winchester, Virginia, roughly half an hour away, for restaurants, shopping and city conveniences.",
@@ -15,15 +15,15 @@
       "position": 1,
       "id": "5/72",
       "caption": "Distinctive, locally built mountain home on 2.9 wooded acres.",
-      "source": "word/media/image31.png",
+      "source": "word/media/image38.png",
       "source_sha256": "a2aeeb93ada3c41e1f44d5e5a821b6b0d4d677348e4c3dfad0d5527f4fd233d3",
-      "comment": "Caption: Distinctive, locally built mountain home on 2.9 wooded acres."
+      "comment": "Caption: Distinctive, locally built mountain home on 2.9 wooded acres.Note: This picture should be the listing hero."
     },
     {
       "position": 2,
       "id": "9/72",
       "caption": "Soaring great room with hardwood floors, wood-burning stove and walls of windows.",
-      "source": "word/media/image26.png",
+      "source": "word/media/image37.png",
       "source_sha256": "a1774b417905b582ba845b76e59953614628ac989dcce697256024901ac84232",
       "comment": "Caption: Soaring great room with hardwood floors, wood-burning stove and walls of windows."
     },
@@ -31,7 +31,7 @@
       "position": 3,
       "id": "Previous Listing",
       "caption": "Tucked into 2.9 wooded acres in the Appalachian Mountains.",
-      "source": "word/media/image17.jpg",
+      "source": "word/media/image1.jpg",
       "source_sha256": "a30401713c9934f240c9a117192b75954a77fc5f7f6831b33d2b09032994564a",
       "comment": "Caption: Tucked into 2.9 wooded acres in the Appalachian Mountains."
     },
@@ -39,7 +39,7 @@
       "position": 4,
       "id": "26/72",
       "caption": "Screened porch with swinging daybed overlooking the wooded hillside.",
-      "source": "word/media/image33.png",
+      "source": "word/media/image34.png",
       "source_sha256": "5e5024ef27f18bd4a8ec6ea67c2fc7b6c2807a2d7d30052613660dddcd43eb70",
       "comment": "Caption: Screened porch with swinging daybed overlooking the wooded hillside."
     },
@@ -54,18 +54,16 @@
     {
       "position": 6,
       "id": "NEW",
-      "caption": "Hot tub on the open deck, surrounded by woods.",
-      "source": "assets/listing/hottub-placeholder-source.jpg",
-      "source_sha256": "1c3768fe623ff14d67ba1ee5aac17b9d4a54be7b1d96976ca378286118cfe38d",
-      "comment": "Caption: Hot tub on the open deck, surrounded by woods.<TO COME!>Photo: Hot tub. Open, full of water, ideally jets running.",
-      "source_url": "https://olympichottub.com/wp-content/uploads/2023/10/Hot-Spring-Flair-wBluetooth-Music-Chehalis_1.jpg",
-      "approval_note": "User-selected placeholder replaces previously approved simulation during colonial-5bv implementation. Not this property; no claim of same make/model or installation. Original simulation remains preserved."
+      "caption": "Salt-water hot tub on the open deck, surrounded by woods.",
+      "source": "word/media/image5.png",
+      "source_sha256": "b1a771cc556b61532b1136f78b55e7105ec5067cc0d62df860dce9c4ac82760d",
+      "comment": "Caption: Salt-water hot tub on the open deck, surrounded by woods.Photo: Hot tub. Open, full of water, ideally jets running."
     },
     {
       "position": 7,
       "id": "39/72",
       "caption": "Spa-like main-level primary bath with oversized jetted soaking tub and separate shower.",
-      "source": "word/media/image15.png",
+      "source": "word/media/image27.png",
       "source_sha256": "b6e6303466909cce6c93e567b1b1dc97edc652ea7795cb7dec5dc8c87f449a5d",
       "comment": "Caption: Spa-like main-level primary bath with oversized jetted soaking tub and separate shower."
     },
@@ -73,7 +71,7 @@
       "position": 8,
       "id": "Previous Listing",
       "caption": "Brilliant fall color across the surrounding woods and Appalachian ridges.",
-      "source": "word/media/image2.jpg",
+      "source": "word/media/image14.jpg",
       "source_sha256": "bd5d78c80b354e39264332fa2dfb150b25e24826c4588e1c83be8219d123dfe1",
       "comment": "Caption: Brilliant fall color across the surrounding woods and Appalachian ridges."
     },
@@ -81,7 +79,7 @@
       "position": 9,
       "id": "Previous Listing",
       "caption": "The house tucked into the woods after a snowfall.",
-      "source": "word/media/image6.jpg",
+      "source": "word/media/image3.jpg",
       "source_sha256": "dec803d2d17e44b55366434ca073c556cd23ecf2f7012636ed22e0dae52e3f63",
       "comment": "Caption: The house tucked into the woods after a snowfall."
     },
@@ -89,7 +87,7 @@
       "position": 10,
       "id": "65/72",
       "caption": "Woodland firepit for evenings beneath the trees.",
-      "source": "word/media/image37.png",
+      "source": "word/media/image36.png",
       "source_sha256": "4c6f47737880895aaab85ab88531346038b2473a148c876d7c749ed35976532d",
       "comment": "Caption: Woodland firepit for evenings beneath the trees."
     },
@@ -97,7 +95,7 @@
       "position": 11,
       "id": "4/72",
       "caption": "Attached two-car garage with high-voltage outlet for EV charging.",
-      "source": "word/media/image16.png",
+      "source": "word/media/image31.png",
       "source_sha256": "c0dd5d3e9824703c765639df4114b8e2a912455e038a76cd27ef3adb82fc9065",
       "comment": "Caption: Attached two-car garage with high-voltage outlet for EV charging."
     },
@@ -105,7 +103,7 @@
       "position": 12,
       "id": "43/72",
       "caption": "The upper loft overlooks the open great room below.",
-      "source": "word/media/image14.png",
+      "source": "word/media/image35.png",
       "source_sha256": "eaff941524f98d8e1577674263e01d4a1ba562e263378c222d25957183d0193e",
       "comment": "Caption: The upper loft overlooks the open great room below.Action Item (Daindridge): Is there a version where the trapezoidal windows are not truncated/cropped?"
     },
@@ -113,7 +111,7 @@
       "position": 13,
       "id": "10/72",
       "caption": "Stone hearth and wood-burning stove anchor the light-filled great room.",
-      "source": "word/media/image23.png",
+      "source": "word/media/image2.png",
       "source_sha256": "9d3ace8f3154c5e7e28a01624ed3b9a7d058652729455de85121e7fa2b2b8b63",
       "comment": "Caption: Stone hearth and wood-burning stove anchor the light-filled great room."
     },
@@ -121,7 +119,7 @@
       "position": 14,
       "id": "18/72",
       "caption": "Open dining area designed for gathering and conversation.",
-      "source": "word/media/image12.png",
+      "source": "word/media/image8.png",
       "source_sha256": "b983051596cfb399d4f47adf72c433e780f1bd1bf529773e28eaefb733df7112",
       "comment": "Caption: Open dining area designed for gathering and conversation.Action Item (Daindridge): Crop the corner of the countertop and cabinet on the right."
     },
@@ -129,7 +127,7 @@
       "position": 15,
       "id": "22/72",
       "caption": "New dual-fuel range with gas cooktop and electric double oven.",
-      "source": "word/media/image27.png",
+      "source": "word/media/image10.png",
       "source_sha256": "3ea6166cf18f7cee4ada6ad411d914e0d7f13e96ca0c6b6a4f557a4c2e1a4157",
       "comment": "Caption: New dual-fuel range with gas cooktop and electric double oven."
     },
@@ -137,7 +135,7 @@
       "position": 16,
       "id": "11/72",
       "caption": "Open deck for grilling, dining and relaxing among the trees.",
-      "source": "word/media/image28.png",
+      "source": "word/media/image15.png",
       "source_sha256": "993a86ff595e4f2071bd88450a20f454e8d504003a7b48442e9a9e20a4e8a7f0",
       "comment": "Caption: Open deck for grilling, dining and relaxing among the trees.Action Item (Daindridge): Crop the right railing and edging on the right."
     },
@@ -145,7 +143,7 @@
       "position": 17,
       "id": "29/72",
       "caption": "The screened porch stretches along the hillside for three-season outdoor living.",
-      "source": "word/media/image19.png",
+      "source": "word/media/image30.png",
       "source_sha256": "5c04698a99a2f974032db5923c5ad76a21f0ccca08125d0d4bc211acb70e20ae",
       "comment": "Caption: The screened porch stretches along the hillside for three-season outdoor living."
     },
@@ -153,7 +151,7 @@
       "position": 18,
       "id": "34/72",
       "caption": "Main-floor primary suite with hardwood floors and wooded views.",
-      "source": "word/media/image8.png",
+      "source": "word/media/image12.png",
       "source_sha256": "599639094591d4395e3c5d70c7cb95c003067f9224e43d62ba2d995e6e5ae641",
       "comment": "Caption: Main-floor primary suite with hardwood floors and wooded views."
     },
@@ -161,7 +159,7 @@
       "position": 19,
       "id": "37/72",
       "caption": "Jetted soaking tub and separate walk-in shower.",
-      "source": "word/media/image10.png",
+      "source": "word/media/image6.png",
       "source_sha256": "0bf08e65daf790c3e065e1384392963c09bbfbcf4f072f32eff1fa04575feb00",
       "comment": "Caption: Jetted soaking tub and separate walk-in shower."
     },
@@ -169,7 +167,7 @@
       "position": 20,
       "id": "NEW; Owner Supplied",
       "caption": "Convenient main-level laundry closet.",
-      "source": "word/media/image4.png",
+      "source": "word/media/image19.png",
       "source_sha256": "a9cba662535eea460efe80516b317b808f39f04311d780818686f6b2b4e5ab6f",
       "comment": "Caption: Convenient main-level laundry closet."
     },
@@ -177,7 +175,7 @@
       "position": 21,
       "id": "46/72",
       "caption": "Spacious upstairs loft creates a second living area.",
-      "source": "word/media/image29.png",
+      "source": "word/media/image28.png",
       "source_sha256": "07234375f734b38200a6450735fc0b03dd4468779342f3f5eec09485dec3fa64",
       "comment": "Caption: Spacious upstairs loft creates a second living area."
     },
@@ -185,7 +183,7 @@
       "position": 22,
       "id": "47/72",
       "caption": "Room for a home theater, office, play space or reading retreat.",
-      "source": "word/media/image18.png",
+      "source": "word/media/image25.png",
       "source_sha256": "87ecbdf1dfa6baa8c898d1de9d278789f8ed047233571a4da3c9914a52eae442",
       "comment": "Caption: Room for a home theater, office, play space or reading retreat."
     },
@@ -193,7 +191,7 @@
       "position": 23,
       "id": "48/72",
       "caption": "Oversized second bedroom on the private upper level.",
-      "source": "word/media/image7.png",
+      "source": "word/media/image9.png",
       "source_sha256": "b69f25dc9b228ccb913d44ce4a58da7c66cfa883e67f1a3927c1a1ef454ad75d",
       "comment": "Caption: Oversized second bedroom on the private upper level.Action Item (Daindridge): crop the ceiling vent"
     },
@@ -201,23 +199,23 @@
       "position": 24,
       "id": "51/72",
       "caption": "Full bath completes the self-contained upper guest level.",
-      "source": "word/media/image36.png",
+      "source": "word/media/image32.png",
       "source_sha256": "61e96fc0080ba87d5ea3fa261b630031d503d515b829c90c065032e1016a2989",
       "comment": "Caption: Full bath completes the self-contained upper guest level."
     },
     {
       "position": 25,
       "id": "Previous Listing",
-      "caption": "Fenced raised-bed garden with adjacent shed.",
-      "source": "word/media/image11.png",
+      "caption": "Fenced raised-bed garden with adjacent greenhouse.",
+      "source": "word/media/image13.png",
       "source_sha256": "ed08a7bdef59ff50577a2f2d06ed00f9bfc5476dc33fd50b346bb904af34328d",
-      "comment": "Caption: Fenced raised-bed garden with adjacent shed."
+      "comment": "Caption: Fenced raised-bed garden with adjacent greenhouse."
     },
     {
       "position": 26,
       "id": "57/72",
       "caption": "Established fruit and nut trees are scattered throughout the property.",
-      "source": "word/media/image34.png",
+      "source": "word/media/image26.png",
       "source_sha256": "ee750b34d1a79c073bab33ccc6a6b1d84871e4e0f63dc9a6ca75e97be806d2ea",
       "comment": "Caption: Established fruit and nut trees are scattered throughout the property."
     },
@@ -225,7 +223,7 @@
       "position": 27,
       "id": "63/72",
       "caption": "Paths and gathering spaces make the most of the wooded setting.",
-      "source": "word/media/image38.png",
+      "source": "word/media/image39.png",
       "source_sha256": "dff1707207cde6232659644cba4cf3e26e80325e98252a4e6c496837f59072a5",
       "comment": "Caption: Paths and gathering spaces make the most of the wooded setting.Action Item (Daindridge): Crop out the deck on the right edge of the photo."
     },
@@ -233,7 +231,7 @@
       "position": 28,
       "id": "Previous Listing",
       "caption": "Nearly three wooded acres, with mountain scenery in every direction. Porches and decks wrap the home.",
-      "source": "word/media/image9.png",
+      "source": "word/media/image7.png",
       "source_sha256": "3539d8c69e5d489bf84c468a90343a581e80598a00c09a300b9890917b5f40ae",
       "comment": "Caption: Nearly three wooded acres, with mountain scenery in every direction. Porches and decks wrap the home."
     },
@@ -241,7 +239,7 @@
       "position": 29,
       "id": "13/72",
       "caption": "Open deck provides big sky views.",
-      "source": "word/media/image25.png",
+      "source": "word/media/image23.png",
       "source_sha256": "73ead32964439b55adeadc948562431fbbdb3613a8044b02e4588e7af13a0da1",
       "comment": "Caption: Open deck provides big sky views."
     },
@@ -249,7 +247,7 @@
       "position": 30,
       "id": "NEW; Owner Supplied",
       "caption": "Full walkout basement with abundant storage and potential for additional finished living space.",
-      "source": "word/media/image5.png",
+      "source": "word/media/image21.png",
       "source_sha256": "cec9e1174011fec2fa2ed18e48adc834bbec289280449e4259809015e5006c23",
       "comment": "Caption: Full walkout basement with abundant storage and potential for additional finished living space."
     },
@@ -257,7 +255,7 @@
       "position": 31,
       "id": "NEW; Owner Supplied",
       "caption": "The basement can be renovated into a separate living space with a walk-out bedroom, basement den, home theater, and second fireplace.",
-      "source": "word/media/image1.png",
+      "source": "word/media/image16.png",
       "source_sha256": "2c9ff7aeb82af7d9f6e7b92e2407c83f72e9fdf4cfe78013b8b8ec72622bb756",
       "comment": "Caption: The basement can be renovated into a separate living space with a walk-out bedroom, basement den, home theater, and second fireplace."
     },
@@ -265,7 +263,7 @@
       "position": 32,
       "id": "3/72",
       "caption": "Approximate boundaries of the 2.9-acre wooded property.",
-      "source": "word/media/image21.png",
+      "source": "word/media/image18.png",
       "source_sha256": "246cd6aa6c5af75b0205c2434fa0002211cab88a4d82e989ebb5da1b7a7d9dc5",
       "comment": "Caption: Approximate boundaries of the 2.9-acre wooded property.Photo: Informational property-boundary aerial."
     },
@@ -273,7 +271,7 @@
       "position": 33,
       "id": "72/72",
       "caption": "Nearly three wooded acres with mountain scenery in every direction.",
-      "source": "word/media/image13.png",
+      "source": "word/media/image17.png",
       "source_sha256": "d76680e4894d639bdeab962a319f6b027a0917c9f3da8cd90aca1d259ececc4c",
       "comment": "Caption: Nearly three wooded acres with mountain scenery in every direction."
     }
@@ -327,6 +325,8 @@
     "images/upbath-6-pewter.png": "176de6c5d61166026c006ea878e4d90223e6fe32a3ba0151236ee79682f98727",
     "images/upbath-sea-salt.webp": "8d4a8751f78b4032d0edd0d8a842670b94a8b1cf4c8735fe342e384bd4b1554d",
     "sale-prep.html": "d84e3ef2dd2421b2feacdfd1409e9431dfd1a64b426d9a62d03f472d856c5b84",
-    "styles.css": "b69617e1f091c3bbd4cb97dde2ff04c628c00c77fb9cfda798fca8a00de1a378"
-  }
+    "styles.css": "b69617e1f091c3bbd4cb97dde2ff04c628c00c77fb9cfda798fca8a00de1a378",
+    "assets/listing/hottub-placeholder-source.jpg": "1c3768fe623ff14d67ba1ee5aac17b9d4a54be7b1d96976ca378286118cfe38d"
+  },
+  "approval": "colonial-5me, 2026-10-04"
 }

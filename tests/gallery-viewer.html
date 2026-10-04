@@ -29,10 +29,11 @@ try {
   check(previewMatches(previousPreview(), 4) && previewMatches(nextPreview(), 6), 'adjacent previews use existing small property images');
   check(previousPreview()?.alt === '' && nextPreview()?.alt === '', 'decorative previews preserve button names');
   check(doc.activeElement.textContent === 'Close', 'initial focus on Close');
-  check(doc.querySelector('#viewer-caption').textContent.includes('Placeholder photo — not this property'), 'placeholder disclosure in viewer');
+  check(doc.querySelector('#viewer-caption').textContent === 'Salt-water hot tub on the open deck, surrounded by woods.', 'real hot-tub caption without placeholder disclosure');
+  check(image.alt === 'Salt-water hot tub on the open deck, surrounded by woods.', 'real hot-tub accessible name');
   doc.querySelector('#next-photo').click();
   check(image.getAttribute('src') === 'assets/listing/07.webp', 'Next advances in approved order');
-  check(previousPreview()?.hidden === true, 'placeholder is not previewed without its disclosure');
+  check(previewMatches(previousPreview(), 5), 'real hot-tub photograph is eligible for adjacent preview');
   check(previewMatches(nextPreview(), 7), 'Next refreshes preview to following photo');
   dialog.dispatchEvent(new win.KeyboardEvent('keydown', {key: 'ArrowLeft', bubbles: true}));
   check(image.getAttribute('src') === 'assets/listing/06.webp', 'ArrowLeft returns previous image');

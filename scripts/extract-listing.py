@@ -1,5 +1,5 @@
 """Regenerate approved listing derivatives from original DOCX; requires ImageMagick.
-Usage: python3 scripts/extract-listing.py '/path/to/Listing Comments 323 Colonial Dr.docx'
+Usage: python3 scripts/extract-listing.py '/path/to/Listing Feedback 323 Colonial Dr.docx'
 Original document and legacy images are never modified. Site needs no build step.
 """
 import hashlib
@@ -51,7 +51,7 @@ def main():
             original.write_bytes(content)
             photo['crop_xywh'] = CROPS.get(n)
             photo['crop_note'] = NOTES.get(n, 'Remove screenshot viewer chrome only; retain complete photograph and MLS watermark.' if n in CROPS else 'Uncropped; retain original framing and any watermark.')
-            photo['provenance'] = ('Placeholder photo — not this property' if n == 6 else 'Conceptual example only' if n == 31 else 'Owner photograph' if n in (20, 30) else 'Prior-listing photograph' if photo['id'] == 'Previous Listing' else 'Listing photograph')
+            photo['provenance'] = ('Conceptual example only' if n == 31 else 'Owner photograph' if n in (6, 20, 30) else 'Prior-listing photograph' if photo['id'] == 'Previous Listing' else 'Listing photograph')
             photo['derivatives'] = []
             for suffix, width in [('', 1600), ('-small', 720)]:
                 target = output / f'{n:02}{suffix}.webp'
@@ -64,7 +64,7 @@ def main():
                 w, h = map(int, subprocess.check_output(['magick', 'identify', '-format', '%w %h', str(target)], text=True).split())
                 photo['derivatives'].append({'path': str(target.relative_to(ROOT)), 'width': w, 'height': h, 'sha256': digest(target.read_bytes())})
             photos.append(photo)
-    manifest = {'document': APPROVED['document'], 'document_sha256': APPROVED['document_sha256'], 'approval': 'colonial-5bv, 2026-10-03', 'processing': 'ImageMagick; explicit crops only, no generative edits; WebP quality 78; max 1600px and 720px; no upscaling. Source document retained outside repository.', 'photos': photos}
+    manifest = {'document': APPROVED['document'], 'document_sha256': APPROVED['document_sha256'], 'approval': APPROVED['approval'], 'processing': 'ImageMagick; explicit crops only, no generative edits; WebP quality 78; max 1600px and 720px; no upscaling. Source document retained outside repository.', 'photos': photos}
     (output / 'manifest.json').write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + '\n')
     print(f'Wrote {len(photos)} ordered images, two sizes each, and provenance manifest.')
 

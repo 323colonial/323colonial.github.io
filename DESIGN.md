@@ -115,7 +115,7 @@ Georgia gives headings and exact listing prose a restrained residential characte
 
 Machine-readable roles above capture the current `listing.css` sizes, not a new CSS token layer. Each role includes its font family for standalone previews; label and note sizes serve several contexts with different line heights. Detail text is 16px, quick facts 19px (16px on mobile), property mark 26px (23px on mobile), masthead location 13px and contact heading 30px.
 
-Body is 18px with 1.65 line height; paragraph measure is bounded at 68ch. H1 scales from 32–44px; h2 from 28–36px; story headings are 28px, reducing to 25px on mobile. Captions are 14px and essential placeholder/concept labels 12px; compact mosaic captions use 12px. Price uses bold 32px sans-serif and tabular numbers.
+Body is 18px with 1.65 line height; paragraph measure is bounded at 68ch. H1 scales from 32–44px; h2 from 28–36px; story headings are 28px, reducing to 25px on mobile. Captions are 14px and essential concept labels 12px; compact mosaic captions use 12px. Price uses bold 32px sans-serif and tabular numbers.
 
 ## Layout
 
@@ -138,14 +138,14 @@ Square image frames and controls, no rounded cards. Photographs are content, not
 - **Navigation:** Home / Photos link to `index.html` / `gallery.html`, without section fragments. Sans-serif links have 44px minimum width and height and wrap on narrow screens. Exactly one `aria-current="page"` link stays bold and underlined. Brokerage contact remains a separate masthead action; contextual photo links retain their specific gallery targets.
 - **Brokerage controls:** forest on paper or paper on forest, 44px minimum height, explicit brokerage wording. Hover darkens the field or adds an underline.
 - **Focus:** visible 3px forest outline on paper, paper outline within the forest masthead/contact band, with 4px offset; each route begins with a keyboard-visible skip link.
-- **Photo records:** image link and exact approved caption. Routine source notes are omitted; provenance stays in the asset manifest. Only placeholder/concept images carry short attached labels. Gallery numbers represent real sequence, not decoration. Placeholder photo is explicitly not this property; conceptual plan is explicitly not existing finished space. Their image-link accessible names include those same short disclosures.
+- **Photo records:** image link and exact approved caption. Routine source notes are omitted; provenance stays in the asset manifest. Only the conceptual basement plan carries a short attached label: explicitly not existing finished space. Its image-link accessible name includes the same disclosure. Gallery numbers represent real sequence, not decoration. Position 6 is the actual salt-water hot-tub photograph, with no placeholder warning.
 - **Enlarged viewer:** native `<dialog>`, labeled title and caption, Previous / Next, Close, full-size fallback. Arrow keys navigate, Escape dismisses, focus returns to the opener. Image-load failure exposes recovery text. Images use contain-fit, never crop-fit.
 - **No-JavaScript fallback:** gallery image links open the optimized full-size asset directly. No framework or runtime fetch is required.
 
 ## Do's and Don'ts
 
 - **Do** preserve exact approved prose, caption order, image provenance and watermarks.
-- **Do** distinguish listing facts, third-party placeholder imagery and conceptual drawings.
+- **Do** distinguish actual property photography and listing facts from conceptual drawings.
 - **Do** show the listing date once in each footer and keep brokerage contact explicit.
 - **Do** keep buyer styling isolated from legacy pages and assets.
 - **Don't** present a placeholder, simulation or plan as evidence of existing property condition.

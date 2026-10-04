@@ -1,4 +1,4 @@
-"""Approved colonial-5bv copy, gallery, asset and preservation contract. No dependencies."""
+"""Approved listing copy, gallery, asset and preservation contract. No dependencies."""
 import hashlib
 import json
 from html.parser import HTMLParser
@@ -58,8 +58,7 @@ class Listing(unittest.TestCase):
         for paragraph in copy:
             self.assertTrue(paragraph.parent.parent.all('figure'), 'Each passage keeps matching inline imagery')
         hot_tub = next(f for f in page.all('figure') if any('06-small.webp' in i.attrs.get('src', '') for i in f.all('img')))
-        self.assertIn('Placeholder photo — not this property', hot_tub.text())
-        self.assertNotIn('Olympic Hot Tub', hot_tub.text())
+        self.assertEqual(hot_tub.text(), APPROVED['photos'][5]['caption'])
         hero = next(img for img in page.all('img') if img.attrs.get('fetchpriority') == 'high')
         self.assertEqual(hero.attrs['src'], 'assets/listing/01.webp')
 
@@ -76,11 +75,7 @@ class Listing(unittest.TestCase):
             self.assertEqual(link.attrs['href'], f'assets/listing/{n:02}.webp')
             self.assertTrue(link.attrs.get('aria-label'))
             self.assertEqual(figure.all('img')[0].attrs['src'], f'assets/listing/{n:02}-small.webp')
-            if n == 6:
-                self.assertIn('Placeholder photo — not this property', figure.text())
-                self.assertNotIn('Olympic Hot Tub', figure.text())
-                self.assertNotIn('simulated', figure.text().lower())
-            elif n == 31:
+            if n == 31:
                 self.assertIn('Conceptual basement plan', figure.text())
                 self.assertIn('not existing finished space', figure.text())
             else:
@@ -121,10 +116,24 @@ class Listing(unittest.TestCase):
             self.assertEqual(text.count('October 3, 2026'), 1, 'Only footer carries listing date')
             self.assertIn('Listing information as of October 3, 2026.', text)
             notes = [s.text() for s in page.all('span') if s.cls('photo-note')]
-            expected = ['Placeholder photo — not this property.']
+            expected = []
             if filename == 'gallery.html':
                 expected.append('Conceptual basement plan — not existing finished space.')
             self.assertEqual(notes, expected)
+
+    def test_real_hot_tub_and_greenhouse_names(self):
+        for filename in ('index.html', 'gallery.html'):
+            page = Page(filename).root
+            self.assertNotIn('placeholder', (ROOT / filename).read_text().lower())
+            for position in (6, 25):
+                figure = next(f for f in page.all('figure') if any(
+                    i.attrs.get('src') == f'assets/listing/{position:02}-small.webp' for i in f.all('img')))
+                self.assertEqual(figure.all('img')[0].attrs['alt'], APPROVED['photos'][position - 1]['caption'])
+                self.assertFalse(any(s.cls('photo-note') for s in figure.all('span')))
+                if position == 6:
+                    image = figure.all('img')[0]
+                    self.assertEqual((image.attrs['width'], image.attrs['height']), ('720', '542'))
+                    self.assertIn('assets/listing/06.webp 1600w', image.attrs['srcset'])
 
     def test_local_links_images_and_fragment_targets_resolve(self):
         for file in ('index.html', 'gallery.html'):
@@ -153,7 +162,11 @@ class Listing(unittest.TestCase):
         manifest = ROOT / 'assets/listing/manifest.json'
         self.assertTrue(manifest.exists(), 'listing provenance manifest missing')
         data = json.loads(manifest.read_text())
+        self.assertEqual(data['document'], APPROVED['document'])
         self.assertEqual(data['document_sha256'], APPROVED['document_sha256'])
+        self.assertEqual(data['approval'], APPROVED['approval'])
+        self.assertEqual(data['photos'][5]['provenance'], 'Owner photograph')
+        self.assertNotIn('source_url', data['photos'][5])
         self.assertEqual(len(data['photos']), 33)
         for actual, expected in zip(data['photos'], APPROVED['photos']):
             for key in ['position', 'id', 'caption', 'source', 'source_sha256']:
