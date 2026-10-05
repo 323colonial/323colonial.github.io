@@ -97,6 +97,30 @@ try {
         frame.style.width = `${width}px`;
         await new Promise(resolve => gridWin.requestAnimationFrame(() => gridWin.requestAnimationFrame(resolve)));
         const columns = width <= 700 ? 1 : width <= 1000 ? 2 : 3;
+        if (route === 'index' && variant === 'original') {
+          check(figures.length === 33 && figures.every((figure, index) => {
+            const number = figure.querySelector('.photo-number');
+            return number.textContent === `${index + 1} / 33` && number.checkVisibility()
+              && number.getBoundingClientRect().height > 0;
+          }), `index ${width}px: all 33 catalog numbers visible in approved order`);
+          const viewer = gridDoc.querySelector('#photo-viewer');
+          const opener = figures[0].querySelector('a');
+          opener.focus();
+          opener.click();
+          check(figures.every((figure, index) => {
+            const matches = gridDoc.querySelector('#viewer-title').textContent === `Photo ${index + 1} of 33`
+              && gridDoc.querySelector('#viewer-image').getAttribute('src') === figure.querySelector('a').getAttribute('href')
+              && gridDoc.querySelector('#viewer-caption .caption-text').textContent === figure.querySelector('.caption-text').textContent
+              && !gridDoc.querySelector('#viewer-caption .photo-number');
+            gridDoc.querySelector('#next-photo').click();
+            return matches;
+          }), `index ${width}px: catalog numbers match viewer positions, images and exact captions`);
+          viewer.querySelector('button').click();
+          await new Promise(resolve => gridWin.requestAnimationFrame(() => gridWin.requestAnimationFrame(resolve)));
+          check(!viewer.open && gridDoc.activeElement === opener, `index ${width}px: viewer Close restores catalog focus`);
+          const catalog = gridDoc.querySelector('#all-photos');
+          check(catalog.scrollWidth <= catalog.clientWidth, `index ${width}px: catalog has no horizontal overflow`);
+        }
         const failures = [];
         if (gridWin.getComputedStyle(grid).gridTemplateColumns.split(' ').length !== columns) failures.push('column count');
         figures.forEach((figure, index) => {
