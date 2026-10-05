@@ -183,7 +183,7 @@ class Listing(unittest.TestCase):
                     url = urlsplit(value)
                     if url.scheme or url.netloc:
                         continue
-                    target = unquote(url.path) or file
+                    target = 'index.html' if url.path == '/' else unquote(url.path).lstrip('/') or file
                     self.assertTrue((ROOT / target).is_file(), f'{file}: {value}')
                     if url.fragment:
                         ids = {e.attrs['id'] for t in ['main', 'section', 'figure', 'h1', 'h2']
