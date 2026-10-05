@@ -19,7 +19,7 @@
 }
 * { box-sizing: border-box; }
 html { background: var(--paper); color: var(--ink); scrollbar-color: var(--pewter-green) var(--paper); scroll-padding-top: calc(var(--header-height) + var(--summary-height) + 24px); }
-body { margin: 0; font: 18px/1.65 Georgia, 'Times New Roman', serif; }
+body { margin: 0; font: 18px/1.65 Georgia, 'Times New Roman', serif; overflow-wrap: anywhere; }
 ::selection { background: var(--mahogany); color: var(--paper); }
 a { color: inherit; text-underline-offset: .2em; }
 a:hover { text-decoration-thickness: 2px; }
@@ -40,13 +40,13 @@ figure { margin: 0; min-width: 0; }
 img { display: block; width: 100%; height: auto; }
 [hidden] { display: none !important; }
 .masthead { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 32px; min-height: 102px; padding: 18px 40px; background: var(--pewter-green); color: var(--paper); }
-.property-identity { margin-right: auto; }
+.property-identity { margin-right: auto; min-width: 0; }
 .property-identity h1 { font-size: clamp(24px, 2.5vw, 34px); letter-spacing: -.025em; margin: 0; }
 .property-identity h1 a { text-decoration: none; display: inline-flex; min-height: 44px; align-items: center; }
 .property-identity p { font: 13px/1.5 Arial, sans-serif; margin: 0; }
 .header-agent, .header-public { font: 13px/1.6 Arial, sans-serif; }
 .header-public { display: inline-flex; align-items: center; min-height: 44px; }
-.showing-contact summary { padding: 12px 16px; border: 1px solid var(--paper); white-space: nowrap; }
+.showing-contact summary { padding: 12px 16px; border: 1px solid var(--paper); }
 .listing-page .showing-contact summary { padding: 12px 0; border: 0; font: 13px/1.6 Arial, sans-serif; text-decoration: underline; text-underline-offset: .2em; }
 .listing-page .showing-contact summary:hover { text-decoration-thickness: 2px; }
 .contact-panel { position: absolute; right: 40px; top: calc(100% - 1px); width: min(380px, calc(100vw - 32px)); padding: 24px; border: 1px solid var(--stone); background: var(--paper); color: var(--ink); font: 14px/1.6 Arial, sans-serif; max-height: calc(100dvh - var(--header-height) - 16px); overflow: auto; }
@@ -73,7 +73,6 @@ figcaption { padding-top: 10px; font: 13px/1.5 Arial, sans-serif; }
 .summary-actions { text-align: right; }
 .summary-actions .text-link { color: var(--mahogany); }
 .market-date { font: 13px/1.5 Arial, sans-serif; margin: 0; }
-.market-date time { white-space: nowrap; }
 .story { padding: 56px 40px; background: var(--sea-salt); }
 .story:nth-child(2), .story:nth-child(5) { background: var(--paper); }
 .story:nth-child(3), .story:nth-child(7) { background: var(--accessible-beige); }
@@ -127,7 +126,7 @@ figure[id] { scroll-margin-top: calc(var(--header-height) + 24px); }
 dialog { width: min(1100px, calc(100% - 32px)); max-height: calc(100dvh - 32px); padding: 20px 24px; border: 1px solid var(--rule); background: var(--paper); color: var(--ink); }
 dialog::backdrop { background: rgb(25 31 27 / 90%); }
 body:has(dialog[open]) { overflow: hidden; }
-.viewer-bar, .viewer-controls { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.viewer-bar, .viewer-controls { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; }
 .viewer-bar { margin-bottom: 16px; }
 #all-photos .viewer-bar, #property-details .viewer-bar { position: sticky; top: -20px; z-index: 1; padding-block: 12px; background: var(--paper); }
 .viewer-bar h2 { font: 700 16px/1.4 Arial, sans-serif; margin: 0; }

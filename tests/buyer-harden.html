@@ -1,0 +1,86 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Buyer hardening regression</title>
+<h1>Buyer hardening regression</h1>
+<p>Serve repository root, then open this page. Text mutations stay inside test frames. Every result must PASS.</p>
+<pre id="results">Running…</pre>
+<iframe title="Buyer page under test" style="width:390px;height:844px;border:0"></iframe>
+<script type="module">
+const frame = document.querySelector('iframe');
+const results = [];
+const check = (ok, name) => results.push(`${ok ? 'PASS' : 'FAIL'}: ${name}`);
+const settle = win => new Promise(resolve => win.requestAnimationFrame(() => win.requestAnimationFrame(resolve)));
+const load = async route => {
+  await new Promise(resolve => { frame.onload = resolve; frame.src = `../${route}.html`; });
+  return [frame.contentDocument, frame.contentWindow];
+};
+try {
+  for (const route of ['index', 'gallery']) {
+    for (const [width, height] of [[1440, 1000], [390, 844], [320, 640], [720, 500]]) {
+      frame.style.width = `${width}px`;
+      frame.style.height = `${height}px`;
+      const [doc, win] = await load(route);
+      const label = `${route} ${width}×${height}`;
+      const fits = element => element.scrollWidth <= element.clientWidth + 1;
+      check(fits(doc.documentElement), `${label}: normal/reflow width fits`);
+      const targets = [...doc.querySelectorAll('.caption-text, .listing-copy, dd, .contact-panel p')];
+      const originals = targets.map(el => el.innerHTML);
+      doc.querySelector('.showing-contact').open = true;
+      for (const [name, value, dir] of [
+        ['long Unicode', 'Übergrößen 東京 🏡 مرحبا ' + 'LongUnbrokenText'.repeat(12), 'ltr'],
+        ['RTL expansion', 'مرحبا بكم في المنزل '.repeat(12), 'rtl'],
+        ['empty', '', 'ltr'],
+        ['single character', '家', 'ltr'],
+      ]) {
+        targets.forEach(el => { el.textContent = value; el.dir = dir; });
+        win.dispatchEvent(new win.Event('resize'));
+        await settle(win);
+        check(fits(doc.documentElement) && targets.filter(el => el.getClientRects().length).every(fits), `${label}: ${name} wraps without clipping`);
+      }
+      targets.forEach((el, i) => { el.innerHTML = originals[i]; el.removeAttribute('dir'); });
+      if (width === 390 || width === 320) {
+        // Text-only enlargement, deliberately distinct from native browser page zoom.
+        const nodes = [...doc.querySelectorAll('body *')];
+        const sizes = nodes.map(el => parseFloat(win.getComputedStyle(el).fontSize));
+        nodes.forEach((el, i) => { el.style.fontSize = `${sizes[i] * 2}px`; });
+        await settle(win);
+        const controls = [...doc.querySelectorAll('.masthead summary, .masthead h1, .listing-summary')];
+        check(fits(doc.documentElement) && controls.every(fits), `${label}: 200% text stays within page`);
+        const panel = doc.querySelector('.contact-panel');
+        check(fits(panel) && panel.getBoundingClientRect().bottom <= height, `${label}: enlarged contact panel stays reachable`);
+        if (route === 'index') doc.querySelector('.price a').click();
+        else doc.querySelector('[data-gallery-image]').click();
+        const modal = doc.querySelector('dialog[open]');
+        check(fits(modal), `${label}: enlarged dialog fits horizontally`);
+      }
+    }
+    const [doc, win] = await load(route);
+    const links = [...doc.querySelectorAll('[data-gallery-image]')];
+    if (route === 'index') doc.querySelector('[data-all-photos]').click();
+    const image = doc.querySelector('#viewer-image');
+    const status = doc.querySelector('#viewer-error');
+    links[0].click();
+    await image.decode();
+    const original = links[1].getAttribute('href');
+    // Real HTTP failure, not a dispatched synthetic error event.
+    links[1].href = `missing-hardening-photo.webp?${Date.now()}`;
+    const failed = new Promise(resolve => image.addEventListener('error', resolve, {once: true}));
+    doc.querySelector('#next-photo').click();
+    check(!status.hidden && /loading/i.test(status.textContent) && status.getAttribute('role') === 'status', `${route}: pending photo announces loading`);
+    check(win.getComputedStyle(image).visibility === 'hidden', `${route}: pending photo cannot show stale pixels under new caption`);
+    await failed;
+    check(!status.hidden && /could not load/i.test(status.textContent), `${route}: real missing image exposes recovery`);
+    check(doc.querySelector('#full-size').href === links[1].href, `${route}: full-size recovery matches failed selection`);
+    links[1].setAttribute('href', original);
+    doc.querySelector('#previous-photo').click();
+    for (let i = 0; i < 10; i++) doc.querySelector('#next-photo').click();
+    await image.decode();
+    check(status.hidden && win.getComputedStyle(image).visibility === 'visible' && image.currentSrc === links[10].href && doc.querySelector('#viewer-title').textContent === 'Photo 11 of 33', `${route}: rapid navigation settles on last selected photo`);
+    doc.querySelector('#photo-viewer button').click();
+    await settle(win);
+    check(doc.activeElement === links[0], `${route}: Close restores opener after load failure and rapid navigation`);
+  }
+} catch (error) { check(false, error.stack); }
+document.querySelector('#results').textContent = results.join('\n');
+document.title = results.some(row => row.startsWith('FAIL')) ? 'FAIL: buyer hardening' : 'PASS: buyer hardening';
+</script>

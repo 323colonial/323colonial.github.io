@@ -40,7 +40,10 @@ function showPhoto(index) {
   current = (index + links.length) % links.length;
   const link = links[current];
   const thumbnail = link.querySelector('img');
-  error.hidden = true;
+  error.textContent = 'Loading photo…';
+  error.hidden = false;
+  // Browsers retain the previous pixels until the new source loads.
+  image.style.visibility = 'hidden';
   image.alt = thumbnail.alt;
   image.src = link.getAttribute('href');
   fullSize.href = link.getAttribute('href');
@@ -91,8 +94,15 @@ if (typeof viewer.showModal === 'function') {
     }
   });
   viewer.addEventListener('close', () => opener?.focus({preventScroll: true}));
-  image.addEventListener('error', () => { error.hidden = false; });
-  image.addEventListener('load', () => { error.hidden = true; positionViewerDots(); });
+  image.addEventListener('error', () => {
+    error.textContent = 'Image could not load. Try opening the full-size image directly.';
+    error.hidden = false;
+  });
+  image.addEventListener('load', () => {
+    error.hidden = true;
+    image.style.visibility = 'visible';
+    positionViewerDots();
+  });
   addEventListener('resize', positionViewerDots);
 }
 
