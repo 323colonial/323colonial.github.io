@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "reviewId": "colonial-dp6",
+  "scope": "behavioral",
+  "reviewer": {"target": "openai-codex", "family": "gpt"},
+  "findings": [{
+    "id": "colonial-dp6-focus-return",
+    "severity": "important",
+    "category": "keyboard accessibility",
+    "location": "listing.js: focus listeners and updatePhotos",
+    "claim": "Focus transfer into viewer hid and inerted a scroll-displaced opener.",
+    "failureScenario": "Focus second photo, scroll back while retaining focus, open viewer, close: opener cannot regain focus.",
+    "evidence": "Discovery fabc17b1-76cf-493f-ba61-5a5e1b1d6118/child-0.json; fresh verifier 3ea35e18-a943-45bf-b5a3-a70b74fb0126/child-0.json confirmed introduced focus-triggered path. Real-browser fixture reproduced 28 failures (seven sections, two viewports, two assertions). Repaired by remembering focused figure while modal borrows focus; tests also cover layout while modal open. Final focused fixture: 198 PASS rows, zero failures.",
+    "status": "confirmed",
+    "verification": {"verifierFamily": "GPT", "method": "reproducer", "evidence": "Fresh independent source verifier plus parent browser RED/GREEN at http://127.0.0.1:8765/tests/narrative-scroll.html. Confirmed defect fixed before staging.", "command": "Serve repository on 127.0.0.1:8765 and open tests/narrative-scroll.html"}
+  }]
+}

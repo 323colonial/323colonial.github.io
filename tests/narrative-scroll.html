@@ -50,6 +50,83 @@ try {
   doc.querySelector('#details').scrollIntoView();
   await settle();
   check(win.getComputedStyle(doc.querySelector('#details')).position === 'static', 'property details scroll normally');
+
+  for (const [width, height] of [[1440, 1000], [390, 844]]) {
+    frame.style.width = `${width}px`;
+    frame.style.height = `${height}px`;
+    doc.activeElement.blur();
+    await settle();
+    for (const section of doc.querySelectorAll('.story')) {
+      const label = `${width}px ${section.getAttribute('aria-label')}`;
+      check(section.classList.contains('is-scrolling'), `${label}: sequence enabled`);
+      const photos = [...section.querySelectorAll('.story-photos figure')];
+      const sticky = section.querySelector(width > 800 ? '.story-stage' : '.story-photos');
+      const inset = parseFloat(win.getComputedStyle(sticky).top);
+      const padding = parseFloat(win.getComputedStyle(section).paddingTop);
+      const offset = padding + (width > 800 ? 0 : section.querySelector('.story-copy').getBoundingClientRect().height + 28);
+      const beginning = section.offsetTop + offset - inset;
+      const step = Math.max(240, height * .5);
+      const seek = async position => { win.scrollTo(0, beginning + step * position); await settle(); };
+      const opacity = photo => photo.hidden ? 0 : Number(win.getComputedStyle(photo.querySelector('a')).opacity);
+      await seek(.625);
+      const early = opacity(photos[1]);
+      await seek(.875);
+      const late = opacity(photos[1]);
+      check(early > .1 && early < .4 && late > .6 && late < .9 && opacity(photos[0]) > 0,
+        `${label}: two photos blend continuously with scroll`);
+      const captionStyle = win.getComputedStyle(photos[1].querySelector('figcaption'));
+      check(win.getComputedStyle(photos[0].querySelector('figcaption')).visibility === 'hidden'
+        && captionStyle.visibility === 'visible' && captionStyle.opacity === '1'
+        && win.getComputedStyle(photos[1]).opacity === '1',
+        `${label}: one readable caption without blended text`);
+      check(photos[0].inert && !photos[1].inert && photos[0].getAttribute('aria-hidden') === 'true',
+        `${label}: only dominant photo is interactive and exposed`);
+      await seek(.625);
+      check(Math.abs(opacity(photos[1]) - early) < .01, `${label}: reverse scroll restores exact blend`);
+      await seek(1);
+      const link = photos[1].querySelector('a');
+      link.focus({preventScroll: true});
+      await seek(.1);
+      check(doc.activeElement === link && opacity(photos[1]) === 1 && !photos[1].inert,
+        `${label}: keyboard-focused photo remains fully visible`);
+      link.click();
+      await settle();
+      check(viewer.open && !photos[1].hidden && !photos[1].inert,
+        `${label}: viewer keeps scroll-displaced opener available`);
+      win.dispatchEvent(new Event('resize'));
+      await settle();
+      check(opacity(photos[1]) === 1 && !photos[1].inert,
+        `${label}: layout while viewer open preserves opener`);
+      viewer.close();
+      await settle();
+      check(doc.activeElement === link && opacity(photos[1]) === 1,
+        `${label}: viewer restores scroll-displaced photo focus`);
+      link.blur();
+      await settle();
+      check(opacity(photos[0]) === 1, `${label}: leaving focus resumes scroll state without another scroll`);
+      await seek(photos.length - 1);
+      const finalTop = sticky.getBoundingClientRect().top;
+      const finalHeight = sticky.getBoundingClientRect().height;
+      await seek(photos.length - .1);
+      check(opacity(photos.at(-1)) === 1 && photos.slice(0, -1).every(photo => opacity(photo) === 0),
+        `${label}: final photo stays fully visible through dedicated hold`);
+      check(Math.abs(finalTop - inset) < 2 && Math.abs(sticky.getBoundingClientRect().top - finalTop) < 2
+        && sticky.getBoundingClientRect().bottom <= height
+        && Math.abs(sticky.getBoundingClientRect().height - finalHeight) < 2,
+        `${label}: final photo has at least 90% of a scroll step pinned before exit`);
+      await seek(photos.length + .3);
+      check(sticky.getBoundingClientRect().top < inset - step * .2, `${label}: continued scrolling exits sequence`);
+    }
+    check(doc.documentElement.scrollWidth <= width, `${width}px: no horizontal overflow`);
+  }
+  frame.style.height = '480px';
+  await settle();
+  check(!doc.querySelector('.is-scrolling') && [...doc.querySelectorAll('.story-photos figure')].every(photo =>
+    !photo.hidden && !photo.inert && !photo.hasAttribute('aria-hidden') && win.getComputedStyle(photo.querySelector('a')).opacity === '1'),
+    'resize to short viewport clears blend, hidden and inert states');
+  frame.style.height = '844px';
+  await settle();
+  check(doc.querySelectorAll('.is-scrolling').length === 7, 'resize back restores all sequences');
 } catch (error) { check(false, error.message); }
 document.querySelector('#results').textContent = results.join('\n');
 document.title = results.some(row => row.startsWith('FAIL')) ? 'FAIL: narrative scroll' : 'PASS: narrative scroll';

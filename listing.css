@@ -85,8 +85,12 @@ figcaption { padding-top: 10px; font: 13px/1.5 Arial, sans-serif; }
 .story-photos { min-width: 0; display: grid; gap: 28px; }
 .story.is-scrolling { height: var(--story-height); }
 .is-scrolling .story-stage { position: sticky; top: calc(var(--header-height) + var(--summary-height) + 24px); }
-.is-scrolling .story-photos { display: block; }
-.is-scrolling .media-record > a { height: var(--photo-height); display: flex; align-items: center; background: rgb(240 236 226 / 25%); }
+.is-scrolling .story-photos { grid-template-rows: var(--frame-height, auto) auto; gap: 0; }
+.is-scrolling .story-photos figure { grid-area: 1 / 1; align-self: start; }
+.is-scrolling .scroll-cue { grid-area: 2 / 1; }
+.is-scrolling .media-record[inert] { pointer-events: none; }
+.is-scrolling .media-record > a { height: var(--photo-height); display: flex; align-items: center; background: rgb(240 236 226 / 25%); opacity: var(--photo-opacity, 1); }
+.is-scrolling .media-record[inert] figcaption { visibility: hidden; }
 .is-scrolling .media-record img { height: 100%; object-fit: contain; }
 .is-scrolling figcaption { min-height: 49px; }
 .scroll-cue { display: flex; justify-content: space-between; gap: 12px; border-top: 1px solid var(--stone); margin: 16px 0 0; padding-top: 10px; font: 12px/1.5 Arial, sans-serif; }
@@ -185,6 +189,9 @@ body:has(dialog[open]) { overflow: hidden; }
   .story { height: auto !important; }
   .story-stage { display: block !important; }
   .story figure[hidden] { display: block !important; }
+  .story-photos { display: block !important; }
   .story figure { break-inside: avoid; margin-block: 24px; }
+  .story figure > a { opacity: 1 !important; }
+  .story figcaption { visibility: visible !important; }
   .story img { height: auto !important; }
 }

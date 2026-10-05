@@ -234,9 +234,9 @@ Narrative is regular-weight fluid type, bounded to 65ch and reset to body size o
 
 Responsive max-width boundaries: **1100px** hides the header agent and compacts facts; **1000px** changes gallery columns and limits summary action width; **800px** switches header, facts, narrative and details layouts (header minimum 88px); **700px** changes gallery, container and viewer layout; **360px** tightens header gutters and stacks the facts annotation. Hidden header information remains available through the showing disclosure.
 
-**The Native Scroll Rule.** Scroll position selects discrete captioned photographs; it does not animate or capture scrolling. On desktop the whole narrative stage sticks below header and facts plus 24px; on mobile only the photo sequence sticks, with 16px clearance after the paragraph. Steps are `max(240px, half the viewport height)`. Forward and reverse scrolling update the count, and a focused photo stays visible until focus leaves it.
+**The Native Scroll Rule.** Native scroll position directly controls reversible crossfades between captioned photographs; scrolling is never captured. On desktop the whole narrative stage sticks below header and facts plus 24px; on mobile only the photo sequence sticks, with 16px clearance after the paragraph. Steps are `max(240px, half the viewport height)`: hold for the first half, blend for the second. The final photo receives a full pinned step after its blend completes. The tallest caption reserves a stable frame; at most two photos blend. Only the images blend; the dominant photo owns the readable, unblended caption, counter, interaction and accessibility state. A focused photo stays fully visible until focus leaves, then scroll state resumes.
 
-Reduced motion, less than 300px available height, or desktop copy taller than the available space disables sequencing for that section. All its photographs then remain inline. No JavaScript also leaves inline photos and working gallery links. Print removes sticky positioning and exposes every narrative photo. There are no timed transitions, autoplay, fades or parallax.
+Reduced motion, less than 300px available height, or desktop copy taller than the available space disables sequencing for that section. All its photographs then remain inline. No JavaScript also leaves inline photos and working gallery links. Print removes sticky positioning and exposes every narrative photo. There are no timed transitions, autoplay or parallax.
 
 ## Elevation & Depth
 
@@ -265,4 +265,4 @@ Square controls and image frames, without rounded cards or decorative clipping. 
 - Do keep buyer styling isolated from unchanged legacy pages and assets.
 - Don't replace the approved composition with a mosaic, story headings, Home / Photos navbar or closing contact band.
 - Don't crop property evidence with cover-fit or present the conceptual plan as existing finished space.
-- Don't intercept scrolling, add timed autoplay, fades or parallax, or remove reduced-motion and short-screen fallbacks.
+- Don't intercept scrolling, add timed autoplay or parallax, or remove reduced-motion and short-screen fallbacks.
