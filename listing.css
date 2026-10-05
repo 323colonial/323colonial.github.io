@@ -90,16 +90,23 @@ figcaption { padding-top: 10px; font: 13px/1.5 Arial, sans-serif; }
 .story-photos { min-width: 0; display: grid; gap: 28px; }
 .story.is-scrolling { height: var(--story-height); }
 .is-scrolling .story-stage { position: sticky; top: calc(var(--header-height) + var(--summary-height) + 24px); }
-.is-scrolling .story-photos { grid-template-rows: var(--frame-height, auto) auto; gap: 0; }
+.is-scrolling .story-photos { position: relative; grid-template-rows: var(--frame-height, auto); gap: 0; }
 .is-scrolling .story-photos figure { grid-area: 1 / 1; align-self: start; }
-.is-scrolling .scroll-cue { grid-area: 2 / 1; }
+.is-scrolling .scroll-cue { position: absolute; top: calc(var(--photo-height) - 10px); left: 50%; transform: translate(-50%, -100%); z-index: 1; }
 .is-scrolling .media-record[inert] { pointer-events: none; }
 .is-scrolling .media-record > a { height: var(--photo-height); display: flex; align-items: center; background: rgb(240 236 226 / 25%); opacity: var(--photo-opacity, 1); }
 .is-scrolling .media-record[inert] figcaption { visibility: hidden; }
 .is-scrolling .media-record img { height: 100%; object-fit: contain; }
 .is-scrolling figcaption { min-height: 49px; }
-.scroll-cue { display: flex; justify-content: flex-end; gap: 12px; border-top: 1px solid var(--stone); margin: 16px 0 0; padding-top: 10px; font: 12px/1.5 Arial, sans-serif; }
-.slide-count { font-variant-numeric: tabular-nums; }
+.scroll-cue { margin: 0; font: 12px/1.5 Arial, sans-serif; pointer-events: none; }
+.photo-frame, #all-photos [data-gallery-image] { position: relative; }
+.photo-dots { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%) scale(var(--dot-scale, 1)); transform-origin: center bottom; display: flex; gap: 4px; width: max-content; color: var(--paper); pointer-events: none; }
+.photo-dots > span { width: 7px; height: 7px; border: 1px solid currentColor; border-radius: 50%; background: var(--pewter-green); outline: 1px solid var(--pewter-green); }
+.photo-dots > .is-current { background: currentColor; }
+.scroll-cue .photo-dots { position: static; transform: translateY(calc(-1 * var(--photo-inset, 0px))); }
+#all-photos .photo-dots { gap: 2px; }
+#all-photos .photo-dots > span { width: 5px; height: 5px; }
+.slide-count, #viewer-title, #all-photos .photo-number { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .details { padding: 72px 40px; background: var(--paper); scroll-margin-top: 24px; }
 @media screen {
   .details.has-dialog:not(:target), .print-contact { display: none; }
@@ -124,7 +131,7 @@ body:has(dialog[open]) { overflow: hidden; }
 .viewer-bar { margin-bottom: 16px; }
 #all-photos .viewer-bar, #property-details .viewer-bar { position: sticky; top: -20px; z-index: 1; padding-block: 12px; background: var(--paper); }
 .viewer-bar h2 { font: 700 16px/1.4 Arial, sans-serif; margin: 0; }
-.viewer-bar form { margin: 0; }
+.viewer-bar form { margin: 0 0 0 auto; }
 .viewer-figure img { height: min(58dvh, 650px); object-fit: contain; background: var(--paper-strong); }
 .viewer-figure figcaption { font-size: 14px; }
 .viewer-controls { margin-top: 16px; font: 14px/1.4 Arial, sans-serif; }
@@ -181,6 +188,8 @@ body:has(dialog[open]) { overflow: hidden; }
   dialog { padding: 16px; }
   #all-photos .viewer-bar, #property-details .viewer-bar { top: -16px; }
   .viewer-figure img { height: min(44dvh, 420px); }
+  .viewer-figure .photo-dots { gap: 2px; }
+  .viewer-figure .photo-dots > span { width: 5px; height: 5px; }
   .viewer-controls { align-items: stretch; gap: 8px; }
   .viewer-controls button { flex-direction: column; gap: 4px; padding: 8px; }
   #next-photo { flex-direction: column-reverse; }
@@ -199,7 +208,7 @@ body:has(dialog[open]) { overflow: hidden; }
 @page listing-sheet { size: auto; margin: .5in; }
 @media print {
   .masthead, .listing-summary, .story-stage, .story-photos { position: static !important; }
-  .skip-link, .showing-contact, .header-public, dialog, .scroll-cue { display: none !important; }
+  .skip-link, .showing-contact, .header-public, dialog, .scroll-cue, .photo-dots { display: none !important; }
   .gallery-grid figure { break-inside: avoid; }
   .site-footer { padding-block: 8px; break-inside: avoid; }
   .story { height: auto !important; }

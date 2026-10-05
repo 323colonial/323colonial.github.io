@@ -6,8 +6,35 @@ const title = document.querySelector('#viewer-title');
 const fullSize = document.querySelector('#full-size');
 const error = document.querySelector('#viewer-error');
 const previews = [];
+const viewerDots = createPhotoDots(links.length);
+
+// Decorative position marks; existing text retains the accessible position.
+function createPhotoDots(count, current = 0) {
+  const dots = document.createElement('span');
+  dots.className = 'photo-dots';
+  dots.setAttribute('aria-hidden', 'true');
+  for (let i = 0; i < count; i++) {
+    const dot = document.createElement('span');
+    dot.classList.toggle('is-current', i === current);
+    dots.append(dot);
+  }
+  return dots;
+}
 let current = 0;
 let opener;
+
+function photoInset(source, width, height) {
+  const photoHeight = width * Number(source.getAttribute('height')) / Number(source.getAttribute('width'));
+  return Math.max(0, (height - photoHeight) / 2);
+}
+
+function positionViewerDots() {
+  if (!viewer.open) return;
+  const source = links[current].querySelector('img');
+  viewerDots.style.bottom = `${10 + photoInset(source, image.clientWidth, image.clientHeight)}px`;
+  const photoWidth = Math.min(image.clientWidth, image.clientHeight * Number(source.getAttribute('width')) / Number(source.getAttribute('height')));
+  viewerDots.style.setProperty('--dot-scale', Math.min(1, (photoWidth - 20) / viewerDots.offsetWidth));
+}
 
 function showPhoto(index) {
   current = (index + links.length) % links.length;
@@ -21,6 +48,8 @@ function showPhoto(index) {
     .filter(child => !child.classList.contains('photo-number'))
     .map(child => child.cloneNode(true)));
   title.textContent = `Photo ${current + 1} of ${links.length}`;
+  [...viewerDots.children].forEach((dot, i) => dot.classList.toggle('is-current', i === current));
+  positionViewerDots();
   previews.forEach((preview, side) => {
     const adjacent = links[(current + (side === 0 ? -1 : 1) + links.length) % links.length];
     // Placeholder and concept images belong beside their full disclosure, never in a tiny preview.
@@ -31,6 +60,7 @@ function showPhoto(index) {
 
 // Keep ordinary image links working with no JS or without native dialog support.
 if (typeof viewer.showModal === 'function') {
+  image.parentElement.append(viewerDots);
   ['previous-photo', 'next-photo'].forEach((id, side) => {
     const preview = new Image(64, 48);
     preview.alt = '';
@@ -48,6 +78,7 @@ if (typeof viewer.showModal === 'function') {
       opener = link;
       showPhoto(index);
       viewer.showModal();
+      positionViewerDots();
     });
   });
   document.querySelector('#previous-photo').addEventListener('click', () => showPhoto(current - 1));
@@ -61,11 +92,21 @@ if (typeof viewer.showModal === 'function') {
   });
   viewer.addEventListener('close', () => opener?.focus({preventScroll: true}));
   image.addEventListener('error', () => { error.hidden = false; });
-  image.addEventListener('load', () => { error.hidden = true; });
+  image.addEventListener('load', () => { error.hidden = true; positionViewerDots(); });
+  addEventListener('resize', positionViewerDots);
 }
 
 const catalog = document.querySelector('#all-photos');
 if (catalog && typeof catalog.showModal === 'function') {
+  links.forEach((link, i) => link.append(createPhotoDots(links.length, i)));
+  const positionCatalogDots = () => {
+    if (!catalog.open) return;
+    links.forEach(link => {
+      const img = link.querySelector('img');
+      link.querySelector('.photo-dots').style.bottom = `${10 + photoInset(img, img.clientWidth, img.clientHeight)}px`;
+    });
+  };
+  addEventListener('resize', positionCatalogDots);
   let catalogOpener;
   document.querySelectorAll('[data-all-photos]').forEach(link => {
     link.addEventListener('click', event => {
@@ -73,6 +114,7 @@ if (catalog && typeof catalog.showModal === 'function') {
       event.preventDefault();
       catalogOpener = link;
       catalog.showModal();
+      positionCatalogDots();
     });
   });
   catalog.addEventListener('close', () => catalogOpener?.focus({preventScroll: true}));

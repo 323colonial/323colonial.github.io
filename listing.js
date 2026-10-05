@@ -7,6 +7,10 @@ let tracks = [];
 let pending = false;
 let focusedPhoto;
 
+stories.forEach(story => {
+  story.querySelector('.scroll-cue').append(createPhotoDots(story.querySelectorAll('.story-photos figure').length));
+});
+
 function updatePhotos() {
   pending = false;
   // A modal borrows focus; keep its photo opener available for native focus restoration.
@@ -29,8 +33,10 @@ function updatePhotos() {
       photo.style.setProperty('--photo-opacity', opacity);
       photo.inert = i !== index;
       photo.setAttribute('aria-hidden', String(i !== index));
+      track.dots.children[i].classList.toggle('is-current', i === index);
     });
     track.counter.textContent = `${index + 1} / ${track.photos.length}`;
+    track.dots.style.setProperty('--photo-inset', `${track.insets[index]}px`);
     // Preload only nearby sequences, not the next frame of every distant story.
     const next = track.photos[index + 1]?.querySelector('img');
     if (next && bounds.top < innerHeight * 2 && bounds.bottom > 0) next.loading = 'eager';
@@ -61,7 +67,9 @@ function layoutStories() {
     // Short windows and reduced motion use ordinary, fully visible photographs.
     if (reducedMotion.matches || available < 300 || (!narrow.matches && copyHeight > available)) continue;
     const photoWidth = story.querySelector('.story-photos').getBoundingClientRect().width;
-    story.style.setProperty('--photo-height', `${Math.min(available - 110, photoWidth * .75)}px`);
+    const photoHeight = Math.min(available - 110, photoWidth * .75);
+    story.style.setProperty('--photo-height', `${photoHeight}px`);
+    const insets = photos.map(photo => photoInset(photo.querySelector('img'), photoWidth, photoHeight));
     cue.hidden = false;
     story.classList.add('is-scrolling');
     // Reserve the tallest caption as well as the image, so blending never shifts the stage.
@@ -73,7 +81,7 @@ function layoutStories() {
     // The final photo gets a full viewing step after its blend has finished.
     const height = offset + stage.getBoundingClientRect().height + padding + photos.length * step;
     story.style.setProperty('--story-height', `${height}px`);
-    tracks.push({story, photos, stickyTop, offset, step, counter: cue.querySelector('.slide-count')});
+    tracks.push({story, photos, insets, stickyTop, offset, step, counter: cue.querySelector('.slide-count'), dots: cue.querySelector('.photo-dots')});
   }
   updatePhotos();
 }

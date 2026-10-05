@@ -67,7 +67,14 @@ try {
       const offset = padding + (width > 800 ? 0 : section.querySelector('.story-copy').getBoundingClientRect().height + 28);
       const beginning = section.offsetTop + offset - inset;
       const step = Math.max(240, height * .5);
-      const seek = async position => { win.scrollTo(0, beginning + step * position); await settle(); };
+      const seek = async position => {
+        win.scrollTo(0, beginning + step * position);
+        await settle();
+        const current = photos.findIndex(photo => !photo.inert);
+        const dots = [...section.querySelectorAll('.photo-dots > span')];
+        check(dots.length === photos.length && dots.every((dot, i) => dot.classList.contains('is-current') === (i === current)),
+          `${label}: dots follow scroll/focus at ${position}`);
+      };
       const opacity = photo => photo.hidden ? 0 : Number(win.getComputedStyle(photo.querySelector('a')).opacity);
       await seek(.625);
       const early = opacity(photos[1]);
@@ -86,9 +93,15 @@ try {
       check(Math.abs(opacity(photos[1]) - early) < .01, `${label}: reverse scroll restores exact blend`);
       await seek(1);
       const counter = section.querySelector('.slide-count');
-      check(counter.textContent === `2 / ${photos.length}`
-        && Math.abs(counter.getBoundingClientRect().right - section.querySelector('.story-photos').getBoundingClientRect().right) < 1,
-        `${label}: photo counter advances and stays right-aligned`);
+      const dots = section.querySelector('.photo-dots');
+      const dotBox = dots?.getBoundingClientRect();
+      const imageBox = photos[1].querySelector('img').getBoundingClientRect();
+      check(counter.textContent === `2 / ${photos.length}` && win.getComputedStyle(counter).clipPath === 'inset(50%)',
+        `${label}: numeric position retained for screen readers only`);
+      check(dotBox && dotBox.bottom <= imageBox.bottom && dotBox.top > imageBox.top
+        && dotBox.left >= imageBox.left && dotBox.right <= imageBox.right
+        && dots.getAttribute('aria-hidden') === 'true' && win.getComputedStyle(dots).pointerEvents === 'none',
+        `${label}: decorative dots overlay image bottom without blocking link`);
       const link = photos[1].querySelector('a');
       link.focus({preventScroll: true});
       await seek(.1);

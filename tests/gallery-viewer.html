@@ -31,7 +31,12 @@ try {
   const nextPreview = () => doc.querySelector('#next-photo img');
   const previewMatches = (preview, index) => preview && !preview.hidden &&
     preview.getAttribute('src') === links[index].querySelector('img').getAttribute('src');
+  const checkDots = (index, label) => {
+    const dots = [...dialog.querySelectorAll('.photo-dots > span')];
+    check(dots.length === links.length && dots.every((dot, i) => dot.classList.contains('is-current') === (i === index)), label);
+  };
   open(5);
+  checkDots(5, 'direct opener selects matching dot');
   check(previewMatches(previousPreview(), 4) && previewMatches(nextPreview(), 6), 'adjacent previews use existing small property images');
   check(previousPreview()?.alt === '' && nextPreview()?.alt === '', 'decorative previews preserve button names');
   check(doc.activeElement.textContent === 'Close', 'initial focus on Close');
@@ -43,6 +48,7 @@ try {
   check(previewMatches(nextPreview(), 7), 'Next refreshes preview to following photo');
   dialog.dispatchEvent(new win.KeyboardEvent('keydown', {key: 'ArrowLeft', bubbles: true}));
   check(image.getAttribute('src') === 'assets/listing/06.webp', 'ArrowLeft returns previous image');
+  checkDots(5, 'ArrowLeft updates dots');
   image.dispatchEvent(new win.Event('error'));
   check(!doc.querySelector('#viewer-error').hidden, 'load error has visible recovery');
   doc.querySelector('#next-photo').click();
@@ -54,10 +60,31 @@ try {
   open(0);
   doc.querySelector('#previous-photo').click();
   check(image.getAttribute('src') === 'assets/listing/33.webp', 'Previous wraps first to last');
+  checkDots(32, 'Previous wraps highlight to rightmost dot');
   check(previewMatches(previousPreview(), 31) && previewMatches(nextPreview(), 0), 'previews wrap with gallery order');
   doc.querySelector('#next-photo').click();
   check(image.getAttribute('src') === 'assets/listing/01.webp', 'Next wraps last to first');
+  checkDots(0, 'Next wraps highlight to leftmost dot');
   dialog.close();
+  for (const [width, height] of [[844, 390], [320, 256]]) {
+    frame.style.width = `${width}px`;
+    frame.style.height = `${height}px`;
+    await new Promise(resolve => win.requestAnimationFrame(() => win.requestAnimationFrame(resolve)));
+    open(2);
+    await image.decode();
+    const imageBox = image.getBoundingClientRect();
+    const photoWidth = Math.min(imageBox.width, imageBox.height * image.naturalWidth / image.naturalHeight);
+    const dots = dialog.querySelector('.photo-dots');
+    const box = dots?.getBoundingClientRect();
+    check(box && box.width <= photoWidth - 16 && Math.abs((box.left + box.right) / 2 - (imageBox.left + imageBox.right) / 2) < 1,
+      `${width}x${height}: all dots fit contained photo, not side gutters`);
+    check(dots && win.getComputedStyle(dots).backgroundColor === 'rgba(0, 0, 0, 0)' && win.getComputedStyle(dots).transitionDuration === '0s',
+      `${width}x${height}: no backing strip or added animation`);
+    dialog.close();
+  }
+  frame.style.width = '390px';
+  frame.style.height = '844px';
+  await new Promise(resolve => win.requestAnimationFrame(() => win.requestAnimationFrame(resolve)));
   open(30);
   check(doc.querySelector('#viewer-caption').textContent.includes('Conceptual basement plan'), 'concept disclaimer in viewer');
   check(doc.querySelector('#full-size').getAttribute('href') === 'assets/listing/31.webp', 'full-size fallback matches selection');
@@ -93,28 +120,41 @@ try {
         images[0].src = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="400" height="600"><rect width="400" height="600" fill="#5e6259"/></svg>');
         await images[0].decode();
       }
-      for (const width of [390, 820, 1280]) {
+      for (const width of [320, 390, 820, 1280]) {
         frame.style.width = `${width}px`;
         await new Promise(resolve => gridWin.requestAnimationFrame(() => gridWin.requestAnimationFrame(resolve)));
         const columns = width <= 700 ? 1 : width <= 1000 ? 2 : 3;
         if (route === 'index' && variant === 'original') {
           check(figures.length === 33 && figures.every((figure, index) => {
             const number = figure.querySelector('.photo-number');
-            return number.textContent === `${index + 1} / 33` && number.checkVisibility()
-              && number.getBoundingClientRect().height > 0;
-          }), `index ${width}px: all 33 catalog numbers visible in approved order`);
+            const dots = [...figure.querySelectorAll('.photo-dots > span')];
+            const box = figure.querySelector('.photo-dots')?.getBoundingClientRect();
+            const imageBox = figure.querySelector('img').getBoundingClientRect();
+            return number.textContent === `${index + 1} / 33` && gridWin.getComputedStyle(number).clipPath === 'inset(50%)'
+              && dots.length === 33 && dots.every((dot, i) => dot.classList.contains('is-current') === (i === index))
+              && box.left >= imageBox.left && box.right <= imageBox.right && box.bottom <= imageBox.bottom && box.top > imageBox.top
+              && box.bottom <= imageBox.top + (imageBox.height + Math.min(imageBox.height, imageBox.width * images[index].naturalHeight / images[index].naturalWidth)) / 2;
+          }), `index ${width}px: catalog dots replace numbers, fit images and preserve accessible order`);
           const viewer = gridDoc.querySelector('#photo-viewer');
           const opener = figures[0].querySelector('a');
           opener.focus();
           opener.click();
           check(figures.every((figure, index) => {
+            const dots = [...viewer.querySelectorAll('.photo-dots > span')];
+            const box = viewer.querySelector('.photo-dots')?.getBoundingClientRect();
+            const imageBox = gridDoc.querySelector('#viewer-image').getBoundingClientRect();
             const matches = gridDoc.querySelector('#viewer-title').textContent === `Photo ${index + 1} of 33`
+              && gridWin.getComputedStyle(gridDoc.querySelector('#viewer-title')).clipPath === 'inset(50%)'
+              && dots.length === 33 && dots.every((dot, i) => dot.classList.contains('is-current') === (i === index))
+              && dots.every((dot, i) => !i || dot.getBoundingClientRect().left > dots[i - 1].getBoundingClientRect().left)
+              && box.left >= imageBox.left && box.right <= imageBox.right && box.bottom <= imageBox.bottom && box.top > imageBox.top
+              && box.bottom <= imageBox.top + (imageBox.height + Math.min(imageBox.height, imageBox.width * images[index].naturalHeight / images[index].naturalWidth)) / 2
               && gridDoc.querySelector('#viewer-image').getAttribute('src') === figure.querySelector('a').getAttribute('href')
               && gridDoc.querySelector('#viewer-caption .caption-text').textContent === figure.querySelector('.caption-text').textContent
               && !gridDoc.querySelector('#viewer-caption .photo-number');
             gridDoc.querySelector('#next-photo').click();
             return matches;
-          }), `index ${width}px: catalog numbers match viewer positions, images and exact captions`);
+          }), `index ${width}px: all viewer dots match positions, fit images and retain exact captions/accessible title`);
           viewer.querySelector('button').click();
           await new Promise(resolve => gridWin.requestAnimationFrame(() => gridWin.requestAnimationFrame(resolve)));
           check(!viewer.open && gridDoc.activeElement === opener, `index ${width}px: viewer Close restores catalog focus`);
