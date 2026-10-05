@@ -2,7 +2,7 @@
   "document": "Listing Feedback 323 Colonial Dr.docx",
   "document_sha256": "0c95beef596f1cd4a832b19133e6fbf24c10416e3c05b63510fb486725092183",
   "approval": "colonial-5me, 2026-10-04",
-  "processing": "ImageMagick; explicit crops only, no generative edits; WebP quality 78; max 1600px and 720px; no upscaling. Source document retained outside repository.",
+  "processing": "Owner-edited PNG exports retained outside repository in edited-listing-photos; edited_source and edited_source_sha256 identify current inputs. Original source and crop fields retain pre-edit provenance; original crops were not reapplied. ImageMagick -auto-orient -colorspace sRGB -resize WIDTHx> -strip -quality 78; WebP max widths 1600px and 720px; no upscaling or additional edits.",
   "photos": [
     {
       "position": 1,
@@ -24,15 +24,17 @@
           "path": "assets/listing/01.webp",
           "width": 1600,
           "height": 1060,
-          "sha256": "d855319ffdb8eb05d1a9099803dd964fbe58c1b12702275d88350b9ae63414fb"
+          "sha256": "46cbc68eb1788480302cd83e2d04137c6ed04de5eb47055f429edbc861c29903"
         },
         {
           "path": "assets/listing/01-small.webp",
           "width": 720,
           "height": 477,
-          "sha256": "4bfe5e000fcbf3a30151f73ef1f36586b63dc425bd2565942a2c9ccf0fdc862f"
+          "sha256": "1b998242e4ea09f4d5b8444f3279bfc5db3d1fe1578d0c502b129e6fb6b025c4"
         }
-      ]
+      ],
+      "edited_source": "edited-listing-photos/01.png",
+      "edited_source_sha256": "012aa820a43c288b26550f96350aabd5f6ab50775df27a7b89b97727f9bacb4e"
     },
     {
       "position": 2,
@@ -54,15 +56,17 @@
           "path": "assets/listing/02.webp",
           "width": 1600,
           "height": 1064,
-          "sha256": "81488656cbe688522ff77023f65b74c8c335419885d4a6b8793fc9f68e57171f"
+          "sha256": "301bb21eae385e6cd00b32d7d98f93bc58210a85bcbbdac1df23048304b71f89"
         },
         {
           "path": "assets/listing/02-small.webp",
           "width": 720,
           "height": 479,
-          "sha256": "b39db0f49eaaddd12a95414517fc648cc942dc7b05a350042eb677a7fa7dca6c"
+          "sha256": "80f54dd400440f4820766a28ce450e57986bd501b46777c26eaf4caf27b901c8"
         }
-      ]
+      ],
+      "edited_source": "edited-listing-photos/02.png",
+      "edited_source_sha256": "0e70cc83962adf6790d3560eba9a4a553ffe05a77b870b3c635b9abd53b166a5"
     },
     {
       "position": 3,
@@ -79,15 +83,17 @@
           "path": "assets/listing/03.webp",
           "width": 1280,
           "height": 960,
-          "sha256": "5a1b79efb8d61725244d6b57887f05069740f035707f1b5d1897c47a43119e3d"
+          "sha256": "faccf84756634307a7b01e20f0aab3b44a8f6a6f122ddc93e5f1fec5f3f4f224"
         },
         {
           "path": "assets/listing/03-small.webp",
           "width": 720,
           "height": 540,
-          "sha256": "20cf24a93e0038951256924c7b75e44bceffced74c39dc75176b540e33f02435"
+          "sha256": "cbcedbbbb15b90cd0293e71a4f65c9aa271f8ac0af07e04251ee25613c5853b5"
         }
-      ]
+      ],
+      "edited_source": "edited-listing-photos/03.png",
+      "edited_source_sha256": "b99947cd920b27f6cc0975d999bb727c906ff4f0a5a543edc2eede0121e3463d"
     },
     {
       "position": 4,
@@ -109,15 +115,17 @@
           "path": "assets/listing/04.webp",
           "width": 1600,
           "height": 1060,
-          "sha256": "6f82e5e99e3b557cec35b2438c84efb186a0b1a1e5a2fede2dd917d7acb42bbb"
+          "sha256": "de192e1b4659d15d539003d5a6238cbe7da283ffb9ef38d2f762be96a0533756"
         },
         {
           "path": "assets/listing/04-small.webp",
           "width": 720,
           "height": 477,
-          "sha256": "b8863d069aed565d77df8f642864f8235912150a3c1ec4e5b38a868b255837d0"
+          "sha256": "635319465e7d850cce80dd113487e7af4cb5925b2ea1853d1a2044fa45c25189"
         }
-      ]
+      ],
+      "edited_source": "edited-listing-photos/04.png",
+      "edited_source_sha256": "d4965ccd185f6548e69badae7381c03a44bf30462142b40ddeca5dc9d5e09773"
     },
     {
       "position": 5,
@@ -139,15 +147,17 @@
           "path": "assets/listing/05.webp",
           "width": 1600,
           "height": 1065,
-          "sha256": "94c8cfbf4247714b143ae6e2bacfc445d71aa39ed5ac7aabdc405b0051675d78"
+          "sha256": "380c3bb1366294fc6dfde02b5e9645d09db0bba5938b5fb98302880eb83bcbdd"
         },
         {
           "path": "assets/listing/05-small.webp",
           "width": 720,
           "height": 479,
-          "sha256": "3ad5e1b3a7b22aae268aa0e2de0b94dea9e76a3e08cc767cbe7b2a1be6f9e461"
+          "sha256": "ffa6b28c65de50bd4e0d542643b38f9890ff2ff96021470efb9a06aa7a436e4c"
         }
-      ]
+      ],
+      "edited_source": "edited-listing-photos/05.png",
+      "edited_source_sha256": "64bdd87fa9b46ba7b56226f3a47b7c7216db6f93edacf433199e6cabcfc4ed6e"
     },
     {
       "position": 6,
@@ -164,15 +174,17 @@
           "path": "assets/listing/06.webp",
           "width": 1600,
           "height": 1205,
-          "sha256": "9aba34716b9310beb64350c22542bbe4eebb9616a41159d421af1de14f71a63b"
+          "sha256": "a376bd15a86f1d49650954c15158376c08658d4be23d70709a795e5af401494d"
         },
         {
           "path": "assets/listing/06-small.webp",
           "width": 720,
           "height": 542,
-          "sha256": "9f266bf8083027b4647a679f3b0467af2371102ad51ae31c6ed558f0e4fecf52"
+          "sha256": "ddfdd122c0c46c52ed7742fcc35270f6d04ba56dae5c88566e2199be1dbcec11"
         }
-      ]
+      ],
+      "edited_source": "edited-listing-photos/06.png",
+      "edited_source_sha256": "f11bd7e47fc53233df561c3d1481928186533c555764df807a0feadb2963760e"
     },
     {
       "position": 7,
@@ -194,15 +206,17 @@
           "path": "assets/listing/07.webp",
           "width": 1600,
           "height": 1063,
-          "sha256": "fab560aa22d0a6463be348dd8f3d54b82935ccc8921fb834966409d70bf5ad7d"
+          "sha256": "be0413b86a598eb883e20f826074e25ef0e86cddb7bcf0a393875872351415c8"
         },
         {
           "path": "assets/listing/07-small.webp",
           "width": 720,
           "height": 478,
-          "sha256": "4698fdb781a59c920156f071a3ba4820a7fdad54470d233629f9a9d53f73828c"
+          "sha256": "8b418bf23371342149772af9634829280b6f5cba4388826f3eac4f2ccdad4e8b"
         }
-      ]
+      ],
+      "edited_source": "edited-listing-photos/07.png",
+      "edited_source_sha256": "07447a438cb3f1bcce8ac7753e42a979c4a0e4154df4db9be0218daac128520f"
     },
     {
       "position": 8,
@@ -219,15 +233,17 @@
           "path": "assets/listing/08.webp",
           "width": 1280,
           "height": 720,
-          "sha256": "27228ac07050aa6a76701497a8a897203a71502b5e92f5f9692d814ff4b03c7b"
+          "sha256": "0eb522a6d5a31796b0aa841ddf8f7a699bd68580da8dbcb1d46c5583ab731f6c"
         },
         {
           "path": "assets/listing/08-small.webp",
           "width": 720,
           "height": 405,
-          "sha256": "35540dfb5ccb57cc694c15a4b82ba3781596252a98f2902884065bb6ce86ce5c"
+          "sha256": "60a7c3450756e216edd4f9f770f8957626e1533f9a3a085c248e0e4f587c0dd2"
         }
-      ]
+      ],
+      "edited_source": "edited-listing-photos/08.png",
+      "edited_source_sha256": "387371472428c84bec961597495f377d1f56d3e235ecbd7637c06c694f301e82"
     },
     {
       "position": 9,
@@ -244,15 +260,17 @@
           "path": "assets/listing/09.webp",
           "width": 1280,
           "height": 960,
-          "sha256": "819656d8613f3dfbebb187fa2499c017f6189aa56084195231c3bac4fb818608"
+          "sha256": "793a9e6b0779fe4e38b1fcc51169d90ec99ac526bea663f1fbefe54a68b3900d"
         },
         {
           "path": "assets/listing/09-small.webp",
           "width": 720,
           "height": 540,
-          "sha256": "930f4cf635102c655788cd69bb7b4f650eaae33f8605a806d91afa6424a43d51"
+          "sha256": "8e245f938179b0cd2cf71f5ccca738d1084793d837adc7f92ab4da5e30b9419e"
         }
-      ]
+      ],
+      "edited_source": "edited-listing-photos/09.png",
+      "edited_source_sha256": "209e8b130f32bf5d9d96d444d829b8fcc9671abe326aa34e12f7da5f6bc9da97"
     },
     {
       "position": 10,
@@ -269,15 +287,17 @@
           "path": "assets/listing/10.webp",
           "width": 1600,
           "height": 1065,
-          "sha256": "b9c42664b0dff65d042849b853772e91c523ad06325994d0764ac0fe9af58c46"
+          "sha256": "785fa7a20e791599f05e327c98b925093399266e354a3e88c7e057786efcfb5d"
         },
         {
           "path": "assets/listing/10-small.webp",
           "width": 720,
           "height": 479,
-          "sha256": "aa91f499f3198aaa121f80800058c16f6dd570f8c9a7e7bc60395d1bd6868408"
+          "sha256": "aa028d751f3f573dd7db0915a3c9019c7923452b5071f053b25fcd96b138a2d2"
         }
-      ]
+      ],
+      "edited_source": "edited-listing-photos/10.png",
+      "edited_source_sha256": "4ab310e7a66fee71cade95a9e3a14249255740a8cdca8466a383637364a2af31"
     },
     {
       "position": 11,
@@ -294,15 +314,17 @@
           "path": "assets/listing/11.webp",
           "width": 1464,
           "height": 982,
-          "sha256": "d3717d7d7f571ae00cc96d4160c23792854eac7dcd838f4dbc325dce6fdb9c0c"
+          "sha256": "97065aa8046f65a2411c3ba8feca42ca427457941cb19fd2e8e89a160f36df96"
         },
         {
           "path": "assets/listing/11-small.webp",
           "width": 720,
           "height": 483,
-          "sha256": "637c382076de9fcb44e838d0fd93de853664b9d29bb39d308ca331f2d8a022b4"
+          "sha256": "330a496f44d0946dfb0e20a0756db50812eae74017ff67e51d32d0627089ddfc"
         }
-      ]
+      ],
+      "edited_source": "edited-listing-photos/11.png",
+      "edited_source_sha256": "b4f52e350edee283fafb9ce857ac19ff45a155ab1a20079035ad3be543490519"
     },
     {
       "position": 12,
@@ -319,15 +341,17 @@
           "path": "assets/listing/12.webp",
           "width": 1460,
           "height": 982,
-          "sha256": "12346a85505b5fe8055f323e9e5c690bf6ef8bb0314496bfd8cbdb0729c3df2c"
+          "sha256": "ad6f390eec93444eeb323b01f48d87f149b93ee1032317d6b3da803cab4877a3"
         },
         {
           "path": "assets/listing/12-small.webp",
           "width": 720,
           "height": 484,
-          "sha256": "bf047586abcd4b2665111498623f79e5eea6fb5eb05bceb864ca6a7d384ed53d"
+          "sha256": "fe4decf447976ac7a0926c1e0fdb61710c86d1edff667af83bef644ba6868767"
         }
-      ]
+      ],
+      "edited_source": "edited-listing-photos/12.png",
+      "edited_source_sha256": "d68100dcc04200fd0938462755a140e288944a1d7814fb12dfb37889745e39a1"
     },
     {
       "position": 13,
@@ -344,15 +368,17 @@
           "path": "assets/listing/13.webp",
           "width": 1600,
           "height": 1072,
-          "sha256": "1d13393d58acb908d946d89471963e1f0fce2867405366849ab46a28ccb7969f"
+          "sha256": "9c3478964db90353575cd7a6eeaf514727eb0105e5fb6e038de2c8bc2b7f076b"
         },
         {
           "path": "assets/listing/13-small.webp",
           "width": 720,
           "height": 482,
-          "sha256": "ff7d550b0c4f709e5404ffb2e113be7ec242d7e08de67805b261f6e1db683a69"
+          "sha256": "a6bf79a66e8e496d597dd4bbaf72e22744be91430b180b58585e9948843f49cc"
         }
-      ]
+      ],
+      "edited_source": "edited-listing-photos/13.png",
+      "edited_source_sha256": "f2c44f747dbee6f708365c734b60fdf688630e4145f5b9edc6c9ceedee902c20"
     },
     {
       "position": 14,
@@ -374,15 +400,17 @@
           "path": "assets/listing/14.webp",
           "width": 1307,
           "height": 960,
-          "sha256": "ef68746d3f052b7e6122b2d8bf440b429991a8c19169f0a23db470053c09fbdc"
+          "sha256": "90cbeb907da69e2c3b986bcd9c65aa91c2751d2d3150345beb26562ec0d57d13"
         },
         {
           "path": "assets/listing/14-small.webp",
           "width": 720,
           "height": 529,
-          "sha256": "45297967559c9c2f1f2095491e775489939ba188514dadca870a807ac8daac2e"
+          "sha256": "366dd9ce17fd26ee2af7bdeb22683db6024090156940fe1d352de9a93b764c08"
         }
-      ]
+      ],
+      "edited_source": "edited-listing-photos/14.png",
+      "edited_source_sha256": "06d6fc81c34e17d95dbdb7c1651619143bc6d0034b0dcec15400103e6fd6c045"
     },
     {
       "position": 15,
@@ -399,15 +427,17 @@
           "path": "assets/listing/15.webp",
           "width": 1154,
           "height": 774,
-          "sha256": "d23ccd8b94cc26da68807384bf399c64c1280bb8319ea7b21eb3958743446998"
+          "sha256": "ee54a2f2a192a8be8ece2d44897fcff82fc6ea73b9e1e54d2e83c265de0029b7"
         },
         {
           "path": "assets/listing/15-small.webp",
           "width": 720,
           "height": 483,
-          "sha256": "4822117ff4cec62a0de6d86312fa7452f4ddb80f01164a4046a1405b5bdda37c"
+          "sha256": "00ba2314b26b229f358e828c4371be85634934da473beae974d3b2dfba3d4375"
         }
-      ]
+      ],
+      "edited_source": "edited-listing-photos/15.png",
+      "edited_source_sha256": "4dbe1a6581ceef559da1ac982c1b0296cc937fc25aa20357161dc7c888c7f978"
     },
     {
       "position": 16,
@@ -429,15 +459,17 @@
           "path": "assets/listing/16.webp",
           "width": 1393,
           "height": 958,
-          "sha256": "2dd4cea4a1e6474a9b170b0d9bcd78a354c589443c109c2ac0891000bd232576"
+          "sha256": "ce0e6867d6d3b28426f1d2a1a0ee7147481adee034ed6925ce09aec4a7af7be6"
         },
         {
           "path": "assets/listing/16-small.webp",
           "width": 720,
           "height": 495,
-          "sha256": "fc4de06149bde3de433021b236a90abbbec4a5419426c3589040998ae3fca1da"
+          "sha256": "0a65de1f13a608d2c3d6283474fa40ee5698771d94a0b381fd102da78ab9dbcf"
         }
-      ]
+      ],
+      "edited_source": "edited-listing-photos/16.png",
+      "edited_source_sha256": "1801240fd59d4ffe9f4de26c6bbbd39b947f5a7da9ef28bdc65a5dd4c5e2cdcf"
     },
     {
       "position": 17,
@@ -454,15 +486,17 @@
           "path": "assets/listing/17.webp",
           "width": 1454,
           "height": 970,
-          "sha256": "88ff1c002d1fee035215b2b08b0f44c45a7f55f75efd733e9dca2cca8c5696d5"
+          "sha256": "0d0be1143dc46981b4aa43310a2049aa35da20062bcf2ad9c6024e49e2ad301b"
         },
         {
           "path": "assets/listing/17-small.webp",
           "width": 720,
           "height": 480,
-          "sha256": "a4c76064c1ecedc05f29d6d430fb9bee34b538cca51c34b3f31b12c8e5af3d8c"
+          "sha256": "5c26387793731f83dc8d4927bb1b35d58e5593e31d7f30d2f5e2947c8a7843d4"
         }
-      ]
+      ],
+      "edited_source": "edited-listing-photos/17.png",
+      "edited_source_sha256": "26a41f127ef196c723562ec859879b534833460221251accbfdad284c08c3295"
     },
     {
       "position": 18,
@@ -479,15 +513,17 @@
           "path": "assets/listing/18.webp",
           "width": 1454,
           "height": 974,
-          "sha256": "b29db00023475ef901d6feaac7976ff5e7f2c016a80880fcfe79bede0a683fb3"
+          "sha256": "c06eb758da08c126471982708f10aeb8820c8d8f29cf174ba2ea765609b33221"
         },
         {
           "path": "assets/listing/18-small.webp",
           "width": 720,
           "height": 482,
-          "sha256": "4eb1f78e78b467855a03fe4e8054db49ad61145130490538fad7a991a2a03568"
+          "sha256": "fe267571152f538d69d983bce5f5987cdf5eb61e40db96f0219116698bc5dd0f"
         }
-      ]
+      ],
+      "edited_source": "edited-listing-photos/18.png",
+      "edited_source_sha256": "589b2dbadb32cdd59e7d8be1172a06be0c09648ec8c9058700e2e29a4bcef7a7"
     },
     {
       "position": 19,
@@ -504,15 +540,17 @@
           "path": "assets/listing/19.webp",
           "width": 1454,
           "height": 976,
-          "sha256": "5844ce8f11385e2bf32e85e692c5595c1683680db71903a0baa549d5e9d1de2b"
+          "sha256": "fd31efd97ac4a6215294ecee2b27ef5a86e5868271fa2414793588ce954d8bdf"
         },
         {
           "path": "assets/listing/19-small.webp",
           "width": 720,
           "height": 483,
-          "sha256": "2a51bbaae009f3039fb4f29974fd0251f59b908860071e3b0b7ae99cde34fad2"
+          "sha256": "1e7ecdb934952a9204c32ee8c8bfab87cea5e111eb0bc98b17c2aef4ef349bb9"
         }
-      ]
+      ],
+      "edited_source": "edited-listing-photos/19.png",
+      "edited_source_sha256": "2af47634c0ff71103ae9cc42bd58315533cdca61fde4118cef87dd0222ca470b"
     },
     {
       "position": 20,
@@ -529,15 +567,17 @@
           "path": "assets/listing/20.webp",
           "width": 1600,
           "height": 1270,
-          "sha256": "e15b4d799349801e7f64874c84e98ce70b0c05e4a5e5b485322366a26d317e2a"
+          "sha256": "ef3b2b9e9fecc9dd477173c3e5916a2b9e3bb4fc68d903da4e39861c70d02905"
         },
         {
           "path": "assets/listing/20-small.webp",
           "width": 720,
-          "height": 571,
-          "sha256": "47829c1c053f094846db97f5bd1a4b1c5d10515dfbeba9efa4994bd9bf06a8ae"
+          "height": 572,
+          "sha256": "ae9dbf38eca6f34684790aec34126bc1e405db85758a774a6150bd83cf5474ec"
         }
-      ]
+      ],
+      "edited_source": "edited-listing-photos/20.png",
+      "edited_source_sha256": "057a7e72243d77188702a7e9058afef7365cb97837f8ce3be9ff54f40c10a085"
     },
     {
       "position": 21,
@@ -554,15 +594,17 @@
           "path": "assets/listing/21.webp",
           "width": 1460,
           "height": 974,
-          "sha256": "591dd0ea531cfec5f11a46cad21b15a17e2053fa73982f3742b1b0d0efe593b1"
+          "sha256": "8adc3af524f0a1c20bad2b52f4eca7af12456cf5a2b1cdeb2901ec50aacd2153"
         },
         {
           "path": "assets/listing/21-small.webp",
           "width": 720,
           "height": 480,
-          "sha256": "a4e5545b042c3bae40f10859b8837406277f905a5b11f2f4c2f6fbe661517947"
+          "sha256": "0af923aeb5f9f30549457385580620a2e14a2db6613790c3f5846538692e7aa0"
         }
-      ]
+      ],
+      "edited_source": "edited-listing-photos/21.png",
+      "edited_source_sha256": "3d98fba25e9c6565b1267ed2a31855ea3c6b729f01c8be08bdcdc431cf282fbd"
     },
     {
       "position": 22,
@@ -579,15 +621,17 @@
           "path": "assets/listing/22.webp",
           "width": 1452,
           "height": 976,
-          "sha256": "8a7cb5a27047e812ea01555a4451100fcbe380a44947db80e4513a97aa576467"
+          "sha256": "150ff8e4ed55b29bdb82d75d9c66eda6e0d8486fd7e9ca28a3749df77a1e03ad"
         },
         {
           "path": "assets/listing/22-small.webp",
           "width": 720,
           "height": 484,
-          "sha256": "a249d17785cb05a2e5a1303f7515ccf2736b5fa5b18eea841c81bd26f231991d"
+          "sha256": "f64d16dd0c8e00c6b7adea803c8a57cb0b3ae29823b9dc928de0f339c0b7b821"
         }
-      ]
+      ],
+      "edited_source": "edited-listing-photos/22.png",
+      "edited_source_sha256": "0f3f703d5fd2bb34fc2e5611c736084b911ef4730fefe82d682af130bac58503"
     },
     {
       "position": 23,
@@ -609,15 +653,17 @@
           "path": "assets/listing/23.webp",
           "width": 1442,
           "height": 917,
-          "sha256": "f04f920bb8efb5c51cf4b67fb4291022b365aab019e5b84438cefc5fe5b3b600"
+          "sha256": "884406d3b15f1783ef0c1ed6f85a456c01da7a4df9d1939bcdd0cbc37fe74be6"
         },
         {
           "path": "assets/listing/23-small.webp",
           "width": 720,
           "height": 458,
-          "sha256": "9daa90966f076b5570d09dfcbe7fd0391536cb74137ba86841454ddf824c11ea"
+          "sha256": "7e97449798e0ea432d19ee4402bcd453f90750b24b8745872b2eee3f1fc61fe7"
         }
-      ]
+      ],
+      "edited_source": "edited-listing-photos/23.png",
+      "edited_source_sha256": "72943333b550a33f375845637fc01f6cb353fe4dbd13ac3915d431b2bd900236"
     },
     {
       "position": 24,
@@ -634,15 +680,17 @@
           "path": "assets/listing/24.webp",
           "width": 1456,
           "height": 980,
-          "sha256": "a5e88e09d594790da0f0cc3022bd67f905fadcca9b8ea27bf373c7d29cd640c3"
+          "sha256": "544a591f0151cfea88e2f1299e616ed1695ad793e1c7a314911a77431cebd03f"
         },
         {
           "path": "assets/listing/24-small.webp",
           "width": 720,
           "height": 485,
-          "sha256": "3281ad93087f29b9f74a73571d5449f2b319ae242d418aa1e8f817ef6c72880f"
+          "sha256": "357c076056518c844fbec01c455fdad03423b124fde34964cbb57d9314d2b1f0"
         }
-      ]
+      ],
+      "edited_source": "edited-listing-photos/24.png",
+      "edited_source_sha256": "f619fd4c873299275cd5afe16e4b268982af3eec7cf1501f73f1921c3fae620f"
     },
     {
       "position": 25,
@@ -659,15 +707,17 @@
           "path": "assets/listing/25.webp",
           "width": 1146,
           "height": 850,
-          "sha256": "f6cdd7dfe10481686ff11ef6fd7cd23d81a58a9baf2bb6e09dacabd68ef8a4c3"
+          "sha256": "6b5d2b2b2b2492b522ad5008e6602a00fbbd65fbe7146667f67008d5b895039c"
         },
         {
           "path": "assets/listing/25-small.webp",
           "width": 720,
           "height": 534,
-          "sha256": "97bd88f093fb3d02a3248d4120b79d99ada37cb9aeadb1cc19a5c61ee16565f9"
+          "sha256": "c66d2fca273be2224fe10278e8c2888cd85a2c33484c529c44be4764961d44d9"
         }
-      ]
+      ],
+      "edited_source": "edited-listing-photos/25.png",
+      "edited_source_sha256": "7f7f5f3f8ade808baa2e1303adc487cf7377ffef89fac956281cf9929e5f5f25"
     },
     {
       "position": 26,
@@ -684,15 +734,17 @@
           "path": "assets/listing/26.webp",
           "width": 1454,
           "height": 970,
-          "sha256": "84f9a3eb8a770fd6b68fc091cda710469f7b603c0bd754aa04ea019a97e2b4c8"
+          "sha256": "b65752fcfa15a5628d87e183e02cf05004606107173dd645763a0647009f572a"
         },
         {
           "path": "assets/listing/26-small.webp",
           "width": 720,
           "height": 480,
-          "sha256": "1fcbab721c6d4d6297319d4f3fe824666e0cfa561ff50b9695f8dd66957c4276"
+          "sha256": "9f4ceb6ca36be9c1ced77c8b25d8c4505eb2e613fe9a27f97294657f002b3496"
         }
-      ]
+      ],
+      "edited_source": "edited-listing-photos/26.png",
+      "edited_source_sha256": "b641690114f15ac4276ac2327141ee363722a18262d2c2fb8430785b6b6c5648"
     },
     {
       "position": 27,
@@ -714,15 +766,17 @@
           "path": "assets/listing/27.webp",
           "width": 1600,
           "height": 1108,
-          "sha256": "735b9ce852dc48aea5088152bb692e86316fbcda564f74be83fefb34dbb3857c"
+          "sha256": "098465b2b5fc62ceefa4f67a8fe93a1df5bc309f1db231c9e201a09d457bf01c"
         },
         {
           "path": "assets/listing/27-small.webp",
           "width": 720,
-          "height": 498,
-          "sha256": "97d4a7ec374f107ce0ffa13eeffa1f346c1181b86b1831ff048691c83acac895"
+          "height": 499,
+          "sha256": "c886c9cb0f584fc5da9b3366ac2f1df0372e81129a237dae6a5f12f3aad1083c"
         }
-      ]
+      ],
+      "edited_source": "edited-listing-photos/27.png",
+      "edited_source_sha256": "2ecb23681ddc84bb14fb27d5eedc079c56b605d327eeff077adbe8c6c13ed383"
     },
     {
       "position": 28,
@@ -739,15 +793,17 @@
           "path": "assets/listing/28.webp",
           "width": 1346,
           "height": 896,
-          "sha256": "869bf57d49f81b82254e9b4421cc603f257cb063103e18009468405059f00f61"
+          "sha256": "036df9eeb5a3b62fa6d48b7184f2671e37e498a54ed039bf767801707157306b"
         },
         {
           "path": "assets/listing/28-small.webp",
           "width": 720,
           "height": 479,
-          "sha256": "028ee6d597e8b386a87f6be7137cbec5dcbe8c9f1c555ed1495045e0ada2c0af"
+          "sha256": "a92642b8520e80f76eed1e6bea7c68a55fe00f6bb94681f2a260eb47acd4ddea"
         }
-      ]
+      ],
+      "edited_source": "edited-listing-photos/28.png",
+      "edited_source_sha256": "a31162b80cdbadef85c112cc2e9c7a81252d9c06e3b93ade861a879271204221"
     },
     {
       "position": 29,
@@ -764,15 +820,17 @@
           "path": "assets/listing/29.webp",
           "width": 1458,
           "height": 976,
-          "sha256": "dcad56623d17799ffe6c0763a3d16f58e672d6205fc57ebcae05629c54e8d313"
+          "sha256": "bffda6d0f6acef1973932ebec15b3a2f711bc757f53187cbfd6a8c3a1983c2da"
         },
         {
           "path": "assets/listing/29-small.webp",
           "width": 720,
           "height": 482,
-          "sha256": "117f3fa96865a341680596dd7e32d4a7a0b991a75d565b3318b5a49da25ca8f6"
+          "sha256": "51aee825191dc759f0652c634b0467caef8c99439d470649f2836711460385b0"
         }
-      ]
+      ],
+      "edited_source": "edited-listing-photos/29.png",
+      "edited_source_sha256": "40c173fe7ea5514bdb6073cd8e3e4da9c88f81fb987b381ce14924564ff80639"
     },
     {
       "position": 30,
@@ -789,15 +847,17 @@
           "path": "assets/listing/30.webp",
           "width": 1600,
           "height": 913,
-          "sha256": "3733c946dcf9891f4f1a4e0c915bc29690f9392ac7708143302ac02be0af282e"
+          "sha256": "50f176b8479488b765f9f5c85f0129134711a2af84b2d1adbe1803ce7f83f7e9"
         },
         {
           "path": "assets/listing/30-small.webp",
           "width": 720,
           "height": 411,
-          "sha256": "47bd9886469cfb381ff84f0d119ddc9379f0cdb800687c632663b41b29fa0ff3"
+          "sha256": "c7423ecc2eca2f15b3c95db20c58836be1f059667bdaefab5be4c07406ebe2bb"
         }
-      ]
+      ],
+      "edited_source": "edited-listing-photos/30.png",
+      "edited_source_sha256": "28abee179a23c12acb12aeab5b3ff3b933c5bef129f7eb20d83f50e342830df1"
     },
     {
       "position": 31,
@@ -814,15 +874,17 @@
           "path": "assets/listing/31.webp",
           "width": 1600,
           "height": 1046,
-          "sha256": "db521f2a3da8cc6f64a8cbc1d7828722ee2f32d277ddfad146bacb3b0f617392"
+          "sha256": "43cdb94eafa9e0a6a8af73b7ece62a39cd0749861da0bceb2f46f942e5f80ff4"
         },
         {
           "path": "assets/listing/31-small.webp",
           "width": 720,
           "height": 471,
-          "sha256": "e54ac19ea235fe4622f006b290784f99467ec6d89b70bac859a0428b231881c4"
+          "sha256": "176679f05c1ff32a37e85ce8a7a4d7d5a4d70cbc3e21b3650fd7a6f3bd57ed2e"
         }
-      ]
+      ],
+      "edited_source": "edited-listing-photos/31.png",
+      "edited_source_sha256": "d2e99facbc0ba3ccf1eb6f9f32a0466695352976a5683e9aecc799dc6b868a7b"
     },
     {
       "position": 32,
@@ -839,15 +901,17 @@
           "path": "assets/listing/32.webp",
           "width": 1456,
           "height": 832,
-          "sha256": "fbea4be18f5080f0846f1e371741d07adabc615d6c542e1337f357a00a163247"
+          "sha256": "d634f98b4a4007056665413af01be028bea6adf8a491c54f93a7fd39d9a6bbac"
         },
         {
           "path": "assets/listing/32-small.webp",
           "width": 720,
           "height": 411,
-          "sha256": "7290dba08b81c122431089348a20a43a8a79b19c0d3b70898713e4b4ff1bd882"
+          "sha256": "4e2aeffbc01782b91cb90a9b85cfd568b3188fa4fff3861ca66fd302967387a5"
         }
-      ]
+      ],
+      "edited_source": "edited-listing-photos/32.png",
+      "edited_source_sha256": "908cd827da2cef46286d90df3d4351c4f963f908828af09a69cebc1d42f3cbbd"
     },
     {
       "position": 33,
@@ -864,15 +928,18 @@
           "path": "assets/listing/33.webp",
           "width": 1454,
           "height": 824,
-          "sha256": "e1a69c6753a108a9d16eece034be9883e072296103f5c01830a6017fbbf7d98c"
+          "sha256": "48054b94afcb48fa0f048b587a61fea1ce9c5bf9b1f5a7397d8b5e4110a83f1a"
         },
         {
           "path": "assets/listing/33-small.webp",
           "width": 720,
           "height": 408,
-          "sha256": "80e98ff42534fd07b2d8e2060db3481e6988afae818bb2724b1a079e7cf2389d"
+          "sha256": "c6369432212d0d656d0ec2fe70a930cb4529fe8512a3e783428716a94d9f998c"
         }
-      ]
+      ],
+      "edited_source": "edited-listing-photos/33.png",
+      "edited_source_sha256": "23ea70d002394ae18d2534ebdadc2a0541401c2d8a85a37e2a8fbc4790a24c7f"
     }
-  ]
+  ],
+  "edit_approval": "colonial-1h8; owner requested replacement with numbered PNG exports"
 }
