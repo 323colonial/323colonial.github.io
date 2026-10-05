@@ -45,7 +45,7 @@ Primary CTA: **Call brokerage · (304) 885-1547**, `tel:+13048851547`. Secondary
 
 Contact checked October 5, 2026 (colonial-is7): the [brokerage homepage](https://www.dandridgerealtygroup.com/) publishes the Charles Town office number above and Liz’s email; [Liz’s profile](https://www.dandridgerealtygroup.com/team/liz-mcdonald) instead lists (304) 885-7645 with the same email. The owner confirmed having Liz’s correct direct mobile but chose the website’s general contact for now, superseding the original request for direct mobile and Michelle’s office-assistance email. Neither supplied private contact is added; no response-speed or texting claims.
 
-Secondary destination: [public Redfin listing](https://www.redfin.com/WV/Berkeley-Springs/323-Colonial-Dr-25411/home/21971085). Never publish the email-specific MLS portal URL. Status must not automatically become Active on the expected date.
+Secondary destination: [public Zillow listing](https://www.zillow.com/homedetails/323-Colonial-Dr-Berkeley-Springs-WV-25411/22875195_zpid). Never publish the email-specific MLS portal URL. Status must not automatically become Active on the expected date.
 
 ## Operating context and boundaries
 

@@ -125,7 +125,15 @@ class Listing(unittest.TestCase):
             self.assertIn('Liz McDonald', header.text())
             self.assertIn('Dandridge Realty Group LLC', header.text())
             self.assertIn('tel:+13048851547', [a.attrs.get('href') for a in page.all('a')])
-            self.assertIn('https://www.redfin.com/WV/Berkeley-Springs/323-Colonial-Dr-25411/home/21971085', [a.attrs.get('href') for a in page.all('a')])
+            listing_links = [a for a in page.all('a') if a.text().startswith('View public listing')]
+            self.assertEqual([a.text() for a in listing_links], [
+                'View public listing', 'View public listing on Zillow',
+            ])
+            for link in listing_links:
+                self.assertEqual(link.attrs['href'], 'https://www.zillow.com/homedetails/323-Colonial-Dr-Berkeley-Springs-WV-25411/22875195_zpid')
+                self.assertEqual(link.attrs.get('aria-label', link.text()), link.text())
+                self.assertNotIn('target', link.attrs, 'Keep same-tab navigation')
+            self.assertNotIn('redfin', (ROOT / file).read_text().lower())
             self.assertIn('Liz McDonald', page.text())
             self.assertIn('Dandridge Realty Group LLC', page.text())
             self.assertNotRegex((ROOT / file).read_text(), r'floorplans\.html|brochure\.html|sale-prep\.html|brightmls\.com|plan-main|plan-second|paint-colors')
@@ -158,7 +166,7 @@ class Listing(unittest.TestCase):
         self.assertEqual([a.attrs['href'] for a in contact.all('a')], [
             'tel:+13048851547',
             'mailto:liz@dandridgerealtygroup.com',
-            'https://www.redfin.com/WV/Berkeley-Springs/323-Colonial-Dr-25411/home/21971085',
+            'https://www.zillow.com/homedetails/323-Colonial-Dr-Berkeley-Springs-WV-25411/22875195_zpid',
         ])
 
     def test_website_brokerage_contacts(self):
