@@ -56,6 +56,7 @@ try {
     frame.style.height = `${height}px`;
     doc.activeElement.blur();
     await settle();
+    check(!/scroll to explore/i.test(doc.body.textContent), `${width}px: no scroll instructions`);
     for (const section of doc.querySelectorAll('.story')) {
       const label = `${width}px ${section.getAttribute('aria-label')}`;
       check(section.classList.contains('is-scrolling'), `${label}: sequence enabled`);
@@ -84,6 +85,10 @@ try {
       await seek(.625);
       check(Math.abs(opacity(photos[1]) - early) < .01, `${label}: reverse scroll restores exact blend`);
       await seek(1);
+      const counter = section.querySelector('.slide-count');
+      check(counter.textContent === `2 / ${photos.length}`
+        && Math.abs(counter.getBoundingClientRect().right - section.querySelector('.story-photos').getBoundingClientRect().right) < 1,
+        `${label}: photo counter advances and stays right-aligned`);
       const link = photos[1].querySelector('a');
       link.focus({preventScroll: true});
       await seek(.1);

@@ -93,7 +93,7 @@ figcaption { padding-top: 10px; font: 13px/1.5 Arial, sans-serif; }
 .is-scrolling .media-record[inert] figcaption { visibility: hidden; }
 .is-scrolling .media-record img { height: 100%; object-fit: contain; }
 .is-scrolling figcaption { min-height: 49px; }
-.scroll-cue { display: flex; justify-content: space-between; gap: 12px; border-top: 1px solid var(--stone); margin: 16px 0 0; padding-top: 10px; font: 12px/1.5 Arial, sans-serif; }
+.scroll-cue { display: flex; justify-content: flex-end; gap: 12px; border-top: 1px solid var(--stone); margin: 16px 0 0; padding-top: 10px; font: 12px/1.5 Arial, sans-serif; }
 .slide-count { font-variant-numeric: tabular-nums; }
 .details { padding: 72px 40px; background: var(--paper); scroll-margin-top: 24px; }
 .detail-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 32px; margin: 24px 0 0; }
