@@ -28,7 +28,7 @@ try {
       check(showing.left >= 0 && showing.right <= width && showing.height >= 44, `${label}: showing control fits`);
       check(Math.abs(parseFloat(doc.documentElement.style.getPropertyValue('--header-height')) - header.height) < 1, `${label}: measured header offset`);
       if (route === 'index') {
-        doc.querySelector('#details-heading').scrollIntoView();
+        doc.querySelector('.site-footer').scrollIntoView();
         await settle(win);
         const facts = doc.querySelector('.listing-summary').getBoundingClientRect();
         check(Math.abs(parseFloat(doc.documentElement.style.getPropertyValue('--summary-height')) - facts.height) < 1, `${label}: measured facts offset (${facts.height.toFixed(1)}px)`);

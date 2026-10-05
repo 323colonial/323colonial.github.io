@@ -101,6 +101,9 @@ figcaption { padding-top: 10px; font: 13px/1.5 Arial, sans-serif; }
 .scroll-cue { display: flex; justify-content: flex-end; gap: 12px; border-top: 1px solid var(--stone); margin: 16px 0 0; padding-top: 10px; font: 12px/1.5 Arial, sans-serif; }
 .slide-count { font-variant-numeric: tabular-nums; }
 .details { padding: 72px 40px; background: var(--paper); scroll-margin-top: 24px; }
+@media screen {
+  .details.has-dialog:not(:target) { display: none; }
+}
 .detail-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 32px; margin: 24px 0 0; }
 .detail-grid > div { border-bottom: 1px solid var(--rule); padding-block: 16px; }
 dt { font: 13px/1.5 Arial, sans-serif; color: var(--muted); margin-bottom: 4px; }

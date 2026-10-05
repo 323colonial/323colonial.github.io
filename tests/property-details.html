@@ -25,6 +25,8 @@ try {
     frame.style.width = `${width}px`;
     frame.style.height = `${height}px`;
     await settle();
+    check(doc.querySelector('#details').getBoundingClientRect().height === 0,
+      `${width}px: enhanced closing details take no space`);
     link.scrollIntoView();
     const url = frame.contentWindow.location.href;
     price?.click();
@@ -49,6 +51,13 @@ try {
   const modified = new frame.contentWindow.MouseEvent('click', {bubbles: true, cancelable: true, ctrlKey: true});
   link.dispatchEvent(modified);
   check(!modified.defaultPrevented && !dialog.open, 'modified click keeps native link behavior');
+  frame.contentWindow.location.hash = 'details';
+  await settle();
+  check(doc.querySelector('#details').getBoundingClientRect().height > 0, 'direct details fragment exposes inline fallback');
+  check(!dialog.open, 'direct fragment does not force a modal');
+  frame.contentWindow.location.hash = '';
+  await settle();
+  check(doc.querySelector('#details').getBoundingClientRect().height === 0, 'leaving details fragment hides duplicate again');
   const source = await fetch('../index.html').then(r => r.text());
   frame.setAttribute('sandbox', 'allow-same-origin');
   await new Promise(resolve => {
@@ -60,6 +69,20 @@ try {
   check(anchor.textContent === 'Property details' && anchor.getAttribute('href') === '#details' && !anchor.hasAttribute('aria-haspopup'), 'no-JS Property details remains ordinary details link');
   check(![...fallback.querySelectorAll('a')].some(a => a.textContent.includes('$499,000')), 'no-JS price is not linked');
   check(fallback.querySelector('#details').getBoundingClientRect().height > 0, 'no-JS details remain visible');
+  check(fallback.querySelectorAll('#details dt').length === 12, 'static source retains all twelve facts');
+  for (const [mode, setup] of [
+    ['unsupported dialog', 'HTMLDialogElement.prototype.showModal = undefined'],
+    ['failed listing initialization', 'window.ResizeObserver = undefined']
+  ]) {
+    frame.removeAttribute('sandbox');
+    await new Promise(resolve => {
+      frame.onload = resolve;
+      frame.srcdoc = source.replace('<head>', `<head><base href="${new URL('../', location.href)}"><script>${setup}<\/script>`);
+    });
+    const fallback = frame.contentDocument;
+    check(fallback.querySelector('#details').getBoundingClientRect().height > 0, `${mode}: inline details remain visible`);
+    check(!fallback.querySelector('.price a').hasAttribute('aria-haspopup'), `${mode}: ordinary anchor retained`);
+  }
 } catch (error) { check(false, error.message); }
 document.querySelector('#results').textContent = results.join('\n');
 document.title = results.some(row => row.startsWith('FAIL')) ? 'FAIL: property details' : 'PASS: property details';

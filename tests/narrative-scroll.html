@@ -47,9 +47,9 @@ try {
   check(viewer.open, 'catalog opens enlarged viewer');
   viewer.close();
   doc.querySelector('#all-photos').close();
-  doc.querySelector('#details').scrollIntoView();
+  doc.querySelector('.site-footer').scrollIntoView();
   await settle();
-  check(win.getComputedStyle(doc.querySelector('#details')).position === 'static', 'property details scroll normally');
+  check(doc.querySelector('#details').getBoundingClientRect().height === 0, 'enhanced narrative ends without duplicate details');
 
   for (const [width, height] of [[1440, 1000], [390, 844]]) {
     frame.style.width = `${width}px`;
@@ -120,7 +120,14 @@ try {
         && Math.abs(sticky.getBoundingClientRect().height - finalHeight) < 2,
         `${label}: final photo has at least 90% of a scroll step pinned before exit`);
       await seek(photos.length + .3);
-      check(sticky.getBoundingClientRect().top < inset - step * .2, `${label}: continued scrolling exits sequence`);
+      if (section === doc.querySelector('.story:last-child')) {
+        const footer = doc.querySelector('.site-footer').getBoundingClientRect();
+        check(opacity(photos.at(-1)) === 1 && sticky.getBoundingClientRect().bottom <= footer.top
+          && footer.bottom <= height + 1 && footer.top >= 0,
+          `${label}: final photo and dated footer remain visible at page end`);
+      } else {
+        check(sticky.getBoundingClientRect().top < inset - step * .2, `${label}: continued scrolling exits sequence`);
+      }
     }
     check(doc.documentElement.scrollWidth <= width, `${width}px: no horizontal overflow`);
   }

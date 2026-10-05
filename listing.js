@@ -102,6 +102,7 @@ if (detailsDialog && typeof detailsDialog.showModal === 'function') {
     detailsDialog.showModal();
   });
   detailsDialog.addEventListener('close', () => detailsLink.focus({preventScroll: true}));
+  document.querySelector('#details').classList.add('has-dialog');
 }
 
 const contact = document.querySelector('.showing-contact');

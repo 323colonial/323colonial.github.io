@@ -41,7 +41,7 @@ try {
       doc.querySelector('#photo-viewer').close();
       await settle(win);
     }
-    doc.querySelector('#details-heading').scrollIntoView();
+    doc.querySelector('.site-footer').scrollIntoView();
     await settle(win);
     const header = doc.querySelector('.masthead').getBoundingClientRect();
     const facts = doc.querySelector('.listing-summary').getBoundingClientRect();
