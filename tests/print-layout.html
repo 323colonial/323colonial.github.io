@@ -75,7 +75,7 @@ try {
       check(paragraphs.length === 7 && paragraphs.filter(p => box(p).height > 0).length === 1 && paragraphs[0].textContent === intro, 'only unchanged opening paragraph printed; seven retained in source');
       check(doc.querySelector('#details').textContent === facts && [...doc.querySelectorAll('#details .detail-grid > div')].filter(row => box(row).height > 0).length === 12, 'twelve unchanged facts visible');
       const contact = doc.querySelector('.print-contact');
-      check(contact && box(contact).height > 0 && ['Liz McDonald', 'Dandridge Realty Group LLC', '304-885-7645', 'https://323colonial.github.io/'].every(text => contact.textContent.includes(text)), 'print contact and site URL visible');
+      check(contact && box(contact).height > 0 && ['Liz McDonald', 'Dandridge Realty Group LLC', '(304) 885-1547', 'https://323colonial.github.io/'].every(text => contact.textContent.includes(text)), 'print contact and site URL visible');
       check(box(doc.querySelector('.site-footer')).bottom <= 960, 'content fits Letter printable height without clipping');
       check(parseFloat(style(paragraphs[0]).fontSize) >= 14, 'readable print prose');
     }

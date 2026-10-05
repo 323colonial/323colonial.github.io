@@ -41,7 +41,9 @@ Verified against Redfin / Bright MLS on **October 3, 2026**, not a live feed:
 | Status | Coming Soon; expected on market October 8, 2026 |
 | MLS | WVMO2008198 |
 
-Primary CTA: **Contact listing brokerage**, `tel:3048857645`, displayed 304-885-7645. Listing agent: **Liz McDonald**, **Dandridge Realty Group LLC**. Phone is the brokerage office, not a direct Liz line or the separate Redfin tour-agent number.
+Primary CTA: **Call brokerage · (304) 885-1547**, `tel:+13048851547`. Secondary contact: **Email Liz**, `mailto:liz@dandridgerealtygroup.com`. Listing agent: **Liz McDonald**, **Dandridge Realty Group LLC**. Both buyer disclosures and the print phone use the general brokerage contact, not a direct Liz line or Redfin tour-agent number.
+
+Contact checked October 5, 2026 (colonial-is7): the [brokerage homepage](https://www.dandridgerealtygroup.com/) publishes the Charles Town office number above and Liz’s email; [Liz’s profile](https://www.dandridgerealtygroup.com/team/liz-mcdonald) instead lists (304) 885-7645 with the same email. The owner confirmed having Liz’s correct direct mobile but chose the website’s general contact for now, superseding the original request for direct mobile and Michelle’s office-assistance email. Neither supplied private contact is added; no response-speed or texting claims.
 
 Secondary destination: [public Redfin listing](https://www.redfin.com/WV/Berkeley-Springs/323-Colonial-Dr-25411/home/21971085). Never publish the email-specific MLS portal URL. Status must not automatically become Active on the expected date.
 

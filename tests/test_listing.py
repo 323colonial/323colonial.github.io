@@ -124,11 +124,11 @@ class Listing(unittest.TestCase):
             self.assertIn('Berkeley Springs, WV 25411', header.text())
             self.assertIn('Liz McDonald', header.text())
             self.assertIn('Dandridge Realty Group LLC', header.text())
-            self.assertIn('tel:3048857645', [a.attrs.get('href') for a in page.all('a')])
+            self.assertIn('tel:+13048851547', [a.attrs.get('href') for a in page.all('a')])
             self.assertIn('https://www.redfin.com/WV/Berkeley-Springs/323-Colonial-Dr-25411/home/21971085', [a.attrs.get('href') for a in page.all('a')])
             self.assertIn('Liz McDonald', page.text())
             self.assertIn('Dandridge Realty Group LLC', page.text())
-            self.assertNotRegex((ROOT / file).read_text(), r'floorplans\.html|brochure\.html|sale-prep\.html|mailto:|brightmls\.com|plan-main|plan-second|paint-colors')
+            self.assertNotRegex((ROOT / file).read_text(), r'floorplans\.html|brochure\.html|sale-prep\.html|brightmls\.com|plan-main|plan-second|paint-colors')
         text = Page('index.html').root.text()
         for fact in ['$499,000', '2,081', '2.90', '2008', 'Coming Soon', 'October 3, 2026', 'October 8, 2026', 'WVMO2008198', '2 full', '1 half']:
             self.assertIn(fact, text)
@@ -156,9 +156,24 @@ class Listing(unittest.TestCase):
             self.assertEqual(printed[0].text().count(detail), 1)
             self.assertEqual(page.text().count(detail), 2, f'{detail} repeated outside disclosure/print footer')
         self.assertEqual([a.attrs['href'] for a in contact.all('a')], [
-            'tel:3048857645',
+            'tel:+13048851547',
+            'mailto:liz@dandridgerealtygroup.com',
             'https://www.redfin.com/WV/Berkeley-Springs/323-Colonial-Dr-25411/home/21971085',
         ])
+
+    def test_website_brokerage_contacts(self):
+        for filename in ('index.html', 'gallery.html'):
+            page = Page(filename).root
+            contact = next(d for d in page.all('details') if d.cls('showing-contact'))
+            links = contact.all('a')
+            self.assertEqual(links[0].attrs['href'], 'tel:+13048851547')
+            self.assertEqual(links[0].text(), 'Call brokerage · (304) 885-1547')
+            self.assertEqual(links[1].attrs['href'], 'mailto:liz@dandridgerealtygroup.com')
+            self.assertEqual(links[1].text(), 'Email Liz')
+            self.assertNotRegex(page.text().lower(), r'michelle|283-8640|885-7645|fast response')
+        printed = next(p for p in Page('index.html').root.all('p') if p.cls('print-contact'))
+        self.assertIn('(304) 885-1547', printed.text())
+        self.assertEqual(printed.all('a')[0].attrs['href'], 'tel:+13048851547')
 
     def test_only_essential_disclosures_remain(self):
         for filename in ('index.html', 'gallery.html'):
