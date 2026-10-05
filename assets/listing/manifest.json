@@ -1387,6 +1387,161 @@
       ],
       "edited_source": "edited-listing-photos/33.png",
       "edited_source_sha256": "23ea70d002394ae18d2534ebdadc2a0541401c2d8a85a37e2a8fbc4790a24c7f"
+    },
+    {
+      "position": 34,
+      "id": "Zillow 55/79 (2026-10-05)",
+      "caption": "Wood staircase and detailed trim in the entry.",
+      "source": "listing info/pics/55.jpg",
+      "source_sha256": "f3a340d795d9f66ebbde4abf7fa7687d8aabfa6fc83cf20245a067b849353d0b",
+      "source_size": [
+        1440,
+        958
+      ],
+      "source_url": "https://photos.zillowstatic.com/fp/aabc079d3b0a1942663b39376c84f694-uncropped_scaled_within_1536_1152.webp",
+      "provenance": "Owner-supplied MLS photograph",
+      "approval": "colonial-8d9, 2026-10-05",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain complete photograph and any watermark.",
+      "processing": "Visually matched owner-supplied JPG to listing image; filenames not assumed stable. ImageMagick -auto-orient -colorspace sRGB -resize WIDTHx> -strip -quality 78; widths 1440 and 720; no upscaling.",
+      "derivatives": [
+        {
+          "path": "assets/listing/34.webp",
+          "width": 1440,
+          "height": 958,
+          "sha256": "49dae776b5bc952b7be554961d54aebc42ea25bb7163a46dc8ffc1784c60582f"
+        },
+        {
+          "path": "assets/listing/34-small.webp",
+          "width": 720,
+          "height": 479,
+          "sha256": "0f1fb556a0b5f2a051b2f5a4531bc83cbd2013916ab6763b31c452deb40c19df"
+        }
+      ]
+    },
+    {
+      "position": 35,
+      "id": "Zillow 42/79 (2026-10-05)",
+      "caption": "Kitchen island looking toward the dining area and great room.",
+      "source": "listing info/pics/42.jpg",
+      "source_sha256": "f136887a7a2b6fed9a5f31eaa2c6c63e2e5e1633df526a7bf6a41d1fee6e3c36",
+      "source_size": [
+        1440,
+        958
+      ],
+      "source_url": "https://photos.zillowstatic.com/fp/598a0a12eea86f9248f6a449a1709a07-uncropped_scaled_within_1536_1152.webp",
+      "provenance": "Owner-supplied MLS photograph",
+      "approval": "colonial-8d9, 2026-10-05",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain complete photograph and any watermark.",
+      "processing": "Visually matched owner-supplied JPG to listing image; filenames not assumed stable. ImageMagick -auto-orient -colorspace sRGB -resize WIDTHx> -strip -quality 78; widths 1440 and 720; no upscaling.",
+      "derivatives": [
+        {
+          "path": "assets/listing/35.webp",
+          "width": 1440,
+          "height": 958,
+          "sha256": "54f2c7e9edb4afa2ddb9e22386c4c0e8a99477ebd427e6e79cd77b61e273a367"
+        },
+        {
+          "path": "assets/listing/35-small.webp",
+          "width": 720,
+          "height": 479,
+          "sha256": "3ec6e154574465dcf4df851d1b629fa0d243d69999ee9d28a4b3d9e06be580b7"
+        }
+      ]
+    },
+    {
+      "position": 36,
+      "id": "Zillow 50/79 (2026-10-05)",
+      "caption": "Main-level half bath with wood vanity and window.",
+      "source": "listing info/pics/50.jpg",
+      "source_sha256": "35c13faf7d3ed5eb0bdbc6aa246bee42e2b1c70b214a814b3a8d8cee76384fdb",
+      "source_size": [
+        1440,
+        957
+      ],
+      "source_url": "https://photos.zillowstatic.com/fp/b61f614cbd4be76e687968118157e857-uncropped_scaled_within_1536_1152.webp",
+      "provenance": "Owner-supplied MLS photograph",
+      "approval": "colonial-8d9, 2026-10-05",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain complete photograph and any watermark.",
+      "processing": "Visually matched owner-supplied JPG to listing image; filenames not assumed stable. ImageMagick -auto-orient -colorspace sRGB -resize WIDTHx> -strip -quality 78; widths 1440 and 720; no upscaling.",
+      "derivatives": [
+        {
+          "path": "assets/listing/36.webp",
+          "width": 1440,
+          "height": 957,
+          "sha256": "0e44cf9901925bc7394d3fe0da0ee6af79311de96a75930ff06ac75d47b65dbc"
+        },
+        {
+          "path": "assets/listing/36-small.webp",
+          "width": 720,
+          "height": 479,
+          "sha256": "6f0bd95e7216761458d4cb578bb0cf5c7f2715e0cd66c1f82d5dd4ff498007c5"
+        }
+      ]
+    },
+    {
+      "position": 37,
+      "id": "Zillow 51/79 (2026-10-05)",
+      "caption": "Main-floor primary bedroom looking toward the closet and adjoining bath.",
+      "source": "listing info/pics/51.jpg",
+      "source_sha256": "3edbb69bf843e13a158060562bbd64637a16618ee3b1ed3afd45c4040b5fe6db",
+      "source_size": [
+        1440,
+        958
+      ],
+      "source_url": "https://photos.zillowstatic.com/fp/a6ec36a0cbd4a3f9aa36819453b4a1ef-uncropped_scaled_within_1536_1152.webp",
+      "provenance": "Owner-supplied MLS photograph",
+      "approval": "colonial-8d9, 2026-10-05",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain complete photograph and any watermark.",
+      "processing": "Visually matched owner-supplied JPG to listing image; filenames not assumed stable. ImageMagick -auto-orient -colorspace sRGB -resize WIDTHx> -strip -quality 78; widths 1440 and 720; no upscaling.",
+      "derivatives": [
+        {
+          "path": "assets/listing/37.webp",
+          "width": 1440,
+          "height": 958,
+          "sha256": "34a974b8273fb3064923df24a2aec53ee6b0093dd664ac53c1dc0fac757474dc"
+        },
+        {
+          "path": "assets/listing/37-small.webp",
+          "width": 720,
+          "height": 479,
+          "sha256": "acc06f1870eec363dc5d4df3a3cddaa84dd78388c910e3009b13c7cdcf33c2ee"
+        }
+      ]
+    },
+    {
+      "position": 38,
+      "id": "Zillow 61/79 (2026-10-05)",
+      "caption": "Upstairs full bath with tub and shower.",
+      "source": "listing info/pics/61.jpg",
+      "source_sha256": "9e802289f86d1a69261f1eb50fbf75527765e0ff6e010e5182aed35370db2fb5",
+      "source_size": [
+        1440,
+        957
+      ],
+      "source_url": "https://photos.zillowstatic.com/fp/be8e2c8191d861db64767976cd4b718a-uncropped_scaled_within_1536_1152.webp",
+      "provenance": "Owner-supplied MLS photograph",
+      "approval": "colonial-8d9, 2026-10-05",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain complete photograph and any watermark.",
+      "processing": "Visually matched owner-supplied JPG to listing image; filenames not assumed stable. ImageMagick -auto-orient -colorspace sRGB -resize WIDTHx> -strip -quality 78; widths 1440 and 720; no upscaling.",
+      "derivatives": [
+        {
+          "path": "assets/listing/38.webp",
+          "width": 1440,
+          "height": 957,
+          "sha256": "e6218d68e688f4cb651ce40b7379f2141e592a0a006b28dd79b355ed148a96ad"
+        },
+        {
+          "path": "assets/listing/38-small.webp",
+          "width": 720,
+          "height": 479,
+          "sha256": "6bfbf117a2a3042b0630f929b5cf6e7c6bb6992df49b8c8a35f3d385272621f7"
+        }
+      ]
     }
   ],
   "edit_approval": "colonial-1h8; owner requested replacement with numbered PNG exports"

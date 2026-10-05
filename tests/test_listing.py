@@ -73,7 +73,7 @@ class Listing(unittest.TestCase):
         covered = {1}
         for story in stories:
             covered.update(int(a.attrs['data-photo']) for a in story.all('a') if 'data-photo' in a.attrs)
-        self.assertEqual(covered, set(range(1, 34)), 'Every photo has a narrative home')
+        self.assertEqual(covered, set(range(1, 39)), 'Every photo has a narrative home')
         plan = next(a for a in page.all('a') if a.attrs.get('data-photo') == '31')
         self.assertIn('additional finished living space', plan.text())
         self.assertIn('conceptual', plan.attrs['aria-label'].lower())
@@ -97,7 +97,7 @@ class Listing(unittest.TestCase):
     def test_gallery_order_captions_and_disclosures(self):
         page = Page('gallery.html').root
         figures = [f for f in page.all('figure') if 'data-position' in f.attrs]
-        self.assertEqual(len(figures), 33)
+        self.assertEqual(len(figures), 38)
         for figure, expected in zip(figures, APPROVED['photos']):
             n = expected['position']
             self.assertEqual(int(figure.attrs['data-position']), n)
@@ -114,6 +114,54 @@ class Listing(unittest.TestCase):
                 self.assertFalse(any(s.cls('photo-note') for s in figure.all('span')), 'Routine photo disclaimers removed')
         self.assertEqual(len(page.all('dialog')), 1)
         self.assertEqual(page.all('dialog')[0].attrs.get('aria-labelledby'), 'viewer-title')
+
+    def test_additional_interiors_in_context_and_both_galleries(self):
+        additions = [
+            (34, '55.jpg', 0, 'Wood staircase and detailed trim in the entry.'),
+            (35, '42.jpg', 1, 'Kitchen island looking toward the dining area and great room.'),
+            (36, '50.jpg', 3, 'Main-level half bath with wood vanity and window.'),
+            (37, '51.jpg', 3, 'Main-floor primary bedroom looking toward the closet and adjoining bath.'),
+            (38, '61.jpg', 3, 'Upstairs full bath with tub and shower.'),
+        ]
+        source_hashes = [
+            'f3a340d795d9f66ebbde4abf7fa7687d8aabfa6fc83cf20245a067b849353d0b',
+            'f136887a7a2b6fed9a5f31eaa2c6c63e2e5e1633df526a7bf6a41d1fee6e3c36',
+            '35c13faf7d3ed5eb0bdbc6aa246bee42e2b1c70b214a814b3a8d8cee76384fdb',
+            '3edbb69bf843e13a158060562bbd64637a16618ee3b1ed3afd45c4040b5fe6db',
+            '9e802289f86d1a69261f1eb50fbf75527765e0ff6e010e5182aed35370db2fb5',
+        ]
+        home = Page('index.html').root
+        stories = [s for s in home.all('section') if s.cls('story')]
+        self.assertIn('View all 38 photos', home.text())
+        self.assertIn('All 38 photos', home.text())
+        photos = json.loads((ROOT / 'assets/listing/manifest.json').read_text())['photos']
+        for file in ('index.html', 'gallery.html'):
+            grid = next(d for d in Page(file).root.all('div') if d.cls('gallery-grid'))
+            self.assertEqual([int(f.attrs['data-position']) for f in grid.all('figure')], list(range(1, 39)))
+            for figure in grid.all('figure'):
+                number = next(s for s in figure.all('span') if s.cls('photo-number'))
+                self.assertEqual(number.text(), f"{figure.attrs['data-position']} / 38")
+            for n, source, section, caption in additions:
+                figure = next(f for f in grid.all('figure') if f.attrs['data-position'] == str(n))
+                inline = [f for f in stories[section].all('figure') if f.attrs['data-position'] == str(n)]
+                self.assertEqual(len(inline), 1, f'Photo {n} needs its contextual narrative home')
+                for record in (figure, inline[0]):
+                    self.assertEqual(record.all('img')[0].attrs['alt'], caption)
+                    self.assertEqual(next(s for s in record.all('span') if s.cls('caption-text')).text(), caption)
+                    image = record.all('img')[0]
+                    self.assertEqual(image.attrs['loading'], 'lazy')
+                    self.assertEqual(image.attrs['decoding'], 'async')
+                    self.assertEqual(image.attrs['srcset'], f'assets/listing/{n}-small.webp 720w, assets/listing/{n}.webp 1440w')
+                    self.assertTrue(image.attrs['sizes'])
+                    self.assertEqual(record.all('a')[0].attrs['aria-label'], f'Enlarge photo {n}: {caption}')
+                self.assertEqual(figure.all('a')[0].attrs['href'], f'assets/listing/{n}.webp')
+                self.assertEqual(inline[0].all('a')[0].attrs['href'], f'gallery.html#photo-{n}')
+                photo = photos[n - 1]
+                self.assertEqual(photo['source'], f'listing info/pics/{source}')
+                self.assertEqual(photo['source_sha256'], source_hashes[n - 34])
+                self.assertEqual(photo['caption'], caption)
+                self.assertEqual(photo['crop_xywh'], None)
+                self.assertEqual([d['width'] for d in photo['derivatives']], [1440, 720])
 
     def test_public_navigation_and_listing_snapshot(self):
         for file in ('index.html', 'gallery.html'):
@@ -283,10 +331,11 @@ class Listing(unittest.TestCase):
         self.assertEqual(data['approval'], APPROVED['approval'])
         self.assertEqual(data['photos'][5]['provenance'], 'Owner photograph')
         self.assertNotIn('source_url', data['photos'][5])
-        self.assertEqual(len(data['photos']), 33)
+        self.assertEqual(len(data['photos']), 38)
         for actual, expected in zip(data['photos'], APPROVED['photos']):
             for key in ['position', 'id', 'caption', 'source', 'source_sha256']:
                 self.assertEqual(actual[key], expected[key])
+        for actual in data['photos']:
             for derivative in actual['derivatives']:
                 content = (ROOT / derivative['path']).read_bytes()
                 self.assertEqual(hashlib.sha256(content).hexdigest(), derivative['sha256'])

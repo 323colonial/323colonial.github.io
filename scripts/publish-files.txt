@@ -69,3 +69,13 @@ assets/listing/32.webp
 assets/listing/32-small.webp
 assets/listing/33.webp
 assets/listing/33-small.webp
+assets/listing/34.webp
+assets/listing/34-small.webp
+assets/listing/35.webp
+assets/listing/35-small.webp
+assets/listing/36.webp
+assets/listing/36-small.webp
+assets/listing/37.webp
+assets/listing/37-small.webp
+assets/listing/38.webp
+assets/listing/38-small.webp

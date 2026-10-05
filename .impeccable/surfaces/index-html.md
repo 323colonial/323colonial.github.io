@@ -19,6 +19,6 @@ STORY: See the house, scan facts, explore alternating photo narratives, enlarge 
 
 FIRST VIEWPORT: Fixed address and smaller locality at left; brokerage and showing access at right. Full-bleed exterior below. Facts dock beneath the header as the hero leaves.
 
-FORM: Exact user-pinned composition; no concept roll. Native scroll advances captioned images beside alternating paragraphs. No scroll capture or autoplay. Short screens and reduced motion retain ordinary photo browsing. All 33 photos have narrative homes and modal access.
+FORM: Exact user-pinned composition; no concept roll. Native scroll advances captioned images beside alternating paragraphs. No scroll capture or autoplay. Short screens and reduced motion retain ordinary photo browsing. All 38 photos have narrative homes and modal access.
 
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance

@@ -42,7 +42,7 @@ try {
   await settle();
   check(doc.activeElement === plan, 'popup restores contextual opener focus');
   doc.querySelector('[data-all-photos]').click();
-  check(doc.querySelector('#all-photos').open && doc.querySelectorAll('#all-photos [data-gallery-image]').length === 33, 'all 33 photos in popup');
+  check(doc.querySelector('#all-photos').open && doc.querySelectorAll('#all-photos [data-gallery-image]').length === 38, 'all 38 photos in popup');
   doc.querySelector('#all-photos [data-gallery-image]').click();
   check(viewer.open, 'catalog opens enlarged viewer');
   viewer.close();

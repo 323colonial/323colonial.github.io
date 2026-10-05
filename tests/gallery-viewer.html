@@ -59,9 +59,9 @@ try {
   check(!dialog.open && doc.activeElement === links[5], 'Close restores triggering link focus');
   open(0);
   doc.querySelector('#previous-photo').click();
-  check(image.getAttribute('src') === 'assets/listing/33.webp', 'Previous wraps first to last');
-  checkDots(32, 'Previous wraps highlight to rightmost dot');
-  check(previewMatches(previousPreview(), 31) && previewMatches(nextPreview(), 0), 'previews wrap with gallery order');
+  check(image.getAttribute('src') === 'assets/listing/38.webp', 'Previous wraps first to last');
+  checkDots(37, 'Previous wraps highlight to rightmost dot');
+  check(previewMatches(previousPreview(), 36) && previewMatches(nextPreview(), 0), 'previews wrap with gallery order');
   doc.querySelector('#next-photo').click();
   check(image.getAttribute('src') === 'assets/listing/01.webp', 'Next wraps last to first');
   checkDots(0, 'Next wraps highlight to leftmost dot');
@@ -125,13 +125,13 @@ try {
         await new Promise(resolve => gridWin.requestAnimationFrame(() => gridWin.requestAnimationFrame(resolve)));
         const columns = width <= 700 ? 1 : width <= 1000 ? 2 : 3;
         if (route === 'index' && variant === 'original') {
-          check(figures.length === 33 && figures.every((figure, index) => {
+          check(figures.length === 38 && figures.every((figure, index) => {
             const number = figure.querySelector('.photo-number');
             const dots = [...figure.querySelectorAll('.photo-dots > span')];
             const box = figure.querySelector('.photo-dots')?.getBoundingClientRect();
             const imageBox = figure.querySelector('img').getBoundingClientRect();
-            return number.textContent === `${index + 1} / 33` && gridWin.getComputedStyle(number).clipPath === 'inset(50%)'
-              && dots.length === 33 && dots.every((dot, i) => dot.classList.contains('is-current') === (i === index))
+            return number.textContent === `${index + 1} / 38` && gridWin.getComputedStyle(number).clipPath === 'inset(50%)'
+              && dots.length === 38 && dots.every((dot, i) => dot.classList.contains('is-current') === (i === index))
               && box.left >= imageBox.left && box.right <= imageBox.right && box.bottom <= imageBox.bottom && box.top > imageBox.top
               && box.bottom <= imageBox.top + (imageBox.height + Math.min(imageBox.height, imageBox.width * images[index].naturalHeight / images[index].naturalWidth)) / 2;
           }), `index ${width}px: catalog dots replace numbers, fit images and preserve accessible order`);
@@ -143,9 +143,9 @@ try {
             const dots = [...viewer.querySelectorAll('.photo-dots > span')];
             const box = viewer.querySelector('.photo-dots')?.getBoundingClientRect();
             const imageBox = gridDoc.querySelector('#viewer-image').getBoundingClientRect();
-            const matches = gridDoc.querySelector('#viewer-title').textContent === `Photo ${index + 1} of 33`
+            const matches = gridDoc.querySelector('#viewer-title').textContent === `Photo ${index + 1} of 38`
               && gridWin.getComputedStyle(gridDoc.querySelector('#viewer-title')).clipPath === 'inset(50%)'
-              && dots.length === 33 && dots.every((dot, i) => dot.classList.contains('is-current') === (i === index))
+              && dots.length === 38 && dots.every((dot, i) => dot.classList.contains('is-current') === (i === index))
               && dots.every((dot, i) => !i || dot.getBoundingClientRect().left > dots[i - 1].getBoundingClientRect().left)
               && box.left >= imageBox.left && box.right <= imageBox.right && box.bottom <= imageBox.bottom && box.top > imageBox.top
               && box.bottom <= imageBox.top + (imageBox.height + Math.min(imageBox.height, imageBox.width * images[index].naturalHeight / images[index].naturalWidth)) / 2
