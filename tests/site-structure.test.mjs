@@ -2,6 +2,27 @@ import assert from 'node:assert/strict';
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import test from 'node:test';
+import { parseDocument } from 'htmlparser2';
+import { selectAll, selectOne } from 'css-select';
+
+test('buyer pages end with one Cloudflare Web Analytics beacon for the same site', () => {
+  const tokens = [];
+  for (const file of ['index.html', 'gallery.html']) {
+    const doc = parseDocument(readFileSync(file, 'utf8'));
+    const beacons = selectAll('script[src*="cloudflareinsights.com"], script[data-cf-beacon]', doc);
+    assert.equal(beacons.length, 1, `${file}: exactly one beacon`);
+    const beacon = beacons[0];
+    assert.equal(beacon.attribs.src, 'https://static.cloudflareinsights.com/beacon.min.js');
+    assert.equal(beacon.attribs.type, 'module');
+    assert.equal(beacon.children.length, 0);
+    assert.equal(selectOne('body > :last-child', doc), beacon);
+    const config = JSON.parse(beacon.attribs['data-cf-beacon']);
+    assert.deepEqual(Object.keys(config), ['token']);
+    assert.match(config.token, /^[a-f0-9]{32}$/);
+    tokens.push(config.token);
+  }
+  assert.equal(tokens[0], tokens[1]);
+});
 
 test('only buyer pages remain at the site root', () => {
   assert.deepEqual(readdirSync('.').filter(file => file.endsWith('.html')).sort(), ['gallery.html', 'index.html']);

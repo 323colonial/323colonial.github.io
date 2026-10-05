@@ -8,7 +8,7 @@ test('git ignores local output without hiding durable project state', () => {
     '__pycache__/cache', 'tests/__pycache__/cache',
     'module.pyc', 'tests/module.pyc', 'tests/module.pyo',
     '.pi/artifacts/run/output.png', '.impeccable/critique/report.md',
-    'node_modules/generated-package.json',
+    'node_modules/generated-package.json', '.cloudflare.snippet',
     '.dolt/data', 'local.db', '.beads-credential-key', '.beads/proxieddb/data',
   ];
   const durable = [
