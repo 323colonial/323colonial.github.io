@@ -133,13 +133,17 @@ class Listing(unittest.TestCase):
         for fact in ['$499,000', '2,081', 'above-grade', '2.90', '2008', 'Coming Soon', 'October 3, 2026', 'October 8, 2026', 'WVMO2008198', '2 full', '1 half']:
             self.assertIn(fact, text)
 
-    def test_title_page_realtor_details_only_in_showing_disclosure(self):
+    def test_title_page_realtor_details_in_disclosure_and_print_footer_only(self):
         page = Page('index.html').root
         contact = next(d for d in page.all('details') if d.cls('showing-contact'))
+        printed = [p for p in page.all('p') if p.cls('print-contact')]
+        self.assertEqual(len(printed), 1)
+        self.assertEqual(printed[0].parent.tag, 'footer')
         self.assertEqual(contact.all('summary')[0].text(), 'See in person')
         for detail in ('Liz McDonald', 'Listing agent', 'Dandridge Realty Group LLC'):
             self.assertEqual(contact.text().count(detail), 1)
-            self.assertEqual(page.text().count(detail), 1, f'{detail} repeated outside disclosure')
+            self.assertEqual(printed[0].text().count(detail), 1)
+            self.assertEqual(page.text().count(detail), 2, f'{detail} repeated outside disclosure/print footer')
         self.assertEqual([a.attrs['href'] for a in contact.all('a')], [
             'tel:3048857645',
             'https://www.redfin.com/WV/Berkeley-Springs/323-Colonial-Dr-25411/home/21971085',

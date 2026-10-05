@@ -32,22 +32,30 @@ try {
     if (route === 'index' && scripts && doc.querySelectorAll('.story.is-scrolling').length !== 7) {
       throw new Error(`${frame.title}: all seven sequences must be enhanced before print`);
     }
-    cases.push({frame, doc, win, figures, route, facts: doc.querySelector('#details')?.textContent});
+    if (route === 'index' && win.getComputedStyle(doc.querySelector('.print-contact')).display !== 'none') {
+      throw new Error(`${frame.title}: print contact must stay hidden on screen`);
+    }
+    cases.push({frame, doc, win, figures, route, facts: doc.querySelector('#details')?.textContent,
+      intro: doc.querySelector('.listing-copy')?.textContent});
   }
   output.textContent = 'Ready: switch to print media (all seven desktop/mobile sequences enhanced).';
   await new Promise(resolve => matchMedia('print').addEventListener('change', event => {
     if (event.matches) resolve();
   }));
+  // Printable widths at 0.5in margins: Letter 720px, A4 ~698px.
+  cases.forEach(({frame}, i) => { frame.style.width = `${i % 2 ? 698 : 720}px`; });
   await settle();
   const results = [];
-  for (const {frame, doc, win, figures, route, facts} of cases) {
+  for (const {frame, doc, win, figures, route, facts, intro} of cases) {
     const failures = [];
     const check = (ok, name) => { if (!ok) failures.push(name); };
     const style = element => win.getComputedStyle(element);
     const box = element => element.getBoundingClientRect();
     check(win.matchMedia('print').matches, 'print media active');
     check(figures.length === (route === 'index' ? 27 : 33), 'all original photos retained');
-    for (const figure of figures) {
+    const visible = figures.filter(figure => box(figure).height > 0);
+    check(visible.length === (route === 'index' ? 1 : 33), 'only selected print photos visible');
+    for (const figure of visible) {
       const img = figure.querySelector('img'), caption = figure.querySelector('figcaption');
       const image = box(img), text = box(caption), record = box(figure);
       const label = `photo ${figure.dataset.position}`;
@@ -57,15 +65,21 @@ try {
       check(image.top >= record.top - 1 && text.bottom <= record.bottom + 1, `${label}: content escapes figure`);
       check(style(img).objectFit === 'contain' || Math.abs(image.width / image.height - img.naturalWidth / img.naturalHeight) < .02, `${label}: uncropped proportions`);
       const next = figure.nextElementSibling;
-      if (next?.matches('figure')) check(record.bottom <= box(next).top + 1 || record.right <= box(next).left + 1, `${label}: successive figures overlap`);
+      if (next?.matches('figure') && box(next).height > 0) check(record.bottom <= box(next).top + 1 || record.right <= box(next).left + 1, `${label}: successive figures overlap`);
     }
     if (route === 'index') {
-      check([...doc.querySelectorAll('.listing-copy')].filter(p => box(p).height > 0).length === 7, 'seven paragraphs visible');
+      const paragraphs = [...doc.querySelectorAll('.listing-copy')];
+      check(paragraphs.length === 7 && paragraphs.filter(p => box(p).height > 0).length === 1 && paragraphs[0].textContent === intro, 'only unchanged opening paragraph printed; seven retained in source');
       check(doc.querySelector('#details').textContent === facts && [...doc.querySelectorAll('#details .detail-grid > div')].filter(row => box(row).height > 0).length === 12, 'twelve unchanged facts visible');
+      const contact = doc.querySelector('.print-contact');
+      check(contact && box(contact).height > 0 && ['Liz McDonald', 'Dandridge Realty Group LLC', '304-885-7645', 'https://323colonial.github.io/'].every(text => contact.textContent.includes(text)), 'print contact and site URL visible');
+      check(box(doc.querySelector('.site-footer')).bottom <= 960, 'content fits Letter printable height without clipping');
+      check(parseFloat(style(paragraphs[0]).fontSize) >= 14, 'readable print prose');
+      check([...doc.querySelectorAll('.skip-link, .showing-contact, .header-public, .summary-actions, .price-label')].every(el => style(el).display === 'none'), 'screen navigation hidden');
     }
     check([...doc.querySelectorAll('dialog, .scroll-cue')].every(el => style(el).display === 'none'), 'interactive overlays/counters hidden');
     check(doc.documentElement.scrollWidth <= frame.clientWidth, 'no horizontal overflow');
-    results.push(`${failures.length ? 'FAIL' : 'PASS'}: ${frame.title} (${figures.length} photos)${failures.length ? ' — ' + failures.join('; ') : ' — captions below images, contained content, no overlap/crop; text retained'}`);
+    results.push(`${failures.length ? 'FAIL' : 'PASS'}: ${frame.title} (${visible.length} printed / ${figures.length} source photos)${failures.length ? ' — ' + failures.join('; ') : ' — captions below images, contained content, no overlap/crop; selected content retained'}`);
   }
   output.textContent = results.join('\n');
   document.title = results.some(row => row.startsWith('FAIL')) ? 'FAIL: print layout' : 'PASS: print layout';

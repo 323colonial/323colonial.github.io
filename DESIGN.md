@@ -11,6 +11,8 @@ colors:
   cedar: "#8b523c"
   stone: "#969187"
   ink: "#252d29"
+  print-paper: "#ffffff"
+  print-ink: "#000000"
   muted: "#50564f"
   image-field: "rgb(240 236 226 / 25%)"
   viewer-backdrop: "rgb(25 31 27 / 90%)"
@@ -238,7 +240,9 @@ Responsive max-width boundaries: **1100px** hides the header agent and compacts 
 
 Only nearby sequences (within one viewport below the visible area and not entirely above it) preload their next photograph; distant sequences retain native lazy loading. The closed viewer image also uses native lazy loading; opening it selects the requested full-size image.
 
-Reduced motion, less than 300px available height, or desktop copy taller than the available space disables sequencing for that section. All its photographs then remain inline. No JavaScript also leaves inline photos and working gallery links. Print removes sticky positioning and exposes every narrative photo. There are no timed transitions, autoplay or parallax.
+Reduced motion, less than 300px available height, or desktop copy taller than the available space disables sequencing for that section. All its photographs then remain inline. No JavaScript also leaves inline photos and working gallery links. There are no timed transitions, autoplay or parallax.
+
+**Print handout (colonial-5dm).** Homepage prints one page on US Letter or A4 portrait at 100% scale, with 0.5in margins and browser headers/footers disabled. Black text on white paper retains Georgia/Arial: 26pt address, 22pt price, 11pt opening paragraph and fact values, 9pt captions/labels. The original uncropped hero and exact caption sit beside the unchanged first paragraph; all twelve facts follow. A print-only footer supplies existing agent/brokerage contact and the public site URL above the unchanged snapshot date. Other narrative paragraphs/photos stay in source and on screen but do not print. No supplemental page, duplicated photo catalog, navigation, sticky positioning or dialog controls. `gallery.html` remains the complete printable photo catalog. `tests/print-layout.html` checks selected-content geometry and fallback modes; actual browser PDF pagination must also be checked on both paper sizes.
 
 ## Elevation & Depth
 

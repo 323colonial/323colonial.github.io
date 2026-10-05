@@ -102,7 +102,7 @@ figcaption { padding-top: 10px; font: 13px/1.5 Arial, sans-serif; }
 .slide-count { font-variant-numeric: tabular-nums; }
 .details { padding: 72px 40px; background: var(--paper); scroll-margin-top: 24px; }
 @media screen {
-  .details.has-dialog:not(:target) { display: none; }
+  .details.has-dialog:not(:target), .print-contact { display: none; }
 }
 .detail-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 32px; margin: 24px 0 0; }
 .detail-grid > div { border-bottom: 1px solid var(--rule); padding-block: 16px; }
@@ -196,6 +196,7 @@ body:has(dialog[open]) { overflow: hidden; }
   .listing-summary { position: static; }
   html { scroll-padding-top: calc(var(--header-height) + 24px); }
 }
+@page listing-sheet { size: auto; margin: .5in; }
 @media print {
   .masthead, .listing-summary, .story-stage, .story-photos { position: static !important; }
   .showing-contact, .header-public, dialog, .scroll-cue { display: none !important; }
@@ -207,4 +208,38 @@ body:has(dialog[open]) { overflow: hidden; }
   .story figure > a { display: block !important; height: auto !important; opacity: 1 !important; }
   .story figcaption { visibility: visible !important; }
   .story img { height: auto !important; }
+
+  /* One-page homepage handout; gallery.html remains the complete photo catalog. */
+  html:has(.listing-page), .listing-page { background: white; color: #000; }
+  .listing-page { page: listing-sheet; font-size: 11pt; overflow: visible !important; }
+  .listing-page a { text-decoration: none; }
+  .listing-page .skip-link, .listing-page .price-label, .listing-page .summary-actions,
+  .listing-page .story-photos, .listing-page .story:not(:first-child) { display: none !important; }
+  .listing-page .masthead { min-height: 0; padding: 0 0 12pt; background: none; color: inherit; border-bottom: 1pt solid; }
+  .listing-page .property-identity h1 { font-size: 26pt; }
+  .listing-page .property-identity h1 a { min-height: 0; }
+  .listing-page .property-identity p { font-size: 10pt; }
+  .listing-page main { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 18pt; }
+  .listing-page .listing-summary { grid-area: 1 / 1 / 2 / -1; display: flex; padding: 12pt 0 0; border: 0; background: none; gap: 18pt; }
+  .listing-page .price-block { display: block; }
+  .listing-page .price { font-size: 22pt; }
+  .listing-page .listing-status { color: inherit; font-size: 10pt; }
+  .listing-page .quick-facts { gap: 12pt; font-size: 10pt; }
+  .listing-page .quick-facts strong { font-size: 14pt; }
+  .listing-page .quick-facts small { display: block; font-size: 9pt; color: inherit; }
+  .listing-page .hero-photo { grid-area: 2 / 1; }
+  .listing-page .hero-photo figure { break-inside: avoid; }
+  .listing-page .hero-photo figcaption { padding: 6pt 0 0; font-size: 9pt; }
+  .listing-page .narrative { grid-area: 2 / 2; }
+  .listing-page .story { padding: 0; background: none; }
+  .listing-page .story-copy { margin: 0; }
+  .listing-page .listing-copy { font-size: 11pt; line-height: 1.45; }
+  .listing-page .details { grid-column: 1 / -1; padding: 0; background: none; }
+  .listing-page .details h2 { font-size: 18pt; margin: 0; }
+  .listing-page .detail-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 18pt; margin: 8pt 0 0; }
+  .listing-page .detail-grid > div { padding-block: 8pt; break-inside: avoid; }
+  .listing-page dt { font-size: 9pt; color: inherit; margin-bottom: 2pt; }
+  .listing-page dd { font-size: 11pt; }
+  .listing-page .site-footer { width: 100%; padding: 14pt 0 0; color: inherit; font-size: 9pt; break-inside: avoid; }
+  .listing-page .print-contact { margin-bottom: 8pt; font-size: 10pt; }
 }

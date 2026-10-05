@@ -40,6 +40,14 @@
         "role": "neutral",
         "displayName": "Ink"
       },
+      "print-paper": {
+        "role": "neutral",
+        "displayName": "Print Paper"
+      },
+      "print-ink": {
+        "role": "neutral",
+        "displayName": "Print Ink"
+      },
       "muted": {
         "role": "neutral",
         "displayName": "Muted"
