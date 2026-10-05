@@ -91,6 +91,19 @@ if (summary) headerObserver.observe(summary);
 document.fonts.ready.then(layoutStories);
 layoutStories();
 
+const detailsDialog = document.querySelector('#property-details');
+const priceLink = document.querySelector('.price a');
+if (detailsDialog && typeof detailsDialog.showModal === 'function') {
+  detailsDialog.append(document.querySelector('#details .detail-grid').cloneNode(true));
+  priceLink.setAttribute('aria-haspopup', 'dialog');
+  priceLink.addEventListener('click', event => {
+    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    detailsDialog.showModal();
+  });
+  detailsDialog.addEventListener('close', () => priceLink.focus({preventScroll: true}));
+}
+
 const contact = document.querySelector('.showing-contact');
 document.addEventListener('keydown', event => {
   if (event.key === 'Escape' && contact.open && !document.querySelector('dialog[open]')) {

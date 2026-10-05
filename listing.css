@@ -60,6 +60,9 @@ figcaption { padding-top: 10px; font: 13px/1.5 Arial, sans-serif; }
 .photo-note { color: var(--muted); font-size: 12px; margin-top: 6px; }
 .listing-summary { position: sticky; top: var(--header-height); z-index: 10; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 18px 40px; background: var(--paper); border-bottom: 1px solid var(--cedar); font-family: Arial, sans-serif; }
 .price { font-size: 30px; line-height: 1.2; font-weight: 700; margin: 0 0 4px; font-variant-numeric: tabular-nums; }
+.price { letter-spacing: normal; }
+.price-label { display: block; font: 14px/1.5 Arial, sans-serif; }
+.price a { display: inline-flex; align-items: center; min-height: 44px; }
 .listing-status { font-size: 12px; margin: 0; color: var(--mahogany); }
 .quick-facts { display: flex; flex-wrap: wrap; gap: 12px 24px; font-size: 15px; line-height: 1.45; margin: 0; }
 .quick-facts span { white-space: nowrap; }
@@ -112,7 +115,7 @@ dialog::backdrop { background: rgb(25 31 27 / 90%); }
 body:has(dialog[open]) { overflow: hidden; }
 .viewer-bar, .viewer-controls { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
 .viewer-bar { margin-bottom: 16px; }
-#all-photos .viewer-bar { position: sticky; top: -20px; z-index: 1; padding-block: 12px; background: var(--paper); }
+#all-photos .viewer-bar, #property-details .viewer-bar { position: sticky; top: -20px; z-index: 1; padding-block: 12px; background: var(--paper); }
 .viewer-bar h2 { font: 700 16px/1.4 Arial, sans-serif; margin: 0; }
 .viewer-bar form { margin: 0; }
 .viewer-figure img { height: min(58dvh, 650px); object-fit: contain; background: var(--paper-strong); }
@@ -170,7 +173,7 @@ body:has(dialog[open]) { overflow: hidden; }
   .gallery-grid { grid-template-columns: 1fr; gap: 32px; }
   .gallery-intro { padding-block: 32px; }
   dialog { padding: 16px; }
-  #all-photos .viewer-bar { top: -16px; }
+  #all-photos .viewer-bar, #property-details .viewer-bar { top: -16px; }
   .viewer-figure img { height: min(44dvh, 420px); }
   .viewer-controls { align-items: stretch; gap: 8px; }
   .viewer-controls button { flex-direction: column; gap: 4px; padding: 8px; }

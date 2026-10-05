@@ -1,0 +1,57 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Property details regression</title>
+<h1>Property details regression</h1>
+<pre id="results">Running…</pre>
+<iframe title="Property details under test" style="width:1440px;height:1000px;border:0"></iframe>
+<script type="module">
+const frame = document.querySelector('iframe');
+const results = [];
+const check = (ok, name) => results.push(`${ok ? 'PASS' : 'FAIL'}: ${name}`);
+const settle = () => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+try {
+  await new Promise(resolve => { frame.onload = resolve; frame.src = '../index.html'; });
+  const doc = frame.contentDocument;
+  const link = doc.querySelector('.price a');
+  check(Boolean(link), 'price is a native link in facts heading');
+  if (!link) throw new Error('Missing price link');
+  const dialog = doc.querySelector('#property-details');
+  check(link.getAttribute('aria-haspopup') === 'dialog', 'enhanced link announces dialog');
+  check(dialog?.getAttribute('aria-labelledby') === 'property-details-title', 'dialog has accessible title');
+  for (const [width, height] of [[1440, 1000], [820, 900], [390, 844], [320, 568], [800, 400]]) {
+    frame.style.width = `${width}px`;
+    frame.style.height = `${height}px`;
+    await settle();
+    link.scrollIntoView();
+    link.focus();
+    link.click();
+    check(dialog.open, `${width}px: price opens dialog`);
+    check(dialog.querySelector('dl').textContent === doc.querySelector('#details dl').textContent,
+      `${width}px: all twelve property facts preserved without copy drift`);
+    check(dialog.querySelectorAll('dt').length === 12, `${width}px: twelve facts`);
+    check(dialog.contains(doc.activeElement), `${width}px: focus enters dialog`);
+    check(dialog.scrollWidth <= dialog.clientWidth && doc.documentElement.scrollWidth <= width,
+      `${width}px: no horizontal overflow`);
+    const rect = dialog.getBoundingClientRect();
+    check(rect.top >= 0 && rect.bottom <= height, `${width}px: dialog fits viewport`);
+    dialog.querySelector('button').click();
+    await settle();
+    check(!dialog.open && doc.activeElement === link, `${width}px: close restores price focus`);
+  }
+  const modified = new frame.contentWindow.MouseEvent('click', {bubbles: true, cancelable: true, ctrlKey: true});
+  link.dispatchEvent(modified);
+  check(!modified.defaultPrevented && !dialog.open, 'modified click keeps native link behavior');
+  const source = await fetch('../index.html').then(r => r.text());
+  frame.setAttribute('sandbox', 'allow-same-origin');
+  await new Promise(resolve => {
+    frame.onload = resolve;
+    frame.srcdoc = source.replace('<head>', `<head><base href="${new URL('../', location.href)}">`);
+  });
+  const fallback = frame.contentDocument;
+  const anchor = fallback.querySelector('.price a');
+  check(anchor.getAttribute('href') === '#details' && !anchor.hasAttribute('aria-haspopup'), 'no-JS price remains ordinary details link');
+  check(fallback.querySelector('#details').getBoundingClientRect().height > 0, 'no-JS details remain visible');
+} catch (error) { check(false, error.message); }
+document.querySelector('#results').textContent = results.join('\n');
+document.title = results.some(row => row.startsWith('FAIL')) ? 'FAIL: property details' : 'PASS: property details';
+</script>
