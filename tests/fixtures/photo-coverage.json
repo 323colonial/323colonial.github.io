@@ -1,0 +1,1204 @@
+{
+  "bead": "colonial-we3",
+  "baseline": "2695702f6e1d09f6c76ca858edd93aecf37a49c8",
+  "baseline_photos_sha256": "78ba6d08737ec788dbfba3c64944d11f53517580f94f42710c9eb71b53d52389",
+  "review": "Visual review of all 77 local listing JPGs and five owner files against existing 38 images, 2026-10-05. Source names are local identifiers, never inferred Zillow indices. Section numbers are one-based. No remote image matching claimed.",
+  "source_roots": {
+    "listing info/pics": "/Users/hays/Downloads/listing info/pics",
+    "owner photos": "/Users/hays/Desktop/owner photos"
+  },
+  "total": 73,
+  "sources": [
+    {
+      "source": "listing info/pics/1.jpg",
+      "sha256": "9a23ff1ea49c938e1004136c0b9520bb3bb208ce44b8a06e65d33492acccc7dc",
+      "size": [
+        1440,
+        955
+      ],
+      "status": "represented",
+      "section": 1,
+      "matches": [
+        1
+      ],
+      "reason": "Same visual view as existing photo; retain approved framing/caption rather than duplicate the source."
+    },
+    {
+      "source": "listing info/pics/2.jpg",
+      "sha256": "234eccc81575c23b136fb309a1be2fab830d7d06636b6a21f09086398c1e66d2",
+      "size": [
+        1440,
+        958
+      ],
+      "status": "represented",
+      "section": 2,
+      "matches": [
+        2
+      ],
+      "reason": "Same visual view as existing photo; retain approved framing/caption rather than duplicate the source."
+    },
+    {
+      "source": "listing info/pics/3.jpg",
+      "sha256": "dc2a5bd390272483346fbcf3ab471d43a9a37c4e1dad28de3f8177d789c9174c",
+      "size": [
+        1438,
+        1080
+      ],
+      "status": "represented",
+      "section": 1,
+      "matches": [
+        3
+      ],
+      "reason": "Same visual view as existing photo; retain approved framing/caption rather than duplicate the source."
+    },
+    {
+      "source": "listing info/pics/4.jpg",
+      "sha256": "e9e4a277863c78356be9e19c95861c2ebd6fb9a81eb60a2b0edeb4197a44b9fb",
+      "size": [
+        1440,
+        955
+      ],
+      "status": "represented",
+      "section": 3,
+      "matches": [
+        4
+      ],
+      "reason": "Same visual view as existing photo; retain approved framing/caption rather than duplicate the source."
+    },
+    {
+      "source": "listing info/pics/5.jpg",
+      "sha256": "6fe1df071264c7cb08008e1706f6b214cc7d42eaf3602229880c27c7fca9f8cd",
+      "size": [
+        1440,
+        959
+      ],
+      "status": "represented",
+      "section": 2,
+      "matches": [
+        5
+      ],
+      "reason": "Same visual view as existing photo; retain approved framing/caption rather than duplicate the source."
+    },
+    {
+      "source": "listing info/pics/6.jpg",
+      "sha256": "8b79489223ea029f21aa15a3367704704e4a3217701d0844f88579070e9c3618",
+      "size": [
+        1440,
+        957
+      ],
+      "status": "represented",
+      "section": 4,
+      "matches": [
+        7
+      ],
+      "reason": "Same visual view as existing photo; retain approved framing/caption rather than duplicate the source."
+    },
+    {
+      "source": "listing info/pics/7.jpg",
+      "sha256": "479ddcf778a8a89c00bb6ab68bf7934fcb99ff1beb2dd7e4900588d288fe9b93",
+      "size": [
+        1440,
+        810
+      ],
+      "status": "represented",
+      "section": 6,
+      "matches": [
+        8
+      ],
+      "reason": "Same visual view as existing photo; retain approved framing/caption rather than duplicate the source."
+    },
+    {
+      "source": "listing info/pics/8.jpg",
+      "sha256": "99bbf13bee792e0848f8a28781ef3014a462fc172f15ec020abb15d601df5f1f",
+      "size": [
+        1440,
+        1080
+      ],
+      "status": "represented",
+      "section": 3,
+      "matches": [
+        9
+      ],
+      "reason": "Same visual view as existing photo; retain approved framing/caption rather than duplicate the source."
+    },
+    {
+      "source": "listing info/pics/9.jpg",
+      "sha256": "a2d0d8d951eb6b58834cc7b2d0b7c36ca3a300a4e503b7e3825ede964528adb1",
+      "size": [
+        1440,
+        951
+      ],
+      "status": "represented",
+      "section": 3,
+      "matches": [
+        10
+      ],
+      "reason": "Same visual view as existing photo; retain approved framing/caption rather than duplicate the source."
+    },
+    {
+      "source": "listing info/pics/10.jpg",
+      "sha256": "3a0abc52eae7c4e121ec4e2e34872113a5336bb6b2d5acfb9a41d05c79b8bd74",
+      "size": [
+        1440,
+        958
+      ],
+      "status": "represented",
+      "section": 1,
+      "matches": [
+        11
+      ],
+      "reason": "Same visual view as existing photo; retain approved framing/caption rather than duplicate the source."
+    },
+    {
+      "source": "listing info/pics/11.jpg",
+      "sha256": "cf814b6599f81d9ca9b043bb590ebb112fb4c1976c0f417950f55ecc6b43d632",
+      "size": [
+        1440,
+        957
+      ],
+      "status": "represented",
+      "section": 2,
+      "matches": [
+        12
+      ],
+      "reason": "Same visual view as existing photo; retain approved framing/caption rather than duplicate the source."
+    },
+    {
+      "source": "listing info/pics/12.jpg",
+      "sha256": "7227367eec1540e0bc6cd84c652680f02969b99141b0379c8feb7810ed71a1b7",
+      "size": [
+        1440,
+        958
+      ],
+      "status": "represented",
+      "section": 2,
+      "matches": [
+        13
+      ],
+      "reason": "Same visual view as existing photo; retain approved framing/caption rather than duplicate the source."
+    },
+    {
+      "source": "listing info/pics/13.jpg",
+      "sha256": "567522e86289155351fbb3d3074eb2e1b130ebb21537ca69bed9a131fdc9cdc4",
+      "size": [
+        1440,
+        958
+      ],
+      "status": "represented",
+      "section": 2,
+      "matches": [
+        14
+      ],
+      "reason": "Same visual view as existing photo; retain approved framing/caption rather than duplicate the source."
+    },
+    {
+      "source": "listing info/pics/14.jpg",
+      "sha256": "b75c993f6e26f65097c39305c3ba0897bb76c6134ab48b9764cef6d636f2fb41",
+      "size": [
+        1440,
+        958
+      ],
+      "status": "represented",
+      "section": 2,
+      "matches": [
+        15
+      ],
+      "reason": "Same visual view as existing photo; retain approved framing/caption rather than duplicate the source."
+    },
+    {
+      "source": "listing info/pics/15.jpg",
+      "sha256": "3c96668ffc9401f68ac400ee16729a6302285516cf08f66993087f32922cd4d8",
+      "size": [
+        1440,
+        956
+      ],
+      "status": "represented",
+      "section": 3,
+      "matches": [
+        16
+      ],
+      "reason": "Same visual view as existing photo; retain approved framing/caption rather than duplicate the source."
+    },
+    {
+      "source": "listing info/pics/16.jpg",
+      "sha256": "949feacc88b74963a356ffb7089d451cf1ee85ac553583ef5bcbb0268034db96",
+      "size": [
+        1440,
+        956
+      ],
+      "status": "represented",
+      "section": 3,
+      "matches": [
+        17
+      ],
+      "reason": "Same visual view as existing photo; retain approved framing/caption rather than duplicate the source."
+    },
+    {
+      "source": "listing info/pics/17.jpg",
+      "sha256": "d28546ca999567b7a1146929b3c9c706a634d7e585d094f3930920feeae60016",
+      "size": [
+        1440,
+        958
+      ],
+      "status": "represented",
+      "section": 4,
+      "matches": [
+        18
+      ],
+      "reason": "Same visual view as existing photo; retain approved framing/caption rather than duplicate the source."
+    },
+    {
+      "source": "listing info/pics/18.jpg",
+      "sha256": "47688d17b30ac55a13757d86733599404a05ffecaa93d8b169afbf3f6f534b04",
+      "size": [
+        1440,
+        958
+      ],
+      "status": "represented",
+      "section": 4,
+      "matches": [
+        19
+      ],
+      "reason": "Same visual view as existing photo; retain approved framing/caption rather than duplicate the source."
+    },
+    {
+      "source": "listing info/pics/19.jpg",
+      "sha256": "dc6fe6a3733f52eebcaf98d3a80abbbf2f2608db1dbffff7ad582ec4543d0876",
+      "size": [
+        1440,
+        955
+      ],
+      "status": "represented",
+      "section": 4,
+      "matches": [
+        21
+      ],
+      "reason": "Same visual view as existing photo; retain approved framing/caption rather than duplicate the source."
+    },
+    {
+      "source": "listing info/pics/20.jpg",
+      "sha256": "1725c4b0192e7362fc229243fab597b98b902bd1b6885831bd72e46ffd27f7c8",
+      "size": [
+        1440,
+        958
+      ],
+      "status": "represented",
+      "section": 4,
+      "matches": [
+        22
+      ],
+      "reason": "Same visual view as existing photo; retain approved framing/caption rather than duplicate the source."
+    },
+    {
+      "source": "listing info/pics/21.jpg",
+      "sha256": "86146e4f124d70215d875ccd15c5a2cf547d04ab91e86a17495990cb982ac381",
+      "size": [
+        1440,
+        957
+      ],
+      "status": "represented",
+      "section": 4,
+      "matches": [
+        23
+      ],
+      "reason": "Same visual view as existing photo; retain approved framing/caption rather than duplicate the source."
+    },
+    {
+      "source": "listing info/pics/22.jpg",
+      "sha256": "33a00d7e9a305e7fe87eced1aefac2149fc415dcac6182612549b673d888afde",
+      "size": [
+        1440,
+        958
+      ],
+      "status": "represented",
+      "section": 4,
+      "matches": [
+        24
+      ],
+      "reason": "Same visual view as existing photo; retain approved framing/caption rather than duplicate the source."
+    },
+    {
+      "source": "listing info/pics/23.jpg",
+      "sha256": "2d1fd355ee2bbeca426279faa44f2fd66f354d48fe495b7e0e8a0cf63aaf1203",
+      "size": [
+        1440,
+        810
+      ],
+      "status": "represented",
+      "section": 5,
+      "matches": [
+        25
+      ],
+      "reason": "Same visual view as existing photo; retain approved framing/caption rather than duplicate the source."
+    },
+    {
+      "source": "listing info/pics/24.jpg",
+      "sha256": "cd60adc09298af019455c0209c5c0813dee1ad2c4d650683bf64aeaae5f7d991",
+      "size": [
+        1440,
+        955
+      ],
+      "status": "represented",
+      "section": 5,
+      "matches": [
+        26
+      ],
+      "reason": "Same visual view as existing photo; retain approved framing/caption rather than duplicate the source."
+    },
+    {
+      "source": "listing info/pics/25.jpg",
+      "sha256": "e5ae018c95a13361999e56ba16b8b3c95ca29ee9b4df0922a6a9ab846fea1461",
+      "size": [
+        1440,
+        958
+      ],
+      "status": "represented",
+      "section": 7,
+      "matches": [
+        27
+      ],
+      "reason": "Same visual view as existing photo; retain approved framing/caption rather than duplicate the source."
+    },
+    {
+      "source": "listing info/pics/26.jpg",
+      "sha256": "ddd19916db99ce70e8df529a7752162e42ed71150cf6b15297894597f83fe9f3",
+      "size": [
+        1438,
+        1080
+      ],
+      "status": "represented",
+      "section": 7,
+      "matches": [
+        28
+      ],
+      "reason": "Same visual view as existing photo; retain approved framing/caption rather than duplicate the source."
+    },
+    {
+      "source": "listing info/pics/27.jpg",
+      "sha256": "6cc18abdc989411525514d37c3d89437d3b837c16fbf6ee1a5b740ef5338dbf3",
+      "size": [
+        1440,
+        957
+      ],
+      "status": "represented",
+      "section": 3,
+      "matches": [
+        29
+      ],
+      "reason": "Same visual view as existing photo; retain approved framing/caption rather than duplicate the source."
+    },
+    {
+      "source": "listing info/pics/28.jpg",
+      "sha256": "3715593a893f3861294d5bd6ea068d6ba001aa11ebb5c6cec492ba0c8ee8617c",
+      "size": [
+        1440,
+        810
+      ],
+      "status": "represented",
+      "section": 1,
+      "matches": [
+        32
+      ],
+      "reason": "Same visual view as existing photo; retain approved framing/caption rather than duplicate the source."
+    },
+    {
+      "source": "listing info/pics/29.jpg",
+      "sha256": "343f719c05a4f366f24f6cf0c3c44b959b04aaae5ad0189da302f9b483a7cbd0",
+      "size": [
+        1440,
+        810
+      ],
+      "status": "represented",
+      "section": 6,
+      "matches": [
+        33
+      ],
+      "reason": "Same visual view as existing photo; retain approved framing/caption rather than duplicate the source."
+    },
+    {
+      "source": "listing info/pics/30.jpg",
+      "sha256": "e2c32240cf9ef3156e04e2fe2ce8079f742d4e34f50e40e6a47beb9e270e947b",
+      "size": [
+        1440,
+        957
+      ],
+      "status": "add",
+      "section": 1,
+      "position": 39,
+      "after": 3,
+      "caption": "Front approach with the covered entry and attached garage.",
+      "reason": "Complementary view: Front approach with the covered entry and attached garage.",
+      "full_width": 1440
+    },
+    {
+      "source": "listing info/pics/31.jpg",
+      "sha256": "141b97693fade3eb91c2b217fbc6b06460ef5def670c9245cb30fe4d387127e5",
+      "size": [
+        1440,
+        958
+      ],
+      "status": "add",
+      "section": 1,
+      "position": 40,
+      "after": 39,
+      "caption": "Covered front entry with wood posts and stone accents.",
+      "reason": "Complementary view: Covered front entry with wood posts and stone accents.",
+      "full_width": 1440
+    },
+    {
+      "source": "listing info/pics/32.jpg",
+      "sha256": "dff3c23b8672ca7f56e74c524924e92381b94e86f2a0b149bf13aacf3f6e09a6",
+      "size": [
+        1440,
+        957
+      ],
+      "status": "omitted",
+      "section": 1,
+      "matches": [
+        39,
+        40
+      ],
+      "reason": "Near-identical frontal approach to 30.jpg; selected wider approach and entry detail instead."
+    },
+    {
+      "source": "listing info/pics/33.jpg",
+      "sha256": "84c31c3ae508b97422a2b58cf22cb8bc23470eff092717fcd8e1c88e58f93085",
+      "size": [
+        1440,
+        953
+      ],
+      "status": "add",
+      "section": 7,
+      "position": 41,
+      "after": 28,
+      "caption": "Side of the house showing the chimney, deck and lower-level doors.",
+      "reason": "Complementary view: Side of the house showing the chimney, deck and lower-level doors.",
+      "full_width": 1440
+    },
+    {
+      "source": "listing info/pics/34.jpg",
+      "sha256": "4bb1c26df3a16a5fd6df35335f8431d038b87cab848f8733de9460e79d61f8ab",
+      "size": [
+        1440,
+        958
+      ],
+      "status": "add",
+      "section": 2,
+      "position": 42,
+      "after": 2,
+      "caption": "Great room seating beside the open kitchen and dining area.",
+      "reason": "Complementary view: Great room seating beside the open kitchen and dining area.",
+      "full_width": 1440
+    },
+    {
+      "source": "listing info/pics/35.jpg",
+      "sha256": "e474da407d9f5eb58ee32b1c13afbd57f81df2e73bfb6d0ed8f0080ce10fb2e6",
+      "size": [
+        1440,
+        958
+      ],
+      "status": "add",
+      "section": 3,
+      "position": 43,
+      "after": 16,
+      "caption": "Deck seating and hot tub along the wooded edge of the house.",
+      "reason": "Complementary view: Deck seating and hot tub along the wooded edge of the house.",
+      "full_width": 1440
+    },
+    {
+      "source": "listing info/pics/36.jpg",
+      "sha256": "cf144ebc5dc6a87a5aca0f1251d6e05d9dbeeec5b5e4925c64915b1296bacafa",
+      "size": [
+        1440,
+        957
+      ],
+      "status": "omitted",
+      "section": 3,
+      "matches": [
+        6,
+        43
+      ],
+      "reason": "Covered hot-tub close view; owner open-tub photo 6 and wider deck view show both equipment and location."
+    },
+    {
+      "source": "listing info/pics/37.jpg",
+      "sha256": "c71c66a1533df5df2bf8a7a1c159edd84343e038f345b4be8981b7d6d92c2a29",
+      "size": [
+        1440,
+        958
+      ],
+      "status": "add",
+      "section": 2,
+      "position": 44,
+      "after": 42,
+      "caption": "Great room seating beside the tall windows and stone hearth.",
+      "reason": "Complementary view: Great room seating beside the tall windows and stone hearth.",
+      "full_width": 1440
+    },
+    {
+      "source": "listing info/pics/38.jpg",
+      "sha256": "6eff532398cc1a2a5bb9bb733b0356a02e6ca1eec37c4c96ca0c2209a60ca2ac",
+      "size": [
+        1440,
+        958
+      ],
+      "status": "add",
+      "section": 2,
+      "position": 45,
+      "after": 44,
+      "caption": "Great room looking toward the staircase and front windows.",
+      "reason": "Complementary view: Great room looking toward the staircase and front windows.",
+      "full_width": 1440
+    },
+    {
+      "source": "listing info/pics/39.jpg",
+      "sha256": "d04975b0e95cb64098ee9750454086e5a3f7b950bbdbcf0a6f4c05d079425aed",
+      "size": [
+        1440,
+        959
+      ],
+      "status": "add",
+      "section": 2,
+      "position": 46,
+      "after": 45,
+      "caption": "Great room looking across the dining area to the kitchen and loft.",
+      "reason": "Complementary view: Great room looking across the dining area to the kitchen and loft.",
+      "full_width": 1440
+    },
+    {
+      "source": "listing info/pics/40.jpg",
+      "sha256": "70ddc8f53f113593bdd5f73a6124b3cd7761a1544e394effdd1814682f5de9c3",
+      "size": [
+        1440,
+        958
+      ],
+      "status": "add",
+      "section": 2,
+      "position": 47,
+      "after": 5,
+      "caption": "Kitchen island with the loft railing above and hallway beyond.",
+      "reason": "Complementary view: Kitchen island with the loft railing above and hallway beyond.",
+      "full_width": 1440
+    },
+    {
+      "source": "listing info/pics/41.jpg",
+      "sha256": "4378f1db30209b95911155a05975773a4ed9634bb1f746a2cc355539e56231b8",
+      "size": [
+        1440,
+        958
+      ],
+      "status": "add",
+      "section": 2,
+      "position": 48,
+      "after": 47,
+      "caption": "Kitchen sink, dishwasher and range along the granite countertops.",
+      "reason": "Complementary view: Kitchen sink, dishwasher and range along the granite countertops.",
+      "full_width": 1440
+    },
+    {
+      "source": "listing info/pics/42.jpg",
+      "sha256": "f136887a7a2b6fed9a5f31eaa2c6c63e2e5e1633df526a7bf6a41d1fee6e3c36",
+      "size": [
+        1440,
+        958
+      ],
+      "status": "represented",
+      "section": 2,
+      "matches": [
+        35
+      ],
+      "reason": "Same visual view as existing photo; retain approved framing/caption rather than duplicate the source."
+    },
+    {
+      "source": "listing info/pics/43.jpg",
+      "sha256": "e6543903840bf2791e3119442c7566289c449f12938145232ee2a5e5c35c2f62",
+      "size": [
+        1440,
+        958
+      ],
+      "status": "add",
+      "section": 1,
+      "position": 49,
+      "after": 34,
+      "caption": "Hallway connecting the garage mudroom to the kitchen and great room, with pantry and back-porch door.",
+      "reason": "Complementary view: Hallway connecting the garage mudroom to the kitchen and great room, with pantry and back-porch door.",
+      "full_width": 1440
+    },
+    {
+      "source": "listing info/pics/44.jpg",
+      "sha256": "83a07e2bcd34c9fc41b57580a61e1d42e352355fa59fe9586486d2fedf0e59c1",
+      "size": [
+        1440,
+        955
+      ],
+      "status": "add",
+      "section": 3,
+      "position": 50,
+      "after": 4,
+      "caption": "Screened porch looking toward the swinging daybed and back-porch door.",
+      "reason": "Complementary view: Screened porch looking toward the swinging daybed and back-porch door.",
+      "full_width": 1440
+    },
+    {
+      "source": "listing info/pics/45.jpg",
+      "sha256": "356b4ec05526609b68d2d97cd0f19233f2b6d97d1e0b2e345f5ca736ca086cec",
+      "size": [
+        1440,
+        957
+      ],
+      "status": "add",
+      "section": 3,
+      "position": 51,
+      "after": 50,
+      "caption": "Woodland view from the swinging daybed on the screened porch.",
+      "reason": "Complementary view: Woodland view from the swinging daybed on the screened porch.",
+      "full_width": 1440
+    },
+    {
+      "source": "listing info/pics/46.jpg",
+      "sha256": "352802cf6d58a78424a7e00983c5464a9d6886ae76279653c220479f6a12fc42",
+      "size": [
+        1440,
+        958
+      ],
+      "status": "add",
+      "section": 3,
+      "position": 52,
+      "after": 17,
+      "caption": "Dining table at the corner of the screened porch.",
+      "reason": "Complementary view: Dining table at the corner of the screened porch.",
+      "full_width": 1440
+    },
+    {
+      "source": "listing info/pics/47.jpg",
+      "sha256": "a3946a43106f8ca9626fe89d58d15fbaf59d254919b74d94102dbe59d771302e",
+      "size": [
+        1440,
+        958
+      ],
+      "status": "omitted",
+      "section": 3,
+      "matches": [
+        17,
+        50
+      ],
+      "reason": "Same long porch axis as 44.jpg and existing 17, without a new room connection; selected end views and dining corner."
+    },
+    {
+      "source": "listing info/pics/48.jpg",
+      "sha256": "a21b3a6568f787c4dcc0248682f3366daf7a327032e73d21ebc1959e9ecedc0f",
+      "size": [
+        1440,
+        953
+      ],
+      "status": "add",
+      "section": 3,
+      "position": 53,
+      "after": 52,
+      "caption": "Screened porch seating looking toward the dining table.",
+      "reason": "Complementary view: Screened porch seating looking toward the dining table.",
+      "full_width": 1440
+    },
+    {
+      "source": "listing info/pics/49.jpg",
+      "sha256": "248649a6122cb214f4fbba7d2ad38947b6d7f51a7ac2ac43c695a940777b8791",
+      "size": [
+        1440,
+        958
+      ],
+      "status": "add",
+      "section": 1,
+      "position": 54,
+      "after": 11,
+      "caption": "Tiled hallway with a wood bench and coat rack.",
+      "reason": "Complementary view: Tiled hallway with a wood bench and coat rack.",
+      "full_width": 1440
+    },
+    {
+      "source": "listing info/pics/50.jpg",
+      "sha256": "35c13faf7d3ed5eb0bdbc6aa246bee42e2b1c70b214a814b3a8d8cee76384fdb",
+      "size": [
+        1440,
+        957
+      ],
+      "status": "represented",
+      "section": 4,
+      "matches": [
+        36
+      ],
+      "reason": "Same visual view as existing photo; retain approved framing/caption rather than duplicate the source."
+    },
+    {
+      "source": "listing info/pics/51.jpg",
+      "sha256": "3edbb69bf843e13a158060562bbd64637a16618ee3b1ed3afd45c4040b5fe6db",
+      "size": [
+        1440,
+        958
+      ],
+      "status": "represented",
+      "section": 4,
+      "matches": [
+        37
+      ],
+      "reason": "Same visual view as existing photo; retain approved framing/caption rather than duplicate the source."
+    },
+    {
+      "source": "listing info/pics/52.jpg",
+      "sha256": "ee6c71e1d9dc1e620ebab89273a797aa4e2b29dd4c57f44bb7d47d384bb13d56",
+      "size": [
+        1440,
+        958
+      ],
+      "status": "add",
+      "section": 4,
+      "position": 55,
+      "after": 7,
+      "caption": "Primary bath with a long wood vanity beside the jetted tub.",
+      "reason": "Complementary view: Primary bath with a long wood vanity beside the jetted tub.",
+      "full_width": 1440
+    },
+    {
+      "source": "listing info/pics/53.jpg",
+      "sha256": "42df238c93875846a58769df0011b90015fbe7228bcf75e71045408de3993a81",
+      "size": [
+        1440,
+        958
+      ],
+      "status": "add",
+      "section": 4,
+      "position": 56,
+      "after": 55,
+      "caption": "Primary bath looking past the vanity and tub toward the separate shower.",
+      "reason": "Complementary view: Primary bath looking past the vanity and tub toward the separate shower.",
+      "full_width": 1440
+    },
+    {
+      "source": "listing info/pics/54.jpg",
+      "sha256": "b01e8569afdebcf7ada33208ae133a6a762dd6f1832ba66aa781fd6685843312",
+      "size": [
+        1440,
+        957
+      ],
+      "status": "omitted",
+      "section": 4,
+      "matches": [
+        20
+      ],
+      "reason": "Older laundry staging; updated owner laundry is already represented in photo 20."
+    },
+    {
+      "source": "listing info/pics/55.jpg",
+      "sha256": "f3a340d795d9f66ebbde4abf7fa7687d8aabfa6fc83cf20245a067b849353d0b",
+      "size": [
+        1440,
+        958
+      ],
+      "status": "represented",
+      "section": 1,
+      "matches": [
+        34
+      ],
+      "reason": "Same visual view as existing photo; retain approved framing/caption rather than duplicate the source."
+    },
+    {
+      "source": "listing info/pics/56.jpg",
+      "sha256": "47e85ccdae3de09ddfb0916fdff91f2930d8a6cf8a64e2909522ca4a2e3646be",
+      "size": [
+        1440,
+        958
+      ],
+      "status": "add",
+      "section": 4,
+      "position": 57,
+      "after": 38,
+      "caption": "Upper landing beside the loft railing and full-bath doorway.",
+      "reason": "Complementary view: Upper landing beside the loft railing and full-bath doorway.",
+      "full_width": 1440
+    },
+    {
+      "source": "listing info/pics/57.jpg",
+      "sha256": "0daafef4cac12610ee4336479417e8060ea1b679655ad4f35263ef11590f5b02",
+      "size": [
+        1440,
+        955
+      ],
+      "status": "add",
+      "section": 4,
+      "position": 58,
+      "after": 21,
+      "caption": "Upper loft seating beside the open stairwell.",
+      "reason": "Complementary view: Upper loft seating beside the open stairwell.",
+      "full_width": 1440
+    },
+    {
+      "source": "listing info/pics/58.jpg",
+      "sha256": "1d8f5f7312edd71af00ae3a9592885c66b4f7ce0407dedef96ff814a2b26948d",
+      "size": [
+        1440,
+        957
+      ],
+      "status": "add",
+      "section": 2,
+      "position": 59,
+      "after": 12,
+      "caption": "Tall great-room windows viewed from the upper level.",
+      "reason": "Complementary view: Tall great-room windows viewed from the upper level.",
+      "full_width": 1440
+    },
+    {
+      "source": "listing info/pics/59.jpg",
+      "sha256": "c2046b3b2c1a67e0c133a0b9481d086debd82359b863d2321e3e523c374ed0b2",
+      "size": [
+        1440,
+        958
+      ],
+      "status": "add",
+      "section": 4,
+      "position": 60,
+      "after": 23,
+      "caption": "Upstairs bedroom looking toward its doors and sloped ceiling.",
+      "reason": "Complementary view: Upstairs bedroom looking toward its doors and sloped ceiling.",
+      "full_width": 1440
+    },
+    {
+      "source": "listing info/pics/60.jpg",
+      "sha256": "db658eebc588fc5e9e5b9d8e482e8252b7792445188d7885e9dbe91f79361518",
+      "size": [
+        1440,
+        958
+      ],
+      "status": "add",
+      "section": 4,
+      "position": 61,
+      "after": 58,
+      "caption": "Upper loft looking toward the seating area and wood doors.",
+      "reason": "Complementary view: Upper loft looking toward the seating area and wood doors.",
+      "full_width": 1440
+    },
+    {
+      "source": "listing info/pics/61.jpg",
+      "sha256": "9e802289f86d1a69261f1eb50fbf75527765e0ff6e010e5182aed35370db2fb5",
+      "size": [
+        1440,
+        957
+      ],
+      "status": "represented",
+      "section": 4,
+      "matches": [
+        38
+      ],
+      "reason": "Same visual view as existing photo; retain approved framing/caption rather than duplicate the source."
+    },
+    {
+      "source": "listing info/pics/62.jpg",
+      "sha256": "144c87e4231f0b287d2b636fb2c1aeca7bd928c0ae1363ba25cab86dad0a2036",
+      "size": [
+        1440,
+        955
+      ],
+      "status": "omitted",
+      "section": 5,
+      "matches": [
+        30,
+        73
+      ],
+      "reason": "Old basement view excluded by owner; use updated basement1 (existing 30) and basement2."
+    },
+    {
+      "source": "listing info/pics/63.jpg",
+      "sha256": "93f7ac9853c1c82c9734128122987e3156caac3c5d55d1d76543f7706d3b0ccc",
+      "size": [
+        1440,
+        957
+      ],
+      "status": "omitted",
+      "section": 5,
+      "matches": [
+        30,
+        73
+      ],
+      "reason": "Old basement view excluded by owner; use updated owner photographs only."
+    },
+    {
+      "source": "listing info/pics/64.jpg",
+      "sha256": "b5d67a13dea5d1bf9e9f9296cedee6ca10823f975569b9d141fd94e489b9a907",
+      "size": [
+        1440,
+        958
+      ],
+      "status": "omitted",
+      "section": 5,
+      "matches": [
+        30,
+        73
+      ],
+      "reason": "Old basement view excluded by owner; use updated owner photographs only."
+    },
+    {
+      "source": "listing info/pics/65.jpg",
+      "sha256": "196d006b3d817b80c019df71110deda1fd5b703a477149ec2ffd2053110d61fb",
+      "size": [
+        1440,
+        958
+      ],
+      "status": "omitted",
+      "section": 5,
+      "matches": [
+        30,
+        73
+      ],
+      "reason": "Old basement view excluded by owner; use updated owner photographs only."
+    },
+    {
+      "source": "listing info/pics/66.jpg",
+      "sha256": "b409fd07a98ff85d23f6737a538ffe39bda5ba6c20bf2866ee294c459c277eb3",
+      "size": [
+        1440,
+        957
+      ],
+      "status": "add",
+      "section": 5,
+      "position": 62,
+      "after": 26,
+      "caption": "Wooded hillside and curved stone-edged garden beds.",
+      "reason": "Complementary view: Wooded hillside and curved stone-edged garden beds.",
+      "full_width": 1200
+    },
+    {
+      "source": "listing info/pics/67.jpg",
+      "sha256": "36dce933fec060e9d23250f563ac3b232d01e9f9e0149b3856646c434e0442a7",
+      "size": [
+        1440,
+        955
+      ],
+      "status": "add",
+      "section": 7,
+      "position": 63,
+      "after": 27,
+      "caption": "Stepping-stone path beside the house and wooded slope.",
+      "reason": "Complementary view: Stepping-stone path beside the house and wooded slope.",
+      "full_width": 1200
+    },
+    {
+      "source": "listing info/pics/68.jpg",
+      "sha256": "428c06ae4075ef43482ac0fb44baa5818b2dc68eebdf5baee24040c3ae22777d",
+      "size": [
+        1440,
+        955
+      ],
+      "status": "add",
+      "section": 7,
+      "position": 64,
+      "after": 41,
+      "caption": "Side of the house with steps leading down toward the screened porch.",
+      "reason": "Complementary view: Side of the house with steps leading down toward the screened porch.",
+      "full_width": 1440
+    },
+    {
+      "source": "listing info/pics/69.jpg",
+      "sha256": "e56d2aadbdf67372b635361a2543ca07d5b8127f5cc293e63d9b11b597a82bb5",
+      "size": [
+        1440,
+        955
+      ],
+      "status": "add",
+      "section": 5,
+      "position": 65,
+      "after": 25,
+      "caption": "Fenced garden beds viewed from the hillside.",
+      "reason": "Complementary view: Fenced garden beds viewed from the hillside.",
+      "full_width": 1200
+    },
+    {
+      "source": "listing info/pics/70.jpg",
+      "sha256": "591c5f486d4b9d0ab468f41b58b72ef254e2fd2315a8b268cb3e779a1fc7402b",
+      "size": [
+        1440,
+        958
+      ],
+      "status": "add",
+      "section": 7,
+      "position": 66,
+      "after": 63,
+      "caption": "Stone steps and paved landing among woodland plantings.",
+      "reason": "Complementary view: Stone steps and paved landing among woodland plantings.",
+      "full_width": 1200
+    },
+    {
+      "source": "listing info/pics/71.jpg",
+      "sha256": "587c2f1c75eb1b599e8a2aacf51cedd03d2705174cb954e977053f42155a11e3",
+      "size": [
+        1440,
+        957
+      ],
+      "status": "add",
+      "section": 3,
+      "position": 67,
+      "after": 10,
+      "caption": "Gravel path leading through the trees to the firepit.",
+      "reason": "Complementary view: Gravel path leading through the trees to the firepit.",
+      "full_width": 1200
+    },
+    {
+      "source": "listing info/pics/72.jpg",
+      "sha256": "4379c9e0dbb6da4ee37ecb605691d100e118e41ac5a60f9fdf3fbd60ead31bdc",
+      "size": [
+        1440,
+        959
+      ],
+      "status": "add",
+      "section": 5,
+      "position": 68,
+      "after": 62,
+      "caption": "Woodland planting beds along the sloping ground.",
+      "reason": "Complementary view: Woodland planting beds along the sloping ground.",
+      "full_width": 1200
+    },
+    {
+      "source": "listing info/pics/73.jpg",
+      "sha256": "e9453ea810c8c565fc60be88c6d9342a1b5eb188a0b42d709ba0ad2e174886a6",
+      "size": [
+        1440,
+        810
+      ],
+      "status": "add",
+      "section": 7,
+      "position": 69,
+      "after": 64,
+      "caption": "The rear of the house and screened porch among the trees.",
+      "reason": "Complementary view: The rear of the house and screened porch among the trees.",
+      "full_width": 1440
+    },
+    {
+      "source": "listing info/pics/74.jpg",
+      "sha256": "394807a6cc2cad10456a64c6003d08c089e5962ac9b05d2c77a943d84da6cbf8",
+      "size": [
+        1440,
+        809
+      ],
+      "status": "add",
+      "section": 6,
+      "position": 70,
+      "after": 33,
+      "caption": "Aerial view across the wooded neighborhood toward the mountain ridge.",
+      "reason": "Complementary view: Aerial view across the wooded neighborhood toward the mountain ridge.",
+      "full_width": 1440
+    },
+    {
+      "source": "listing info/pics/75.jpg",
+      "sha256": "73ec388a19710697b11f7ea884859c9a9a33221224d22e21d2124357d78da64b",
+      "size": [
+        1440,
+        810
+      ],
+      "status": "omitted",
+      "section": 6,
+      "matches": [
+        70,
+        71
+      ],
+      "reason": "Nearly same ridge-facing aerial as 74.jpg; selected 74 and opposite canopy view 76 instead."
+    },
+    {
+      "source": "listing info/pics/76.jpg",
+      "sha256": "8b7a38aaa2917c3abcaa1fed062480003d16890cafc28ca21fb9d82dad07ed70",
+      "size": [
+        1440,
+        810
+      ],
+      "status": "add",
+      "section": 6,
+      "position": 71,
+      "after": 70,
+      "caption": "Aerial view of the surrounding tree canopy and distant ridges.",
+      "reason": "Complementary view: Aerial view of the surrounding tree canopy and distant ridges.",
+      "full_width": 1440
+    },
+    {
+      "source": "listing info/pics/77.jpg",
+      "sha256": "631d6b2acf2692f5100aac40d2c4e683fc62d7e5dfa775d644a0580c279ab0a3",
+      "size": [
+        1440,
+        810
+      ],
+      "status": "add",
+      "section": 7,
+      "position": 72,
+      "after": 69,
+      "caption": "Overhead view of the house within the surrounding woods.",
+      "reason": "Complementary view: Overhead view of the house within the surrounding woods.",
+      "full_width": 1200
+    },
+    {
+      "source": "owner photos/basement1.jpeg",
+      "sha256": "26428105e473842c299f8d88945a24b67d2b9e5d8b0071a72f877a75de9472a4",
+      "size": [
+        3776,
+        2161
+      ],
+      "status": "represented",
+      "section": 5,
+      "matches": [
+        30
+      ],
+      "reason": "Same updated owner photograph already represented; preserve existing derivative and approved framing."
+    },
+    {
+      "source": "owner photos/basement2.jpeg",
+      "sha256": "952fced60e04bdebac3444abd4e94c390a75bb1a43b46ede0fdcfa9ee539e2a0",
+      "size": [
+        3768,
+        2554
+      ],
+      "status": "add",
+      "section": 5,
+      "position": 73,
+      "after": 30,
+      "caption": "Unfinished basement looking along the walkout doors, storage area and stairs.",
+      "reason": "Updated owner photograph; reverse view reveals basement length and walkout connection.",
+      "full_width": 1600
+    },
+    {
+      "source": "owner photos/hot-tub.jpeg",
+      "sha256": "31d365b1c0ba9f3f6bfd624acf4d60b6c1d64435d786285ec4b76547d6d1e9cb",
+      "size": [
+        1600,
+        1205
+      ],
+      "status": "represented",
+      "section": 3,
+      "matches": [
+        6
+      ],
+      "reason": "Same updated owner photograph already represented; preserve existing derivative and approved framing."
+    },
+    {
+      "source": "owner photos/laundry.jpeg",
+      "sha256": "2a0a5d5cf569f5effdf14569bdc7f9632a4cc45d5e1ca49cb9f5dd97bc320291",
+      "size": [
+        4032,
+        3024
+      ],
+      "status": "represented",
+      "section": 4,
+      "matches": [
+        20
+      ],
+      "reason": "Same updated owner photograph already represented; preserve existing derivative and approved framing."
+    },
+    {
+      "source": "owner photos/323-Colonial-Basement-Marketing.png",
+      "sha256": "d85ce987f66d0be0771ef68515621c0f4cfd9e94f2768b127b4645f825124faf",
+      "size": [
+        2200,
+        1700
+      ],
+      "status": "represented",
+      "section": 5,
+      "matches": [
+        31
+      ],
+      "reason": "Same owner view already represented; preserve existing derivative and approved framing. Concept plan is not a photograph."
+    }
+  ]
+}

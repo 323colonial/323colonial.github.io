@@ -10,7 +10,7 @@ const pages = [
   ['index.html', '', '323 Colonial Dr · Berkeley Springs, WV · $499,000',
     'Explore 323 Colonial Dr in Berkeley Springs, WV: a 2-bedroom mountain home with 2 full baths, 1 half bath, a screened porch and an open deck.'],
   ['gallery.html', 'gallery.html', 'Photos · 323 Colonial Dr · Berkeley Springs, WV',
-    'Explore 38 views of 323 Colonial Dr in Berkeley Springs, WV, including one labeled conceptual basement plan — not existing finished space.'],
+    'Explore 73 views of 323 Colonial Dr in Berkeley Springs, WV, including one labeled conceptual basement plan — not existing finished space.'],
 ];
 
 for (const [file, route, title, description] of pages) {
@@ -61,7 +61,7 @@ test('publish allowlist contains exactly required buyer files, never repository/
   assert.ok(existsSync('scripts/publish-files.txt'), 'explicit publish allowlist missing');
   const files = readFileSync('scripts/publish-files.txt', 'utf8').trim().split('\n');
   const expected = ['index.html', 'gallery.html', 'listing.css', 'gallery.js', 'listing.js'];
-  for (let n = 1; n <= 38; n++) {
+  for (let n = 1; n <= 73; n++) {
     for (const suffix of ['', '-small']) expected.push(`assets/listing/${String(n).padStart(2, '0')}${suffix}.webp`);
   }
   assert.deepEqual([...files].sort(), expected.sort());

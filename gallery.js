@@ -113,7 +113,10 @@ if (catalog && typeof catalog.showModal === 'function') {
     if (!catalog.open) return;
     links.forEach(link => {
       const img = link.querySelector('img');
-      link.querySelector('.photo-dots').style.bottom = `${10 + photoInset(img, img.clientWidth, img.clientHeight)}px`;
+      const dots = link.querySelector('.photo-dots');
+      dots.style.bottom = `${10 + photoInset(img, img.clientWidth, img.clientHeight)}px`;
+      const photoWidth = Math.min(img.clientWidth, img.clientHeight * Number(img.getAttribute('width')) / Number(img.getAttribute('height')));
+      dots.style.setProperty('--dot-scale', Math.min(1, (photoWidth - 20) / dots.offsetWidth));
     });
   };
   addEventListener('resize', positionCatalogDots);

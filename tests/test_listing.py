@@ -8,6 +8,7 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 APPROVED = json.loads((ROOT / 'tests/fixtures/approved-listing.json').read_text())
+COVERAGE = json.loads((ROOT / 'tests/fixtures/photo-coverage.json').read_text())
 
 
 class Element:
@@ -73,7 +74,7 @@ class Listing(unittest.TestCase):
         covered = {1}
         for story in stories:
             covered.update(int(a.attrs['data-photo']) for a in story.all('a') if 'data-photo' in a.attrs)
-        self.assertEqual(covered, set(range(1, 39)), 'Every photo has a narrative home')
+        self.assertEqual(covered, set(range(1, 74)), 'Every photo has a narrative home')
         plan = next(a for a in page.all('a') if a.attrs.get('data-photo') == '31')
         self.assertIn('additional finished living space', plan.text())
         self.assertIn('conceptual', plan.attrs['aria-label'].lower())
@@ -97,7 +98,7 @@ class Listing(unittest.TestCase):
     def test_gallery_order_captions_and_disclosures(self):
         page = Page('gallery.html').root
         figures = [f for f in page.all('figure') if 'data-position' in f.attrs]
-        self.assertEqual(len(figures), 38)
+        self.assertEqual(len(figures), 73)
         for figure, expected in zip(figures, APPROVED['photos']):
             n = expected['position']
             self.assertEqual(int(figure.attrs['data-position']), n)
@@ -132,15 +133,15 @@ class Listing(unittest.TestCase):
         ]
         home = Page('index.html').root
         stories = [s for s in home.all('section') if s.cls('story')]
-        self.assertIn('View all 38 photos', home.text())
-        self.assertIn('All 38 photos', home.text())
+        self.assertIn('View all 73 photos', home.text())
+        self.assertIn('All 73 photos', home.text())
         photos = json.loads((ROOT / 'assets/listing/manifest.json').read_text())['photos']
         for file in ('index.html', 'gallery.html'):
             grid = next(d for d in Page(file).root.all('div') if d.cls('gallery-grid'))
-            self.assertEqual([int(f.attrs['data-position']) for f in grid.all('figure')], list(range(1, 39)))
+            self.assertEqual([int(f.attrs['data-position']) for f in grid.all('figure')], list(range(1, 74)))
             for figure in grid.all('figure'):
                 number = next(s for s in figure.all('span') if s.cls('photo-number'))
-                self.assertEqual(number.text(), f"{figure.attrs['data-position']} / 38")
+                self.assertEqual(number.text(), f"{figure.attrs['data-position']} / 73")
             for n, source, section, caption in additions:
                 figure = next(f for f in grid.all('figure') if f.attrs['data-position'] == str(n))
                 inline = [f for f in stories[section].all('figure') if f.attrs['data-position'] == str(n)]
@@ -162,6 +163,55 @@ class Listing(unittest.TestCase):
                 self.assertEqual(photo['caption'], caption)
                 self.assertEqual(photo['crop_xywh'], None)
                 self.assertEqual([d['width'] for d in photo['derivatives']], [1440, 720])
+
+    def test_complete_source_inventory_and_expanded_coverage(self):
+        sources = COVERAGE['sources']
+        listing = [r for r in sources if r['source'].startswith('listing info/pics/')]
+        self.assertEqual([r['source'] for r in listing], [f'listing info/pics/{n}.jpg' for n in range(1, 78)])
+        self.assertEqual(len(sources), 82)
+        photos = json.loads((ROOT / 'assets/listing/manifest.json').read_text())['photos']
+        self.assertEqual(hashlib.sha256(json.dumps(photos[:38], sort_keys=True).encode()).hexdigest(),
+                         COVERAGE['baseline_photos_sha256'], 'All original 38 records must remain unchanged')
+        additions = [r for r in sources if r['status'] == 'add']
+        self.assertEqual([r['position'] for r in additions], list(range(39, 74)))
+        for row in sources:
+            self.assertIn(row['status'], ('represented', 'omitted', 'add'))
+            self.assertIn(row['section'], range(1, 8))
+            self.assertTrue(row['reason'])
+            self.assertRegex(row['sha256'], r'^[0-9a-f]{64}$')
+            if row['status'] != 'add':
+                self.assertTrue(row['matches'])
+            if row['source'] in [f'listing info/pics/{n}.jpg' for n in range(62, 66)]:
+                self.assertEqual(row['status'], 'omitted', 'Owner excludes older basement photographs')
+        stories = [s for s in Page('index.html').root.all('section') if s.cls('story')]
+        for file in ('index.html', 'gallery.html'):
+            grid = next(d for d in Page(file).root.all('div') if d.cls('gallery-grid'))
+            figures = grid.all('figure')
+            self.assertEqual([int(f.attrs['data-position']) for f in figures], list(range(1, 74)))
+            for row in additions:
+                n, caption = row['position'], row['caption']
+                photo = photos[n - 1]
+                self.assertEqual(photo['source'], row['source'])
+                self.assertEqual(photo['source_sha256'], row['sha256'])
+                self.assertEqual(photo['source_size'], row['size'])
+                self.assertEqual(photo['caption'], caption)
+                self.assertEqual(photo['approval'], 'colonial-we3, 2026-10-05')
+                self.assertIsNone(photo['crop_xywh'])
+                widths = [row['full_width'], 720]
+                self.assertEqual([d['width'] for d in photo['derivatives']], widths)
+                inline = stories[row['section'] - 1].all('figure')
+                positions = [int(f.attrs['data-position']) for f in inline]
+                self.assertIn(n, positions)
+                self.assertGreater(positions.index(n), positions.index(row['after']))
+                for figure in (figures[n - 1], inline[positions.index(n)]):
+                    img = figure.all('img')[0]
+                    self.assertEqual(img.attrs['alt'], caption)
+                    self.assertEqual(img.attrs['loading'], 'lazy')
+                    self.assertEqual(img.attrs['decoding'], 'async')
+                    self.assertEqual(img.attrs['srcset'], f'assets/listing/{n}-small.webp 720w, assets/listing/{n}.webp {widths[0]}w')
+                    self.assertTrue(img.attrs['sizes'])
+                    self.assertEqual(next(s for s in figure.all('span') if s.cls('caption-text')).text(), caption)
+                    self.assertEqual(figure.all('a')[0].attrs['aria-label'], f'Enlarge photo {n}: {caption}')
 
     def test_public_navigation_and_listing_snapshot(self):
         for file in ('index.html', 'gallery.html'):
@@ -331,7 +381,7 @@ class Listing(unittest.TestCase):
         self.assertEqual(data['approval'], APPROVED['approval'])
         self.assertEqual(data['photos'][5]['provenance'], 'Owner photograph')
         self.assertNotIn('source_url', data['photos'][5])
-        self.assertEqual(len(data['photos']), 38)
+        self.assertEqual(len(data['photos']), 73)
         for actual, expected in zip(data['photos'], APPROVED['photos']):
             for key in ['position', 'id', 'caption', 'source', 'source_sha256']:
                 self.assertEqual(actual[key], expected[key])

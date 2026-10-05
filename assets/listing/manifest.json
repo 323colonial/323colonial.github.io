@@ -1542,6 +1542,1056 @@
           "sha256": "6bfbf117a2a3042b0630f929b5cf6e7c6bb6992df49b8c8a35f3d385272621f7"
         }
       ]
+    },
+    {
+      "position": 39,
+      "id": "Owner collection addition 39 (2026-10-05)",
+      "caption": "Front approach with the covered entry and attached garage.",
+      "source": "listing info/pics/30.jpg",
+      "source_sha256": "e2c32240cf9ef3156e04e2fe2ce8079f742d4e34f50e40e6a47beb9e270e947b",
+      "source_size": [
+        1440,
+        957
+      ],
+      "provenance": "Owner-supplied MLS photograph",
+      "approval": "colonial-we3, 2026-10-05",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain complete photograph and any watermark.",
+      "processing": "Visual match against existing images; local source name is not a listing index. ImageMagick -auto-orient -colorspace sRGB -resize WIDTHx> -strip -quality 78; widths 1440 and 720; no upscaling.",
+      "derivatives": [
+        {
+          "path": "assets/listing/39.webp",
+          "width": 1440,
+          "height": 957,
+          "sha256": "4f2713f0f63cce1a14526fcf7162f487d57ab75d54d0cdc94ee156ea826c0303"
+        },
+        {
+          "path": "assets/listing/39-small.webp",
+          "width": 720,
+          "height": 479,
+          "sha256": "3f14fc3510c80ccb9b9a28e341224e98de47b7d3bc3ef71c82137912920199ed"
+        }
+      ]
+    },
+    {
+      "position": 40,
+      "id": "Owner collection addition 40 (2026-10-05)",
+      "caption": "Covered front entry with wood posts and stone accents.",
+      "source": "listing info/pics/31.jpg",
+      "source_sha256": "141b97693fade3eb91c2b217fbc6b06460ef5def670c9245cb30fe4d387127e5",
+      "source_size": [
+        1440,
+        958
+      ],
+      "provenance": "Owner-supplied MLS photograph",
+      "approval": "colonial-we3, 2026-10-05",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain complete photograph and any watermark.",
+      "processing": "Visual match against existing images; local source name is not a listing index. ImageMagick -auto-orient -colorspace sRGB -resize WIDTHx> -strip -quality 78; widths 1440 and 720; no upscaling.",
+      "derivatives": [
+        {
+          "path": "assets/listing/40.webp",
+          "width": 1440,
+          "height": 958,
+          "sha256": "d88b3758cdfcf90f93464343e35b4aa2a946685c02ce812b616ecb5e54267339"
+        },
+        {
+          "path": "assets/listing/40-small.webp",
+          "width": 720,
+          "height": 479,
+          "sha256": "df9b288f9f3b6ff5e0e7eade64650e124b4fa93541c27b97481d5190486a1f1c"
+        }
+      ]
+    },
+    {
+      "position": 41,
+      "id": "Owner collection addition 41 (2026-10-05)",
+      "caption": "Side of the house showing the chimney, deck and lower-level doors.",
+      "source": "listing info/pics/33.jpg",
+      "source_sha256": "84c31c3ae508b97422a2b58cf22cb8bc23470eff092717fcd8e1c88e58f93085",
+      "source_size": [
+        1440,
+        953
+      ],
+      "provenance": "Owner-supplied MLS photograph",
+      "approval": "colonial-we3, 2026-10-05",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain complete photograph and any watermark.",
+      "processing": "Visual match against existing images; local source name is not a listing index. ImageMagick -auto-orient -colorspace sRGB -resize WIDTHx> -strip -quality 78; widths 1440 and 720; no upscaling.",
+      "derivatives": [
+        {
+          "path": "assets/listing/41.webp",
+          "width": 1440,
+          "height": 953,
+          "sha256": "58a3217dbcb560c9060838e8fd77dba88777e9afb7ca7758dc0085788a213e79"
+        },
+        {
+          "path": "assets/listing/41-small.webp",
+          "width": 720,
+          "height": 477,
+          "sha256": "f30860e0bfc8164cfd90c2b95b572ca2df676837b9147f134566483db0287c71"
+        }
+      ]
+    },
+    {
+      "position": 42,
+      "id": "Owner collection addition 42 (2026-10-05)",
+      "caption": "Great room seating beside the open kitchen and dining area.",
+      "source": "listing info/pics/34.jpg",
+      "source_sha256": "4bb1c26df3a16a5fd6df35335f8431d038b87cab848f8733de9460e79d61f8ab",
+      "source_size": [
+        1440,
+        958
+      ],
+      "provenance": "Owner-supplied MLS photograph",
+      "approval": "colonial-we3, 2026-10-05",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain complete photograph and any watermark.",
+      "processing": "Visual match against existing images; local source name is not a listing index. ImageMagick -auto-orient -colorspace sRGB -resize WIDTHx> -strip -quality 78; widths 1440 and 720; no upscaling.",
+      "derivatives": [
+        {
+          "path": "assets/listing/42.webp",
+          "width": 1440,
+          "height": 958,
+          "sha256": "4c6de7da683694d2debe761f7e8c08b0b3b085d3e0d9d4f76c212171a9e63c3b"
+        },
+        {
+          "path": "assets/listing/42-small.webp",
+          "width": 720,
+          "height": 479,
+          "sha256": "5883721f3f57b536cb22b528dbbcd33862dff920b257045512eaa166eaa9a566"
+        }
+      ]
+    },
+    {
+      "position": 43,
+      "id": "Owner collection addition 43 (2026-10-05)",
+      "caption": "Deck seating and hot tub along the wooded edge of the house.",
+      "source": "listing info/pics/35.jpg",
+      "source_sha256": "e474da407d9f5eb58ee32b1c13afbd57f81df2e73bfb6d0ed8f0080ce10fb2e6",
+      "source_size": [
+        1440,
+        958
+      ],
+      "provenance": "Owner-supplied MLS photograph",
+      "approval": "colonial-we3, 2026-10-05",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain complete photograph and any watermark.",
+      "processing": "Visual match against existing images; local source name is not a listing index. ImageMagick -auto-orient -colorspace sRGB -resize WIDTHx> -strip -quality 78; widths 1440 and 720; no upscaling.",
+      "derivatives": [
+        {
+          "path": "assets/listing/43.webp",
+          "width": 1440,
+          "height": 958,
+          "sha256": "bfa3152ccb8850d376044c3ae4d673a2004534d0e03c1d72e7c8bedd33ad6edd"
+        },
+        {
+          "path": "assets/listing/43-small.webp",
+          "width": 720,
+          "height": 479,
+          "sha256": "6899c554813bc47782d06620a7939b5a9b43271878ef1082781d11df7b12079b"
+        }
+      ]
+    },
+    {
+      "position": 44,
+      "id": "Owner collection addition 44 (2026-10-05)",
+      "caption": "Great room seating beside the tall windows and stone hearth.",
+      "source": "listing info/pics/37.jpg",
+      "source_sha256": "c71c66a1533df5df2bf8a7a1c159edd84343e038f345b4be8981b7d6d92c2a29",
+      "source_size": [
+        1440,
+        958
+      ],
+      "provenance": "Owner-supplied MLS photograph",
+      "approval": "colonial-we3, 2026-10-05",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain complete photograph and any watermark.",
+      "processing": "Visual match against existing images; local source name is not a listing index. ImageMagick -auto-orient -colorspace sRGB -resize WIDTHx> -strip -quality 78; widths 1440 and 720; no upscaling.",
+      "derivatives": [
+        {
+          "path": "assets/listing/44.webp",
+          "width": 1440,
+          "height": 958,
+          "sha256": "2bb58af52c48552288fe034f719db18f9c0f13f5bce25a6d9e87e9b2c91e12c8"
+        },
+        {
+          "path": "assets/listing/44-small.webp",
+          "width": 720,
+          "height": 479,
+          "sha256": "8a48940f4525d076c47bed0f7f81b687492acc35ae1c24a72df1194df4b59534"
+        }
+      ]
+    },
+    {
+      "position": 45,
+      "id": "Owner collection addition 45 (2026-10-05)",
+      "caption": "Great room looking toward the staircase and front windows.",
+      "source": "listing info/pics/38.jpg",
+      "source_sha256": "6eff532398cc1a2a5bb9bb733b0356a02e6ca1eec37c4c96ca0c2209a60ca2ac",
+      "source_size": [
+        1440,
+        958
+      ],
+      "provenance": "Owner-supplied MLS photograph",
+      "approval": "colonial-we3, 2026-10-05",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain complete photograph and any watermark.",
+      "processing": "Visual match against existing images; local source name is not a listing index. ImageMagick -auto-orient -colorspace sRGB -resize WIDTHx> -strip -quality 78; widths 1440 and 720; no upscaling.",
+      "derivatives": [
+        {
+          "path": "assets/listing/45.webp",
+          "width": 1440,
+          "height": 958,
+          "sha256": "9134da0d4d72ba936d8564ad44dbdd65b2885e33b24a870f4e4594c318b92e80"
+        },
+        {
+          "path": "assets/listing/45-small.webp",
+          "width": 720,
+          "height": 479,
+          "sha256": "17a6da2e8a9600c70a6b635995308e22c1e35199f5b3c275240359bb833dedaa"
+        }
+      ]
+    },
+    {
+      "position": 46,
+      "id": "Owner collection addition 46 (2026-10-05)",
+      "caption": "Great room looking across the dining area to the kitchen and loft.",
+      "source": "listing info/pics/39.jpg",
+      "source_sha256": "d04975b0e95cb64098ee9750454086e5a3f7b950bbdbcf0a6f4c05d079425aed",
+      "source_size": [
+        1440,
+        959
+      ],
+      "provenance": "Owner-supplied MLS photograph",
+      "approval": "colonial-we3, 2026-10-05",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain complete photograph and any watermark.",
+      "processing": "Visual match against existing images; local source name is not a listing index. ImageMagick -auto-orient -colorspace sRGB -resize WIDTHx> -strip -quality 78; widths 1440 and 720; no upscaling.",
+      "derivatives": [
+        {
+          "path": "assets/listing/46.webp",
+          "width": 1440,
+          "height": 959,
+          "sha256": "ebbf4124cb5627d34882ed89e8d2e698ad4cdcda34fb326b7c12b9649a557930"
+        },
+        {
+          "path": "assets/listing/46-small.webp",
+          "width": 720,
+          "height": 480,
+          "sha256": "5609dfcefeee83573308f2c51c7489c5d7b6506cd901156236da7045dca1299d"
+        }
+      ]
+    },
+    {
+      "position": 47,
+      "id": "Owner collection addition 47 (2026-10-05)",
+      "caption": "Kitchen island with the loft railing above and hallway beyond.",
+      "source": "listing info/pics/40.jpg",
+      "source_sha256": "70ddc8f53f113593bdd5f73a6124b3cd7761a1544e394effdd1814682f5de9c3",
+      "source_size": [
+        1440,
+        958
+      ],
+      "provenance": "Owner-supplied MLS photograph",
+      "approval": "colonial-we3, 2026-10-05",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain complete photograph and any watermark.",
+      "processing": "Visual match against existing images; local source name is not a listing index. ImageMagick -auto-orient -colorspace sRGB -resize WIDTHx> -strip -quality 78; widths 1440 and 720; no upscaling.",
+      "derivatives": [
+        {
+          "path": "assets/listing/47.webp",
+          "width": 1440,
+          "height": 958,
+          "sha256": "e3935baa5797768a854e8732d94badeb817711510975cf27b2c3182d7c92ca27"
+        },
+        {
+          "path": "assets/listing/47-small.webp",
+          "width": 720,
+          "height": 479,
+          "sha256": "ea5a6022b5a50f023b03c155aafc95f68a6b2e2bee4de8de6aaac0ac04a57e8c"
+        }
+      ]
+    },
+    {
+      "position": 48,
+      "id": "Owner collection addition 48 (2026-10-05)",
+      "caption": "Kitchen sink, dishwasher and range along the granite countertops.",
+      "source": "listing info/pics/41.jpg",
+      "source_sha256": "4378f1db30209b95911155a05975773a4ed9634bb1f746a2cc355539e56231b8",
+      "source_size": [
+        1440,
+        958
+      ],
+      "provenance": "Owner-supplied MLS photograph",
+      "approval": "colonial-we3, 2026-10-05",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain complete photograph and any watermark.",
+      "processing": "Visual match against existing images; local source name is not a listing index. ImageMagick -auto-orient -colorspace sRGB -resize WIDTHx> -strip -quality 78; widths 1440 and 720; no upscaling.",
+      "derivatives": [
+        {
+          "path": "assets/listing/48.webp",
+          "width": 1440,
+          "height": 958,
+          "sha256": "6affa51d573e7b5ca7f25a250495176bf9812fd65c5e2f4cc6f2eb8c36d06257"
+        },
+        {
+          "path": "assets/listing/48-small.webp",
+          "width": 720,
+          "height": 479,
+          "sha256": "e75c115c9a06ce75e95a6dc9fb4000ee24718bb40ff4b95778e6718034837d77"
+        }
+      ]
+    },
+    {
+      "position": 49,
+      "id": "Owner collection addition 49 (2026-10-05)",
+      "caption": "Hallway connecting the garage mudroom to the kitchen and great room, with pantry and back-porch door.",
+      "source": "listing info/pics/43.jpg",
+      "source_sha256": "e6543903840bf2791e3119442c7566289c449f12938145232ee2a5e5c35c2f62",
+      "source_size": [
+        1440,
+        958
+      ],
+      "provenance": "Owner-supplied MLS photograph",
+      "approval": "colonial-we3, 2026-10-05",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain complete photograph and any watermark.",
+      "processing": "Visual match against existing images; local source name is not a listing index. ImageMagick -auto-orient -colorspace sRGB -resize WIDTHx> -strip -quality 78; widths 1440 and 720; no upscaling.",
+      "derivatives": [
+        {
+          "path": "assets/listing/49.webp",
+          "width": 1440,
+          "height": 958,
+          "sha256": "d3ddf5ab1130014f3d72ea0653de8419c87a8cefb4d1fe47de115b5323f8ee84"
+        },
+        {
+          "path": "assets/listing/49-small.webp",
+          "width": 720,
+          "height": 479,
+          "sha256": "f0d970d67ea9476922cf05c29e7a67a314aaddf9532b1d8625195f9ed9c8087e"
+        }
+      ]
+    },
+    {
+      "position": 50,
+      "id": "Owner collection addition 50 (2026-10-05)",
+      "caption": "Screened porch looking toward the swinging daybed and back-porch door.",
+      "source": "listing info/pics/44.jpg",
+      "source_sha256": "83a07e2bcd34c9fc41b57580a61e1d42e352355fa59fe9586486d2fedf0e59c1",
+      "source_size": [
+        1440,
+        955
+      ],
+      "provenance": "Owner-supplied MLS photograph",
+      "approval": "colonial-we3, 2026-10-05",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain complete photograph and any watermark.",
+      "processing": "Visual match against existing images; local source name is not a listing index. ImageMagick -auto-orient -colorspace sRGB -resize WIDTHx> -strip -quality 78; widths 1440 and 720; no upscaling.",
+      "derivatives": [
+        {
+          "path": "assets/listing/50.webp",
+          "width": 1440,
+          "height": 955,
+          "sha256": "56c229f2d38aa1c7d62801984f6071454124f23b02764359fb9d839dc559da29"
+        },
+        {
+          "path": "assets/listing/50-small.webp",
+          "width": 720,
+          "height": 478,
+          "sha256": "f3e8446b857ea40a41323a8917492a0c0c3444bc4fc56baa26605439ac6406c7"
+        }
+      ]
+    },
+    {
+      "position": 51,
+      "id": "Owner collection addition 51 (2026-10-05)",
+      "caption": "Woodland view from the swinging daybed on the screened porch.",
+      "source": "listing info/pics/45.jpg",
+      "source_sha256": "356b4ec05526609b68d2d97cd0f19233f2b6d97d1e0b2e345f5ca736ca086cec",
+      "source_size": [
+        1440,
+        957
+      ],
+      "provenance": "Owner-supplied MLS photograph",
+      "approval": "colonial-we3, 2026-10-05",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain complete photograph and any watermark.",
+      "processing": "Visual match against existing images; local source name is not a listing index. ImageMagick -auto-orient -colorspace sRGB -resize WIDTHx> -strip -quality 78; widths 1440 and 720; no upscaling.",
+      "derivatives": [
+        {
+          "path": "assets/listing/51.webp",
+          "width": 1440,
+          "height": 957,
+          "sha256": "b0dc6115ccbc55d69b54b033fcd6930bc1df4824d2384ad8dadb4d909c25a279"
+        },
+        {
+          "path": "assets/listing/51-small.webp",
+          "width": 720,
+          "height": 479,
+          "sha256": "a2c45860b92a46e37ed451dc7916c9668e524a6716b7e03eb992e5467f9b71e9"
+        }
+      ]
+    },
+    {
+      "position": 52,
+      "id": "Owner collection addition 52 (2026-10-05)",
+      "caption": "Dining table at the corner of the screened porch.",
+      "source": "listing info/pics/46.jpg",
+      "source_sha256": "352802cf6d58a78424a7e00983c5464a9d6886ae76279653c220479f6a12fc42",
+      "source_size": [
+        1440,
+        958
+      ],
+      "provenance": "Owner-supplied MLS photograph",
+      "approval": "colonial-we3, 2026-10-05",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain complete photograph and any watermark.",
+      "processing": "Visual match against existing images; local source name is not a listing index. ImageMagick -auto-orient -colorspace sRGB -resize WIDTHx> -strip -quality 78; widths 1440 and 720; no upscaling.",
+      "derivatives": [
+        {
+          "path": "assets/listing/52.webp",
+          "width": 1440,
+          "height": 958,
+          "sha256": "abeb0210ad041b59f56dc28394a2ff97d538b411d5f744505331f734235df1ba"
+        },
+        {
+          "path": "assets/listing/52-small.webp",
+          "width": 720,
+          "height": 479,
+          "sha256": "c77607137aad7809535e8b80c3524358c8e63a81b6dd991ffe60a031f5298a74"
+        }
+      ]
+    },
+    {
+      "position": 53,
+      "id": "Owner collection addition 53 (2026-10-05)",
+      "caption": "Screened porch seating looking toward the dining table.",
+      "source": "listing info/pics/48.jpg",
+      "source_sha256": "a21b3a6568f787c4dcc0248682f3366daf7a327032e73d21ebc1959e9ecedc0f",
+      "source_size": [
+        1440,
+        953
+      ],
+      "provenance": "Owner-supplied MLS photograph",
+      "approval": "colonial-we3, 2026-10-05",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain complete photograph and any watermark.",
+      "processing": "Visual match against existing images; local source name is not a listing index. ImageMagick -auto-orient -colorspace sRGB -resize WIDTHx> -strip -quality 78; widths 1440 and 720; no upscaling.",
+      "derivatives": [
+        {
+          "path": "assets/listing/53.webp",
+          "width": 1440,
+          "height": 953,
+          "sha256": "f296503bc181ab2fc6b8821dc772745cde00bdd0e972ebc05459af36d9cdd0a8"
+        },
+        {
+          "path": "assets/listing/53-small.webp",
+          "width": 720,
+          "height": 477,
+          "sha256": "e6855c4d7a93cbb9cd3eae411e39f30f6779fbb974d54c0f337db6d8d7a37d4f"
+        }
+      ]
+    },
+    {
+      "position": 54,
+      "id": "Owner collection addition 54 (2026-10-05)",
+      "caption": "Tiled hallway with a wood bench and coat rack.",
+      "source": "listing info/pics/49.jpg",
+      "source_sha256": "248649a6122cb214f4fbba7d2ad38947b6d7f51a7ac2ac43c695a940777b8791",
+      "source_size": [
+        1440,
+        958
+      ],
+      "provenance": "Owner-supplied MLS photograph",
+      "approval": "colonial-we3, 2026-10-05",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain complete photograph and any watermark.",
+      "processing": "Visual match against existing images; local source name is not a listing index. ImageMagick -auto-orient -colorspace sRGB -resize WIDTHx> -strip -quality 78; widths 1440 and 720; no upscaling.",
+      "derivatives": [
+        {
+          "path": "assets/listing/54.webp",
+          "width": 1440,
+          "height": 958,
+          "sha256": "0e433962bcb72ad43cbd8d50794efee054383d1ae835fccbf8f7ad8a6fada1e2"
+        },
+        {
+          "path": "assets/listing/54-small.webp",
+          "width": 720,
+          "height": 479,
+          "sha256": "d879576ee16e3f94fad02c65d25e2ea51d28daf675cc7340012e50197d25758c"
+        }
+      ]
+    },
+    {
+      "position": 55,
+      "id": "Owner collection addition 55 (2026-10-05)",
+      "caption": "Primary bath with a long wood vanity beside the jetted tub.",
+      "source": "listing info/pics/52.jpg",
+      "source_sha256": "ee6c71e1d9dc1e620ebab89273a797aa4e2b29dd4c57f44bb7d47d384bb13d56",
+      "source_size": [
+        1440,
+        958
+      ],
+      "provenance": "Owner-supplied MLS photograph",
+      "approval": "colonial-we3, 2026-10-05",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain complete photograph and any watermark.",
+      "processing": "Visual match against existing images; local source name is not a listing index. ImageMagick -auto-orient -colorspace sRGB -resize WIDTHx> -strip -quality 78; widths 1440 and 720; no upscaling.",
+      "derivatives": [
+        {
+          "path": "assets/listing/55.webp",
+          "width": 1440,
+          "height": 958,
+          "sha256": "de808f1d98176dd2eee37c0d5070def15a70a4687945fcad1b74335b19cc75f3"
+        },
+        {
+          "path": "assets/listing/55-small.webp",
+          "width": 720,
+          "height": 479,
+          "sha256": "a1d0ca3f6e3f9fe97c82a6bc672b37f578f9c2f77c127f01da09433e884aaef1"
+        }
+      ]
+    },
+    {
+      "position": 56,
+      "id": "Owner collection addition 56 (2026-10-05)",
+      "caption": "Primary bath looking past the vanity and tub toward the separate shower.",
+      "source": "listing info/pics/53.jpg",
+      "source_sha256": "42df238c93875846a58769df0011b90015fbe7228bcf75e71045408de3993a81",
+      "source_size": [
+        1440,
+        958
+      ],
+      "provenance": "Owner-supplied MLS photograph",
+      "approval": "colonial-we3, 2026-10-05",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain complete photograph and any watermark.",
+      "processing": "Visual match against existing images; local source name is not a listing index. ImageMagick -auto-orient -colorspace sRGB -resize WIDTHx> -strip -quality 78; widths 1440 and 720; no upscaling.",
+      "derivatives": [
+        {
+          "path": "assets/listing/56.webp",
+          "width": 1440,
+          "height": 958,
+          "sha256": "b4c85385cc8a3772b772179630a9b5dc283a0f0cec69e1908dc856c0654c53e8"
+        },
+        {
+          "path": "assets/listing/56-small.webp",
+          "width": 720,
+          "height": 479,
+          "sha256": "cb2d0023691c9a3b77be7985c0df81496df40f1fc0a24f04faa03e0e253821e4"
+        }
+      ]
+    },
+    {
+      "position": 57,
+      "id": "Owner collection addition 57 (2026-10-05)",
+      "caption": "Upper landing beside the loft railing and full-bath doorway.",
+      "source": "listing info/pics/56.jpg",
+      "source_sha256": "47e85ccdae3de09ddfb0916fdff91f2930d8a6cf8a64e2909522ca4a2e3646be",
+      "source_size": [
+        1440,
+        958
+      ],
+      "provenance": "Owner-supplied MLS photograph",
+      "approval": "colonial-we3, 2026-10-05",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain complete photograph and any watermark.",
+      "processing": "Visual match against existing images; local source name is not a listing index. ImageMagick -auto-orient -colorspace sRGB -resize WIDTHx> -strip -quality 78; widths 1440 and 720; no upscaling.",
+      "derivatives": [
+        {
+          "path": "assets/listing/57.webp",
+          "width": 1440,
+          "height": 958,
+          "sha256": "6fddec2e7d27f83f864f2fd521d11300b4b24689618908b3220f5000b2f5621f"
+        },
+        {
+          "path": "assets/listing/57-small.webp",
+          "width": 720,
+          "height": 479,
+          "sha256": "68b3346f4d0ec395f7071f95674841c0428bc05f3e579ab6b13b5023689b23f2"
+        }
+      ]
+    },
+    {
+      "position": 58,
+      "id": "Owner collection addition 58 (2026-10-05)",
+      "caption": "Upper loft seating beside the open stairwell.",
+      "source": "listing info/pics/57.jpg",
+      "source_sha256": "0daafef4cac12610ee4336479417e8060ea1b679655ad4f35263ef11590f5b02",
+      "source_size": [
+        1440,
+        955
+      ],
+      "provenance": "Owner-supplied MLS photograph",
+      "approval": "colonial-we3, 2026-10-05",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain complete photograph and any watermark.",
+      "processing": "Visual match against existing images; local source name is not a listing index. ImageMagick -auto-orient -colorspace sRGB -resize WIDTHx> -strip -quality 78; widths 1440 and 720; no upscaling.",
+      "derivatives": [
+        {
+          "path": "assets/listing/58.webp",
+          "width": 1440,
+          "height": 955,
+          "sha256": "0f6ade54cd89c32626b9e82d6b4c2c4a42933365b79c7d2744bb72cd3d2d8bbd"
+        },
+        {
+          "path": "assets/listing/58-small.webp",
+          "width": 720,
+          "height": 478,
+          "sha256": "ea74430e9e7060936a68e1e7ce7bab19f779b3338a703da559dc2bbfaee1edad"
+        }
+      ]
+    },
+    {
+      "position": 59,
+      "id": "Owner collection addition 59 (2026-10-05)",
+      "caption": "Tall great-room windows viewed from the upper level.",
+      "source": "listing info/pics/58.jpg",
+      "source_sha256": "1d8f5f7312edd71af00ae3a9592885c66b4f7ce0407dedef96ff814a2b26948d",
+      "source_size": [
+        1440,
+        957
+      ],
+      "provenance": "Owner-supplied MLS photograph",
+      "approval": "colonial-we3, 2026-10-05",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain complete photograph and any watermark.",
+      "processing": "Visual match against existing images; local source name is not a listing index. ImageMagick -auto-orient -colorspace sRGB -resize WIDTHx> -strip -quality 78; widths 1440 and 720; no upscaling.",
+      "derivatives": [
+        {
+          "path": "assets/listing/59.webp",
+          "width": 1440,
+          "height": 957,
+          "sha256": "712d9be453262bad1fc57a09f0bda222c81971055bffccd909a9f7bf5d9cb9e8"
+        },
+        {
+          "path": "assets/listing/59-small.webp",
+          "width": 720,
+          "height": 479,
+          "sha256": "7eaab36a44764ea33a8e7386e4d4044e235d3c0cf66fe26729a7b3170b61548d"
+        }
+      ]
+    },
+    {
+      "position": 60,
+      "id": "Owner collection addition 60 (2026-10-05)",
+      "caption": "Upstairs bedroom looking toward its doors and sloped ceiling.",
+      "source": "listing info/pics/59.jpg",
+      "source_sha256": "c2046b3b2c1a67e0c133a0b9481d086debd82359b863d2321e3e523c374ed0b2",
+      "source_size": [
+        1440,
+        958
+      ],
+      "provenance": "Owner-supplied MLS photograph",
+      "approval": "colonial-we3, 2026-10-05",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain complete photograph and any watermark.",
+      "processing": "Visual match against existing images; local source name is not a listing index. ImageMagick -auto-orient -colorspace sRGB -resize WIDTHx> -strip -quality 78; widths 1440 and 720; no upscaling.",
+      "derivatives": [
+        {
+          "path": "assets/listing/60.webp",
+          "width": 1440,
+          "height": 958,
+          "sha256": "0bbd7d365948e7726bad0a2cf9780a6380f20afd7e6d480e488dc603c741c957"
+        },
+        {
+          "path": "assets/listing/60-small.webp",
+          "width": 720,
+          "height": 479,
+          "sha256": "561dd1f4fa5314b37b2b19b45eb3aebd35bb367ba8838d1e421e910fce1ae9f7"
+        }
+      ]
+    },
+    {
+      "position": 61,
+      "id": "Owner collection addition 61 (2026-10-05)",
+      "caption": "Upper loft looking toward the seating area and wood doors.",
+      "source": "listing info/pics/60.jpg",
+      "source_sha256": "db658eebc588fc5e9e5b9d8e482e8252b7792445188d7885e9dbe91f79361518",
+      "source_size": [
+        1440,
+        958
+      ],
+      "provenance": "Owner-supplied MLS photograph",
+      "approval": "colonial-we3, 2026-10-05",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain complete photograph and any watermark.",
+      "processing": "Visual match against existing images; local source name is not a listing index. ImageMagick -auto-orient -colorspace sRGB -resize WIDTHx> -strip -quality 78; widths 1440 and 720; no upscaling.",
+      "derivatives": [
+        {
+          "path": "assets/listing/61.webp",
+          "width": 1440,
+          "height": 958,
+          "sha256": "8faeb3136d5e1e24c381f498ce8781b7aa45b6095347efe1aff08606c2a9535b"
+        },
+        {
+          "path": "assets/listing/61-small.webp",
+          "width": 720,
+          "height": 479,
+          "sha256": "cde40ddd68733a3afa3a114ff52f25b1b07db05d97ee4d55b63a4ebbc1f2866c"
+        }
+      ]
+    },
+    {
+      "position": 62,
+      "id": "Owner collection addition 62 (2026-10-05)",
+      "caption": "Wooded hillside and curved stone-edged garden beds.",
+      "source": "listing info/pics/66.jpg",
+      "source_sha256": "b409fd07a98ff85d23f6737a538ffe39bda5ba6c20bf2866ee294c459c277eb3",
+      "source_size": [
+        1440,
+        957
+      ],
+      "provenance": "Owner-supplied MLS photograph",
+      "approval": "colonial-we3, 2026-10-05",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain complete photograph and any watermark.",
+      "processing": "Visual match against existing images; local source name is not a listing index. ImageMagick -auto-orient -colorspace sRGB -resize WIDTHx> -strip -quality 78; widths 1200 and 720; no upscaling. Full derivative limited to 1200px to retain quality 78 within the existing 500KB image budget.",
+      "derivatives": [
+        {
+          "path": "assets/listing/62.webp",
+          "width": 1200,
+          "height": 798,
+          "sha256": "66d634aea9751592302f5f0ff353f6d90d33d37549fbf222734b9be0c7fface0"
+        },
+        {
+          "path": "assets/listing/62-small.webp",
+          "width": 720,
+          "height": 479,
+          "sha256": "3ab175988ebfca1576aff22e6cab750f460b609e9b3140ea09389401d59c8d60"
+        }
+      ]
+    },
+    {
+      "position": 63,
+      "id": "Owner collection addition 63 (2026-10-05)",
+      "caption": "Stepping-stone path beside the house and wooded slope.",
+      "source": "listing info/pics/67.jpg",
+      "source_sha256": "36dce933fec060e9d23250f563ac3b232d01e9f9e0149b3856646c434e0442a7",
+      "source_size": [
+        1440,
+        955
+      ],
+      "provenance": "Owner-supplied MLS photograph",
+      "approval": "colonial-we3, 2026-10-05",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain complete photograph and any watermark.",
+      "processing": "Visual match against existing images; local source name is not a listing index. ImageMagick -auto-orient -colorspace sRGB -resize WIDTHx> -strip -quality 78; widths 1200 and 720; no upscaling. Full derivative limited to 1200px to retain quality 78 within the existing 500KB image budget.",
+      "derivatives": [
+        {
+          "path": "assets/listing/63.webp",
+          "width": 1200,
+          "height": 796,
+          "sha256": "de19e700b07fa36f04b210bac8d87bafab031723ce559f2861c28b299c8f4c6a"
+        },
+        {
+          "path": "assets/listing/63-small.webp",
+          "width": 720,
+          "height": 478,
+          "sha256": "93a6b57e9b7d874ca66a759b23f880c1f7e2a020f78d4d13d1b0f073d16c15c4"
+        }
+      ]
+    },
+    {
+      "position": 64,
+      "id": "Owner collection addition 64 (2026-10-05)",
+      "caption": "Side of the house with steps leading down toward the screened porch.",
+      "source": "listing info/pics/68.jpg",
+      "source_sha256": "428c06ae4075ef43482ac0fb44baa5818b2dc68eebdf5baee24040c3ae22777d",
+      "source_size": [
+        1440,
+        955
+      ],
+      "provenance": "Owner-supplied MLS photograph",
+      "approval": "colonial-we3, 2026-10-05",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain complete photograph and any watermark.",
+      "processing": "Visual match against existing images; local source name is not a listing index. ImageMagick -auto-orient -colorspace sRGB -resize WIDTHx> -strip -quality 78; widths 1440 and 720; no upscaling.",
+      "derivatives": [
+        {
+          "path": "assets/listing/64.webp",
+          "width": 1440,
+          "height": 955,
+          "sha256": "c8eab9ab3e700efb867b9d48aa6e8a2c26fd4377e237579a2c3c9fbcd5db2610"
+        },
+        {
+          "path": "assets/listing/64-small.webp",
+          "width": 720,
+          "height": 478,
+          "sha256": "346019480a83d022c50187b094dbfed954be7158f0c1654989531ed7edd5d926"
+        }
+      ]
+    },
+    {
+      "position": 65,
+      "id": "Owner collection addition 65 (2026-10-05)",
+      "caption": "Fenced garden beds viewed from the hillside.",
+      "source": "listing info/pics/69.jpg",
+      "source_sha256": "e56d2aadbdf67372b635361a2543ca07d5b8127f5cc293e63d9b11b597a82bb5",
+      "source_size": [
+        1440,
+        955
+      ],
+      "provenance": "Owner-supplied MLS photograph",
+      "approval": "colonial-we3, 2026-10-05",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain complete photograph and any watermark.",
+      "processing": "Visual match against existing images; local source name is not a listing index. ImageMagick -auto-orient -colorspace sRGB -resize WIDTHx> -strip -quality 78; widths 1200 and 720; no upscaling. Full derivative limited to 1200px to retain quality 78 within the existing 500KB image budget.",
+      "derivatives": [
+        {
+          "path": "assets/listing/65.webp",
+          "width": 1200,
+          "height": 796,
+          "sha256": "6be4829c0ba537b2c555e49c0421cc14653bedfc2ae43482593e5625898d3a89"
+        },
+        {
+          "path": "assets/listing/65-small.webp",
+          "width": 720,
+          "height": 478,
+          "sha256": "9af6a555dc46596f4ba5987ea2daa619da4355fc9c7e02a00a8628b019b32a9c"
+        }
+      ]
+    },
+    {
+      "position": 66,
+      "id": "Owner collection addition 66 (2026-10-05)",
+      "caption": "Stone steps and paved landing among woodland plantings.",
+      "source": "listing info/pics/70.jpg",
+      "source_sha256": "591c5f486d4b9d0ab468f41b58b72ef254e2fd2315a8b268cb3e779a1fc7402b",
+      "source_size": [
+        1440,
+        958
+      ],
+      "provenance": "Owner-supplied MLS photograph",
+      "approval": "colonial-we3, 2026-10-05",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain complete photograph and any watermark.",
+      "processing": "Visual match against existing images; local source name is not a listing index. ImageMagick -auto-orient -colorspace sRGB -resize WIDTHx> -strip -quality 78; widths 1200 and 720; no upscaling. Full derivative limited to 1200px to retain quality 78 within the existing 500KB image budget.",
+      "derivatives": [
+        {
+          "path": "assets/listing/66.webp",
+          "width": 1200,
+          "height": 798,
+          "sha256": "fe278143f962297e4f8ebb5db23fb7dcd1bdc8a091fe6b085591508d67e905eb"
+        },
+        {
+          "path": "assets/listing/66-small.webp",
+          "width": 720,
+          "height": 479,
+          "sha256": "4ea4063c19012cdda9a80df11a23331c82364a48e8117186f4376fc3e5e7f765"
+        }
+      ]
+    },
+    {
+      "position": 67,
+      "id": "Owner collection addition 67 (2026-10-05)",
+      "caption": "Gravel path leading through the trees to the firepit.",
+      "source": "listing info/pics/71.jpg",
+      "source_sha256": "587c2f1c75eb1b599e8a2aacf51cedd03d2705174cb954e977053f42155a11e3",
+      "source_size": [
+        1440,
+        957
+      ],
+      "provenance": "Owner-supplied MLS photograph",
+      "approval": "colonial-we3, 2026-10-05",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain complete photograph and any watermark.",
+      "processing": "Visual match against existing images; local source name is not a listing index. ImageMagick -auto-orient -colorspace sRGB -resize WIDTHx> -strip -quality 78; widths 1200 and 720; no upscaling. Full derivative limited to 1200px to retain quality 78 within the existing 500KB image budget.",
+      "derivatives": [
+        {
+          "path": "assets/listing/67.webp",
+          "width": 1200,
+          "height": 798,
+          "sha256": "610197e4a5e92ea8b87d93a0eb15c2e05c051260584b33deaccf0f1d62bbf652"
+        },
+        {
+          "path": "assets/listing/67-small.webp",
+          "width": 720,
+          "height": 479,
+          "sha256": "83d226c7417702c08b51d03a9446889bb462f6cd7afbd0a9dc08a5d315da9d56"
+        }
+      ]
+    },
+    {
+      "position": 68,
+      "id": "Owner collection addition 68 (2026-10-05)",
+      "caption": "Woodland planting beds along the sloping ground.",
+      "source": "listing info/pics/72.jpg",
+      "source_sha256": "4379c9e0dbb6da4ee37ecb605691d100e118e41ac5a60f9fdf3fbd60ead31bdc",
+      "source_size": [
+        1440,
+        959
+      ],
+      "provenance": "Owner-supplied MLS photograph",
+      "approval": "colonial-we3, 2026-10-05",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain complete photograph and any watermark.",
+      "processing": "Visual match against existing images; local source name is not a listing index. ImageMagick -auto-orient -colorspace sRGB -resize WIDTHx> -strip -quality 78; widths 1200 and 720; no upscaling. Full derivative limited to 1200px to retain quality 78 within the existing 500KB image budget.",
+      "derivatives": [
+        {
+          "path": "assets/listing/68.webp",
+          "width": 1200,
+          "height": 799,
+          "sha256": "2bf8bfe7dbb63acd85b23968655579cddd18ba205d9ab3ba131a6b4f34250425"
+        },
+        {
+          "path": "assets/listing/68-small.webp",
+          "width": 720,
+          "height": 480,
+          "sha256": "395ec00601a444a1fae6e575a4fe65dde7dd7742bb91f309cb8abd98d6b8fb00"
+        }
+      ]
+    },
+    {
+      "position": 69,
+      "id": "Owner collection addition 69 (2026-10-05)",
+      "caption": "The rear of the house and screened porch among the trees.",
+      "source": "listing info/pics/73.jpg",
+      "source_sha256": "e9453ea810c8c565fc60be88c6d9342a1b5eb188a0b42d709ba0ad2e174886a6",
+      "source_size": [
+        1440,
+        810
+      ],
+      "provenance": "Owner-supplied MLS photograph",
+      "approval": "colonial-we3, 2026-10-05",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain complete photograph and any watermark.",
+      "processing": "Visual match against existing images; local source name is not a listing index. ImageMagick -auto-orient -colorspace sRGB -resize WIDTHx> -strip -quality 78; widths 1440 and 720; no upscaling.",
+      "derivatives": [
+        {
+          "path": "assets/listing/69.webp",
+          "width": 1440,
+          "height": 810,
+          "sha256": "65522060c3c939feeea73522f59dbd67bddd376bf9f1bbbe7e9c38ffba436484"
+        },
+        {
+          "path": "assets/listing/69-small.webp",
+          "width": 720,
+          "height": 405,
+          "sha256": "a64cd2797a0be15401acc55d46bcd2a5296fc70f11a915bbeb41668d82368a4b"
+        }
+      ]
+    },
+    {
+      "position": 70,
+      "id": "Owner collection addition 70 (2026-10-05)",
+      "caption": "Aerial view across the wooded neighborhood toward the mountain ridge.",
+      "source": "listing info/pics/74.jpg",
+      "source_sha256": "394807a6cc2cad10456a64c6003d08c089e5962ac9b05d2c77a943d84da6cbf8",
+      "source_size": [
+        1440,
+        809
+      ],
+      "provenance": "Owner-supplied MLS photograph",
+      "approval": "colonial-we3, 2026-10-05",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain complete photograph and any watermark.",
+      "processing": "Visual match against existing images; local source name is not a listing index. ImageMagick -auto-orient -colorspace sRGB -resize WIDTHx> -strip -quality 78; widths 1440 and 720; no upscaling.",
+      "derivatives": [
+        {
+          "path": "assets/listing/70.webp",
+          "width": 1440,
+          "height": 809,
+          "sha256": "b9c6e8e7a88bcbaf013235ca852e666762c1c4a8747556dfd7243749933303d9"
+        },
+        {
+          "path": "assets/listing/70-small.webp",
+          "width": 720,
+          "height": 405,
+          "sha256": "27922f074502dd6ba91dba64e246432036a95b556402a35b29567675e8076a49"
+        }
+      ]
+    },
+    {
+      "position": 71,
+      "id": "Owner collection addition 71 (2026-10-05)",
+      "caption": "Aerial view of the surrounding tree canopy and distant ridges.",
+      "source": "listing info/pics/76.jpg",
+      "source_sha256": "8b7a38aaa2917c3abcaa1fed062480003d16890cafc28ca21fb9d82dad07ed70",
+      "source_size": [
+        1440,
+        810
+      ],
+      "provenance": "Owner-supplied MLS photograph",
+      "approval": "colonial-we3, 2026-10-05",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain complete photograph and any watermark.",
+      "processing": "Visual match against existing images; local source name is not a listing index. ImageMagick -auto-orient -colorspace sRGB -resize WIDTHx> -strip -quality 78; widths 1440 and 720; no upscaling.",
+      "derivatives": [
+        {
+          "path": "assets/listing/71.webp",
+          "width": 1440,
+          "height": 810,
+          "sha256": "999b4e70f4809ce198c3fc1af2eaeead11772fb02693a6b06b954bafb097c32a"
+        },
+        {
+          "path": "assets/listing/71-small.webp",
+          "width": 720,
+          "height": 405,
+          "sha256": "cf071b5685ee74522580344631db329c7d7f8a6b2c45548631da04c703966dbc"
+        }
+      ]
+    },
+    {
+      "position": 72,
+      "id": "Owner collection addition 72 (2026-10-05)",
+      "caption": "Overhead view of the house within the surrounding woods.",
+      "source": "listing info/pics/77.jpg",
+      "source_sha256": "631d6b2acf2692f5100aac40d2c4e683fc62d7e5dfa775d644a0580c279ab0a3",
+      "source_size": [
+        1440,
+        810
+      ],
+      "provenance": "Owner-supplied MLS photograph",
+      "approval": "colonial-we3, 2026-10-05",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain complete photograph and any watermark.",
+      "processing": "Visual match against existing images; local source name is not a listing index. ImageMagick -auto-orient -colorspace sRGB -resize WIDTHx> -strip -quality 78; widths 1200 and 720; no upscaling. Full derivative limited to 1200px to retain quality 78 within the existing 500KB image budget.",
+      "derivatives": [
+        {
+          "path": "assets/listing/72.webp",
+          "width": 1200,
+          "height": 675,
+          "sha256": "b84b4c1c1c6d01a59dfab873758f963272c01c90321939699b33dc3075ac7280"
+        },
+        {
+          "path": "assets/listing/72-small.webp",
+          "width": 720,
+          "height": 405,
+          "sha256": "d2692b5981b054d8231a5823a53d2b96cbd4166ba15adccf3db2f944279232cb"
+        }
+      ]
+    },
+    {
+      "position": 73,
+      "id": "Owner collection addition 73 (2026-10-05)",
+      "caption": "Unfinished basement looking along the walkout doors, storage area and stairs.",
+      "source": "owner photos/basement2.jpeg",
+      "source_sha256": "952fced60e04bdebac3444abd4e94c390a75bb1a43b46ede0fdcfa9ee539e2a0",
+      "source_size": [
+        3768,
+        2554
+      ],
+      "provenance": "Owner photograph",
+      "approval": "colonial-we3, 2026-10-05",
+      "crop_xywh": null,
+      "crop_note": "Uncropped; retain complete photograph and any watermark.",
+      "processing": "Visual match against existing images; local source name is not a listing index. ImageMagick -auto-orient -colorspace sRGB -resize WIDTHx> -strip -quality 78; widths 1600 and 720; no upscaling.",
+      "derivatives": [
+        {
+          "path": "assets/listing/73.webp",
+          "width": 1600,
+          "height": 1085,
+          "sha256": "72b7d9917aab73460bf091383c6cb1d9778607678b3465df66585b928d9a6fea"
+        },
+        {
+          "path": "assets/listing/73-small.webp",
+          "width": 720,
+          "height": 488,
+          "sha256": "f28ba27881fda7a5a62b988e8b54db23a2759a9bc72510e3c75aa32a34708c89"
+        }
+      ]
     }
   ],
   "edit_approval": "colonial-1h8; owner requested replacement with numbered PNG exports"

@@ -194,7 +194,6 @@ body:has(dialog[open]) { overflow: hidden; }
   .viewer-controls a { flex: 1; justify-content: center; font-size: 12px; }
 }
 @media (max-width: 360px) {
-  #all-photos .photo-dots { gap: 1px; }
   .masthead { padding-inline: 12px; gap: 8px; }
   .property-identity h1 { font-size: 22px; }
 }

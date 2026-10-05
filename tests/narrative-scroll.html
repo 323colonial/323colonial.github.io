@@ -28,7 +28,7 @@ try {
   check(story.querySelector('.story-photos figure:not([hidden])')?.dataset.position === '3', 'first relevant photo');
   win.scrollTo(0, start + story.offsetHeight - stage.offsetHeight - 2);
   await settle();
-  check(story.querySelector('.story-photos figure:not([hidden])')?.dataset.position === '11', 'vertical scroll advances photo');
+  check(story.querySelector('.story-photos figure:not([hidden])')?.dataset.position === '54', 'vertical scroll advances photo');
   win.scrollTo(0, start + 2);
   await settle();
   check(story.querySelector('.story-photos figure:not([hidden])')?.dataset.position === '3', 'reverse scroll restores photo');
@@ -42,7 +42,7 @@ try {
   await settle();
   check(doc.activeElement === plan, 'popup restores contextual opener focus');
   doc.querySelector('[data-all-photos]').click();
-  check(doc.querySelector('#all-photos').open && doc.querySelectorAll('#all-photos [data-gallery-image]').length === 38, 'all 38 photos in popup');
+  check(doc.querySelector('#all-photos').open && doc.querySelectorAll('#all-photos [data-gallery-image]').length === 73, 'all 73 photos in popup');
   doc.querySelector('#all-photos [data-gallery-image]').click();
   check(viewer.open, 'catalog opens enlarged viewer');
   viewer.close();
@@ -75,6 +75,15 @@ try {
         check(dots.length === photos.length && dots.every((dot, i) => dot.classList.contains('is-current') === (i === current)),
           `${label}: dots follow scroll/focus at ${position}`);
       };
+      check(section.offsetHeight <= offset + sticky.getBoundingClientRect().height + padding + photos.length * step + 1,
+        `${label}: scroll length stays one existing step per photo`);
+      for (const indices of [photos.map((_, i) => i), photos.map((_, i) => i).reverse()]) {
+        for (const index of indices) {
+          await seek(index + .1);
+          check(!photos[index].hidden && !photos[index].inert && Number(photos[index].style.getPropertyValue('--photo-opacity')) === 1,
+            `${label}: complete forward/reverse coverage for photo ${photos[index].dataset.position}`);
+        }
+      }
       const opacity = photo => photo.hidden ? 0 : Number(win.getComputedStyle(photo.querySelector('a')).opacity);
       await seek(.625);
       const early = opacity(photos[1]);
