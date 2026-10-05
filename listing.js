@@ -14,7 +14,8 @@ function updatePhotos() {
     focusedPhoto = document.activeElement.closest('.story-photos figure');
   }
   for (const track of tracks) {
-    const top = track.story.getBoundingClientRect().top + scrollY;
+    const bounds = track.story.getBoundingClientRect();
+    const top = bounds.top + scrollY;
     const position = Math.max(0, Math.min(track.photos.length - 1,
       (scrollY - top - track.offset + track.stickyTop) / track.step));
     // Hold each photo for half a step, then blend directly with scroll (no timed easing).
@@ -30,9 +31,9 @@ function updatePhotos() {
       photo.setAttribute('aria-hidden', String(i !== index));
     });
     track.counter.textContent = `${index + 1} / ${track.photos.length}`;
-    // Load the next frame before its scroll threshold, without eager-loading the full gallery.
+    // Preload only nearby sequences, not the next frame of every distant story.
     const next = track.photos[index + 1]?.querySelector('img');
-    if (next) next.loading = 'eager';
+    if (next && bounds.top < innerHeight * 2 && bounds.bottom > 0) next.loading = 'eager';
   }
 }
 

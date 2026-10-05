@@ -1,0 +1,66 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Buyer audit regression</title>
+<h1>Buyer audit regression</h1>
+<pre id="results">Running…</pre>
+<iframe title="Buyer page under test" style="border:0"></iframe>
+<script type="module">
+const frame = document.querySelector('iframe');
+const results = [];
+const check = (ok, name) => results.push(`${ok ? 'PASS' : 'FAIL'}: ${name}`);
+const settle = win => new Promise(resolve => win.requestAnimationFrame(() => win.requestAnimationFrame(resolve)));
+try {
+  for (const [width, height, scripts] of [[1440, 1000, true], [320, 256, true], [844, 390, true], [1440, 500, true], [390, 844, true], [320, 256, false]]) {
+    frame.style.width = `${width}px`;
+    frame.style.height = `${height}px`;
+    if (scripts) frame.removeAttribute('sandbox');
+    else frame.setAttribute('sandbox', 'allow-same-origin');
+    await new Promise(resolve => { frame.onload = resolve; frame.src = `../index.html?audit=${width}-${height}-${scripts}`; });
+    const doc = frame.contentDocument, win = frame.contentWindow;
+    await settle(win);
+    const label = `${width}×${height}${scripts ? '' : ' no JS'}`;
+    if (width === 1440 && height === 1000) {
+      const distant = [...doc.querySelectorAll('.story')].filter(story => story.getBoundingClientRect().top > height * 2);
+      check(distant.length > 0 && distant.every(story => [...story.querySelectorAll('img')].every(img => img.loading === 'lazy')),
+        'distant sequences retain native lazy loading');
+      const viewerImage = doc.querySelector('#viewer-image');
+      // Run before narrow-view hero loads can warm the iframe's image cache.
+      check(!viewerImage.currentSrc && !win.performance.getEntriesByType('resource').some(entry => entry.name.endsWith('/01-small.webp')),
+        'closed viewer does not request initial image');
+      const story = doc.querySelector('.story');
+      story.scrollIntoView();
+      await settle(win);
+      const next = story.querySelectorAll('.story-photos img')[1];
+      check(next.loading === 'eager', 'nearby sequence preloads its next photo');
+      await next.decode();
+      check(next.naturalWidth > 0, 'next photo is loadable before transition');
+      doc.querySelector('[data-photo="31"]').click();
+      await viewerImage.decode();
+      check(doc.querySelector('#photo-viewer').open && viewerImage.currentSrc.endsWith('/31.webp') && viewerImage.naturalWidth > 0,
+        'viewer loads selected image on demand');
+      doc.querySelector('#photo-viewer').close();
+      await settle(win);
+    }
+    doc.querySelector('#details-heading').scrollIntoView();
+    await settle(win);
+    const header = doc.querySelector('.masthead').getBoundingClientRect();
+    const facts = doc.querySelector('.listing-summary').getBoundingClientRect();
+    check(Math.abs(header.top) < 1, `${label}: contact header stays accessible`);
+    check(height - Math.max(header.bottom, facts.bottom) >= 160, `${label}: at least 160px remains for reading`);
+    check(height <= 500 ? facts.bottom <= 0 : Math.abs(facts.top - header.bottom) < 2,
+      `${label}: facts ${height <= 500 ? 'scroll away' : 'dock below header'}`);
+    check(doc.documentElement.scrollWidth <= width, `${label}: no horizontal overflow`);
+    // Anchor clearance must match only the bars that actually remain pinned.
+    if (height <= 500) check(parseFloat(win.getComputedStyle(doc.documentElement).scrollPaddingTop) <= header.height + 24,
+      `${label}: short-screen anchor clearance excludes facts`);
+    doc.querySelector('.showing-contact').open = true;
+    const call = doc.querySelector('.contact-panel .button');
+    call.focus();
+    const target = call.getBoundingClientRect();
+    check(target.height >= 44 && call.contains(doc.elementFromPoint(target.x + target.width / 2, target.y + target.height / 2)),
+      `${label}: brokerage call is reachable`);
+  }
+} catch (error) { check(false, error.message); }
+document.querySelector('#results').textContent = results.join('\n');
+document.title = results.some(row => row.startsWith('FAIL')) ? 'FAIL: buyer audit' : 'PASS: buyer audit';
+</script>

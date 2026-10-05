@@ -183,6 +183,10 @@ body:has(dialog[open]) { overflow: hidden; }
   .property-identity h1 { font-size: 22px; }
   .quick-facts small { display: block; }
 }
+@media (max-height: 500px) {
+  .listing-summary { position: static; }
+  html { scroll-padding-top: calc(var(--header-height) + 24px); }
+}
 @media print {
   .masthead, .listing-summary, .story-stage, .story-photos { position: static !important; }
   .showing-contact, .header-public, dialog, .scroll-cue { display: none !important; }
