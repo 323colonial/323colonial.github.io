@@ -246,7 +246,7 @@ No shadows or blur. Tonal fields and 1px rules provide separation. The header la
 
 ## Shapes
 
-Square controls and image frames, without rounded cards or decorative clipping. Hero and inline photos retain natural proportions; sequenced and enlarged images use contain-fit. Source watermarks and image borders remain pixels, not new UI decoration.
+Square controls and image frames, without rounded cards or decorative clipping. Hero and inline photos retain natural proportions; sequenced and enlarged images use contain-fit. Source watermarks remain pixels, not new UI decoration. Confirmed solid outer photo margins are trimmed per `assets/listing/margin-review.md`; ambiguous edge pixels and photographic content remain intact.
 
 ## Components
 

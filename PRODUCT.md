@@ -79,8 +79,8 @@ Sherwin-Williams · 814 S Loudoun St, Winchester, VA 22601-4597.
 ## Evidence and regeneration
 
 - Approved revised DOCX remains at `/Users/hays/Downloads/Listing Feedback 323 Colonial Dr.docx`, unchanged; not copied into the public site. Approved document, embedded media and legacy file SHA-256 hashes live in `tests/fixtures/approved-listing.json`.
-- `assets/listing/manifest.json` maps all 33 positions to embedded source relationship targets, exact captions, crop rectangles/decisions and output hashes. Derivatives are WebP at maximum 1600px and 720px, quality 78, with no upscaling or new generative edits.
-- Reproduce with installed ImageMagick: `python3 scripts/extract-listing.py '/path/to/Listing Feedback 323 Colonial Dr.docx'`. Extraction rejects a source that differs from the approved hashes. No extraction is required to serve the committed website.
+- `assets/listing/manifest.json` maps all 33 positions to original embedded sources, current owner-edited PNG hashes, exact captions and output hashes. Derivatives use WebP quality 78. Colonial-286 removes confirmed solid outer margins from 16 photographs without changing their existing scale; all other files remain unchanged. Bounds, conservative edge decisions and reproduction instructions live in `assets/listing/margin-review.md`.
+- Reproduce reviewed trims with installed ImageMagick: `python3 scripts/trim-listing-margins.py '/path/to/edited-listing-photos' '/tmp/reproduced-margin-trims'`. The historical `extract-listing.py` reproduces pre-edit DOCX images, not the current edited/trimmed assets; do not use it to overwrite the current site. No extraction is required to serve the committed website.
 - Legacy `images/photo-*.jpg`, simulation sources, `images/planned-colours.json`, old reference plans and `assets/plates/` remain untouched. Basement drawing/pricing history lives in a separate CAD project.
 - Existing Impeccable mock/build artifacts describe the superseded monograph composition; they are not authority over this approved brief. `DESIGN.md` and `.impeccable/design.json` describe the current buyer listing; legacy styling remains separate.
 

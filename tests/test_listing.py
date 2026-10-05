@@ -171,6 +171,45 @@ class Listing(unittest.TestCase):
                     if src.strip():
                         self.assertTrue((ROOT / src.split()[0]).is_file())
 
+    def test_reviewed_margin_trims_and_responsive_dimensions(self):
+        # Left, top, right, bottom: visually approved margins, not an auto-trim.
+        margins = {
+            10: (4, 9, 6, 5), 11: (8, 7, 12, 13), 12: (8, 10, 8, 12),
+            13: (0, 10, 9, 8), 15: (8, 9, 10, 9), 17: (3, 5, 8, 5),
+            18: (3, 7, 8, 6), 19: (6, 6, 4, 7), 21: (6, 12, 10, 6),
+            22: (3, 10, 4, 4), 24: (6, 12, 6, 4), 26: (4, 6, 6, 6),
+            28: (9, 8, 7, 6), 29: (8, 9, 6, 7), 32: (4, 9, 8, 9),
+            33: (4, 5, 6, 5),
+        }
+        photos = json.loads((ROOT / 'assets/listing/manifest.json').read_text())['photos']
+        dimensions = {}
+        for photo in photos:
+            full = photo['derivatives'][0]
+            for d in photo['derivatives']:
+                dimensions[d['path']] = (d['width'], d['height'])
+                trim = d.get('margin_trim')
+                if photo['position'] not in margins:
+                    self.assertIsNone(trim)
+                    continue
+                self.assertIsNotNone(trim, f"Photo {photo['position']} still has its reviewed border")
+                fw, fh = full['margin_trim']['input_size']
+                iw, ih = trim['input_size']
+                left, top, right, bottom = margins[photo['position']]
+                left, right = left * iw // fw, right * iw // fw
+                top, bottom = top * ih // fh, bottom * ih // fh
+                self.assertEqual(trim['xywh'], [left, top, iw - left - right, ih - top - bottom])
+                self.assertEqual((d['width'], d['height']), tuple(trim['xywh'][2:]))
+                self.assertRegex(trim['retained_rgb_sha256'], r'^[0-9a-f]{64}$')
+        for filename in ('index.html', 'gallery.html'):
+            for img in Page(filename).root.all('img'):
+                if img.attrs.get('src') not in dimensions:
+                    continue
+                self.assertEqual((int(img.attrs['width']), int(img.attrs['height'])), dimensions[img.attrs['src']])
+                for candidate in img.attrs.get('srcset', '').split(','):
+                    if candidate.strip():
+                        path, width = candidate.split()
+                        self.assertEqual(int(width[:-1]), dimensions[path][0])
+
     def test_source_provenance_optimized_derivatives_and_legacy_preserved(self):
         manifest = ROOT / 'assets/listing/manifest.json'
         self.assertTrue(manifest.exists(), 'listing provenance manifest missing')
