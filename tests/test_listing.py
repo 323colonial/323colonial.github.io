@@ -254,8 +254,13 @@ class Listing(unittest.TestCase):
                 self.assertEqual(hashlib.sha256(content).hexdigest(), derivative['sha256'])
                 self.assertLess(len(content), 500_000)
                 self.assertEqual(content[8:12], b'WEBP')
+        # colonial-yec retires these routes; keep the original approval record intact.
+        retired = {'brochure.html', 'floorplans.html', 'sale-prep.html', 'styles.css'}
         for filename, expected in APPROVED['preserved_sha256'].items():
-            self.assertEqual(hashlib.sha256((ROOT / filename).read_bytes()).hexdigest(), expected, filename)
+            if filename in retired:
+                self.assertFalse((ROOT / filename).exists(), filename)
+            else:
+                self.assertEqual(hashlib.sha256((ROOT / filename).read_bytes()).hexdigest(), expected, filename)
 
 
 if __name__ == '__main__':

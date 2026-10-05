@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "reviewId": "colonial-yec",
+  "scope": "behavioral",
+  "reviewer": {
+    "target": "openai-codex/gpt-6-astra",
+    "family": "openai"
+  },
+  "findings": []
+}

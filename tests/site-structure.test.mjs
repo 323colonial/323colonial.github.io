@@ -1,165 +1,32 @@
 import assert from 'node:assert/strict';
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import test from 'node:test';
 
-// Legacy routes retain their original contract; tests/test_listing.py covers new buyer pages.
-const publicPages = ['floorplans.html'];
-const ownerPages = ['brochure.html', 'sale-prep.html'];
-const pages = [...publicPages, ...ownerPages];
-const html = Object.fromEntries(pages.map((file) => [file, existsSync(file) ? readFileSync(file, 'utf8') : '']));
-
-for (const file of publicPages) {
-  test(`${file} exposes buyer navigation and showing contact`, () => {
-    assert.match(html[file], /aria-label="Buyer navigation"/);
-    assert.match(html[file], /mailto:realtor@stevenhay\.com/);
-    assert.match(html[file], /href="styles\.css"/);
-    assert.match(html[file], /<a class="skip-link" href="#main-content">Skip to content<\/a>/);
-    assert.match(html[file], /<main[^>]*id="main-content"/);
-    assert.doesNotMatch(html[file], /<style\b/i);
-  });
-}
-
-test('owner records remain separate and preserve purchasing caveats', () => {
-  for (const file of ownerPages) {
-    assert.match(html[file], /<meta name="robots" content="noindex, nofollow">/);
-    assert.match(html[file], /aria-label="Owner records"/);
-    assert.doesNotMatch(html[file], /aria-label="Buyer navigation"/);
-    assert.match(html[file], /Confirm product compatibility/i);
+test('only buyer pages remain at the site root', () => {
+  assert.deepEqual(readdirSync('.').filter(file => file.endsWith('.html')).sort(), ['gallery.html', 'index.html']);
+  for (const file of ['brochure.html', 'floorplans.html', 'sale-prep.html', 'styles.css', 'tests/table-contrast.html']) {
+    assert.equal(existsSync(file), false, `${file}: retired route or dependency returned`);
   }
 });
 
-test('floor-plan route leads with current photography before drawings', () => {
-  const page = html['floorplans.html'];
-  const currentPhoto = page.search(/images\/photo-[^"']+\.jpg/);
-  const firstPlan = page.search(/images\/plan-[^"']+\.png/);
-  assert.ok(currentPhoto >= 0, 'current-property photograph missing');
-  assert.ok(firstPlan > currentPhoto, 'reference drawings must follow current-property photography');
-});
-
-test('floor-plan introduction links directly to both named sheets', () => {
-  const plans = html['floorplans.html'];
-  const intro = plans.match(/<header class="record-intro record-intro--plans">([\s\S]*?)<\/header>/)?.[1] || '';
-  assert.match(intro, /<nav[^>]*aria-label="Floor-plan sheets"/);
-  for (const [id, label] of [['main-floor', 'Main floor'], ['second-floor', 'Second floor']]) {
-    assert.match(intro, new RegExp(`<a[^>]*href="#${id}"[^>]*>${label}</a>`));
-    assert.match(plans, new RegExp(`<section[^>]*id="${id}"[^>]*aria-labelledby="${id}-heading"`));
-  }
-});
-
-test('public floorplans use marketing crops and approximate areas', () => {
-  const plans = html['floorplans.html'];
-  assert.match(plans, /images\/plan-main-marketing\.png/);
-  assert.match(plans, /images\/plan-second-marketing\.png/);
-  assert.match(plans, /approximate square footage/i);
-  assert.match(readFileSync('styles.css', 'utf8'), /\.plan-sheet img \{[^}]*height: auto/);
-  for (const name of ['main', 'second']) {
-    const path = `images/plan-${name}-marketing.png`;
-    const png = readFileSync(path);
-    assert.equal(png.subarray(1, 4).toString(), 'PNG');
-    assert.ok(png.readUInt32BE(16) > png.readUInt32BE(20), 'plan must remain landscape');
-    assert.match(plans, new RegExp(`href="${path}"`), 'full-size plan must be accessible');
-  }
-  assert.doesNotMatch(plans, /Sheet A-|verify every dimension|Orientation and pricing only/i);
-  for (const file of ['floorplans.html']) {
-    assert.doesNotMatch(html[file], /(?:images\/plan-A-[45]|assets\/plates\/plan-image)\.png/);
-  }
-});
-
-test('planning routes disclose reference and estimate status', () => {
-  assert.match(html['brochure.html'], /Planning record/i);
-  assert.match(html['brochure.html'], /Planned-work visualisation/i);
-  assert.match(html['floorplans.html'], /reference plan/i);
-  assert.match(html['floorplans.html'], /not (?:field-measured|for construction or permit)/i);
-  assert.match(html['sale-prep.html'], /Planning record/i);
-  assert.match(html['sale-prep.html'], /budgeting (?:range|estimate)/i);
-});
-
-test('approved paint palette uses matching planned images, not superseded renders', () => {
-  const brochure = html['brochure.html'];
-  for (const [name, code, room] of [
-    ['Alabaster', '7008', 'hallway'],
-    ['Debonair', '9139', 'primary bedroom'],
-    ['Sea Salt', '6204', 'primary and upstairs baths'],
-    ['Oyster Bay', '6206', 'upstairs bedroom'],
-    ['Pewter Green', '6208', 'front/back and garage doors'],
-  ]) {
-    assert.ok(brochure.includes(`<strong>${name}</strong><span>SW ${code} · ${room}`), `${name} swatch assignment`);
-    assert.ok(html['sale-prep.html'].includes(`SW ${code} ${name}`), `${name} sale-prep record`);
-  }
-  for (const file of ownerPages) {
-    assert.match(html[file], /Traditional Mahogany/);
-    assert.match(html[file], /SuperDeck Exterior Waterborne Solid Color Deck Stain/);
-    assert.match(html[file], /older visualisations/i);
-    assert.doesNotMatch(html[file], /Acacia Haze/);
-  }
-  for (const [image, colour] of [
-    ['approach-pewter-green.webp', 'SW 6208 Pewter Green'],
-    ['entry-pewter-green.webp', 'SW 6208 Pewter Green'],
-    ['primary-debonair.webp', 'SW 9139 Debonair'],
-    ['mainbath-2-seasalt.png', 'SW 6204 Sea Salt'],
-    ['bedroom-oyster-bay.webp', 'SW 6206 Oyster Bay'],
-    ['upbath-sea-salt.webp', 'SW 6204 Sea Salt'],
-  ]) {
-    const figure = brochure.split('<figure').find((part) => part.split('</figure>')[0].includes(`images/${image}`))?.split('</figure>')[0] || '';
-    assert.ok(figure.includes(colour), `${image}: approved colour caption missing`);
-    assert.match(figure, /Planned-work visualisation/);
-    assert.doesNotMatch(figure, /older palette|Older visualisation|not (?:Debonair|Oyster Bay|Sea Salt)/);
-    assert.ok(readFileSync(`images/${image}`).length > 10000, `${image}: image missing or empty`);
-  }
-  assert.match(html['sale-prep.html'], /images\/approach-pewter-green\.webp/);
-  for (const page of Object.values(html)) {
-    assert.doesNotMatch(page, /images\/(?:master-r6-vancourtland-king|bed2-r7-pewter-king|upbath-6-pewter|approach-green-trees|entry-green-door)\.png/);
-  }
-  for (const file of ['brochure.html', 'sale-prep.html']) {
-    const current = html[file].search(/images\/photo-/);
-    const planned = html[file].indexOf('class="status-label">Planned-work visualisation');
-    assert.ok(current >= 0 && planned > current, `${file}: real photography must precede planned images`);
-  }
-  const finishes = brochure.slice(brochure.indexOf('id="takeoff-heading"'));
-  assert.match(finishes, /Paint &amp; finish specification/);
-  assert.doesNotMatch(finishes, /Van Courtland|Revere Pewter|White Dove/);
-  assert.match(html['sale-prep.html'], /Historical budget/);
-  assert.match(html['sale-prep.html'], /excludes hallway and bedroom repainting/);
-  const css = readFileSync('styles.css', 'utf8');
-  assert.match(css, /\.swatch--debonair .swatch-color \{ background: #90a0a6; \}/);
-  assert.match(css, /\.swatch--oyster-bay .swatch-color \{ background: #aeb3a9; \}/);
-  assert.match(brochure, /Screen swatches are approximate/);
-});
-
-test('finish schedule records approved products without obsolete paint quantities', () => {
+test('durable finish specification survives removal of owner pages', () => {
   const product = readFileSync('PRODUCT.md', 'utf8');
-  const rows = [...html['brochure.html'].matchAll(/<tr>[\s\S]*?<\/tr>/g)].map(([row]) => row);
-  for (const [name, code, surface, finish] of [
-    ['Alabaster', '7008', /hallway/i, 'Emerald Interior Matte'],
-    ['Debonair', '9139', /primary bedroom/i, 'Emerald Interior Matte'],
-    ['Sea Salt', '6204', /both full baths/i, 'Duration Home Satin'],
-    ['Oyster Bay', '6206', /upstairs bedroom/i, 'Emerald Interior Matte'],
-    ['Pewter Green', '6208', /front, back and garage doors/i, 'Emerald Urethane Trim Enamel Satin'],
-    ['Traditional Mahogany', '3080', /deck floor/i, 'SuperDeck Exterior Waterborne Solid Color Deck Stain'],
+  for (const [name, code, finish] of [
+    ['Alabaster', '7008', 'Emerald Interior Matte'],
+    ['Debonair', '9139', 'Emerald Interior Matte'],
+    ['Sea Salt', '6204', 'Duration Home Satin'],
+    ['Oyster Bay', '6206', 'Emerald Interior Matte'],
+    ['Pewter Green', '6208', 'Emerald Urethane Trim Enamel Satin'],
+    ['Traditional Mahogany', '3080', 'SuperDeck Exterior Waterborne Solid Color Deck Stain'],
   ]) {
-    const row = rows.find((row) => row.includes(name)) || '';
-    assert.match(row, surface, `${name}: owner surface`);
-    for (const text of [name, `SW ${code}`, finish]) {
-      assert.ok(row.includes(text), `${name}: owner ${text}`);
-      assert.ok(product.split('\n').find((line) => line.startsWith('|') && line.includes(name))?.includes(text), `${name}: durable ${text}`);
-    }
+    const row = product.split('\n').find(line => line.startsWith('|') && line.includes(name)) || '';
+    for (const text of [name, `SW ${code}`, finish]) assert.ok(row.includes(text), `${name}: durable ${text}`);
   }
-  for (const content of [product, html['brochure.html']]) {
-    assert.match(content, /Sherwin-Williams/);
-    assert.match(content, /814 S Loudoun St, Winchester, VA 22601-4597/);
-    assert.match(content, /Confirm product compatibility/);
-    assert.doesNotMatch(content, /\bgal(?:lon)?s?\b|\bqt\b|Paint takeoff/i);
-  }
-  const painting = html['sale-prep.html'].split('aria-labelledby="painting-heading"')[1].split('</section>')[0];
-  assert.doesNotMatch(painting, /\bgal(?:lon)?s?\b|\bqt\b|product (?:TBD|not selected)/i);
-  for (const file of ownerPages) {
-    for (const [figure] of html[file].matchAll(/<figure\b[\s\S]*?<\/figure>/g)) {
-      if (/images\/(?:deck-3-walnut|deck-hottub-v3)\.png/.test(figure)) {
-        assert.match(figure, /Earlier walnut concept; not an exact Traditional Mahogany match/, `${file}: deck disclosure`);
-      }
-    }
-  }
+  assert.match(product, /Sherwin-Williams/);
+  assert.match(product, /814 S Loudoun St, Winchester, VA 22601-4597/);
+  assert.match(product, /Confirm product compatibility/);
+  assert.doesNotMatch(product, /\bgal(?:lon)?s?\b|\bqt\b|Paint takeoff/i);
 });
 
 test('colour edits retain source provenance and immutable property evidence', () => {

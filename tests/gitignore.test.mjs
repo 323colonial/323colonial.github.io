@@ -19,7 +19,7 @@ test('git ignores local output without hiding durable project state', () => {
     '.impeccable/review/desktop.png', '.impeccable/surfaces/index-html.md',
     'nested/.pi/artifacts/source.png', 'nested/.impeccable/critique/source.md',
     'assets/new-image.png', 'images/new-image.webp',
-    'index.html', 'styles.css', 'PRODUCT.md', 'test_design.py',
+    'index.html', 'listing.css', 'PRODUCT.md', 'test_design.py',
     'flake.nix', 'flake.lock', 'package.json', 'package-lock.json',
   ];
   const result = spawnSync('git', [

@@ -8,7 +8,7 @@ web
 
 ## Users
 
-Prospective buyers are primary users. Realtors and the owner use the site as supporting audiences when answering questions, arranging showings, and reviewing sale-prep records.
+Prospective buyers are primary users. Realtors and the owner use the site as supporting audiences when answering property questions and arranging showings.
 
 ## Product purpose
 
@@ -47,11 +47,11 @@ Secondary destination: [public Redfin listing](https://www.redfin.com/WV/Berkele
 
 ## Operating context and boundaries
 
-Static HTML/CSS and small progressive-enhancement `gallery.js` / `listing.js`; no framework, dependency or build/runtime service. Native image and gallery links work without JavaScript. `listing.js` measures the header/facts and enables sticky photo sequences only when content fits; it respects reduced motion and preserves focused photo links. At viewport heights of 500px or less, facts scroll normally while the contact header stays accessible. Only nearby sequences preload their next photo, and the closed viewer image is lazy-loaded. Public `listing.css` is isolated from legacy `styles.css`.
+Static HTML/CSS and small progressive-enhancement `gallery.js` / `listing.js`; no framework, dependency or build/runtime service. Native image and gallery links work without JavaScript. `listing.js` measures the header/facts and enables sticky photo sequences only when content fits; it respects reduced motion and preserves focused photo links. At viewport heights of 500px or less, facts scroll normally while the contact header stays accessible. Only nearby sequences preload their next photo, and the closed viewer image is lazy-loaded. Both buyer pages share `listing.css`.
 
 This implementation is local-only: no push or deployment authorized. Before later publication, owner/brokerage should reconfirm price, status, measurements, advertised improvements and photography rights. The dated snapshot is not a promise of present availability.
 
-Legacy `floorplans.html`, `brochure.html`, `sale-prep.html`, shared `styles.css`, and all prior images/assets remain byte-identical and unlinked from the buyer journey. Owner records retain their noindex metadata and original planning/purchasing caveats; URL-accessible does not mean private. Old main/upstairs drawings and old finish simulations are not buyer content.
+The site serves only `index.html` and `gallery.html` as product pages. Colonial-yec removes legacy `floorplans.html`, `brochure.html`, `sale-prep.html` and their unused `styles.css`; no equivalent replacement warrants redirects. Route decisions and Git recovery source are recorded in `.pi/plans/2026-10-05-colonial-yec-route-pruning-plan.md`. All prior images/assets remain byte-identical. Old main/upstairs drawings and finish simulations are not linked buyer content. Developer tests and historical design artifacts remain repository tooling, not product pages.
 
 ## Brand commitments
 
@@ -73,9 +73,9 @@ Sherwin-Williams · 814 S Loudoun St, Winchester, VA 22601-4597.
 - Matte supersedes the earlier flat preference. Door enamel and satin sheen carry forward the earlier discussion; the latest list confirms the door colour only.
 - Omit paint purchase quantities. Great-room and loft whites stay for sale; half bath remains as-is. Kitchen Alabaster and porch finish remain earlier scope, not additions to this purchase specification. Basement work remains separate.
 - Owner reports mostly sound, faded deck coating with little peeling. Confirm product compatibility, cleaning, prep, primer and tint base with the Winchester store; no base or formula is verified here.
-- [Traditional Mahogany SW 3080](https://www.sherwin-williams.com/homeowners/color/find-and-explore-colors/stain-colors/SW3080-traditional-mahogany) replaces Dark Walnut for the deck. The approximate CSS swatch references the [manufacturer’s screen swatch](https://sherwin.scene7.com/is/image/sw/db3080tradmahogany_s); verify physical chips in daylight.
+- [Traditional Mahogany SW 3080](https://www.sherwin-williams.com/homeowners/color/find-and-explore-colors/stain-colors/SW3080-traditional-mahogany) replaces Dark Walnut for the deck. The historical approximate CSS swatch referenced the [manufacturer’s screen swatch](https://sherwin.scene7.com/is/image/sw/db3080tradmahogany_s); verify physical chips in daylight.
 - Existing walnut deck and porch simulations are earlier concepts, not exact Traditional Mahogany matches. Preserve assets and provenance; disclose that mismatch beside deck images rather than relabeling their pixels as newly recoloured.
-- `brochure.html` holds the owner purchase specification; the buyer finish schedule was removed from the public journey by colonial-5bv. Historical sale-prep prices remain estimates, not current product quotes. The pre-publication completion and photography gate still applies.
+- The table above preserves the owner purchase specification; removed owner pages remain recoverable in Git. The buyer finish schedule was removed from the public journey by colonial-5bv. Historical sale-prep prices remain estimates, not current product quotes. The pre-publication completion and photography gate still applies.
 
 ## Evidence and regeneration
 
@@ -83,7 +83,7 @@ Sherwin-Williams · 814 S Loudoun St, Winchester, VA 22601-4597.
 - `assets/listing/manifest.json` maps all 33 positions to original embedded sources, current owner-edited PNG hashes, exact captions and output hashes. Derivatives use WebP quality 78. Colonial-286 removes confirmed solid outer margins from 16 photographs without changing their existing scale; all other files remain unchanged. Bounds, conservative edge decisions and reproduction instructions live in `assets/listing/margin-review.md`.
 - Reproduce reviewed trims with installed ImageMagick: `python3 scripts/trim-listing-margins.py '/path/to/edited-listing-photos' '/tmp/reproduced-margin-trims'`. The historical `extract-listing.py` reproduces pre-edit DOCX images, not the current edited/trimmed assets; do not use it to overwrite the current site. No extraction is required to serve the committed website.
 - Legacy `images/photo-*.jpg`, simulation sources, `images/planned-colours.json`, old reference plans and `assets/plates/` remain untouched. Basement drawing/pricing history lives in a separate CAD project.
-- Existing Impeccable mock/build artifacts describe the superseded monograph composition; they are not authority over this approved brief. `DESIGN.md` and `.impeccable/design.json` describe the current buyer listing; legacy styling remains separate.
+- Existing Impeccable mock/build artifacts describe the superseded monograph composition; they are not authority over this approved brief. `DESIGN.md` and `.impeccable/design.json` describe the current buyer listing; retired styling remains recoverable in Git.
 
 ## Verification
 
@@ -97,4 +97,4 @@ python3 test_marketing_plans.py
 python3 -m http.server 8765 --bind 127.0.0.1
 ```
 
-Open `tests/hero-layout.html`, `tests/media-layout.html`, `tests/gallery-viewer.html`, `tests/table-contrast.html`, `tests/buyer-quality.html`, `tests/narrative-scroll.html`, `tests/listing-fallbacks.html`, `tests/buyer-audit.html` and `tests/property-details.html` through the local server. Each must report PASS. Fixtures cover responsive geometry, alternating sides, sticky-content fit, docking facts, forward/reverse photo progression, gallery/plan dialogs, contact access, frozen copy/captions, focus contrast, responsive image slots and disabled-script/reduced-motion fallbacks. Manually verify native Tab/Shift+Tab behavior, Escape dismissal and return focus. The Python listing regression freezes exact copy/order, all-33 narrative coverage, contact facts, local links/assets, source/derivative hashes, accessible link naming and byte-identical legacy preservation.
+Open `tests/hero-layout.html`, `tests/media-layout.html`, `tests/gallery-viewer.html`, `tests/buyer-quality.html`, `tests/narrative-scroll.html`, `tests/listing-fallbacks.html`, `tests/buyer-audit.html` and `tests/property-details.html` through the local server. Each must report PASS. Fixtures cover responsive geometry, alternating sides, sticky-content fit, docking facts, forward/reverse photo progression, gallery/plan dialogs, contact access, frozen copy/captions, focus contrast, responsive image slots and disabled-script/reduced-motion fallbacks. Manually verify native Tab/Shift+Tab behavior, Escape dismissal and return focus. The Python listing regression freezes exact copy/order, all-33 narrative coverage, contact facts, local links/assets, source/derivative hashes, accessible link naming, absence of retired routes and byte-identical legacy asset preservation. The Node route inventory check requires exactly the two buyer HTML pages at the site root.

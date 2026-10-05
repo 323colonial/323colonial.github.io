@@ -203,7 +203,7 @@ House colors frame real property photography and uninterrupted Georgia prose. Pe
 - House-color fields, square controls and fine rules; no shadows.
 - Native scrolling with fit-aware inline fallbacks.
 
-Source: `listing.css`, `listing.js` and `gallery.js`; surface contract: `.impeccable/surfaces/index-html.md`. Supplied desktop/mobile finish-review captures in `.impeccable/review/` confirm the composition. This document governs buyer pages, not legacy `styles.css` or historical Impeccable comps.
+Source: `listing.css`, `listing.js` and `gallery.js`; surface contract: `.impeccable/surfaces/index-html.md`. Supplied desktop/mobile finish-review captures in `.impeccable/review/` confirm the composition. This document governs buyer pages, not historical Impeccable comps. Legacy owner/planning pages and their `styles.css` were removed by colonial-yec; buyer styling is unchanged.
 
 ## Colors
 
@@ -265,7 +265,7 @@ Square controls and image frames, without rounded cards or decorative clipping. 
 - Do preserve the seven approved paragraphs, exact captions, watermarks and conceptual-plan disclosure.
 - Do keep contact access, visible keyboard focus and ordinary links available.
 - Do use the existing system fonts, static assets and dependency-free enhancement.
-- Do keep buyer styling isolated from unchanged legacy pages and assets.
+- Do keep buyer styling and retained historical image assets intact when pruning unrelated routes.
 - Don't replace the approved composition with a mosaic, story headings, Home / Photos navbar or closing contact band.
 - Don't crop property evidence with cover-fit or present the conceptual plan as existing finished space.
 - Don't intercept scrolling, add timed autoplay or parallax, or remove reduced-motion and short-screen fallbacks.

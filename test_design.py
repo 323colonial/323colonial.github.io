@@ -2,33 +2,31 @@ from pathlib import Path
 import re
 
 
-PAGES = ("index.html", "gallery.html", "brochure.html", "floorplans.html", "sale-prep.html")
+PAGES = ("index.html", "gallery.html")
 REQUIRED_TOKENS = (
     "--forest",
-    "--forest-ink",
+    "--ink",
     "--paper",
     "--paper-strong",
     "--rule",
     "--muted",
-    "--white",
-    "--font-display",
-    "--font-serif",
-    "--font-label",
+    "--pewter-green",
+    "--mahogany",
 )
 REQUIRED_COMPONENTS = (
-    ".listing-header",
-    ".buyer-nav",
+    ".masthead",
+    ".showing-contact",
     ".button",
     ".media-record",
-    ".swatch",
-    ".data-table",
-    ".showing-band",
+    ".detail-grid",
+    ".gallery-grid",
+    ".viewer-controls",
 )
 
 
 def main() -> None:
-    stylesheet = Path("styles.css")
-    assert stylesheet.exists(), "shared styles.css is missing"
+    stylesheet = Path("listing.css")
+    assert stylesheet.exists(), "shared listing.css is missing"
     css = stylesheet.read_text()
 
     for token in REQUIRED_TOKENS:
@@ -37,11 +35,8 @@ def main() -> None:
         assert selector in css, f"missing component selector: {selector}"
 
     assert "https://fonts.googleapis.com" not in css, "remote font dependency remains"
-    assert re.search(r"@media \(max-width: 640px\)[\s\S]*?\.listing-header > \.button \{[^}]*min-height: 44px", css), "mobile showing CTA is shorter than 44px"
-    assert re.search(r"\.property-mark \{[^}]*min-height: 44px", css), "property mark target is shorter than 44px"
-    assert re.search(r"\.text-link \{[^}]*min-height: 44px", css), "isolated text-link target is shorter than 44px"
-    assert re.search(r"\.planning-link \{[^}]*min-height: 44px", css), "hero planning-link target is shorter than 44px"
-    assert not re.search(r"@media \(max-width: 640px\)[\s\S]*?\.data-table \{[^}]*min-width: 640px", css), "mobile tables still force horizontal scrolling"
+    assert re.search(r"button, \.button, summary, \.text-link \{[^}]*min-height: 44px", css), "buyer control targets are shorter than 44px"
+    assert re.search(r"\.property-identity h1 a \{[^}]*min-height: 44px", css), "property home-link target is shorter than 44px"
 
     design = Path("DESIGN.md").read_text()
     assert "House-color property narrative" in design, "approved design direction is undocumented"
@@ -51,12 +46,11 @@ def main() -> None:
     for page in PAGES:
         html = Path(page).read_text()
         assert '<meta name="viewport" content="width=device-width, initial-scale=1">' in html, f"{page}: viewport metadata missing"
-        css_file = 'listing.css' if page in ('index.html', 'gallery.html') else 'styles.css'
-        assert f'<link rel="stylesheet" href="{css_file}">' in html, f"{page}: stylesheet missing"
+        assert '<link rel="stylesheet" href="listing.css">' in html, f"{page}: stylesheet missing"
         assert not re.search(r"<style\b", html, re.I), f"{page}: embedded stylesheet remains"
         assert not re.search(r"\sstyle=", html, re.I), f"{page}: inline style remains"
 
-    print(f"PASS: isolated buyer and legacy styles wired across {len(PAGES)} pages")
+    print(f"PASS: buyer styles wired across {len(PAGES)} pages")
 
 
 if __name__ == "__main__":
