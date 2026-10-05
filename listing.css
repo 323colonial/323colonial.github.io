@@ -47,6 +47,8 @@ img { display: block; width: 100%; height: auto; }
 .header-agent, .header-public { font: 13px/1.6 Arial, sans-serif; }
 .header-public { display: inline-flex; align-items: center; min-height: 44px; }
 .showing-contact summary { padding: 12px 16px; border: 1px solid var(--paper); white-space: nowrap; }
+.listing-page .showing-contact summary { padding: 12px 0; border: 0; font: 13px/1.6 Arial, sans-serif; text-decoration: underline; text-underline-offset: .2em; }
+.listing-page .showing-contact summary:hover { text-decoration-thickness: 2px; }
 .contact-panel { position: absolute; right: 40px; top: calc(100% - 1px); width: min(380px, calc(100vw - 32px)); padding: 24px; border: 1px solid var(--stone); background: var(--paper); color: var(--ink); font: 14px/1.6 Arial, sans-serif; max-height: calc(100dvh - var(--header-height) - 16px); overflow: auto; }
 .contact-panel p:first-child { font-weight: 700; }
 main { padding: 0; }

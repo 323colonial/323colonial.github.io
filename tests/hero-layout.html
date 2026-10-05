@@ -37,7 +37,22 @@ for (const [width, height] of [[1440, 1000], [1376, 768], [1080, 768], [801, 844
     check(box(link).left >= 0 && box(link).right <= width, 'link escapes viewport');
   }
   const contact = doc.querySelector('.showing-contact');
+  const disclosure = contact.querySelector('summary');
+  const style = win.getComputedStyle(disclosure);
+  check(style.borderTopWidth === '0px' && style.fontWeight === '400' && style.fontSize === '13px', 'showing disclosure not quiet header text');
+  check(style.textDecorationLine.includes('underline') && style.display === 'list-item', 'disclosure affordance missing');
+  const publicLink = doc.querySelector('.header-public');
+  if (width > 800) {
+    check(box(publicLink).height >= 44 && box(publicLink).right < box(disclosure).left, 'desktop actions must remain side by side');
+  } else {
+    check(box(publicLink).height === 0, 'mobile public link belongs inside disclosure');
+  }
   contact.open = true;
+  const panel = box(contact.querySelector('.contact-panel'));
+  check(panel.left >= 0 && panel.right <= width && panel.bottom <= height, 'contact panel escapes viewport');
+  for (const action of contact.querySelectorAll('a')) {
+    check(box(action).height >= 44 && action.tabIndex === 0, 'contact link inaccessible');
+  }
   const link = contact.querySelector('.button');
   link.focus();
   const target = box(link);
