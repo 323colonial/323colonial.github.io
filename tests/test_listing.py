@@ -130,8 +130,19 @@ class Listing(unittest.TestCase):
             self.assertIn('Dandridge Realty Group LLC', page.text())
             self.assertNotRegex((ROOT / file).read_text(), r'floorplans\.html|brochure\.html|sale-prep\.html|mailto:|brightmls\.com|plan-main|plan-second|paint-colors')
         text = Page('index.html').root.text()
-        for fact in ['$499,000', '2,081', 'above-grade', '2.90', '2008', 'Coming Soon', 'October 3, 2026', 'October 8, 2026', 'WVMO2008198', '2 full', '1 half']:
+        for fact in ['$499,000', '2,081', '2.90', '2008', 'Coming Soon', 'October 3, 2026', 'October 8, 2026', 'WVMO2008198', '2 full', '1 half']:
             self.assertIn(fact, text)
+
+    def test_square_footage_without_grade_qualifier(self):
+        page = Page('index.html').root
+        facts = next(p for p in page.all('p') if p.cls('quick-facts'))
+        self.assertEqual([s.text() for s in facts.all('span')][2], '2,081 sq ft')
+        details = next(dl for dl in page.all('dl') if dl.cls('detail-grid'))
+        values = dict(zip((dt.text() for dt in details.all('dt')),
+                          (dd.text() for dd in details.all('dd'))))
+        self.assertEqual(values['Finished area'], '2,081 sq ft')
+        self.assertEqual(values['Lower level'], 'Unfinished walkout basement')
+        self.assertNotRegex(page.text().lower(), r'above[\s-]+grade')
 
     def test_title_page_realtor_details_in_disclosure_and_print_footer_only(self):
         page = Page('index.html').root

@@ -69,7 +69,6 @@ figcaption { padding-top: 10px; font: 13px/1.5 Arial, sans-serif; }
 .quick-facts { display: flex; flex-wrap: wrap; gap: 12px 24px; font-size: 15px; line-height: 1.45; margin: 0; }
 .quick-facts span { white-space: nowrap; }
 .quick-facts strong { font-size: 20px; font-weight: 400; }
-.quick-facts small { display: block; font-size: 13px; color: var(--muted); }
 .summary-actions { text-align: right; }
 .summary-actions .text-link { color: var(--mahogany); }
 .market-date { font: 13px/1.5 Arial, sans-serif; margin: 0; }
@@ -166,7 +165,6 @@ body:has(dialog[open]) { overflow: hidden; }
   .price-block { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; }
   .quick-facts { grid-column: 1 / -1; grid-row: 2; justify-content: space-between; font-size: 12px; gap: 8px; }
   .quick-facts strong { font-size: 16px; }
-  .quick-facts small { display: inline; }
   .summary-actions { max-width: none; }
   .summary-actions .text-link { font-size: 12px; }
   .story { padding: 40px 20px; }
@@ -198,7 +196,6 @@ body:has(dialog[open]) { overflow: hidden; }
 @media (max-width: 360px) {
   .masthead { padding-inline: 12px; gap: 8px; }
   .property-identity h1 { font-size: 22px; }
-  .quick-facts small { display: block; }
 }
 @media (max-height: 500px) {
   .listing-summary { position: static; }
@@ -236,7 +233,6 @@ body:has(dialog[open]) { overflow: hidden; }
   .listing-page .listing-status { color: inherit; font-size: 10pt; }
   .listing-page .quick-facts { gap: 12pt; font-size: 10pt; }
   .listing-page .quick-facts strong { font-size: 14pt; }
-  .listing-page .quick-facts small { display: block; font-size: 9pt; color: inherit; }
   .listing-page .hero-photo { grid-area: 2 / 1; }
   .listing-page .hero-photo figure { break-inside: avoid; }
   .listing-page .hero-photo figcaption { padding: 6pt 0 0; font-size: 9pt; }
