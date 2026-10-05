@@ -1,0 +1,70 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Buyer typography regression</title>
+<h1>Buyer typography regression</h1>
+<p>Serve repository root, then open this page. Every result must PASS. Viewport checks are not browser zoom or text-only enlargement.</p>
+<pre id="results" style="white-space:pre-wrap">Running…</pre>
+<iframe title="Buyer page under test" style="border:0"></iframe>
+<script type="module">
+const frame = document.querySelector('iframe');
+const results = [];
+const check = (ok, name) => results.push(`${ok ? 'PASS' : 'FAIL'}: ${name}`);
+const settle = win => new Promise(resolve => win.requestAnimationFrame(() => win.requestAnimationFrame(resolve)));
+try {
+  for (const route of ['index', 'gallery']) {
+    for (const [width, height] of [[320, 480], [390, 844], [844, 390], [1440, 1000]]) {
+      frame.style.width = `${width}px`;
+      frame.style.height = `${height}px`;
+      await new Promise(resolve => { frame.onload = resolve; frame.src = `../${route}.html?typography=${width}`; });
+      const doc = frame.contentDocument, win = frame.contentWindow;
+      await settle(win);
+      const label = `${route} ${width}×${height}`;
+      const size = element => parseFloat(win.getComputedStyle(element).fontSize);
+      const essential = [...doc.querySelectorAll('.listing-status, .market-date, .quick-facts small, dt, .photo-note')];
+      check(essential.length && essential.every(element => size(element) >= 13 && size(element) <= 14), `${label}: essential text 13–14px`);
+      check([...doc.querySelectorAll('.scroll-cue, .site-footer')].every(element => size(element) === 12), `${label}: counters/footer remain 12px`);
+      const header = doc.querySelector('.masthead').getBoundingClientRect();
+      const showing = doc.querySelector('summary').getBoundingClientRect();
+      check(showing.left >= 0 && showing.right <= width && showing.height >= 44, `${label}: showing control fits`);
+      check(Math.abs(parseFloat(doc.documentElement.style.getPropertyValue('--header-height')) - header.height) < 1, `${label}: measured header offset`);
+      if (route === 'index') {
+        doc.querySelector('#details-heading').scrollIntoView();
+        await settle(win);
+        const facts = doc.querySelector('.listing-summary').getBoundingClientRect();
+        check(Math.abs(parseFloat(doc.documentElement.style.getPropertyValue('--summary-height')) - facts.height) < 1, `${label}: measured facts offset (${facts.height.toFixed(1)}px)`);
+        check(height <= 500 ? facts.bottom <= 0 : Math.abs(facts.top - header.bottom) < 1, `${label}: facts dock or scroll away`);
+        const qualifier = doc.querySelector('.quick-facts small');
+        check(qualifier.scrollWidth <= qualifier.parentElement.clientWidth, `${label}: above-grade qualifier fits`);
+        doc.querySelector('.price a').click();
+        const dialog = doc.querySelector('#property-details');
+        check(dialog.open && dialog.scrollWidth <= dialog.clientWidth, `${label}: details dialog wraps`);
+        dialog.close();
+      } else {
+        const p = doc.querySelector('.gallery-intro p');
+        if (width === 1440) {
+          const text = p.firstChild, lines = new Map();
+          for (let i = 0; i < text.length; i++) {
+            const range = doc.createRange();
+            range.setStart(text, i); range.setEnd(text, i + 1);
+            const top = range.getBoundingClientRect().top;
+            lines.set(top, (lines.get(top) || '') + text.textContent[i]);
+          }
+          const lengths = [...lines.values()].map(line => line.trim().length);
+          check(p.getBoundingClientRect().width < 760 && Math.max(...lengths) < 95, `${label}: intro measure improved (${lengths.join('/')} characters)`);
+        }
+        const note = doc.querySelector('#photo-31 .photo-note');
+        check(note.scrollWidth <= note.clientWidth, `${label}: concept disclosure wraps`);
+      }
+      doc.querySelector('.showing-contact').open = true;
+      const call = doc.querySelector('.contact-panel .button');
+      call.focus();
+      const target = call.getBoundingClientRect();
+      check(call.contains(doc.elementFromPoint(target.x + target.width / 2, target.y + target.height / 2)), `${label}: brokerage call reachable`);
+      doc.querySelector('.showing-contact').open = false;
+      check(doc.documentElement.scrollWidth <= width, `${label}: no horizontal overflow`);
+    }
+  }
+} catch (error) { check(false, error.message); }
+document.querySelector('#results').textContent = results.join('\n');
+document.title = results.some(row => row.startsWith('FAIL')) ? 'FAIL: buyer typography' : 'PASS: buyer typography';
+</script>

@@ -96,7 +96,7 @@ typography:
     lineHeight: 1.6
   status:
     fontFamily: "Arial, sans-serif"
-    fontSize: "12px"
+    fontSize: "13px"
     fontWeight: 400
     lineHeight: 1.65
   detail:
@@ -182,7 +182,7 @@ components:
     typography: "{typography.metadata}"
   photo-note:
     textColor: "{colors.muted}"
-    typography: "{typography.metadata}"
+    typography: "{typography.caption}"
   photo-dialog:
     backgroundColor: "{colors.greek-villa}"
     textColor: "{colors.ink}"
@@ -222,7 +222,7 @@ Greek Villa is the page, facts and dialog field; Accessible Beige also backs enl
 
 Georgia with Times New Roman/serif fallback carries address, section headings and prose; Arial/sans-serif carries facts, captions and controls. No font downloads. Frontmatter records literal source roles, including responsive variants, rather than inventing a new scale.
 
-Narrative is regular-weight fluid type, bounded to 65ch and reset to body size on mobile. Only Property details and the gallery introduction have section headings; the seven narrative passages have none. Price and counters use tabular numerals. Metadata bottoms out at 12px, including mobile facts annotations and dates; there are no 10px or 11px text roles. Captions remain distinct from the smaller essential concept note.
+Narrative is regular-weight fluid type, bounded to 65ch and reset to body size on mobile. Only Property details and the gallery introduction have section headings; the seven narrative passages have none. Price and counters use tabular numerals. Status, expected date, above-grade qualifier, details labels and the essential concept note use 13px at every width; captions also use 13px. Counters, footer, mobile locality and mobile facts labels stay subordinate at 12px. The gallery introduction paragraph alone is capped at 60ch; its heading and gallery grid retain their widths. Prose size and leading remain unchanged.
 
 ## Layout
 

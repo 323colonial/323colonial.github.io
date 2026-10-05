@@ -100,7 +100,7 @@
       },
       "caption": {
         "displayName": "Caption",
-        "purpose": "Hero, narrative and gallery captions."
+        "purpose": "Hero, narrative and gallery captions; also 13px concept note, above-grade qualifier, details labels and expected date."
       },
       "viewer-caption": {
         "displayName": "Viewer Caption",
@@ -108,7 +108,7 @@
       },
       "metadata": {
         "displayName": "Metadata",
-        "purpose": "Concept note, photo number, detail label, date, scroll cue and mobile locality."
+        "purpose": "Photo number, scroll cue and mobile locality; essential labels and disclosures use 13px."
       },
       "footer": {
         "displayName": "Footer",
@@ -124,7 +124,7 @@
       },
       "quick-facts": {
         "displayName": "Quick Facts",
-        "purpose": "Desktop facts labels; small annotation is 12px."
+        "purpose": "Desktop facts labels; small annotation is 13px."
       },
       "quick-facts-mobile": {
         "displayName": "Quick Facts Mobile",
@@ -221,7 +221,7 @@
       "refersTo": "docking-facts",
       "description": "Price/status excerpt from the docking facts bar; static panel preview.",
       "html": "<div class=\"ds-facts\"><p class=\"ds-price\">$499,000</p><p class=\"ds-status\">Coming Soon</p></div>",
-      "css": ".ds-facts { padding: 18px 40px; background: var(--paper, #f0ece2); color: var(--ink, #252d29); border-bottom: 1px solid var(--cedar, #8b523c); font-family: Arial, sans-serif; } .ds-price { font-size: 30px; line-height: 1.2; font-weight: 700; margin: 0 0 4px; font-variant-numeric: tabular-nums; } .ds-status { font-size: 12px; line-height: 1.65; margin: 0; color: var(--mahogany, #593a32); } @media (max-width: 800px) { .ds-facts { padding: 12px 20px; } .ds-price { font-size: 25px; } }"
+      "css": ".ds-facts { padding: 18px 40px; background: var(--paper, #f0ece2); color: var(--ink, #252d29); border-bottom: 1px solid var(--cedar, #8b523c); font-family: Arial, sans-serif; } .ds-price { font-size: 30px; line-height: 1.2; font-weight: 700; margin: 0 0 4px; font-variant-numeric: tabular-nums; } .ds-status { font-size: 13px; line-height: 1.65; margin: 0; color: var(--mahogany, #593a32); } @media (max-width: 800px) { .ds-facts { padding: 12px 20px; } .ds-price { font-size: 25px; } }"
     },
     {
       "name": "Scroll cue",
@@ -237,7 +237,7 @@
       "refersTo": "photo-note",
       "description": "Essential attached note for photo 31 only.",
       "html": "<span class=\"ds-photo-note\">Conceptual basement plan — not existing finished space.</span>",
-      "css": ".ds-photo-note { display: block; margin-top: 6px; color: var(--muted, #50564f); font: 12px/1.5 Arial, sans-serif; }"
+      "css": ".ds-photo-note { display: block; margin-top: 6px; color: var(--muted, #50564f); font: 13px/1.5 Arial, sans-serif; }"
     }
   ],
   "narrative": {

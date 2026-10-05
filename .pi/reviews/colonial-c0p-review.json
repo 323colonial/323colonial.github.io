@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "reviewId": "colonial-c0p",
+  "scope": "behavioral",
+  "reviewer": {
+    "target": "scoped-read-only-reviewer",
+    "family": "GPT"
+  },
+  "findings": []
+}
