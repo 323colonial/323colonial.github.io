@@ -76,6 +76,49 @@ try {
   doc.addEventListener('click', event => { intercepted = event.defaultPrevented; event.preventDefault(); }, {once: true});
   links[0].dispatchEvent(modified);
   check(!intercepted && !dialog.open, 'modified click retains native link behavior');
+  for (const route of ['gallery', 'index']) {
+    await new Promise(resolve => { frame.onload = resolve; frame.src = `../${route}.html`; });
+    const gridDoc = frame.contentDocument;
+    const gridWin = frame.contentWindow;
+    if (route === 'index') gridDoc.querySelector('[data-all-photos]').click();
+    const grid = gridDoc.querySelector('.gallery-grid');
+    const figures = [...grid.children];
+    const images = figures.map(figure => figure.querySelector('img'));
+    images.forEach(img => { img.loading = 'eager'; });
+    await Promise.all(images.map(img => img.decode()));
+    for (const variant of ['original', 'mixed portrait/landscape']) {
+      if (variant !== 'original') {
+        // Current listing sources are all landscape; exercise a true portrait source too.
+        images[0].removeAttribute('srcset');
+        images[0].src = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="400" height="600"><rect width="400" height="600" fill="#5e6259"/></svg>');
+        await images[0].decode();
+      }
+      for (const width of [390, 820, 1280]) {
+        frame.style.width = `${width}px`;
+        await new Promise(resolve => gridWin.requestAnimationFrame(() => gridWin.requestAnimationFrame(resolve)));
+        const columns = width <= 700 ? 1 : width <= 1000 ? 2 : 3;
+        const failures = [];
+        if (gridWin.getComputedStyle(grid).gridTemplateColumns.split(' ').length !== columns) failures.push('column count');
+        figures.forEach((figure, index) => {
+          const box = figure.getBoundingClientRect();
+          const img = images[index];
+          const imageBox = img.getBoundingClientRect();
+          const caption = figure.querySelector('figcaption');
+          const captionBox = caption.getBoundingClientRect();
+          const first = figures[index - index % columns];
+          const firstImage = first.querySelector('img').getBoundingClientRect();
+          const firstCaption = first.querySelector('figcaption').getBoundingClientRect();
+          if (Math.abs(imageBox.top - firstImage.top) > 1 || Math.abs(imageBox.bottom - firstImage.bottom) > 1 || Math.abs(captionBox.top - firstCaption.top) > 1) failures.push(`photo ${index + 1}: row alignment`);
+          const naturalRatio = img.naturalWidth / img.naturalHeight;
+          if (Math.abs(imageBox.width / imageBox.height - naturalRatio) > .02 && gridWin.getComputedStyle(img).objectFit !== 'contain') failures.push(`photo ${index + 1}: cropped/distorted`);
+          if (width <= 700 && Math.abs(imageBox.width / imageBox.height - naturalRatio) > .02) failures.push(`photo ${index + 1}: mobile proportions`);
+          if (imageBox.bottom > captionBox.top + 1 || captionBox.bottom > box.bottom + 1 || caption.scrollHeight > caption.clientHeight + 1 || caption.scrollWidth > caption.clientWidth + 1) failures.push(`photo ${index + 1}: caption overlap/clipping`);
+          if (index >= columns && figures[index - columns].getBoundingClientRect().bottom > box.top + 1) failures.push(`photo ${index + 1}: overlapping rows`);
+        });
+        check(!failures.length, `${route} ${width}px ${variant}: aligned photo/caption rows, uncropped images, readable captions${failures.length ? ' — ' + failures.join('; ') : ''}`);
+      }
+    }
+  }
 } catch (error) { check(false, error.message); }
 document.querySelector('#results').textContent = results.join('\n');
 document.title = results.some(row => row.startsWith('FAIL')) ? 'FAIL: gallery viewer' : 'PASS: gallery viewer';
