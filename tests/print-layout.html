@@ -1,0 +1,76 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Print layout regression</title>
+<h1>Print layout regression</h1>
+<p>Serve repository root, open in screen media, wait for Ready, then emulate print media in browser developer tools. Every result must PASS. Reload in screen media to repeat. This checks continuous print geometry, not pagination.</p>
+<pre id="results">Loading…</pre>
+<script type="module">
+const output = document.querySelector('#results');
+const cases = [];
+const settle = () => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+try {
+  if (matchMedia('print').matches) throw new Error('Load in screen media before switching to print');
+  for (const [route, width, height, scripts] of [
+    ['index', 1440, 1100, true], ['index', 390, 844, true],
+    ['index', 1440, 1100, false], ['gallery', 800, 1100, true],
+  ]) {
+    const frame = document.createElement('iframe');
+    frame.title = `${route} ${width}px ${scripts ? 'enhanced' : 'no scripts'}`;
+    frame.style.cssText = `width:${width}px;height:${height}px;border:0`;
+    if (!scripts) frame.setAttribute('sandbox', 'allow-same-origin');
+    document.body.append(frame);
+    await new Promise(resolve => { frame.onload = resolve; frame.src = `../${route}.html`; });
+    const doc = frame.contentDocument, win = frame.contentWindow;
+    await doc.fonts.ready;
+    const figures = [...doc.querySelectorAll('main .media-record')];
+    await Promise.all(figures.map(async figure => {
+      const img = figure.querySelector('img');
+      img.loading = 'eager';
+      await img.decode();
+    }));
+    await settle();
+    if (route === 'index' && scripts && doc.querySelectorAll('.story.is-scrolling').length !== 7) {
+      throw new Error(`${frame.title}: all seven sequences must be enhanced before print`);
+    }
+    cases.push({frame, doc, win, figures, route, facts: doc.querySelector('#details')?.textContent});
+  }
+  output.textContent = 'Ready: switch to print media (all seven desktop/mobile sequences enhanced).';
+  await new Promise(resolve => matchMedia('print').addEventListener('change', event => {
+    if (event.matches) resolve();
+  }));
+  await settle();
+  const results = [];
+  for (const {frame, doc, win, figures, route, facts} of cases) {
+    const failures = [];
+    const check = (ok, name) => { if (!ok) failures.push(name); };
+    const style = element => win.getComputedStyle(element);
+    const box = element => element.getBoundingClientRect();
+    check(win.matchMedia('print').matches, 'print media active');
+    check(figures.length === (route === 'index' ? 27 : 33), 'all original photos retained');
+    for (const figure of figures) {
+      const img = figure.querySelector('img'), caption = figure.querySelector('figcaption');
+      const image = box(img), text = box(caption), record = box(figure);
+      const label = `photo ${figure.dataset.position}`;
+      check(image.height > 0 && style(figure).display !== 'none' && style(figure.querySelector('a')).opacity === '1', `${label}: visible`);
+      check(text.height > 0 && style(caption).visibility === 'visible', `${label}: caption visible`);
+      check(image.bottom <= text.top + 1, `${label}: image overlaps caption`);
+      check(image.top >= record.top - 1 && text.bottom <= record.bottom + 1, `${label}: content escapes figure`);
+      check(style(img).objectFit === 'contain' || Math.abs(image.width / image.height - img.naturalWidth / img.naturalHeight) < .02, `${label}: uncropped proportions`);
+      const next = figure.nextElementSibling;
+      if (next?.matches('figure')) check(record.bottom <= box(next).top + 1 || record.right <= box(next).left + 1, `${label}: successive figures overlap`);
+    }
+    if (route === 'index') {
+      check([...doc.querySelectorAll('.listing-copy')].filter(p => box(p).height > 0).length === 7, 'seven paragraphs visible');
+      check(doc.querySelector('#details').textContent === facts && [...doc.querySelectorAll('#details .detail-grid > div')].filter(row => box(row).height > 0).length === 12, 'twelve unchanged facts visible');
+    }
+    check([...doc.querySelectorAll('dialog, .scroll-cue')].every(el => style(el).display === 'none'), 'interactive overlays/counters hidden');
+    check(doc.documentElement.scrollWidth <= frame.clientWidth, 'no horizontal overflow');
+    results.push(`${failures.length ? 'FAIL' : 'PASS'}: ${frame.title} (${figures.length} photos)${failures.length ? ' — ' + failures.join('; ') : ' — captions below images, contained content, no overlap/crop; text retained'}`);
+  }
+  output.textContent = results.join('\n');
+  document.title = results.some(row => row.startsWith('FAIL')) ? 'FAIL: print layout' : 'PASS: print layout';
+} catch (error) {
+  output.textContent = `FAIL: ${error.message}`;
+  document.title = 'FAIL: print layout';
+}
+</script>
