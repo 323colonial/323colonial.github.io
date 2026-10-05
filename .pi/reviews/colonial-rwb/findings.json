@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 1,
+  "reviewId": "colonial-rwb-final-readonly",
+  "scope": "behavioral",
+  "reviewer": {"target": "current-session", "family": "openai"},
+  "findings": []
+}

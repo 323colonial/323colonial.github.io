@@ -43,6 +43,8 @@ for (const route of ['index', 'gallery']) {
       for (const target of [...caption.children, ...(caption.children.length ? [] : [caption]), ...figure.querySelectorAll('.status-label')]) {
         if (target.matches('.photo-number')) continue; // Photo counters are intentionally hidden.
         target.scrollIntoView({block: 'center', behavior: 'instant'});
+        // Wait for scroll-linked section offsets before hit-testing the painted caption.
+        await new Promise(resolve => frame.contentWindow.requestAnimationFrame(() => frame.contentWindow.requestAnimationFrame(resolve)));
         const box = target.getBoundingClientRect();
         check(target.contains(doc.elementFromPoint(box.x + box.width / 2, box.y + box.height / 2)), `${name}: caption/status obscured`);
         if (target.matches('.status-label')) check(inside(box, img.getBoundingClientRect()), `${name}: status outside image`);

@@ -64,7 +64,8 @@ try {
       const sticky = section.querySelector(width > 800 ? '.story-stage' : '.story-photos');
       const inset = parseFloat(win.getComputedStyle(sticky).top);
       const padding = parseFloat(win.getComputedStyle(section).paddingTop);
-      const offset = padding + (width > 800 ? 0 : section.querySelector('.story-copy').getBoundingClientRect().height + 28);
+      const borderHeight = parseFloat(win.getComputedStyle(section, '::before').height) || 0;
+      const offset = padding + borderHeight + (width > 800 ? 0 : section.querySelector('.story-copy').getBoundingClientRect().height + 28);
       const beginning = section.offsetTop + offset - inset;
       const step = Math.max(240, height * .5);
       const seek = async position => {
@@ -141,7 +142,50 @@ try {
       link.blur();
       await settle();
       check(opacity(photos[0]) === 1, `${label}: leaving focus resumes scroll state without another scroll`);
+      const nextSection = section.nextElementSibling;
+      if (nextSection) {
+        const gap = () => nextSection.getBoundingClientRect().top - sticky.getBoundingClientRect().bottom;
+        for (const positions of [[.1, photos.length - .1], [photos.length - .1, .1]]) {
+          await seek(positions[0]);
+          const initialGap = gap();
+          await seek(positions[1]);
+          check(Math.abs(gap() - initialGap) < 2 && Math.abs(gap() - padding) < 2,
+            `${label}: next section keeps exit spacing throughout forward/reverse photo hold`);
+        }
+        await seek(photos.length + .1);
+        const stageTop = sticky.getBoundingClientRect().top;
+        const nextTop = nextSection.getBoundingClientRect().top;
+        await seek(photos.length + .3);
+        check(Math.abs(sticky.getBoundingClientRect().top - stageTop + step * .2) < 2
+          && Math.abs(nextSection.getBoundingClientRect().top - nextTop + step * .2) < 2
+          && Math.abs(gap() - padding) < 2,
+          `${label}: both sections travel upward together after release without overlap`);
+        await seek(.1);
+        const nextLink = nextSection.querySelector('.story-copy a, figure:not([inert]):not([hidden]) a');
+        nextLink.focus();
+        await settle();
+        const focusedBox = nextLink.getBoundingClientRect();
+        check(doc.activeElement === nextLink && focusedBox.top >= facts.getBoundingClientRect().bottom
+          && focusedBox.bottom <= height,
+          `${label}: focus entering next section is visible above the fold`);
+        nextLink.blur();
+      }
       await seek(photos.length - 1);
+      if (section.previousElementSibling) {
+        const border = win.getComputedStyle(section, '::before');
+        const lineHeight = parseFloat(win.getComputedStyle(section).lineHeight);
+        check(border.content !== 'none' && border.position === 'sticky'
+          && Math.abs(parseFloat(border.height) - lineHeight * 1.25) < 1
+          && border.backgroundColor === win.getComputedStyle(section.previousElementSibling).backgroundColor
+          && Math.abs(parseFloat(border.top) - facts.getBoundingClientRect().bottom) < 2
+          && sticky.getBoundingClientRect().top >= facts.getBoundingClientRect().bottom + parseFloat(border.height),
+          `${label}: previous section color stays visible as a1.25-line border above content`);
+        await seek(-1);
+        const entry = section.querySelector(width > 800 ? '.story-stage' : '.story-copy');
+        check(entry.getBoundingClientRect().top - section.getBoundingClientRect().top >= padding + parseFloat(border.height) - 1,
+          `${label}: retained border does not consume entry content padding`);
+        await seek(photos.length - 1);
+      }
       const finalTop = sticky.getBoundingClientRect().top;
       const finalHeight = sticky.getBoundingClientRect().height;
       await seek(photos.length - .1);
@@ -166,7 +210,9 @@ try {
   frame.style.height = '480px';
   await settle();
   check(!doc.querySelector('.is-scrolling') && [...doc.querySelectorAll('.story-photos figure')].every(photo =>
-    !photo.hidden && !photo.inert && !photo.hasAttribute('aria-hidden') && win.getComputedStyle(photo.querySelector('a')).opacity === '1'),
+    !photo.hidden && !photo.inert && !photo.hasAttribute('aria-hidden') && win.getComputedStyle(photo.querySelector('a')).opacity === '1')
+    && [...doc.querySelectorAll('.story')].every(section => win.getComputedStyle(section).translate === 'none'
+      && win.getComputedStyle(section, '::before').content === 'none'),
     'resize to short viewport clears blend, hidden and inert states');
   frame.style.height = '844px';
   await settle();
