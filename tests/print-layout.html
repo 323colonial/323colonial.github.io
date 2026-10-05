@@ -47,6 +47,9 @@ try {
   await settle();
   const results = [];
   for (const {frame, doc, win, figures, route, facts, intro} of cases) {
+    // Print/width changes can select a new srcset candidate after the screen decode.
+    await Promise.all(figures.map(figure => figure.querySelector('img').decode()));
+    await settle();
     const failures = [];
     const check = (ok, name) => { if (!ok) failures.push(name); };
     const style = element => win.getComputedStyle(element);
@@ -75,8 +78,9 @@ try {
       check(contact && box(contact).height > 0 && ['Liz McDonald', 'Dandridge Realty Group LLC', '304-885-7645', 'https://323colonial.github.io/'].every(text => contact.textContent.includes(text)), 'print contact and site URL visible');
       check(box(doc.querySelector('.site-footer')).bottom <= 960, 'content fits Letter printable height without clipping');
       check(parseFloat(style(paragraphs[0]).fontSize) >= 14, 'readable print prose');
-      check([...doc.querySelectorAll('.skip-link, .showing-contact, .header-public, .summary-actions, .price-label')].every(el => style(el).display === 'none'), 'screen navigation hidden');
     }
+    check([...doc.querySelectorAll('.skip-link, .showing-contact, .header-public, .summary-actions, .price-label')].every(el => style(el).display === 'none'), 'screen navigation hidden');
+    if (route === 'gallery') check(figures.every(figure => style(figure).breakInside === 'avoid'), 'photo/caption groups protected from page breaks');
     check([...doc.querySelectorAll('dialog, .scroll-cue')].every(el => style(el).display === 'none'), 'interactive overlays/counters hidden');
     check(doc.documentElement.scrollWidth <= frame.clientWidth, 'no horizontal overflow');
     results.push(`${failures.length ? 'FAIL' : 'PASS'}: ${frame.title} (${visible.length} printed / ${figures.length} source photos)${failures.length ? ' — ' + failures.join('; ') : ' — captions below images, contained content, no overlap/crop; selected content retained'}`);

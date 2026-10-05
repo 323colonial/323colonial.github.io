@@ -199,7 +199,9 @@ body:has(dialog[open]) { overflow: hidden; }
 @page listing-sheet { size: auto; margin: .5in; }
 @media print {
   .masthead, .listing-summary, .story-stage, .story-photos { position: static !important; }
-  .showing-contact, .header-public, dialog, .scroll-cue { display: none !important; }
+  .skip-link, .showing-contact, .header-public, dialog, .scroll-cue { display: none !important; }
+  .gallery-grid figure { break-inside: avoid; }
+  .site-footer { padding-block: 8px; break-inside: avoid; }
   .story { height: auto !important; }
   .story-stage { display: block !important; }
   .story figure[hidden] { display: block !important; }
@@ -213,7 +215,7 @@ body:has(dialog[open]) { overflow: hidden; }
   html:has(.listing-page), .listing-page { background: white; color: #000; }
   .listing-page { page: listing-sheet; font-size: 11pt; overflow: visible !important; }
   .listing-page a { text-decoration: none; }
-  .listing-page .skip-link, .listing-page .price-label, .listing-page .summary-actions,
+  .listing-page .price-label, .listing-page .summary-actions,
   .listing-page .story-photos, .listing-page .story:not(:first-child) { display: none !important; }
   .listing-page .masthead { min-height: 0; padding: 0 0 12pt; background: none; color: inherit; border-bottom: 1pt solid; }
   .listing-page .property-identity h1 { font-size: 26pt; }

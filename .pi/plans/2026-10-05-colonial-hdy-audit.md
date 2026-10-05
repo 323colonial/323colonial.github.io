@@ -3,6 +3,8 @@
 Date: 5 October 2026. Audited revision: `5fe8997789c6b785a94b47393894a7e0144ff074`.
 Implementation follow-up: **colonial-vw9 — Implement confirmed Impeccable audit recommendations** (created before audit closeout).
 
+**Follow-up result, 5 October 2026:** F1–F3 repaired and verified in Chromium; see [implementation outcome](#implementation-outcome--colonial-vw9). Original audit findings below remain the historical baseline, not the current defect list.
+
 ## Implementation integrity verdict
 
 **PASS for product-specific coherence; not release certification.** The implementation follows the owner-pinned house palette, Georgia/Arial typography, exact seven-paragraph narrative, native scrolling, factual imagery and labeled conceptual plan. No redesign is warranted. Three confirmed P2 findings remain: two gallery-print defects and one print-test synchronization defect. No P0, P1 or P3 findings confirmed in this scope.
@@ -213,3 +215,60 @@ Private screenshot basenames under the same BetterWright directory:
 - Browser checklist `colonial-hdy-audit`: 10/10 inspection requirements evidenced and audited. This marks audit coverage, not absence of defects.
 
 Tooling note: two malformed controls-batch requests made no page mutation; switched to supported Playwright calls after read-only `agnt doctor --json`. Doctor had no failures, with unrelated missing pytest/check-pi-config prerequisites; no environment repair attempted. A broad PDF-preparation selector initially included generated preview images with no src, causing decode rejection; scoped to catalog images. Neither is a buyer-site finding.
+
+## Implementation outcome — colonial-vw9
+
+5 October 2026. Implementation baseline: `ec18910dad9c0d7ddcd4a2b663a5c44bb403d277`. Fresh session recovered only `colonial-hdy`, `colonial-vw9` and referenced current artifacts. **F1–F3: repaired; bounded task regression PASS. Release readiness remains NOT VERIFIED.**
+
+### Reproduction and smallest repair
+
+- **F1/F2 reproduced before edits:** fresh A4 PDF had 19 pages, repeated skip-link overlays, and photo 3 separated from its caption across pages 2–3, matching the audit. Baseline PDF retained privately as `/tmp/colonial-vw9-proof/before-gallery-A4.pdf`.
+- **F3 reproduced before edits:** gallery fixture failed proportions for photos 19, 20, 24, 31 and 32; three homepage cases passed. Decoding selected images in the same iframe cleared all five failures without changing product code. New gallery navigation and fragmentation guards also failed against unchanged CSS before implementation.
+- `listing.css`: move `.skip-link` into the shared print-only exclusion; add `.gallery-grid figure { break-inside: avoid; }`; reduce print footer vertical padding to 8px and keep footer contents together. The homepage's later dedicated footer rule retains its existing padding. An initial `break-before: avoid` footer trial did not prevent Letter's footer-only sheet; it was replaced, not layered with more layout machinery.
+- `tests/print-layout.html`: after print/width selection settles, await each selected figure image's `decode()` and settle again before measuring. Apply existing navigation assertion to gallery too; add a computed fragmentation-protection assertion. No tolerance, content or geometry assertion removed or weakened. The fixture still explicitly does not model actual pagination.
+- No grid replacement, forced orientation, dependency, markup, script, image, caption, seven-paragraph copy, palette or font change. All CSS edits live inside `@media print`; screen skip-link behavior remains intact.
+
+### Final verification
+
+Actual Chromium 153 PDFs: portrait, 100% scale, 0.5in margins, browser headers/footers disabled, print backgrounds enabled. Used the audit's `page.pdf` options above with explicit margins on both routes, after decoding catalog/hero images.
+
+| Output | Result |
+| --- | --- |
+| Gallery Letter | **6 pages**, all 33 photo/caption groups intact; final photo and dated footer share page 6 |
+| Gallery A4 | **20 pages**, all 33 photo/caption groups intact; final photos and footer share page 20 |
+| Homepage Letter / A4 | **1 clean page each**, unchanged selected handout content |
+
+A4 keeps the existing one-column print breakpoint; Letter keeps two columns. The A4 page increase is the necessary result of keeping groups together at existing sizes, not a new page-count target. No photos were cropped or omitted to save paper.
+
+All final gallery pages were rendered and inspected as contact sheets; representative repaired breaks are [Letter page 6 and A4 page 3](colonial-vw9-evidence/gallery-pagination.png). [Both complete homepage PDF renders](colonial-vw9-evidence/home-prints.png) show retained opening paragraph, hero/caption, twelve facts, contact/URL and date.
+
+Private `check-pdfs.py` additionally parsed `pdftohtml -xml -hidden -zoom 1` output for both catalogs. Every extracted image's 8-bit RGB SHA-256 matched an existing manifest derivative, positions were exactly 1–33 in order, drawn aspect ratios matched within .02 (integer-point XML precision), and complete exact caption/concept text occurred beneath the corresponding image in the same column/page. All image/text bounds stayed within printable margins (1pt extraction tolerance); no skip text, blank or footer-only pages. This is PDF verification evidence, not a new application dependency. Helper, XML, extracted images, full renders and PDFs are under `/tmp/colonial-vw9-proof/` and may expire.
+
+| Check | Result |
+| --- | --- |
+| `tests/print-layout.html` | **Three consecutive runs × four cases PASS** after final CSS; unchanged geometry assertions |
+| Nine screen fixtures, sequential | hero 9, media 6, quality 16, fallback 12, buyer-audit 39, details 67, typography 69, viewer 51, scroll 214 PASS; zero failures |
+| Desktop/mobile inspection | Both routes at 1440×1100 and 390×844 retain approved composition; no screen CSS changes |
+| `node --test tests/*.test.mjs` | 12/12 PASS |
+| `python3 tests/test_listing.py` | 11/11 PASS, including frozen content/assets |
+| `python3 test_design.py` | PASS |
+| `python3 test_marketing_plans.py` | PASS |
+| Detector on changed CSS/fixture | Exit 2, one Arial warning; owner-pinned font, not a defect |
+| Diff/scope review | Print-only production change plus existing fixture, this report and two evidence renders; unrelated `.beads.gate.lock` untouched |
+
+Browser checklist `colonial-vw9-print-repair` audited 9/9. Proof sheets explicitly label diagnostic composites rather than presenting them as product screenshots. Private BetterWright proof basenames under `/Users/hays/.betterwright/artifacts/85b42e1702877c85/`: print fixture `pi-evidence-1791175951372-107534.png`; screen captures/results `pi-evidence-1791176132783-cf735b.png`; catalog PDFs `pi-evidence-1791176178254-6e71ef.png`; reproduction/homepage PDFs `pi-evidence-1791176217883-312729.png`.
+
+### Evidence hashes and remaining limits
+
+| Artifact | SHA-256 |
+| --- | --- |
+| `colonial-vw9-evidence/gallery-pagination.png` | `09e60266a3467811eabd09f445e65d66f2e9077c7ea0b09ad85b62bc9ff79c78` |
+| `colonial-vw9-evidence/home-prints.png` | `7174145717f86da6a329f05052abf5049f2aced5874647c7d6d346d722c59cc2` |
+| `/tmp/colonial-vw9-proof/final-gallery-Letter.pdf` | `06cfe3803bd8d567fb6cbd905978ced6856eedd81a01368b4c0bd01d33a003b6` |
+| `/tmp/colonial-vw9-proof/final-gallery-A4.pdf` | `0bb555c38382476159b88e9fa1108f7499db0d2a5b3fe348284526c5bc5e3b3f` |
+| `/tmp/colonial-vw9-proof/home-Letter.pdf` | `3c837625aa0fbbf7c15e8cb8009d88114474b468586376aed5adbd883cb2be57` |
+| `/tmp/colonial-vw9-proof/home-A4.pdf` | `39a6d080e13dba7c6a4106756972c96ed931dd465824405db790384e1df89705` |
+
+Firefox/Safari pagination and physical printers remain **unverified**; no claim of a fix for the owner's Firefox landscape preference. `size: auto` remains unchanged. Prior parallel buyer-audit failure did not reproduce in this isolated sequential run; no speculative product fix added. All other audit exclusions remain. No push or deployment.
+
+Tooling limits: one Chromium `Page.printToPDF: Printing failed` closed browser pages; restored browser generated the final PDFs successfully. Artifact quota evicted earlier PDFs, so final outputs were copied promptly to `/tmp`. Optional Pillow was absent; verification used installed ImageMagick and Python stdlib instead. ImageMagick montage font config and an occupied proof-server port affected only evidence assembly; font-free image joins and an OS-assigned loopback port succeeded. Read-only `agnt doctor --json` reported no failures, only unrelated pytest/check-pi-config prerequisite warnings; no dependency installation or home configuration repair.
