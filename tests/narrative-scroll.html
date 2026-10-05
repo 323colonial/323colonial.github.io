@@ -82,6 +82,16 @@ try {
       const late = opacity(photos[1]);
       check(early > .1 && early < .4 && late > .6 && late < .9 && opacity(photos[0]) > 0,
         `${label}: two photos blend continuously with scroll`);
+      const image = photos[1].querySelector('img');
+      const imageBoxDuringBlend = image.getBoundingClientRect();
+      check(win.getComputedStyle(image).objectFit === 'contain'
+        && Math.abs(imageBoxDuringBlend.width / imageBoxDuringBlend.height - Number(image.getAttribute('width')) / Number(image.getAttribute('height'))) > .01,
+        `${label}: contain-fit photo exposes letterbox space`);
+      const photoLayers = section.querySelectorAll('.story-stage, .story-photos, .media-record, .media-record > a, .media-record img');
+      check([...photoLayers].every(layer => {
+        const style = win.getComputedStyle(layer);
+        return style.backgroundColor === 'rgba(0, 0, 0, 0)' && style.backgroundImage === 'none';
+      }), `${label}: letterboxes reveal section background without tint, including during crossfade`);
       const captionStyle = win.getComputedStyle(photos[1].querySelector('figcaption'));
       check(win.getComputedStyle(photos[0].querySelector('figcaption')).visibility === 'hidden'
         && captionStyle.visibility === 'visible' && captionStyle.opacity === '1'

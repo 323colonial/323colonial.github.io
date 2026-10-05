@@ -94,7 +94,7 @@ figcaption { padding-top: 10px; font: 13px/1.5 Arial, sans-serif; }
 .is-scrolling .story-photos figure { grid-area: 1 / 1; align-self: start; }
 .is-scrolling .scroll-cue { position: absolute; top: calc(var(--photo-height) - 10px); left: 50%; transform: translate(-50%, -100%); z-index: 1; }
 .is-scrolling .media-record[inert] { pointer-events: none; }
-.is-scrolling .media-record > a { height: var(--photo-height); display: flex; align-items: center; background: rgb(240 236 226 / 25%); opacity: var(--photo-opacity, 1); }
+.is-scrolling .media-record > a { height: var(--photo-height); display: flex; align-items: center; opacity: var(--photo-opacity, 1); }
 .is-scrolling .media-record[inert] figcaption { visibility: hidden; }
 .is-scrolling .media-record img { height: 100%; object-fit: contain; }
 .is-scrolling figcaption { min-height: 49px; }

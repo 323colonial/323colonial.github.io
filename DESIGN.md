@@ -14,7 +14,7 @@ colors:
   print-paper: "#ffffff"
   print-ink: "#000000"
   muted: "#50564f"
-  image-field: "rgb(240 236 226 / 25%)"
+  image-field: "transparent"
   viewer-backdrop: "rgb(25 31 27 / 90%)"
 typography:
   property-mark:
@@ -216,7 +216,7 @@ Pewter Green anchors the persistent masthead. Mahogany carries buttons, status, 
 Sea Salt, Debonair and Accessible Beige are broad narrative fields. The seven fields run Sea Salt, Greek Villa, Accessible Beige, Debonair, Greek Villa, Debonair, Accessible Beige.
 
 ### Neutral
-Greek Villa is the page, facts and dialog field; Accessible Beige also backs enlarged images. Ink is primary text, muted green-grey is metadata, stone makes fine separators, and cedar marks the facts bar's lower edge. Translucent Greek Villa fills contain-fit narrative image slots; the dark translucent viewer backdrop separates modal focus.
+Greek Villa is the page, facts and dialog field; Accessible Beige also backs enlarged images. Ink is primary text, muted green-grey is metadata, stone makes fine separators, and cedar marks the facts bar's lower edge. Contain-fit narrative image slots stay transparent so letterboxing matches each surrounding section, including during crossfades; the dark translucent viewer backdrop separates modal focus.
 
 **The House Palette Rule.** These are screen approximations of the owner's colors, not physical paint-match specifications. CSS aliases resolve forest to Pewter Green, paper to Greek Villa, paper-strong to Accessible Beige and rule to stone.
 
