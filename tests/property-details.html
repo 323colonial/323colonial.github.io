@@ -13,8 +13,11 @@ try {
   await new Promise(resolve => { frame.onload = resolve; frame.src = '../index.html'; });
   const doc = frame.contentDocument;
   const link = doc.querySelector('.price a');
-  check(Boolean(link), 'price is a native link in facts heading');
-  if (!link) throw new Error('Missing price link');
+  check(link?.textContent === 'Property details', 'Property details text is the native link in facts heading');
+  if (!link) throw new Error('Missing Property details link');
+  check((link.getAttribute('aria-label') || link.textContent) === 'Property details', 'accessible name matches visible link text');
+  const price = [...doc.querySelectorAll('.price span')].find(span => span.textContent === '$499,000');
+  check(Boolean(price) && !price.closest('a') && price.tabIndex === -1, 'price is plain non-focusable text');
   const dialog = doc.querySelector('#property-details');
   check(link.getAttribute('aria-haspopup') === 'dialog', 'enhanced link announces dialog');
   check(dialog?.getAttribute('aria-labelledby') === 'property-details-title', 'dialog has accessible title');
@@ -23,9 +26,14 @@ try {
     frame.style.height = `${height}px`;
     await settle();
     link.scrollIntoView();
+    const url = frame.contentWindow.location.href;
+    price?.click();
+    await settle();
+    check(!dialog.open && frame.contentWindow.location.href === url, `${width}px: price click does not open or navigate`);
+    check(link.getBoundingClientRect().height >= 44, `${width}px: details link retains touch target`);
     link.focus();
     link.click();
-    check(dialog.open, `${width}px: price opens dialog`);
+    check(dialog.open, `${width}px: Property details opens dialog`);
     check(dialog.querySelector('dl').textContent === doc.querySelector('#details dl').textContent,
       `${width}px: all twelve property facts preserved without copy drift`);
     check(dialog.querySelectorAll('dt').length === 12, `${width}px: twelve facts`);
@@ -36,7 +44,7 @@ try {
     check(rect.top >= 0 && rect.bottom <= height, `${width}px: dialog fits viewport`);
     dialog.querySelector('button').click();
     await settle();
-    check(!dialog.open && doc.activeElement === link, `${width}px: close restores price focus`);
+    check(!dialog.open && doc.activeElement === link, `${width}px: close restores Property details focus`);
   }
   const modified = new frame.contentWindow.MouseEvent('click', {bubbles: true, cancelable: true, ctrlKey: true});
   link.dispatchEvent(modified);
@@ -49,7 +57,8 @@ try {
   });
   const fallback = frame.contentDocument;
   const anchor = fallback.querySelector('.price a');
-  check(anchor.getAttribute('href') === '#details' && !anchor.hasAttribute('aria-haspopup'), 'no-JS price remains ordinary details link');
+  check(anchor.textContent === 'Property details' && anchor.getAttribute('href') === '#details' && !anchor.hasAttribute('aria-haspopup'), 'no-JS Property details remains ordinary details link');
+  check(![...fallback.querySelectorAll('a')].some(a => a.textContent.includes('$499,000')), 'no-JS price is not linked');
   check(fallback.querySelector('#details').getBoundingClientRect().height > 0, 'no-JS details remain visible');
 } catch (error) { check(false, error.message); }
 document.querySelector('#results').textContent = results.join('\n');

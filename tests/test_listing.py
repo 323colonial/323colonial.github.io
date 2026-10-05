@@ -80,14 +80,17 @@ class Listing(unittest.TestCase):
         self.assertIn(plan.text(), plan.attrs['aria-label'], 'Speech input can target the visible link wording')
         self.assertEqual({d.attrs['id'] for d in page.all('dialog')}, {'all-photos', 'photo-viewer', 'property-details'})
 
-    def test_price_opens_property_details_from_facts_heading(self):
+    def test_property_details_text_links_from_facts_heading(self):
         page = Page('index.html').root
         summary = next(s for s in page.all('section') if s.cls('listing-summary'))
         self.assertEqual(len(summary.all('h2')), 1, 'Facts bar needs property details heading')
         heading = summary.all('h2')[0]
         self.assertIn('Property details', heading.text())
         link = heading.all('a')[0]
-        self.assertIn('$499,000', link.text())
+        self.assertEqual(link.text(), 'Property details')
+        self.assertEqual(link.attrs.get('aria-label', link.text()), 'Property details')
+        self.assertFalse(any('$499,000' in a.text() for a in page.all('a')), 'Price is not linked')
+        self.assertIn('$499,000', heading.text())
         self.assertEqual(link.attrs['href'], '#details', 'Native anchor fallback preserved')
         self.assertEqual(page.all('h2')[0], heading)
 
