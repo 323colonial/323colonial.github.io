@@ -9,6 +9,16 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 APPROVED = json.loads((ROOT / 'tests/fixtures/approved-listing.json').read_text())
 COVERAGE = json.loads((ROOT / 'tests/fixtures/photo-coverage.json').read_text())
+REDFIN = json.loads((ROOT / 'tests/fixtures/redfin-refresh.json').read_text())
+
+
+def before_redfin(photo):
+    """Recover frozen historical record; replacement provenance never rewrites it."""
+    original = dict(photo)
+    replacement = original.pop('redfin_source', None)
+    if replacement:
+        original['derivatives'] = replacement['previous_derivatives']
+    return original
 
 
 class Element:
@@ -170,7 +180,7 @@ class Listing(unittest.TestCase):
         self.assertEqual([r['source'] for r in listing], [f'listing info/pics/{n}.jpg' for n in range(1, 78)])
         self.assertEqual(len(sources), 82)
         photos = json.loads((ROOT / 'assets/listing/manifest.json').read_text())['photos']
-        self.assertEqual(hashlib.sha256(json.dumps(photos[:38], sort_keys=True).encode()).hexdigest(),
+        self.assertEqual(hashlib.sha256(json.dumps([before_redfin(p) for p in photos[:38]], sort_keys=True).encode()).hexdigest(),
                          COVERAGE['baseline_photos_sha256'], 'All original 38 records must remain unchanged')
         additions = [r for r in sources if r['status'] == 'add']
         self.assertEqual([r['position'] for r in additions], list(range(39, 74)))
@@ -346,9 +356,11 @@ class Listing(unittest.TestCase):
         photos = json.loads((ROOT / 'assets/listing/manifest.json').read_text())['photos']
         dimensions = {}
         for photo in photos:
-            full = photo['derivatives'][0]
             for d in photo['derivatives']:
                 dimensions[d['path']] = (d['width'], d['height'])
+            historical = before_redfin(photo)
+            full = historical['derivatives'][0]
+            for d in historical['derivatives']:
                 trim = d.get('margin_trim')
                 if photo['position'] not in margins:
                     self.assertIsNone(trim)
@@ -371,6 +383,31 @@ class Listing(unittest.TestCase):
                     if candidate.strip():
                         path, width = candidate.split()
                         self.assertEqual(int(width[:-1]), dimensions[path][0])
+
+    def test_redfin_refresh_matches_and_preserves_every_other_record(self):
+        photos = json.loads((ROOT / 'assets/listing/manifest.json').read_text())['photos']
+        matches = {m['position']: m for m in REDFIN['matches']}
+        self.assertEqual(len(matches), 26)
+        self.assertEqual(len({m['url'] for m in matches.values()}), 26)
+        self.assertEqual(set(REDFIN['retained_positions']), set(range(1, 74)) - matches.keys())
+        for photo, baseline in zip(photos, REDFIN['baseline_records_sha256']):
+            self.assertEqual(hashlib.sha256(json.dumps(before_redfin(photo), sort_keys=True).encode()).hexdigest(), baseline)
+            n = photo['position']
+            if n not in matches:
+                self.assertNotIn('redfin_source', photo)
+                continue
+            self.assertIn('redfin_source', photo, f'Photo {n} still uses degraded source')
+            source, match = photo['redfin_source'], matches[n]
+            for key in ('redfin_position', 'file', 'url', 'sha256', 'size', 'visual_match'):
+                self.assertEqual(source[key], match[key], f'Photo {n}: wrong {key}')
+            self.assertTrue(source['url'].startswith('https://ssl.cdn-redfin.com/photo/235/bigphoto/198/'))
+            self.assertIsNone(source['crop_xywh'], 'Keep original framing and watermark')
+            self.assertEqual(source['quality'], 80)
+            self.assertEqual([d['width'] for d in photo['derivatives']], [1280, 720])
+            self.assertEqual([photo['derivatives'][0][k] for k in ('width', 'height')], source['size'])
+            self.assertNotEqual(photo['derivatives'], source['previous_derivatives'])
+            for d in photo['derivatives']:
+                self.assertNotIn('margin_trim', d, 'Screenshot trims must not be reapplied to originals')
 
     def test_source_provenance_optimized_derivatives_and_legacy_preserved(self):
         manifest = ROOT / 'assets/listing/manifest.json'

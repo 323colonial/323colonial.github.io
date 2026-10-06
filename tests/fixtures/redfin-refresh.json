@@ -1,0 +1,443 @@
+{
+  "bead": "colonial-1x4",
+  "listing_url": "https://www.redfin.com/WV/Berkeley-Springs/323-Colonial-Dr-25411/home/21971085",
+  "download_directory": "redfin-colonial-2026-10-06",
+  "baseline_records_sha256": [
+    "7f7b0f8d9ad8b8a94f37f6abaadb5af011d437874e57ea7b9cb986e367d1c232",
+    "3d0d0a0a37e648d205492a8d724e112cd1204a42942ee1fa09649a283857c1ff",
+    "810e10268075bac10c18c176f2557d8cd0b00e08b615e0b015fdc15d4937d708",
+    "4dfc74c389d7bbb45c3e6b3a0e3d8f327e1b6a8c1800c432c718532f82bf21ae",
+    "ed7708360200ca551e7581ea88aa9876290d91e13477aaec0c768540a1037880",
+    "a46bc1c8f4e265c258c069ef025b850cfc3ff84dc0aeb0c1e10ba8fb47cce435",
+    "33cbeecc66e02b1ca0c0dbd28b3b3eff99988b20376f2d327d2044d58bc78c3f",
+    "5867fac7f3d836511e48abd29496b1a9c9a8f14eb2797fdb1682bdfe72422326",
+    "7fcea01af763f86f0f9044e0c8724341881e5c0ae3589a1249273029b8798517",
+    "72746f2695e198533b059c2794fc3ecb967432a727ad39102243b9977e1d7a7f",
+    "e8eb7a352ebcc7010b0f6f19de1cc2526d090381f23eb4a5bd4dd5515d5a5abc",
+    "576f97f3d8d40c2e70557e0db3180141a0777d0c6b8c84056dcaa874e30c8e77",
+    "61551bd59620f7aaec2d2c1e1ce9f974efbdf726980bda431a3e21291697bebb",
+    "390249c101875bc6c131a44775dc8da395f57aac84988dfe2de14010f7b28486",
+    "9ebdb07f7c4beb98c970d0d6744034ad16d2d0244b5cc82729daa19380c71d3f",
+    "8bada07dd11f264794b4d870e41fb179d0e973b52c406375e2d14751c9d1fe6e",
+    "508fb396577b661c5c5e80252beeb583a0f41e2dbedd4b374b5a5a55e2d4c4c8",
+    "c20ee4ba54434de065d518bad106df2e7d40822f42af78976dcccf326dc9cf30",
+    "3f9264f4b230d5e18c232cb0cf1b1afb26b3f5c43ac9345cb430b1c7390a59f8",
+    "42545b746316535812740231d0b5bcbeaaa7aa110676dbd548351aa7aede539f",
+    "d6efbced699d05ec3210652cf13dc0adbdf34458c57452662559a33cd9afa331",
+    "7bbf802c98d063c071b156e548a593757789eacb4c6378d9b792e63c58158465",
+    "07017bc845d5a9e7fcd7de362e6dd2f49c79e35ad4b1841bad59f1b72eec86b7",
+    "d2b1ce04837c85c18d3b8ee52283785f18563544b3eb59054f8e21328cb4620f",
+    "ace2be662aa9e7774c8dfd9d74ca33c92d150873020fe74d526348190c5807c6",
+    "2bf75eedc27b29982b55a67dcd337fd50528f0b1c82765fe0640f50ddb7c1627",
+    "5ddb96949dd6545e1ed5c2c26865f7fac6072127da61d02db1624e7f8e8bfbda",
+    "54e28cb127c69c8dac6fbc1a3bf045514860fc750da04ea997b5966cb5bbff32",
+    "3d288010400fbac993bd335460d45e782c6458115a653ac0ba7d60c15ba3b66c",
+    "161aa4dc8e48675043df488246685d181e78d1d3660fcdd98f8a030463ffdccb",
+    "268ae274fd63016e83d82d158b0d161947f98e1e17941b89031e0253cebb8040",
+    "d65d7a7b5c8ae878bdcdf456845bdc7c913d3231bbe2b8d21abd5c2e33ee5cd7",
+    "88192096d0a0ea57f8c3b4de462f42ea971ebe5d5c94b8675f7abc5dae9fbe63",
+    "1d64d6c346c52d47db95c564a1c528d824279169f8cc9dfa9ccd3ba25f326d21",
+    "e420ad62f1745c867bdf8b31a2621ac58c188ba8dbeda71f9910bacf3772451c",
+    "55ebcabe8487e8c3b9c72a71459a154721aaee8bcaf85289341d467741dd7daa",
+    "6f9ce9494cf6fcb1a234f0a1a04237201fa8e9def5f9a1e528727128c3ab4470",
+    "968342df9ab930f58d175fc078daabb42d724575e50eb7d685d2468001427c94",
+    "06bd92ae66905a39198321b40dfa60fc6d78ef80e9b522159311a21fe5526b53",
+    "d6fca7f8a40a25adb80dc6ed16e8749326961de6e6ee1cede64284b420cb44cd",
+    "7d8536014bf08e49faaf1d88148ca2e2c87ed627e4b66c67bcd2fe4e69f5438e",
+    "7ac22d081c8faadc7ce43501181b5f01f0aae5efb56a383b35b9d04f1374b263",
+    "961a83524f4fbdf69cf988930be568718dc0c9dfa03ecbecfd4605345af372cb",
+    "309b6e7dab79b1c603295b1f1625b1a59400152bfc4a3e9adf076e72e1a383bc",
+    "d3a10d07c6a74487f84194dc39dc396f29e38087d64839490f58e3c0608fbe17",
+    "8f7fba3708cc796ae8efb5f09a8a48dd99454c39647bd362c5fb60dc26465494",
+    "c2ede14b41b8471abc9c59307116c9bdfd73b2d9e5d0adef7a9a0cbd0cef5bf0",
+    "21583b320864855c6769fb6b42dce7c196cdecd63d12d8c329d3b8bfc494b823",
+    "496cca444ac5110600e5db66b1dd9ab0088fc2935c55ead812ff32328c3da5b9",
+    "e86f2d545e061cd347b9a1f1088ec3af44fb14a77d0a222b7dec829ca1131897",
+    "dc3fc4c8a43a8414bb0d87d5fc55060306c9b3117225584d1087421f56aedc0f",
+    "a763b01b8bd7f87b4ec66c0b0dab4dd4a907e61d96e1c58040132c2e44b4c130",
+    "5e719929a728c31a4e17fc3da72fd3596c231d49b052a21de6955179a2997076",
+    "9f1dee4f2395649ea106c410f4caf5f71a632bc755146fde1b24673e1a4080f5",
+    "001a919a55760bb7b443252d8860b1f15d385dcc39ae428388578277c509c130",
+    "7c72654b2203bbad79fa3beb7132f8f37e252ac5bfe0fbc778873c3097e6fadf",
+    "192d9de5298c53531ba81b2603f4f04a921b1fded9ea86ee387dfcfbc19625a0",
+    "e6b6223c6a2570648874e11235f8af56f17434720341dfa71e0c241d8f7e8dd4",
+    "ae899c94d1ff6798e81fae5d4a4d5ffbff2c99b22f32b218bc4cba459a48150d",
+    "e370bdeec61f0a19d1314502840bafa09b5f2b5fa38e45c49b55faf9100ba558",
+    "810f9709d6b8d268e9835821827022759d70200c737515526ca83619f6066055",
+    "caae2ebf9c15983e0c01dd767ca6a4f254f2415a1878f3804c3c5ef7887ba5a4",
+    "4e7956dd9da0f75fcc0feb5f1527efe2b000e6d2f238a5f47d59dedb29f0d796",
+    "a40f303fda15d2b96bad4238045d8d3a8c83b324db0d506ea8e343a2a499c811",
+    "9fc14c2c12589a01a77faab0f0c4870a885da0e7f40b90af4ea95e300769f9e0",
+    "148f5333e4cbc2199475aa7d9fc0ec45963b044f80171c570ba35267e8bd834e",
+    "54508141d60f64d49cf0ac6a8b6c76eb84216a2c57b5253ea5c9017d1902fab6",
+    "b8c2bdebe61dfa8200056fd1a67f528cb37d2fd6a171661ecb55a865c3b38a5c",
+    "3a621435543c77153d4fdfb5c9f8f8aae4daf2fe493d3b0b5b2b853dcb6be9e3",
+    "2fd4b876bac4f2afbe4e8bcd4a8d59111286e9c1625c5babcdc7b251616362a2",
+    "2ac285231c3707c3ec6442bf40b60a10c8f443a0a576876da22dd92a8b95ee85",
+    "cb7798ca230988957b8d7ad6360361d0bff62cbf9c7274671aac2e42dc64909e",
+    "ab479c510523b838a82e08b9d80796a009056c377d9d235e4e09a1ee8c156f6b"
+  ],
+  "matches": [
+    {
+      "position": 1,
+      "redfin_position": 1,
+      "file": "redfin-01.jpg",
+      "url": "https://ssl.cdn-redfin.com/photo/235/bigphoto/198/WVMO2008198_2.jpg",
+      "sha256": "6d91f6f3993b5014b1be640c8a2eb51428762af3f05c35beed9bec26147bd9ab",
+      "size": [
+        1280,
+        848
+      ],
+      "visual_match": "Chimney, dormers, grill, birdbath and foreground branches."
+    },
+    {
+      "position": 2,
+      "redfin_position": 2,
+      "file": "redfin-02.jpg",
+      "url": "https://ssl.cdn-redfin.com/photo/235/bigphoto/198/WVMO2008198_1_3.jpg",
+      "sha256": "ce6cb424263a710c77e20f95868a1cb1f70a73265e7719699ce6a27268525d19",
+      "size": [
+        1280,
+        851
+      ],
+      "visual_match": "Bird artwork between tall windows, hearth, sofa and dining table."
+    },
+    {
+      "position": 3,
+      "redfin_position": 3,
+      "file": "redfin-03.jpg",
+      "url": "https://ssl.cdn-redfin.com/photo/235/bigphoto/198/WVMO2008198_2_3.jpg",
+      "sha256": "8403ab1dc2ddab92ed7e4fda97b255b65011456cfc7e7cfe11fb6e6327bbf260",
+      "size": [
+        1280,
+        960
+      ],
+      "visual_match": "Leafless aerial, house roof, road and distant ridge."
+    },
+    {
+      "position": 4,
+      "redfin_position": 4,
+      "file": "redfin-04.jpg",
+      "url": "https://ssl.cdn-redfin.com/photo/235/bigphoto/198/WVMO2008198_3_4.jpg",
+      "sha256": "0eb404d59fe19b080750fff06078b5de176b1ea5cbc035f9b2cbc356b9594a40",
+      "size": [
+        1280,
+        848
+      ],
+      "visual_match": "Swing chains, blue cushions, screened hillside and rear table."
+    },
+    {
+      "position": 8,
+      "redfin_position": 14,
+      "file": "redfin-14.jpg",
+      "url": "https://ssl.cdn-redfin.com/photo/235/bigphoto/198/WVMO2008198_13_4.jpg",
+      "sha256": "1f394875f22dc20829843772d0bd96ae2a4e1ea45684fa2594ba15ba2765f59a",
+      "size": [
+        1280,
+        720
+      ],
+      "visual_match": "Autumn aerial canopy, roof at right and distant ridge."
+    },
+    {
+      "position": 9,
+      "redfin_position": 13,
+      "file": "redfin-13.jpg",
+      "url": "https://ssl.cdn-redfin.com/photo/235/bigphoto/198/WVMO2008198_12_4.jpg",
+      "sha256": "f66cb0dffdcbc387e233824b6a095b205744e83198cd1c490b33823a7ab8d7f2",
+      "size": [
+        1280,
+        960
+      ],
+      "visual_match": "Snow-covered roof, foreground trunk and bare trees."
+    },
+    {
+      "position": 10,
+      "redfin_position": 46,
+      "file": "redfin-46.jpg",
+      "url": "https://ssl.cdn-redfin.com/photo/235/bigphoto/198/WVMO2008198_45_6.jpg",
+      "sha256": "e9b24d27813c31263abf5ee97e1e510184d51a5fd98201bde160b885ed1ca7ad",
+      "size": [
+        1280,
+        845
+      ],
+      "visual_match": "Firepit flame, circular stone surround and background trunks."
+    },
+    {
+      "position": 11,
+      "redfin_position": 36,
+      "file": "redfin-36.jpg",
+      "url": "https://ssl.cdn-redfin.com/photo/235/bigphoto/198/WVMO2008198_35_7.jpg",
+      "sha256": "3f7c1f069f7c35bf4c5af810195ee4ab47f2f303e114dfe430aa314375f17650",
+      "size": [
+        1280,
+        851
+      ],
+      "visual_match": "Garage doors, roof dormers and paved approach."
+    },
+    {
+      "position": 12,
+      "redfin_position": 9,
+      "file": "redfin-09.jpg",
+      "url": "https://ssl.cdn-redfin.com/photo/235/bigphoto/198/WVMO2008198_8_4.jpg",
+      "sha256": "a695ba519dc77019dccf243f3ac4c49d24c8ccff6fe197743817b3793733a708",
+      "size": [
+        1280,
+        850
+      ],
+      "visual_match": "Loft-down view, sectional sofa, island and fireplace."
+    },
+    {
+      "position": 13,
+      "redfin_position": 7,
+      "file": "redfin-07.jpg",
+      "url": "https://ssl.cdn-redfin.com/photo/235/bigphoto/198/WVMO2008198_6_4.jpg",
+      "sha256": "da4962527a9b9013108c6db31e4243c90913e6cd08c592280fc93ecff0bcbe59",
+      "size": [
+        1280,
+        851
+      ],
+      "visual_match": "Close frontal hearth, wood basket and twin sliders."
+    },
+    {
+      "position": 14,
+      "redfin_position": 17,
+      "file": "redfin-17.jpg",
+      "url": "https://ssl.cdn-redfin.com/photo/235/bigphoto/198/WVMO2008198_16_5.jpg",
+      "sha256": "16f34c215b06026fd9df96bc8c6c470b76144e2e39115a72b7dfc5a050b1e348",
+      "size": [
+        1280,
+        931
+      ],
+      "visual_match": "Dining table, chandelier, slider and decorative wall shelf."
+    },
+    {
+      "position": 15,
+      "redfin_position": 18,
+      "file": "redfin-18.jpg",
+      "url": "https://ssl.cdn-redfin.com/photo/235/bigphoto/198/WVMO2008198_17_4.jpg",
+      "sha256": "76ab8162dd1ffc0965eaff8ea6b90a143c7073acbcc489252851b78f11cf023a",
+      "size": [
+        1280,
+        851
+      ],
+      "visual_match": "Range, refrigerator, sink window and granite counter."
+    },
+    {
+      "position": 16,
+      "redfin_position": 11,
+      "file": "redfin-11.jpg",
+      "url": "https://ssl.cdn-redfin.com/photo/235/bigphoto/198/WVMO2008198_10_4.jpg",
+      "sha256": "168967c9793c9ca24ea71d63d8105d0cc22056cae5a751ba737ea2ac8cd999af",
+      "size": [
+        1280,
+        959
+      ],
+      "visual_match": "Chimney, red grill, white deck chairs and hot tub."
+    },
+    {
+      "position": 17,
+      "redfin_position": 12,
+      "file": "redfin-12.jpg",
+      "url": "https://ssl.cdn-redfin.com/photo/235/bigphoto/198/WVMO2008198_11_4.jpg",
+      "sha256": "dc4c8d698519e772a6f71d7a2d4cb43da5a4da096551f35ae16002a7745062d7",
+      "size": [
+        1280,
+        849
+      ],
+      "visual_match": "Long screened porch, apple bowl, ceiling fan and swing."
+    },
+    {
+      "position": 18,
+      "redfin_position": 23,
+      "file": "redfin-23.jpg",
+      "url": "https://ssl.cdn-redfin.com/photo/235/bigphoto/198/WVMO2008198_22_5.jpg",
+      "sha256": "324a5b5196d1a6d136d040f19a98429ca144417b301598fc1e6bbae38513b9e7",
+      "size": [
+        1280,
+        851
+      ],
+      "visual_match": "Blue bedroom, dresser, bed and double window."
+    },
+    {
+      "position": 19,
+      "redfin_position": 22,
+      "file": "redfin-22.jpg",
+      "url": "https://ssl.cdn-redfin.com/photo/235/bigphoto/198/WVMO2008198_21_5.jpg",
+      "sha256": "8d67f91b7d2c76d60c623ca2eec5996f6218aae1e12200bcea2f7f6841a04529",
+      "size": [
+        1280,
+        851
+      ],
+      "visual_match": "Shower door at left, tub and twin wood mirrors."
+    },
+    {
+      "position": 21,
+      "redfin_position": 28,
+      "file": "redfin-28.jpg",
+      "url": "https://ssl.cdn-redfin.com/photo/235/bigphoto/198/WVMO2008198_27_5.jpg",
+      "sha256": "a7c5c3359e7931a59c5f26581439d182895525760d149fafedb8169c72d473f6",
+      "size": [
+        1280,
+        848
+      ],
+      "visual_match": "Loft sofa, coffee table, keyboard and wood double doors."
+    },
+    {
+      "position": 22,
+      "redfin_position": 29,
+      "file": "redfin-29.jpg",
+      "url": "https://ssl.cdn-redfin.com/photo/235/bigphoto/198/WVMO2008198_28_5.jpg",
+      "sha256": "68815a4745555d9bc0e702f6680d9b548a9900f4b8c0ebe9b7d9fc8b95ba1424",
+      "size": [
+        1280,
+        851
+      ],
+      "visual_match": "TV, wall mirror, sofa and loft window."
+    },
+    {
+      "position": 23,
+      "redfin_position": 31,
+      "file": "redfin-31.jpg",
+      "url": "https://ssl.cdn-redfin.com/photo/235/bigphoto/198/WVMO2008198_30_5.jpg",
+      "sha256": "412bc0649dcfae381761829d58755c2b301802c5530ee878bb38bf6ffc6adebf",
+      "size": [
+        1280,
+        850
+      ],
+      "visual_match": "Upstairs bed, bedside table, sloping ceiling and low wood doors."
+    },
+    {
+      "position": 24,
+      "redfin_position": 32,
+      "file": "redfin-32.jpg",
+      "url": "https://ssl.cdn-redfin.com/photo/235/bigphoto/198/WVMO2008198_31_6.jpg",
+      "sha256": "0c52f49ac4ab86be7a4db849b930a68496c8d130cad91aa1c8201484321cd5bb",
+      "size": [
+        1280,
+        851
+      ],
+      "visual_match": "Upstairs vanity, mirror, toilet and window."
+    },
+    {
+      "position": 26,
+      "redfin_position": 35,
+      "file": "redfin-35.jpg",
+      "url": "https://ssl.cdn-redfin.com/photo/235/bigphoto/198/WVMO2008198_34_6.jpg",
+      "sha256": "fddc10d494f1b81dedfd49fccfab18556fb7494a01b2f897c566361481c1791f",
+      "size": [
+        1280,
+        848
+      ],
+      "visual_match": "Front-left house through same trunks and lawn."
+    },
+    {
+      "position": 27,
+      "redfin_position": 40,
+      "file": "redfin-40.jpg",
+      "url": "https://ssl.cdn-redfin.com/photo/235/bigphoto/198/WVMO2008198_39_6.jpg",
+      "sha256": "d04c5344caa66cdb963e60b102c9327098890b110d96b961ed0877875e655864",
+      "size": [
+        1280,
+        851
+      ],
+      "visual_match": "Curving path, firepit, same trees and sunlit lawn."
+    },
+    {
+      "position": 28,
+      "redfin_position": 41,
+      "file": "redfin-41.jpg",
+      "url": "https://ssl.cdn-redfin.com/photo/235/bigphoto/198/WVMO2008198_40_6.jpg",
+      "sha256": "2f6f900910176b7cc83789528e220fb6e4da85f0b73fbc4e4fdfcb79ed6e1b04",
+      "size": [
+        1280,
+        960
+      ],
+      "visual_match": "Leafless aerial, chimney end, wrapping deck and circular bed."
+    },
+    {
+      "position": 29,
+      "redfin_position": 42,
+      "file": "redfin-42.jpg",
+      "url": "https://ssl.cdn-redfin.com/photo/235/bigphoto/198/WVMO2008198_41_6.jpg",
+      "sha256": "521f22ab913a5302792f900e7c75ab96d7b11eb15a33617fc99bd05ebc7c7690",
+      "size": [
+        1280,
+        850
+      ],
+      "visual_match": "Deck plant pot, white chairs and woods."
+    },
+    {
+      "position": 32,
+      "redfin_position": 43,
+      "file": "redfin-43.jpg",
+      "url": "https://ssl.cdn-redfin.com/photo/235/bigphoto/198/WVMO2008198_42_6.jpg",
+      "sha256": "d442b181b975d59cc6291192705cec51b0b9c8a176c169df7ae849ece75ceb34",
+      "size": [
+        1280,
+        720
+      ],
+      "visual_match": "Identical parcel outline and 2.90-acre label; source disclaimer retained."
+    },
+    {
+      "position": 33,
+      "redfin_position": 10,
+      "file": "redfin-10.jpg",
+      "url": "https://ssl.cdn-redfin.com/photo/235/bigphoto/198/WVMO2008198_9_4.jpg",
+      "sha256": "117c705bd04b104dc52592f4cde1065e7d574a3e2e332e9d9ccc48c287eadcb1",
+      "size": [
+        1280,
+        720
+      ],
+      "visual_match": "Same location pin, forest canopy and ridge."
+    }
+  ],
+  "retained_positions": [
+    5,
+    6,
+    7,
+    20,
+    25,
+    30,
+    31,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    67,
+    68,
+    69,
+    70,
+    71,
+    72,
+    73
+  ]
+}

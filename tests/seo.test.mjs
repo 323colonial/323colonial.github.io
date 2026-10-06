@@ -39,7 +39,7 @@ for (const [file, route, title, description] of pages) {
     const share = {
       'og:title': title, 'og:description': description, 'og:type': 'website',
       'og:url': origin + route, 'og:image': origin + 'assets/listing/01.webp',
-      'og:image:type': 'image/webp', 'og:image:width': '1600', 'og:image:height': '1060',
+      'og:image:type': 'image/webp', 'og:image:width': '1280', 'og:image:height': '848',
       'og:image:alt': 'Exterior of 323 Colonial Dr in Berkeley Springs, West Virginia.',
     };
     for (const [property, content] of Object.entries(share)) {

@@ -2,7 +2,7 @@
   "document": "Listing Feedback 323 Colonial Dr.docx",
   "document_sha256": "0c95beef596f1cd4a832b19133e6fbf24c10416e3c05b63510fb486725092183",
   "approval": "colonial-5me, 2026-10-04",
-  "processing": "Owner-edited PNG exports retained outside repository in edited-listing-photos; edited_source and edited_source_sha256 identify current inputs. Original source and crop fields retain pre-edit provenance; original crops were not reapplied. ImageMagick -auto-orient -colorspace sRGB -resize WIDTHx> -strip -quality 78; WebP max widths 1600px and 720px; no upscaling or additional edits. colonial-286: manually reviewed solid margins removed only from 16 photos, after reproducing each existing derivative scale; no resize after trimming. Per-derivative margin_trim records input size/hash, xywh and retained pre-encoding RGB hash. WebP quality remains 78; source PNGs unchanged. See margin-review.md and scripts/trim-listing-margins.py.",
+  "processing": "Owner-edited PNG exports retained outside repository in edited-listing-photos; edited_source and edited_source_sha256 identify current inputs. Original source and crop fields retain pre-edit provenance; original crops were not reapplied. ImageMagick -auto-orient -colorspace sRGB -resize WIDTHx> -strip -quality 78; WebP max widths 1600px and 720px; no upscaling or additional edits. colonial-286: manually reviewed solid margins removed only from 16 photos, after reproducing each existing derivative scale; no resize after trimming. Per-derivative margin_trim records input size/hash, xywh and retained pre-encoding RGB hash. WebP quality remains 78; source PNGs unchanged. See margin-review.md and scripts/trim-listing-margins.py. colonial-1x4: 26 visually matched direct Redfin JPGs replace degraded derivatives. redfin_source identifies current input, original dimensions, quality 80 and prior derivatives. Full source framing and watermarks retained; no crop/upscale, max 1280/720px. Earlier source, edited_source and crop fields are historical only for these records. Other 47 records/assets unchanged.",
   "photos": [
     {
       "position": 1,
@@ -22,19 +22,47 @@
       "derivatives": [
         {
           "path": "assets/listing/01.webp",
-          "width": 1600,
-          "height": 1060,
-          "sha256": "46cbc68eb1788480302cd83e2d04137c6ed04de5eb47055f429edbc861c29903"
+          "width": 1280,
+          "height": 848,
+          "sha256": "77cb63cc24aa43bf2259d077fcf68a774619c55293404b72dde19f21eae48375"
         },
         {
           "path": "assets/listing/01-small.webp",
           "width": 720,
           "height": 477,
-          "sha256": "1b998242e4ea09f4d5b8444f3279bfc5db3d1fe1578d0c502b129e6fb6b025c4"
+          "sha256": "b0e7a5e5315b56f7a919e15127f5f0c7d51b321b07ff6e64436d82e157b2f331"
         }
       ],
       "edited_source": "edited-listing-photos/01.png",
-      "edited_source_sha256": "012aa820a43c288b26550f96350aabd5f6ab50775df27a7b89b97727f9bacb4e"
+      "edited_source_sha256": "012aa820a43c288b26550f96350aabd5f6ab50775df27a7b89b97727f9bacb4e",
+      "redfin_source": {
+        "redfin_position": 1,
+        "file": "redfin-01.jpg",
+        "url": "https://ssl.cdn-redfin.com/photo/235/bigphoto/198/WVMO2008198_2.jpg",
+        "sha256": "6d91f6f3993b5014b1be640c8a2eb51428762af3f05c35beed9bec26147bd9ab",
+        "size": [
+          1280,
+          848
+        ],
+        "visual_match": "Chimney, dormers, grill, birdbath and foreground branches.",
+        "approval": "colonial-1x4, 2026-10-06",
+        "crop_xywh": null,
+        "quality": 80,
+        "previous_derivatives": [
+          {
+            "path": "assets/listing/01.webp",
+            "width": 1600,
+            "height": 1060,
+            "sha256": "46cbc68eb1788480302cd83e2d04137c6ed04de5eb47055f429edbc861c29903"
+          },
+          {
+            "path": "assets/listing/01-small.webp",
+            "width": 720,
+            "height": 477,
+            "sha256": "1b998242e4ea09f4d5b8444f3279bfc5db3d1fe1578d0c502b129e6fb6b025c4"
+          }
+        ]
+      }
     },
     {
       "position": 2,
@@ -54,19 +82,47 @@
       "derivatives": [
         {
           "path": "assets/listing/02.webp",
-          "width": 1600,
-          "height": 1064,
-          "sha256": "301bb21eae385e6cd00b32d7d98f93bc58210a85bcbbdac1df23048304b71f89"
+          "width": 1280,
+          "height": 851,
+          "sha256": "8bf73ef676d18e7fe6e8c3abb428cc23181fa13e64556aaf822f6f47ecc54148"
         },
         {
           "path": "assets/listing/02-small.webp",
           "width": 720,
           "height": 479,
-          "sha256": "80f54dd400440f4820766a28ce450e57986bd501b46777c26eaf4caf27b901c8"
+          "sha256": "840fe8ddd2e9d14c474e177d32935f91036c50909424c62b390851728098f54d"
         }
       ],
       "edited_source": "edited-listing-photos/02.png",
-      "edited_source_sha256": "0e70cc83962adf6790d3560eba9a4a553ffe05a77b870b3c635b9abd53b166a5"
+      "edited_source_sha256": "0e70cc83962adf6790d3560eba9a4a553ffe05a77b870b3c635b9abd53b166a5",
+      "redfin_source": {
+        "redfin_position": 2,
+        "file": "redfin-02.jpg",
+        "url": "https://ssl.cdn-redfin.com/photo/235/bigphoto/198/WVMO2008198_1_3.jpg",
+        "sha256": "ce6cb424263a710c77e20f95868a1cb1f70a73265e7719699ce6a27268525d19",
+        "size": [
+          1280,
+          851
+        ],
+        "visual_match": "Bird artwork between tall windows, hearth, sofa and dining table.",
+        "approval": "colonial-1x4, 2026-10-06",
+        "crop_xywh": null,
+        "quality": 80,
+        "previous_derivatives": [
+          {
+            "path": "assets/listing/02.webp",
+            "width": 1600,
+            "height": 1064,
+            "sha256": "301bb21eae385e6cd00b32d7d98f93bc58210a85bcbbdac1df23048304b71f89"
+          },
+          {
+            "path": "assets/listing/02-small.webp",
+            "width": 720,
+            "height": 479,
+            "sha256": "80f54dd400440f4820766a28ce450e57986bd501b46777c26eaf4caf27b901c8"
+          }
+        ]
+      }
     },
     {
       "position": 3,
@@ -83,17 +139,45 @@
           "path": "assets/listing/03.webp",
           "width": 1280,
           "height": 960,
-          "sha256": "faccf84756634307a7b01e20f0aab3b44a8f6a6f122ddc93e5f1fec5f3f4f224"
+          "sha256": "122d0228e527a3b516ed7c5f4feeec912240a9655b4a06ae6486ef5d6885c0a9"
         },
         {
           "path": "assets/listing/03-small.webp",
           "width": 720,
           "height": 540,
-          "sha256": "cbcedbbbb15b90cd0293e71a4f65c9aa271f8ac0af07e04251ee25613c5853b5"
+          "sha256": "c9a3836035e0423922673438a1aeb80a930c1147240ef7094599bd40c46badc5"
         }
       ],
       "edited_source": "edited-listing-photos/03.png",
-      "edited_source_sha256": "b99947cd920b27f6cc0975d999bb727c906ff4f0a5a543edc2eede0121e3463d"
+      "edited_source_sha256": "b99947cd920b27f6cc0975d999bb727c906ff4f0a5a543edc2eede0121e3463d",
+      "redfin_source": {
+        "redfin_position": 3,
+        "file": "redfin-03.jpg",
+        "url": "https://ssl.cdn-redfin.com/photo/235/bigphoto/198/WVMO2008198_2_3.jpg",
+        "sha256": "8403ab1dc2ddab92ed7e4fda97b255b65011456cfc7e7cfe11fb6e6327bbf260",
+        "size": [
+          1280,
+          960
+        ],
+        "visual_match": "Leafless aerial, house roof, road and distant ridge.",
+        "approval": "colonial-1x4, 2026-10-06",
+        "crop_xywh": null,
+        "quality": 80,
+        "previous_derivatives": [
+          {
+            "path": "assets/listing/03.webp",
+            "width": 1280,
+            "height": 960,
+            "sha256": "faccf84756634307a7b01e20f0aab3b44a8f6a6f122ddc93e5f1fec5f3f4f224"
+          },
+          {
+            "path": "assets/listing/03-small.webp",
+            "width": 720,
+            "height": 540,
+            "sha256": "cbcedbbbb15b90cd0293e71a4f65c9aa271f8ac0af07e04251ee25613c5853b5"
+          }
+        ]
+      }
     },
     {
       "position": 4,
@@ -113,19 +197,47 @@
       "derivatives": [
         {
           "path": "assets/listing/04.webp",
-          "width": 1600,
-          "height": 1060,
-          "sha256": "de192e1b4659d15d539003d5a6238cbe7da283ffb9ef38d2f762be96a0533756"
+          "width": 1280,
+          "height": 848,
+          "sha256": "20814e9a6b65021d1411544b71d053d308325ac37562005702d0d519276594ef"
         },
         {
           "path": "assets/listing/04-small.webp",
           "width": 720,
           "height": 477,
-          "sha256": "635319465e7d850cce80dd113487e7af4cb5925b2ea1853d1a2044fa45c25189"
+          "sha256": "f19123b9f36c0bf4641bdd6c404a7142debbd4f9a8516c57ad2656a3aab5c3ae"
         }
       ],
       "edited_source": "edited-listing-photos/04.png",
-      "edited_source_sha256": "d4965ccd185f6548e69badae7381c03a44bf30462142b40ddeca5dc9d5e09773"
+      "edited_source_sha256": "d4965ccd185f6548e69badae7381c03a44bf30462142b40ddeca5dc9d5e09773",
+      "redfin_source": {
+        "redfin_position": 4,
+        "file": "redfin-04.jpg",
+        "url": "https://ssl.cdn-redfin.com/photo/235/bigphoto/198/WVMO2008198_3_4.jpg",
+        "sha256": "0eb404d59fe19b080750fff06078b5de176b1ea5cbc035f9b2cbc356b9594a40",
+        "size": [
+          1280,
+          848
+        ],
+        "visual_match": "Swing chains, blue cushions, screened hillside and rear table.",
+        "approval": "colonial-1x4, 2026-10-06",
+        "crop_xywh": null,
+        "quality": 80,
+        "previous_derivatives": [
+          {
+            "path": "assets/listing/04.webp",
+            "width": 1600,
+            "height": 1060,
+            "sha256": "de192e1b4659d15d539003d5a6238cbe7da283ffb9ef38d2f762be96a0533756"
+          },
+          {
+            "path": "assets/listing/04-small.webp",
+            "width": 720,
+            "height": 477,
+            "sha256": "635319465e7d850cce80dd113487e7af4cb5925b2ea1853d1a2044fa45c25189"
+          }
+        ]
+      }
     },
     {
       "position": 5,
@@ -233,17 +345,45 @@
           "path": "assets/listing/08.webp",
           "width": 1280,
           "height": 720,
-          "sha256": "0eb522a6d5a31796b0aa841ddf8f7a699bd68580da8dbcb1d46c5583ab731f6c"
+          "sha256": "c7c6c64f3626041692ecefc968f727a67050d4da4bd69464f0a945a43cc90a28"
         },
         {
           "path": "assets/listing/08-small.webp",
           "width": 720,
           "height": 405,
-          "sha256": "60a7c3450756e216edd4f9f770f8957626e1533f9a3a085c248e0e4f587c0dd2"
+          "sha256": "96d275f0f783f1935d6c8ff18d5e2d091577932442d13219f1aa15ab416b7e50"
         }
       ],
       "edited_source": "edited-listing-photos/08.png",
-      "edited_source_sha256": "387371472428c84bec961597495f377d1f56d3e235ecbd7637c06c694f301e82"
+      "edited_source_sha256": "387371472428c84bec961597495f377d1f56d3e235ecbd7637c06c694f301e82",
+      "redfin_source": {
+        "redfin_position": 14,
+        "file": "redfin-14.jpg",
+        "url": "https://ssl.cdn-redfin.com/photo/235/bigphoto/198/WVMO2008198_13_4.jpg",
+        "sha256": "1f394875f22dc20829843772d0bd96ae2a4e1ea45684fa2594ba15ba2765f59a",
+        "size": [
+          1280,
+          720
+        ],
+        "visual_match": "Autumn aerial canopy, roof at right and distant ridge.",
+        "approval": "colonial-1x4, 2026-10-06",
+        "crop_xywh": null,
+        "quality": 80,
+        "previous_derivatives": [
+          {
+            "path": "assets/listing/08.webp",
+            "width": 1280,
+            "height": 720,
+            "sha256": "0eb522a6d5a31796b0aa841ddf8f7a699bd68580da8dbcb1d46c5583ab731f6c"
+          },
+          {
+            "path": "assets/listing/08-small.webp",
+            "width": 720,
+            "height": 405,
+            "sha256": "60a7c3450756e216edd4f9f770f8957626e1533f9a3a085c248e0e4f587c0dd2"
+          }
+        ]
+      }
     },
     {
       "position": 9,
@@ -260,17 +400,45 @@
           "path": "assets/listing/09.webp",
           "width": 1280,
           "height": 960,
-          "sha256": "793a9e6b0779fe4e38b1fcc51169d90ec99ac526bea663f1fbefe54a68b3900d"
+          "sha256": "ab548b1c9015b45e05a18ea7c817ab9276ed890d76aa9e739b46f266fc089cec"
         },
         {
           "path": "assets/listing/09-small.webp",
           "width": 720,
           "height": 540,
-          "sha256": "8e245f938179b0cd2cf71f5ccca738d1084793d837adc7f92ab4da5e30b9419e"
+          "sha256": "e49fb0bed4ceb40316a13f978cd28cb43cda275aad1a8daa5ebb046d482acb3a"
         }
       ],
       "edited_source": "edited-listing-photos/09.png",
-      "edited_source_sha256": "209e8b130f32bf5d9d96d444d829b8fcc9671abe326aa34e12f7da5f6bc9da97"
+      "edited_source_sha256": "209e8b130f32bf5d9d96d444d829b8fcc9671abe326aa34e12f7da5f6bc9da97",
+      "redfin_source": {
+        "redfin_position": 13,
+        "file": "redfin-13.jpg",
+        "url": "https://ssl.cdn-redfin.com/photo/235/bigphoto/198/WVMO2008198_12_4.jpg",
+        "sha256": "f66cb0dffdcbc387e233824b6a095b205744e83198cd1c490b33823a7ab8d7f2",
+        "size": [
+          1280,
+          960
+        ],
+        "visual_match": "Snow-covered roof, foreground trunk and bare trees.",
+        "approval": "colonial-1x4, 2026-10-06",
+        "crop_xywh": null,
+        "quality": 80,
+        "previous_derivatives": [
+          {
+            "path": "assets/listing/09.webp",
+            "width": 1280,
+            "height": 960,
+            "sha256": "793a9e6b0779fe4e38b1fcc51169d90ec99ac526bea663f1fbefe54a68b3900d"
+          },
+          {
+            "path": "assets/listing/09-small.webp",
+            "width": 720,
+            "height": 540,
+            "sha256": "8e245f938179b0cd2cf71f5ccca738d1084793d837adc7f92ab4da5e30b9419e"
+          }
+        ]
+      }
     },
     {
       "position": 10,
@@ -285,47 +453,75 @@
       "derivatives": [
         {
           "path": "assets/listing/10.webp",
-          "width": 1590,
-          "height": 1051,
-          "sha256": "253e26610da0afd61834ac9cb4f1377e849e305632a56145dc48a7553994a24a",
-          "margin_trim": {
-            "input_size": [
-              1600,
-              1065
-            ],
-            "input_sha256": "785fa7a20e791599f05e327c98b925093399266e354a3e88c7e057786efcfb5d",
-            "xywh": [
-              4,
-              9,
-              1590,
-              1051
-            ],
-            "retained_rgb_sha256": "045ac9717dad9e97c5000b2e3cd032eccb10b26f9f78ad6ef9e73dde6eaca0a9"
-          }
+          "width": 1280,
+          "height": 845,
+          "sha256": "dc7d9b188e9473dda07a31bad45557834db58f650e48a9cd39e21044dc96f8c9"
         },
         {
           "path": "assets/listing/10-small.webp",
-          "width": 717,
-          "height": 473,
-          "sha256": "ca10a69ae4df0ca2ad0164e2df8bdd9bbd1b8a115a42b5fde47f408a7e628ef3",
-          "margin_trim": {
-            "input_size": [
-              720,
-              479
-            ],
-            "input_sha256": "aa028d751f3f573dd7db0915a3c9019c7923452b5071f053b25fcd96b138a2d2",
-            "xywh": [
-              1,
-              4,
-              717,
-              473
-            ],
-            "retained_rgb_sha256": "635869ffbc5d1ee8542023d93692f4701f2c0db23d9dc48c78aaeaed3420f4ae"
-          }
+          "width": 720,
+          "height": 475,
+          "sha256": "83d30ef744ef0bc8beb9f6d4619bcc17343f703deeedb3eba80bec694a7ad001"
         }
       ],
       "edited_source": "edited-listing-photos/10.png",
-      "edited_source_sha256": "4ab310e7a66fee71cade95a9e3a14249255740a8cdca8466a383637364a2af31"
+      "edited_source_sha256": "4ab310e7a66fee71cade95a9e3a14249255740a8cdca8466a383637364a2af31",
+      "redfin_source": {
+        "redfin_position": 46,
+        "file": "redfin-46.jpg",
+        "url": "https://ssl.cdn-redfin.com/photo/235/bigphoto/198/WVMO2008198_45_6.jpg",
+        "sha256": "e9b24d27813c31263abf5ee97e1e510184d51a5fd98201bde160b885ed1ca7ad",
+        "size": [
+          1280,
+          845
+        ],
+        "visual_match": "Firepit flame, circular stone surround and background trunks.",
+        "approval": "colonial-1x4, 2026-10-06",
+        "crop_xywh": null,
+        "quality": 80,
+        "previous_derivatives": [
+          {
+            "path": "assets/listing/10.webp",
+            "width": 1590,
+            "height": 1051,
+            "sha256": "253e26610da0afd61834ac9cb4f1377e849e305632a56145dc48a7553994a24a",
+            "margin_trim": {
+              "input_size": [
+                1600,
+                1065
+              ],
+              "input_sha256": "785fa7a20e791599f05e327c98b925093399266e354a3e88c7e057786efcfb5d",
+              "xywh": [
+                4,
+                9,
+                1590,
+                1051
+              ],
+              "retained_rgb_sha256": "045ac9717dad9e97c5000b2e3cd032eccb10b26f9f78ad6ef9e73dde6eaca0a9"
+            }
+          },
+          {
+            "path": "assets/listing/10-small.webp",
+            "width": 717,
+            "height": 473,
+            "sha256": "ca10a69ae4df0ca2ad0164e2df8bdd9bbd1b8a115a42b5fde47f408a7e628ef3",
+            "margin_trim": {
+              "input_size": [
+                720,
+                479
+              ],
+              "input_sha256": "aa028d751f3f573dd7db0915a3c9019c7923452b5071f053b25fcd96b138a2d2",
+              "xywh": [
+                1,
+                4,
+                717,
+                473
+              ],
+              "retained_rgb_sha256": "635869ffbc5d1ee8542023d93692f4701f2c0db23d9dc48c78aaeaed3420f4ae"
+            }
+          }
+        ]
+      }
     },
     {
       "position": 11,
@@ -340,47 +536,75 @@
       "derivatives": [
         {
           "path": "assets/listing/11.webp",
-          "width": 1444,
-          "height": 962,
-          "sha256": "49d1a7f7c172125110efc60685a376361a1edf28292a29940d48540a3daaf814",
-          "margin_trim": {
-            "input_size": [
-              1464,
-              982
-            ],
-            "input_sha256": "97065aa8046f65a2411c3ba8feca42ca427457941cb19fd2e8e89a160f36df96",
-            "xywh": [
-              8,
-              7,
-              1444,
-              962
-            ],
-            "retained_rgb_sha256": "0494c273f64ad81f77e2ab3c8f4b2460ca084c0965b4f76b374d6b9c853d6b78"
-          }
+          "width": 1280,
+          "height": 851,
+          "sha256": "8985754520365d2ea38947f764dde24570f24522872a034dba3596711c4bd79d"
         },
         {
           "path": "assets/listing/11-small.webp",
-          "width": 712,
-          "height": 474,
-          "sha256": "3b6e1cd3d7affde886465dbe29f9c795400cc014bda219b35a12c4b8acd8af22",
-          "margin_trim": {
-            "input_size": [
-              720,
-              483
-            ],
-            "input_sha256": "330a496f44d0946dfb0e20a0756db50812eae74017ff67e51d32d0627089ddfc",
-            "xywh": [
-              3,
-              3,
-              712,
-              474
-            ],
-            "retained_rgb_sha256": "a41f90745953e6d49539eac3a124bdc5e55010700c7fa89cf1d3435cc1c3548d"
-          }
+          "width": 720,
+          "height": 479,
+          "sha256": "a821a0a24a53b211180489573fe2a5dcbacda1175f8fe1e017eedac4687acc87"
         }
       ],
       "edited_source": "edited-listing-photos/11.png",
-      "edited_source_sha256": "b4f52e350edee283fafb9ce857ac19ff45a155ab1a20079035ad3be543490519"
+      "edited_source_sha256": "b4f52e350edee283fafb9ce857ac19ff45a155ab1a20079035ad3be543490519",
+      "redfin_source": {
+        "redfin_position": 36,
+        "file": "redfin-36.jpg",
+        "url": "https://ssl.cdn-redfin.com/photo/235/bigphoto/198/WVMO2008198_35_7.jpg",
+        "sha256": "3f7c1f069f7c35bf4c5af810195ee4ab47f2f303e114dfe430aa314375f17650",
+        "size": [
+          1280,
+          851
+        ],
+        "visual_match": "Garage doors, roof dormers and paved approach.",
+        "approval": "colonial-1x4, 2026-10-06",
+        "crop_xywh": null,
+        "quality": 80,
+        "previous_derivatives": [
+          {
+            "path": "assets/listing/11.webp",
+            "width": 1444,
+            "height": 962,
+            "sha256": "49d1a7f7c172125110efc60685a376361a1edf28292a29940d48540a3daaf814",
+            "margin_trim": {
+              "input_size": [
+                1464,
+                982
+              ],
+              "input_sha256": "97065aa8046f65a2411c3ba8feca42ca427457941cb19fd2e8e89a160f36df96",
+              "xywh": [
+                8,
+                7,
+                1444,
+                962
+              ],
+              "retained_rgb_sha256": "0494c273f64ad81f77e2ab3c8f4b2460ca084c0965b4f76b374d6b9c853d6b78"
+            }
+          },
+          {
+            "path": "assets/listing/11-small.webp",
+            "width": 712,
+            "height": 474,
+            "sha256": "3b6e1cd3d7affde886465dbe29f9c795400cc014bda219b35a12c4b8acd8af22",
+            "margin_trim": {
+              "input_size": [
+                720,
+                483
+              ],
+              "input_sha256": "330a496f44d0946dfb0e20a0756db50812eae74017ff67e51d32d0627089ddfc",
+              "xywh": [
+                3,
+                3,
+                712,
+                474
+              ],
+              "retained_rgb_sha256": "a41f90745953e6d49539eac3a124bdc5e55010700c7fa89cf1d3435cc1c3548d"
+            }
+          }
+        ]
+      }
     },
     {
       "position": 12,
@@ -395,47 +619,75 @@
       "derivatives": [
         {
           "path": "assets/listing/12.webp",
-          "width": 1444,
-          "height": 960,
-          "sha256": "34c88f28339379b7610cce3eee177d186a2942da5bb357acf8d4fb960a1f5daf",
-          "margin_trim": {
-            "input_size": [
-              1460,
-              982
-            ],
-            "input_sha256": "ad6f390eec93444eeb323b01f48d87f149b93ee1032317d6b3da803cab4877a3",
-            "xywh": [
-              8,
-              10,
-              1444,
-              960
-            ],
-            "retained_rgb_sha256": "326125bb665cef5f70fb9d400f337bdfc81540e8954c091b5b41159122507872"
-          }
+          "width": 1280,
+          "height": 850,
+          "sha256": "b7aec6e723d4297f6c56a3f07ce2e97ac5db3f71bdef05006351fb61d108986d"
         },
         {
           "path": "assets/listing/12-small.webp",
-          "width": 714,
-          "height": 475,
-          "sha256": "1548266399b6c67fbe2ed9c31acb75f2cc6ae7256e6cc54facad3043ef3cb2fe",
-          "margin_trim": {
-            "input_size": [
-              720,
-              484
-            ],
-            "input_sha256": "fe4decf447976ac7a0926c1e0fdb61710c86d1edff667af83bef644ba6868767",
-            "xywh": [
-              3,
-              4,
-              714,
-              475
-            ],
-            "retained_rgb_sha256": "561ddf35f550f5a18be2cdaa02a46987900db7878aff2208548c1fc9487c57c6"
-          }
+          "width": 720,
+          "height": 478,
+          "sha256": "2ac9f65fe4aa5ab280d2717e77fba506e7cc51997e788f9f35677049052a2727"
         }
       ],
       "edited_source": "edited-listing-photos/12.png",
-      "edited_source_sha256": "d68100dcc04200fd0938462755a140e288944a1d7814fb12dfb37889745e39a1"
+      "edited_source_sha256": "d68100dcc04200fd0938462755a140e288944a1d7814fb12dfb37889745e39a1",
+      "redfin_source": {
+        "redfin_position": 9,
+        "file": "redfin-09.jpg",
+        "url": "https://ssl.cdn-redfin.com/photo/235/bigphoto/198/WVMO2008198_8_4.jpg",
+        "sha256": "a695ba519dc77019dccf243f3ac4c49d24c8ccff6fe197743817b3793733a708",
+        "size": [
+          1280,
+          850
+        ],
+        "visual_match": "Loft-down view, sectional sofa, island and fireplace.",
+        "approval": "colonial-1x4, 2026-10-06",
+        "crop_xywh": null,
+        "quality": 80,
+        "previous_derivatives": [
+          {
+            "path": "assets/listing/12.webp",
+            "width": 1444,
+            "height": 960,
+            "sha256": "34c88f28339379b7610cce3eee177d186a2942da5bb357acf8d4fb960a1f5daf",
+            "margin_trim": {
+              "input_size": [
+                1460,
+                982
+              ],
+              "input_sha256": "ad6f390eec93444eeb323b01f48d87f149b93ee1032317d6b3da803cab4877a3",
+              "xywh": [
+                8,
+                10,
+                1444,
+                960
+              ],
+              "retained_rgb_sha256": "326125bb665cef5f70fb9d400f337bdfc81540e8954c091b5b41159122507872"
+            }
+          },
+          {
+            "path": "assets/listing/12-small.webp",
+            "width": 714,
+            "height": 475,
+            "sha256": "1548266399b6c67fbe2ed9c31acb75f2cc6ae7256e6cc54facad3043ef3cb2fe",
+            "margin_trim": {
+              "input_size": [
+                720,
+                484
+              ],
+              "input_sha256": "fe4decf447976ac7a0926c1e0fdb61710c86d1edff667af83bef644ba6868767",
+              "xywh": [
+                3,
+                4,
+                714,
+                475
+              ],
+              "retained_rgb_sha256": "561ddf35f550f5a18be2cdaa02a46987900db7878aff2208548c1fc9487c57c6"
+            }
+          }
+        ]
+      }
     },
     {
       "position": 13,
@@ -450,47 +702,75 @@
       "derivatives": [
         {
           "path": "assets/listing/13.webp",
-          "width": 1591,
-          "height": 1054,
-          "sha256": "29b0dcf9a233382fc2de888bf84ed9b35e527dd36a96de60d194a8248588b7b4",
-          "margin_trim": {
-            "input_size": [
-              1600,
-              1072
-            ],
-            "input_sha256": "9c3478964db90353575cd7a6eeaf514727eb0105e5fb6e038de2c8bc2b7f076b",
-            "xywh": [
-              0,
-              10,
-              1591,
-              1054
-            ],
-            "retained_rgb_sha256": "8af45476df44a6c1987ef5877efa7a05c6edb670159991128650e879b33e1937"
-          }
+          "width": 1280,
+          "height": 851,
+          "sha256": "7e6cda840c156384a56f22140752f9f7fea454120fe480ec80036e7e525914c4"
         },
         {
           "path": "assets/listing/13-small.webp",
-          "width": 716,
-          "height": 475,
-          "sha256": "256b08ced04633b1aa25657603071af76b9bff221d421ca2c12b3134be353c31",
-          "margin_trim": {
-            "input_size": [
-              720,
-              482
-            ],
-            "input_sha256": "a6bf79a66e8e496d597dd4bbaf72e22744be91430b180b58585e9948843f49cc",
-            "xywh": [
-              0,
-              4,
-              716,
-              475
-            ],
-            "retained_rgb_sha256": "2b24b2ff1503e55bd289b4889d636d4463eb116c5bb41c3e152f5199300607aa"
-          }
+          "width": 720,
+          "height": 479,
+          "sha256": "ee80102d21ab832a4c036be5e634215e239648292e8e278178abcaa52fe836b7"
         }
       ],
       "edited_source": "edited-listing-photos/13.png",
-      "edited_source_sha256": "f2c44f747dbee6f708365c734b60fdf688630e4145f5b9edc6c9ceedee902c20"
+      "edited_source_sha256": "f2c44f747dbee6f708365c734b60fdf688630e4145f5b9edc6c9ceedee902c20",
+      "redfin_source": {
+        "redfin_position": 7,
+        "file": "redfin-07.jpg",
+        "url": "https://ssl.cdn-redfin.com/photo/235/bigphoto/198/WVMO2008198_6_4.jpg",
+        "sha256": "da4962527a9b9013108c6db31e4243c90913e6cd08c592280fc93ecff0bcbe59",
+        "size": [
+          1280,
+          851
+        ],
+        "visual_match": "Close frontal hearth, wood basket and twin sliders.",
+        "approval": "colonial-1x4, 2026-10-06",
+        "crop_xywh": null,
+        "quality": 80,
+        "previous_derivatives": [
+          {
+            "path": "assets/listing/13.webp",
+            "width": 1591,
+            "height": 1054,
+            "sha256": "29b0dcf9a233382fc2de888bf84ed9b35e527dd36a96de60d194a8248588b7b4",
+            "margin_trim": {
+              "input_size": [
+                1600,
+                1072
+              ],
+              "input_sha256": "9c3478964db90353575cd7a6eeaf514727eb0105e5fb6e038de2c8bc2b7f076b",
+              "xywh": [
+                0,
+                10,
+                1591,
+                1054
+              ],
+              "retained_rgb_sha256": "8af45476df44a6c1987ef5877efa7a05c6edb670159991128650e879b33e1937"
+            }
+          },
+          {
+            "path": "assets/listing/13-small.webp",
+            "width": 716,
+            "height": 475,
+            "sha256": "256b08ced04633b1aa25657603071af76b9bff221d421ca2c12b3134be353c31",
+            "margin_trim": {
+              "input_size": [
+                720,
+                482
+              ],
+              "input_sha256": "a6bf79a66e8e496d597dd4bbaf72e22744be91430b180b58585e9948843f49cc",
+              "xywh": [
+                0,
+                4,
+                716,
+                475
+              ],
+              "retained_rgb_sha256": "2b24b2ff1503e55bd289b4889d636d4463eb116c5bb41c3e152f5199300607aa"
+            }
+          }
+        ]
+      }
     },
     {
       "position": 14,
@@ -510,19 +790,47 @@
       "derivatives": [
         {
           "path": "assets/listing/14.webp",
-          "width": 1307,
-          "height": 960,
-          "sha256": "90cbeb907da69e2c3b986bcd9c65aa91c2751d2d3150345beb26562ec0d57d13"
+          "width": 1280,
+          "height": 931,
+          "sha256": "c7d8b6321e69aeade17e9cbd5b1f08ac4e62ae2b2a97f32b23b13e4bc5aa6d52"
         },
         {
           "path": "assets/listing/14-small.webp",
           "width": 720,
-          "height": 529,
-          "sha256": "366dd9ce17fd26ee2af7bdeb22683db6024090156940fe1d352de9a93b764c08"
+          "height": 524,
+          "sha256": "9b3e00f0fdfde4df3e9318a6454d6a249e13983c2559522d217413ce2abbe987"
         }
       ],
       "edited_source": "edited-listing-photos/14.png",
-      "edited_source_sha256": "06d6fc81c34e17d95dbdb7c1651619143bc6d0034b0dcec15400103e6fd6c045"
+      "edited_source_sha256": "06d6fc81c34e17d95dbdb7c1651619143bc6d0034b0dcec15400103e6fd6c045",
+      "redfin_source": {
+        "redfin_position": 17,
+        "file": "redfin-17.jpg",
+        "url": "https://ssl.cdn-redfin.com/photo/235/bigphoto/198/WVMO2008198_16_5.jpg",
+        "sha256": "16f34c215b06026fd9df96bc8c6c470b76144e2e39115a72b7dfc5a050b1e348",
+        "size": [
+          1280,
+          931
+        ],
+        "visual_match": "Dining table, chandelier, slider and decorative wall shelf.",
+        "approval": "colonial-1x4, 2026-10-06",
+        "crop_xywh": null,
+        "quality": 80,
+        "previous_derivatives": [
+          {
+            "path": "assets/listing/14.webp",
+            "width": 1307,
+            "height": 960,
+            "sha256": "90cbeb907da69e2c3b986bcd9c65aa91c2751d2d3150345beb26562ec0d57d13"
+          },
+          {
+            "path": "assets/listing/14-small.webp",
+            "width": 720,
+            "height": 529,
+            "sha256": "366dd9ce17fd26ee2af7bdeb22683db6024090156940fe1d352de9a93b764c08"
+          }
+        ]
+      }
     },
     {
       "position": 15,
@@ -537,47 +845,75 @@
       "derivatives": [
         {
           "path": "assets/listing/15.webp",
-          "width": 1136,
-          "height": 756,
-          "sha256": "226e8f8ea62cf4f0f8db75a5ee48d2644f948b388909d593d0a579c6ed06edd4",
-          "margin_trim": {
-            "input_size": [
-              1154,
-              774
-            ],
-            "input_sha256": "ee54a2f2a192a8be8ece2d44897fcff82fc6ea73b9e1e54d2e83c265de0029b7",
-            "xywh": [
-              8,
-              9,
-              1136,
-              756
-            ],
-            "retained_rgb_sha256": "5d6b6cd0a8195b04885c25c2da6bb95ac060cb49205d57bbb465bdbc0b5f3357"
-          }
+          "width": 1280,
+          "height": 851,
+          "sha256": "7cb781b849e565e6c9135fa7768d8a837cd9a5a9f1df72f3f9c1b16cabcd1ea6"
         },
         {
           "path": "assets/listing/15-small.webp",
-          "width": 710,
-          "height": 473,
-          "sha256": "78cfb66bc103be20d57593c8aee1c541bc0d0bec08fdc4ed3ffd9d58f3504238",
-          "margin_trim": {
-            "input_size": [
-              720,
-              483
-            ],
-            "input_sha256": "00ba2314b26b229f358e828c4371be85634934da473beae974d3b2dfba3d4375",
-            "xywh": [
-              4,
-              5,
-              710,
-              473
-            ],
-            "retained_rgb_sha256": "648badfaa66d57e6d4ebdd0c21e2d502a1b2d4db5db980af1bf9c341d073e775"
-          }
+          "width": 720,
+          "height": 479,
+          "sha256": "536ffb5055dfb2ca11b4982a4a9be615de2a06a0088807227244f40851b0d2cb"
         }
       ],
       "edited_source": "edited-listing-photos/15.png",
-      "edited_source_sha256": "4dbe1a6581ceef559da1ac982c1b0296cc937fc25aa20357161dc7c888c7f978"
+      "edited_source_sha256": "4dbe1a6581ceef559da1ac982c1b0296cc937fc25aa20357161dc7c888c7f978",
+      "redfin_source": {
+        "redfin_position": 18,
+        "file": "redfin-18.jpg",
+        "url": "https://ssl.cdn-redfin.com/photo/235/bigphoto/198/WVMO2008198_17_4.jpg",
+        "sha256": "76ab8162dd1ffc0965eaff8ea6b90a143c7073acbcc489252851b78f11cf023a",
+        "size": [
+          1280,
+          851
+        ],
+        "visual_match": "Range, refrigerator, sink window and granite counter.",
+        "approval": "colonial-1x4, 2026-10-06",
+        "crop_xywh": null,
+        "quality": 80,
+        "previous_derivatives": [
+          {
+            "path": "assets/listing/15.webp",
+            "width": 1136,
+            "height": 756,
+            "sha256": "226e8f8ea62cf4f0f8db75a5ee48d2644f948b388909d593d0a579c6ed06edd4",
+            "margin_trim": {
+              "input_size": [
+                1154,
+                774
+              ],
+              "input_sha256": "ee54a2f2a192a8be8ece2d44897fcff82fc6ea73b9e1e54d2e83c265de0029b7",
+              "xywh": [
+                8,
+                9,
+                1136,
+                756
+              ],
+              "retained_rgb_sha256": "5d6b6cd0a8195b04885c25c2da6bb95ac060cb49205d57bbb465bdbc0b5f3357"
+            }
+          },
+          {
+            "path": "assets/listing/15-small.webp",
+            "width": 710,
+            "height": 473,
+            "sha256": "78cfb66bc103be20d57593c8aee1c541bc0d0bec08fdc4ed3ffd9d58f3504238",
+            "margin_trim": {
+              "input_size": [
+                720,
+                483
+              ],
+              "input_sha256": "00ba2314b26b229f358e828c4371be85634934da473beae974d3b2dfba3d4375",
+              "xywh": [
+                4,
+                5,
+                710,
+                473
+              ],
+              "retained_rgb_sha256": "648badfaa66d57e6d4ebdd0c21e2d502a1b2d4db5db980af1bf9c341d073e775"
+            }
+          }
+        ]
+      }
     },
     {
       "position": 16,
@@ -597,19 +933,47 @@
       "derivatives": [
         {
           "path": "assets/listing/16.webp",
-          "width": 1393,
-          "height": 958,
-          "sha256": "ce0e6867d6d3b28426f1d2a1a0ee7147481adee034ed6925ce09aec4a7af7be6"
+          "width": 1280,
+          "height": 959,
+          "sha256": "0209346c7ff711d6ae3480dd1412109a811936224c5c1f3106acd523c7ed27b3"
         },
         {
           "path": "assets/listing/16-small.webp",
           "width": 720,
-          "height": 495,
-          "sha256": "0a65de1f13a608d2c3d6283474fa40ee5698771d94a0b381fd102da78ab9dbcf"
+          "height": 539,
+          "sha256": "f856016f7a27859afb06ae28826d94f1c38ee8197bba4525fe2d2ba23d3f1350"
         }
       ],
       "edited_source": "edited-listing-photos/16.png",
-      "edited_source_sha256": "1801240fd59d4ffe9f4de26c6bbbd39b947f5a7da9ef28bdc65a5dd4c5e2cdcf"
+      "edited_source_sha256": "1801240fd59d4ffe9f4de26c6bbbd39b947f5a7da9ef28bdc65a5dd4c5e2cdcf",
+      "redfin_source": {
+        "redfin_position": 11,
+        "file": "redfin-11.jpg",
+        "url": "https://ssl.cdn-redfin.com/photo/235/bigphoto/198/WVMO2008198_10_4.jpg",
+        "sha256": "168967c9793c9ca24ea71d63d8105d0cc22056cae5a751ba737ea2ac8cd999af",
+        "size": [
+          1280,
+          959
+        ],
+        "visual_match": "Chimney, red grill, white deck chairs and hot tub.",
+        "approval": "colonial-1x4, 2026-10-06",
+        "crop_xywh": null,
+        "quality": 80,
+        "previous_derivatives": [
+          {
+            "path": "assets/listing/16.webp",
+            "width": 1393,
+            "height": 958,
+            "sha256": "ce0e6867d6d3b28426f1d2a1a0ee7147481adee034ed6925ce09aec4a7af7be6"
+          },
+          {
+            "path": "assets/listing/16-small.webp",
+            "width": 720,
+            "height": 495,
+            "sha256": "0a65de1f13a608d2c3d6283474fa40ee5698771d94a0b381fd102da78ab9dbcf"
+          }
+        ]
+      }
     },
     {
       "position": 17,
@@ -624,47 +988,75 @@
       "derivatives": [
         {
           "path": "assets/listing/17.webp",
-          "width": 1443,
-          "height": 960,
-          "sha256": "1ec84c01d13ce0b62263fb5301770c7276dcdcebc667c82037d3d473a994586c",
-          "margin_trim": {
-            "input_size": [
-              1454,
-              970
-            ],
-            "input_sha256": "0d0be1143dc46981b4aa43310a2049aa35da20062bcf2ad9c6024e49e2ad301b",
-            "xywh": [
-              3,
-              5,
-              1443,
-              960
-            ],
-            "retained_rgb_sha256": "696235213188cf9d0d75877f3b8b860182d68ff658fd6c430d1fdbb40ab21ac7"
-          }
+          "width": 1280,
+          "height": 849,
+          "sha256": "1552316c3dcd8c0d387bb21cd55bfad96746f47d71c867cf301d8cf89f0d4f9c"
         },
         {
           "path": "assets/listing/17-small.webp",
-          "width": 716,
-          "height": 476,
-          "sha256": "b2b595fde3d12ee3d5f4ad929d2c767f994ccbd1acdb433136073f9dd9e21a55",
-          "margin_trim": {
-            "input_size": [
-              720,
-              480
-            ],
-            "input_sha256": "5c26387793731f83dc8d4927bb1b35d58e5593e31d7f30d2f5e2947c8a7843d4",
-            "xywh": [
-              1,
-              2,
-              716,
-              476
-            ],
-            "retained_rgb_sha256": "609650fb86d34d383018aefd19a6d895ea41861bdaeb415eb4fb81099b5e941c"
-          }
+          "width": 720,
+          "height": 478,
+          "sha256": "34d1831aa304654d144892b37e1c647a3ce779ba873512a03e63d94b8004ca95"
         }
       ],
       "edited_source": "edited-listing-photos/17.png",
-      "edited_source_sha256": "26a41f127ef196c723562ec859879b534833460221251accbfdad284c08c3295"
+      "edited_source_sha256": "26a41f127ef196c723562ec859879b534833460221251accbfdad284c08c3295",
+      "redfin_source": {
+        "redfin_position": 12,
+        "file": "redfin-12.jpg",
+        "url": "https://ssl.cdn-redfin.com/photo/235/bigphoto/198/WVMO2008198_11_4.jpg",
+        "sha256": "dc4c8d698519e772a6f71d7a2d4cb43da5a4da096551f35ae16002a7745062d7",
+        "size": [
+          1280,
+          849
+        ],
+        "visual_match": "Long screened porch, apple bowl, ceiling fan and swing.",
+        "approval": "colonial-1x4, 2026-10-06",
+        "crop_xywh": null,
+        "quality": 80,
+        "previous_derivatives": [
+          {
+            "path": "assets/listing/17.webp",
+            "width": 1443,
+            "height": 960,
+            "sha256": "1ec84c01d13ce0b62263fb5301770c7276dcdcebc667c82037d3d473a994586c",
+            "margin_trim": {
+              "input_size": [
+                1454,
+                970
+              ],
+              "input_sha256": "0d0be1143dc46981b4aa43310a2049aa35da20062bcf2ad9c6024e49e2ad301b",
+              "xywh": [
+                3,
+                5,
+                1443,
+                960
+              ],
+              "retained_rgb_sha256": "696235213188cf9d0d75877f3b8b860182d68ff658fd6c430d1fdbb40ab21ac7"
+            }
+          },
+          {
+            "path": "assets/listing/17-small.webp",
+            "width": 716,
+            "height": 476,
+            "sha256": "b2b595fde3d12ee3d5f4ad929d2c767f994ccbd1acdb433136073f9dd9e21a55",
+            "margin_trim": {
+              "input_size": [
+                720,
+                480
+              ],
+              "input_sha256": "5c26387793731f83dc8d4927bb1b35d58e5593e31d7f30d2f5e2947c8a7843d4",
+              "xywh": [
+                1,
+                2,
+                716,
+                476
+              ],
+              "retained_rgb_sha256": "609650fb86d34d383018aefd19a6d895ea41861bdaeb415eb4fb81099b5e941c"
+            }
+          }
+        ]
+      }
     },
     {
       "position": 18,
@@ -679,47 +1071,75 @@
       "derivatives": [
         {
           "path": "assets/listing/18.webp",
-          "width": 1443,
-          "height": 961,
-          "sha256": "3f3b61393bdf94ff1169adafb5cd76876356b46ddef95b2a9b581baa27be9b37",
-          "margin_trim": {
-            "input_size": [
-              1454,
-              974
-            ],
-            "input_sha256": "c06eb758da08c126471982708f10aeb8820c8d8f29cf174ba2ea765609b33221",
-            "xywh": [
-              3,
-              7,
-              1443,
-              961
-            ],
-            "retained_rgb_sha256": "0a7df2c32d5d9374625dcee0d48240747ec0e348c95120625d1b207437f2773c"
-          }
+          "width": 1280,
+          "height": 851,
+          "sha256": "a9f38f13f21b06f3f0827873fb9d13b4e664439e0d4c36caf3616e0f68a65542"
         },
         {
           "path": "assets/listing/18-small.webp",
-          "width": 716,
-          "height": 477,
-          "sha256": "bc09849d387b98b9e264c96a573736ba6b3857b31e5ce631b909ea4aba3830d5",
-          "margin_trim": {
-            "input_size": [
-              720,
-              482
-            ],
-            "input_sha256": "fe267571152f538d69d983bce5f5987cdf5eb61e40db96f0219116698bc5dd0f",
-            "xywh": [
-              1,
-              3,
-              716,
-              477
-            ],
-            "retained_rgb_sha256": "36049fa95fd03e5cbbbccc44568e2f3611bbcd6bcd555122a42f3697cb581c04"
-          }
+          "width": 720,
+          "height": 479,
+          "sha256": "738032b113c8435a817609da6b3f81a411279b85b90c4ec65efb3ff4ed157d3c"
         }
       ],
       "edited_source": "edited-listing-photos/18.png",
-      "edited_source_sha256": "589b2dbadb32cdd59e7d8be1172a06be0c09648ec8c9058700e2e29a4bcef7a7"
+      "edited_source_sha256": "589b2dbadb32cdd59e7d8be1172a06be0c09648ec8c9058700e2e29a4bcef7a7",
+      "redfin_source": {
+        "redfin_position": 23,
+        "file": "redfin-23.jpg",
+        "url": "https://ssl.cdn-redfin.com/photo/235/bigphoto/198/WVMO2008198_22_5.jpg",
+        "sha256": "324a5b5196d1a6d136d040f19a98429ca144417b301598fc1e6bbae38513b9e7",
+        "size": [
+          1280,
+          851
+        ],
+        "visual_match": "Blue bedroom, dresser, bed and double window.",
+        "approval": "colonial-1x4, 2026-10-06",
+        "crop_xywh": null,
+        "quality": 80,
+        "previous_derivatives": [
+          {
+            "path": "assets/listing/18.webp",
+            "width": 1443,
+            "height": 961,
+            "sha256": "3f3b61393bdf94ff1169adafb5cd76876356b46ddef95b2a9b581baa27be9b37",
+            "margin_trim": {
+              "input_size": [
+                1454,
+                974
+              ],
+              "input_sha256": "c06eb758da08c126471982708f10aeb8820c8d8f29cf174ba2ea765609b33221",
+              "xywh": [
+                3,
+                7,
+                1443,
+                961
+              ],
+              "retained_rgb_sha256": "0a7df2c32d5d9374625dcee0d48240747ec0e348c95120625d1b207437f2773c"
+            }
+          },
+          {
+            "path": "assets/listing/18-small.webp",
+            "width": 716,
+            "height": 477,
+            "sha256": "bc09849d387b98b9e264c96a573736ba6b3857b31e5ce631b909ea4aba3830d5",
+            "margin_trim": {
+              "input_size": [
+                720,
+                482
+              ],
+              "input_sha256": "fe267571152f538d69d983bce5f5987cdf5eb61e40db96f0219116698bc5dd0f",
+              "xywh": [
+                1,
+                3,
+                716,
+                477
+              ],
+              "retained_rgb_sha256": "36049fa95fd03e5cbbbccc44568e2f3611bbcd6bcd555122a42f3697cb581c04"
+            }
+          }
+        ]
+      }
     },
     {
       "position": 19,
@@ -734,47 +1154,75 @@
       "derivatives": [
         {
           "path": "assets/listing/19.webp",
-          "width": 1444,
-          "height": 963,
-          "sha256": "98af74baf638ab3667fd719709871fe6f7d0880861e7267871e141591bd35bc0",
-          "margin_trim": {
-            "input_size": [
-              1454,
-              976
-            ],
-            "input_sha256": "fd31efd97ac4a6215294ecee2b27ef5a86e5868271fa2414793588ce954d8bdf",
-            "xywh": [
-              6,
-              6,
-              1444,
-              963
-            ],
-            "retained_rgb_sha256": "d7f826390fc019a9ecd60ea73096e52f0b3ada4c5ea2e6150871dc024154826b"
-          }
+          "width": 1280,
+          "height": 851,
+          "sha256": "87fb1101671cd0a7e4d0c517e94a843d3e3fac12bdd94d6ac7d062dc6e1696bd"
         },
         {
           "path": "assets/listing/19-small.webp",
-          "width": 717,
-          "height": 478,
-          "sha256": "b997020b03b7abd960fb3f046e3ce59d81b9e2318e272cce6ac70e6447b423ac",
-          "margin_trim": {
-            "input_size": [
-              720,
-              483
-            ],
-            "input_sha256": "1e7ecdb934952a9204c32ee8c8bfab87cea5e111eb0bc98b17c2aef4ef349bb9",
-            "xywh": [
-              2,
-              2,
-              717,
-              478
-            ],
-            "retained_rgb_sha256": "d5376fe14a8719eafac7556fc5f5777d7c03c9f7a987945d8c6263083bb373dc"
-          }
+          "width": 720,
+          "height": 479,
+          "sha256": "d623c8dd9e3743bf728cf6234ff849e2b74cf557dc69145015330567a9da8225"
         }
       ],
       "edited_source": "edited-listing-photos/19.png",
-      "edited_source_sha256": "2af47634c0ff71103ae9cc42bd58315533cdca61fde4118cef87dd0222ca470b"
+      "edited_source_sha256": "2af47634c0ff71103ae9cc42bd58315533cdca61fde4118cef87dd0222ca470b",
+      "redfin_source": {
+        "redfin_position": 22,
+        "file": "redfin-22.jpg",
+        "url": "https://ssl.cdn-redfin.com/photo/235/bigphoto/198/WVMO2008198_21_5.jpg",
+        "sha256": "8d67f91b7d2c76d60c623ca2eec5996f6218aae1e12200bcea2f7f6841a04529",
+        "size": [
+          1280,
+          851
+        ],
+        "visual_match": "Shower door at left, tub and twin wood mirrors.",
+        "approval": "colonial-1x4, 2026-10-06",
+        "crop_xywh": null,
+        "quality": 80,
+        "previous_derivatives": [
+          {
+            "path": "assets/listing/19.webp",
+            "width": 1444,
+            "height": 963,
+            "sha256": "98af74baf638ab3667fd719709871fe6f7d0880861e7267871e141591bd35bc0",
+            "margin_trim": {
+              "input_size": [
+                1454,
+                976
+              ],
+              "input_sha256": "fd31efd97ac4a6215294ecee2b27ef5a86e5868271fa2414793588ce954d8bdf",
+              "xywh": [
+                6,
+                6,
+                1444,
+                963
+              ],
+              "retained_rgb_sha256": "d7f826390fc019a9ecd60ea73096e52f0b3ada4c5ea2e6150871dc024154826b"
+            }
+          },
+          {
+            "path": "assets/listing/19-small.webp",
+            "width": 717,
+            "height": 478,
+            "sha256": "b997020b03b7abd960fb3f046e3ce59d81b9e2318e272cce6ac70e6447b423ac",
+            "margin_trim": {
+              "input_size": [
+                720,
+                483
+              ],
+              "input_sha256": "1e7ecdb934952a9204c32ee8c8bfab87cea5e111eb0bc98b17c2aef4ef349bb9",
+              "xywh": [
+                2,
+                2,
+                717,
+                478
+              ],
+              "retained_rgb_sha256": "d5376fe14a8719eafac7556fc5f5777d7c03c9f7a987945d8c6263083bb373dc"
+            }
+          }
+        ]
+      }
     },
     {
       "position": 20,
@@ -816,47 +1264,75 @@
       "derivatives": [
         {
           "path": "assets/listing/21.webp",
-          "width": 1444,
-          "height": 956,
-          "sha256": "7ee3b71fd5dcae1e8e63d65e845a3b23106c2f7a98d15b5557e38eab60006f6e",
-          "margin_trim": {
-            "input_size": [
-              1460,
-              974
-            ],
-            "input_sha256": "8adc3af524f0a1c20bad2b52f4eca7af12456cf5a2b1cdeb2901ec50aacd2153",
-            "xywh": [
-              6,
-              12,
-              1444,
-              956
-            ],
-            "retained_rgb_sha256": "c421310619792eb44c61651656cdfbc1577904b0a896e025f0e09184aa24e0ee"
-          }
+          "width": 1280,
+          "height": 848,
+          "sha256": "a50ccb21267d1130382a9e9c39ede0dbda4d0099a00d9b043bc9c1ce95ba2f86"
         },
         {
           "path": "assets/listing/21-small.webp",
-          "width": 714,
-          "height": 473,
-          "sha256": "b933c16edbc491ccefcbedaadb667f0b6d4fdf590c5787b65bdf562204708cdf",
-          "margin_trim": {
-            "input_size": [
-              720,
-              480
-            ],
-            "input_sha256": "0af923aeb5f9f30549457385580620a2e14a2db6613790c3f5846538692e7aa0",
-            "xywh": [
-              2,
-              5,
-              714,
-              473
-            ],
-            "retained_rgb_sha256": "0521b3124891825f69eac2b206beca3f377af66eb94e0146ffc4ec0115daa820"
-          }
+          "width": 720,
+          "height": 477,
+          "sha256": "b4ccc50fea916a0120c2cb781b486f50a337add8abadb3c1a504ec8628259567"
         }
       ],
       "edited_source": "edited-listing-photos/21.png",
-      "edited_source_sha256": "3d98fba25e9c6565b1267ed2a31855ea3c6b729f01c8be08bdcdc431cf282fbd"
+      "edited_source_sha256": "3d98fba25e9c6565b1267ed2a31855ea3c6b729f01c8be08bdcdc431cf282fbd",
+      "redfin_source": {
+        "redfin_position": 28,
+        "file": "redfin-28.jpg",
+        "url": "https://ssl.cdn-redfin.com/photo/235/bigphoto/198/WVMO2008198_27_5.jpg",
+        "sha256": "a7c5c3359e7931a59c5f26581439d182895525760d149fafedb8169c72d473f6",
+        "size": [
+          1280,
+          848
+        ],
+        "visual_match": "Loft sofa, coffee table, keyboard and wood double doors.",
+        "approval": "colonial-1x4, 2026-10-06",
+        "crop_xywh": null,
+        "quality": 80,
+        "previous_derivatives": [
+          {
+            "path": "assets/listing/21.webp",
+            "width": 1444,
+            "height": 956,
+            "sha256": "7ee3b71fd5dcae1e8e63d65e845a3b23106c2f7a98d15b5557e38eab60006f6e",
+            "margin_trim": {
+              "input_size": [
+                1460,
+                974
+              ],
+              "input_sha256": "8adc3af524f0a1c20bad2b52f4eca7af12456cf5a2b1cdeb2901ec50aacd2153",
+              "xywh": [
+                6,
+                12,
+                1444,
+                956
+              ],
+              "retained_rgb_sha256": "c421310619792eb44c61651656cdfbc1577904b0a896e025f0e09184aa24e0ee"
+            }
+          },
+          {
+            "path": "assets/listing/21-small.webp",
+            "width": 714,
+            "height": 473,
+            "sha256": "b933c16edbc491ccefcbedaadb667f0b6d4fdf590c5787b65bdf562204708cdf",
+            "margin_trim": {
+              "input_size": [
+                720,
+                480
+              ],
+              "input_sha256": "0af923aeb5f9f30549457385580620a2e14a2db6613790c3f5846538692e7aa0",
+              "xywh": [
+                2,
+                5,
+                714,
+                473
+              ],
+              "retained_rgb_sha256": "0521b3124891825f69eac2b206beca3f377af66eb94e0146ffc4ec0115daa820"
+            }
+          }
+        ]
+      }
     },
     {
       "position": 22,
@@ -871,47 +1347,75 @@
       "derivatives": [
         {
           "path": "assets/listing/22.webp",
-          "width": 1445,
-          "height": 962,
-          "sha256": "78a15b58a52b96f4d47fd84ad45fa66b92e73011cfa1c9e99c01dab42fbcc7d9",
-          "margin_trim": {
-            "input_size": [
-              1452,
-              976
-            ],
-            "input_sha256": "150ff8e4ed55b29bdb82d75d9c66eda6e0d8486fd7e9ca28a3749df77a1e03ad",
-            "xywh": [
-              3,
-              10,
-              1445,
-              962
-            ],
-            "retained_rgb_sha256": "4c597e4eab2ce109018ae51f3d9fac2223ad956939090537c79b7161ff2c9521"
-          }
+          "width": 1280,
+          "height": 851,
+          "sha256": "bfe10673de3bce94a6ddf2bb3ebb7994c8df48381bf159d261ef1b162f7d8163"
         },
         {
           "path": "assets/listing/22-small.webp",
-          "width": 718,
+          "width": 720,
           "height": 479,
-          "sha256": "4c2fd3944b7967367da7810707ea256fd9fe552b9771757c26f046eb770ef7be",
-          "margin_trim": {
-            "input_size": [
-              720,
-              484
-            ],
-            "input_sha256": "f64d16dd0c8e00c6b7adea803c8a57cb0b3ae29823b9dc928de0f339c0b7b821",
-            "xywh": [
-              1,
-              4,
-              718,
-              479
-            ],
-            "retained_rgb_sha256": "090d76d11e7cf513ba787744e5ad35ea64810dba2aef6f1fb5e58b11e3b5c567"
-          }
+          "sha256": "fa625fdcba0c1b09deeb0486ed8d0305f12de7cfe0f0ab608c3686f50d131350"
         }
       ],
       "edited_source": "edited-listing-photos/22.png",
-      "edited_source_sha256": "0f3f703d5fd2bb34fc2e5611c736084b911ef4730fefe82d682af130bac58503"
+      "edited_source_sha256": "0f3f703d5fd2bb34fc2e5611c736084b911ef4730fefe82d682af130bac58503",
+      "redfin_source": {
+        "redfin_position": 29,
+        "file": "redfin-29.jpg",
+        "url": "https://ssl.cdn-redfin.com/photo/235/bigphoto/198/WVMO2008198_28_5.jpg",
+        "sha256": "68815a4745555d9bc0e702f6680d9b548a9900f4b8c0ebe9b7d9fc8b95ba1424",
+        "size": [
+          1280,
+          851
+        ],
+        "visual_match": "TV, wall mirror, sofa and loft window.",
+        "approval": "colonial-1x4, 2026-10-06",
+        "crop_xywh": null,
+        "quality": 80,
+        "previous_derivatives": [
+          {
+            "path": "assets/listing/22.webp",
+            "width": 1445,
+            "height": 962,
+            "sha256": "78a15b58a52b96f4d47fd84ad45fa66b92e73011cfa1c9e99c01dab42fbcc7d9",
+            "margin_trim": {
+              "input_size": [
+                1452,
+                976
+              ],
+              "input_sha256": "150ff8e4ed55b29bdb82d75d9c66eda6e0d8486fd7e9ca28a3749df77a1e03ad",
+              "xywh": [
+                3,
+                10,
+                1445,
+                962
+              ],
+              "retained_rgb_sha256": "4c597e4eab2ce109018ae51f3d9fac2223ad956939090537c79b7161ff2c9521"
+            }
+          },
+          {
+            "path": "assets/listing/22-small.webp",
+            "width": 718,
+            "height": 479,
+            "sha256": "4c2fd3944b7967367da7810707ea256fd9fe552b9771757c26f046eb770ef7be",
+            "margin_trim": {
+              "input_size": [
+                720,
+                484
+              ],
+              "input_sha256": "f64d16dd0c8e00c6b7adea803c8a57cb0b3ae29823b9dc928de0f339c0b7b821",
+              "xywh": [
+                1,
+                4,
+                718,
+                479
+              ],
+              "retained_rgb_sha256": "090d76d11e7cf513ba787744e5ad35ea64810dba2aef6f1fb5e58b11e3b5c567"
+            }
+          }
+        ]
+      }
     },
     {
       "position": 23,
@@ -931,19 +1435,47 @@
       "derivatives": [
         {
           "path": "assets/listing/23.webp",
-          "width": 1442,
-          "height": 917,
-          "sha256": "884406d3b15f1783ef0c1ed6f85a456c01da7a4df9d1939bcdd0cbc37fe74be6"
+          "width": 1280,
+          "height": 850,
+          "sha256": "f75d7dbd5103eb272e27f446677b1a3cf6f9aa7e7390c6fc27641e9ad64cafd5"
         },
         {
           "path": "assets/listing/23-small.webp",
           "width": 720,
-          "height": 458,
-          "sha256": "7e97449798e0ea432d19ee4402bcd453f90750b24b8745872b2eee3f1fc61fe7"
+          "height": 478,
+          "sha256": "40aa70482d5e3c6e438e04f7e9bc06eb6a68c9b4ccf80be172622e15c1759eb4"
         }
       ],
       "edited_source": "edited-listing-photos/23.png",
-      "edited_source_sha256": "72943333b550a33f375845637fc01f6cb353fe4dbd13ac3915d431b2bd900236"
+      "edited_source_sha256": "72943333b550a33f375845637fc01f6cb353fe4dbd13ac3915d431b2bd900236",
+      "redfin_source": {
+        "redfin_position": 31,
+        "file": "redfin-31.jpg",
+        "url": "https://ssl.cdn-redfin.com/photo/235/bigphoto/198/WVMO2008198_30_5.jpg",
+        "sha256": "412bc0649dcfae381761829d58755c2b301802c5530ee878bb38bf6ffc6adebf",
+        "size": [
+          1280,
+          850
+        ],
+        "visual_match": "Upstairs bed, bedside table, sloping ceiling and low wood doors.",
+        "approval": "colonial-1x4, 2026-10-06",
+        "crop_xywh": null,
+        "quality": 80,
+        "previous_derivatives": [
+          {
+            "path": "assets/listing/23.webp",
+            "width": 1442,
+            "height": 917,
+            "sha256": "884406d3b15f1783ef0c1ed6f85a456c01da7a4df9d1939bcdd0cbc37fe74be6"
+          },
+          {
+            "path": "assets/listing/23-small.webp",
+            "width": 720,
+            "height": 458,
+            "sha256": "7e97449798e0ea432d19ee4402bcd453f90750b24b8745872b2eee3f1fc61fe7"
+          }
+        ]
+      }
     },
     {
       "position": 24,
@@ -958,47 +1490,75 @@
       "derivatives": [
         {
           "path": "assets/listing/24.webp",
-          "width": 1444,
-          "height": 964,
-          "sha256": "ddd934aee2a4d37a30f1cadaee1bf5bc137a221443d9af7a2c6c335abc084524",
-          "margin_trim": {
-            "input_size": [
-              1456,
-              980
-            ],
-            "input_sha256": "544a591f0151cfea88e2f1299e616ed1695ad793e1c7a314911a77431cebd03f",
-            "xywh": [
-              6,
-              12,
-              1444,
-              964
-            ],
-            "retained_rgb_sha256": "40130904f50290538da67439fc75d3334a538254b999cf537b70e6ec7314a5cf"
-          }
+          "width": 1280,
+          "height": 851,
+          "sha256": "9ef8cc23a3b9d2f8255842fe8a8257de56c46ab980f66cb602314de954afb21a"
         },
         {
           "path": "assets/listing/24-small.webp",
-          "width": 716,
+          "width": 720,
           "height": 479,
-          "sha256": "fb9dd4d568ef192433e1189ef9a140d065ed2f8856787382fc1a0ff91da76860",
-          "margin_trim": {
-            "input_size": [
-              720,
-              485
-            ],
-            "input_sha256": "357c076056518c844fbec01c455fdad03423b124fde34964cbb57d9314d2b1f0",
-            "xywh": [
-              2,
-              5,
-              716,
-              479
-            ],
-            "retained_rgb_sha256": "cf6ea79663551fb8e7dc1ab6b2fff23503f45e63ef1d6629f2a0a11a18f5e9f8"
-          }
+          "sha256": "27be5d1a53af24102b5d66a2a76fbc2faad9745e58e6d6126979280feb4376f9"
         }
       ],
       "edited_source": "edited-listing-photos/24.png",
-      "edited_source_sha256": "f619fd4c873299275cd5afe16e4b268982af3eec7cf1501f73f1921c3fae620f"
+      "edited_source_sha256": "f619fd4c873299275cd5afe16e4b268982af3eec7cf1501f73f1921c3fae620f",
+      "redfin_source": {
+        "redfin_position": 32,
+        "file": "redfin-32.jpg",
+        "url": "https://ssl.cdn-redfin.com/photo/235/bigphoto/198/WVMO2008198_31_6.jpg",
+        "sha256": "0c52f49ac4ab86be7a4db849b930a68496c8d130cad91aa1c8201484321cd5bb",
+        "size": [
+          1280,
+          851
+        ],
+        "visual_match": "Upstairs vanity, mirror, toilet and window.",
+        "approval": "colonial-1x4, 2026-10-06",
+        "crop_xywh": null,
+        "quality": 80,
+        "previous_derivatives": [
+          {
+            "path": "assets/listing/24.webp",
+            "width": 1444,
+            "height": 964,
+            "sha256": "ddd934aee2a4d37a30f1cadaee1bf5bc137a221443d9af7a2c6c335abc084524",
+            "margin_trim": {
+              "input_size": [
+                1456,
+                980
+              ],
+              "input_sha256": "544a591f0151cfea88e2f1299e616ed1695ad793e1c7a314911a77431cebd03f",
+              "xywh": [
+                6,
+                12,
+                1444,
+                964
+              ],
+              "retained_rgb_sha256": "40130904f50290538da67439fc75d3334a538254b999cf537b70e6ec7314a5cf"
+            }
+          },
+          {
+            "path": "assets/listing/24-small.webp",
+            "width": 716,
+            "height": 479,
+            "sha256": "fb9dd4d568ef192433e1189ef9a140d065ed2f8856787382fc1a0ff91da76860",
+            "margin_trim": {
+              "input_size": [
+                720,
+                485
+              ],
+              "input_sha256": "357c076056518c844fbec01c455fdad03423b124fde34964cbb57d9314d2b1f0",
+              "xywh": [
+                2,
+                5,
+                716,
+                479
+              ],
+              "retained_rgb_sha256": "cf6ea79663551fb8e7dc1ab6b2fff23503f45e63ef1d6629f2a0a11a18f5e9f8"
+            }
+          }
+        ]
+      }
     },
     {
       "position": 25,
@@ -1040,47 +1600,75 @@
       "derivatives": [
         {
           "path": "assets/listing/26.webp",
-          "width": 1444,
-          "height": 958,
-          "sha256": "f2b26e77b4decdd72fddc38c9008f7ec372d582c1c54ce5a0a2b623099fef8d9",
-          "margin_trim": {
-            "input_size": [
-              1454,
-              970
-            ],
-            "input_sha256": "b65752fcfa15a5628d87e183e02cf05004606107173dd645763a0647009f572a",
-            "xywh": [
-              4,
-              6,
-              1444,
-              958
-            ],
-            "retained_rgb_sha256": "e5728c0115e40406b0b91b2c59f9bb8fdc98944a8c0fa889a1f61aeefb723910"
-          }
+          "width": 1280,
+          "height": 848,
+          "sha256": "e81423a34602b7df36167be7cf49f52e351f7c1ceb6871c2a5761aaf7cd51d2d"
         },
         {
           "path": "assets/listing/26-small.webp",
-          "width": 717,
-          "height": 476,
-          "sha256": "0b86251b652638f608d13b5a27379277376b7707b609d073bd5d4c66efcae184",
-          "margin_trim": {
-            "input_size": [
-              720,
-              480
-            ],
-            "input_sha256": "9f4ceb6ca36be9c1ced77c8b25d8c4505eb2e613fe9a27f97294657f002b3496",
-            "xywh": [
-              1,
-              2,
-              717,
-              476
-            ],
-            "retained_rgb_sha256": "44dc8fac1017f34884adf897465a174fc2d0ac545e895d15fe5610bd142b433e"
-          }
+          "width": 720,
+          "height": 477,
+          "sha256": "1c5e32c870acaaa44f0e05170763579d449417bedeea9caac78c2a9e4fefb562"
         }
       ],
       "edited_source": "edited-listing-photos/26.png",
-      "edited_source_sha256": "b641690114f15ac4276ac2327141ee363722a18262d2c2fb8430785b6b6c5648"
+      "edited_source_sha256": "b641690114f15ac4276ac2327141ee363722a18262d2c2fb8430785b6b6c5648",
+      "redfin_source": {
+        "redfin_position": 35,
+        "file": "redfin-35.jpg",
+        "url": "https://ssl.cdn-redfin.com/photo/235/bigphoto/198/WVMO2008198_34_6.jpg",
+        "sha256": "fddc10d494f1b81dedfd49fccfab18556fb7494a01b2f897c566361481c1791f",
+        "size": [
+          1280,
+          848
+        ],
+        "visual_match": "Front-left house through same trunks and lawn.",
+        "approval": "colonial-1x4, 2026-10-06",
+        "crop_xywh": null,
+        "quality": 80,
+        "previous_derivatives": [
+          {
+            "path": "assets/listing/26.webp",
+            "width": 1444,
+            "height": 958,
+            "sha256": "f2b26e77b4decdd72fddc38c9008f7ec372d582c1c54ce5a0a2b623099fef8d9",
+            "margin_trim": {
+              "input_size": [
+                1454,
+                970
+              ],
+              "input_sha256": "b65752fcfa15a5628d87e183e02cf05004606107173dd645763a0647009f572a",
+              "xywh": [
+                4,
+                6,
+                1444,
+                958
+              ],
+              "retained_rgb_sha256": "e5728c0115e40406b0b91b2c59f9bb8fdc98944a8c0fa889a1f61aeefb723910"
+            }
+          },
+          {
+            "path": "assets/listing/26-small.webp",
+            "width": 717,
+            "height": 476,
+            "sha256": "0b86251b652638f608d13b5a27379277376b7707b609d073bd5d4c66efcae184",
+            "margin_trim": {
+              "input_size": [
+                720,
+                480
+              ],
+              "input_sha256": "9f4ceb6ca36be9c1ced77c8b25d8c4505eb2e613fe9a27f97294657f002b3496",
+              "xywh": [
+                1,
+                2,
+                717,
+                476
+              ],
+              "retained_rgb_sha256": "44dc8fac1017f34884adf897465a174fc2d0ac545e895d15fe5610bd142b433e"
+            }
+          }
+        ]
+      }
     },
     {
       "position": 27,
@@ -1100,19 +1688,47 @@
       "derivatives": [
         {
           "path": "assets/listing/27.webp",
-          "width": 1600,
-          "height": 1108,
-          "sha256": "098465b2b5fc62ceefa4f67a8fe93a1df5bc309f1db231c9e201a09d457bf01c"
+          "width": 1280,
+          "height": 851,
+          "sha256": "18719b974d89ff9b44e2a4d6f1b3172884ffb63f58f1fb45c73049492027a061"
         },
         {
           "path": "assets/listing/27-small.webp",
           "width": 720,
-          "height": 499,
-          "sha256": "c886c9cb0f584fc5da9b3366ac2f1df0372e81129a237dae6a5f12f3aad1083c"
+          "height": 479,
+          "sha256": "9d19bf0e729fab05e1793447a05f2c061a11b15465bc5e44953295ba86887e11"
         }
       ],
       "edited_source": "edited-listing-photos/27.png",
-      "edited_source_sha256": "2ecb23681ddc84bb14fb27d5eedc079c56b605d327eeff077adbe8c6c13ed383"
+      "edited_source_sha256": "2ecb23681ddc84bb14fb27d5eedc079c56b605d327eeff077adbe8c6c13ed383",
+      "redfin_source": {
+        "redfin_position": 40,
+        "file": "redfin-40.jpg",
+        "url": "https://ssl.cdn-redfin.com/photo/235/bigphoto/198/WVMO2008198_39_6.jpg",
+        "sha256": "d04c5344caa66cdb963e60b102c9327098890b110d96b961ed0877875e655864",
+        "size": [
+          1280,
+          851
+        ],
+        "visual_match": "Curving path, firepit, same trees and sunlit lawn.",
+        "approval": "colonial-1x4, 2026-10-06",
+        "crop_xywh": null,
+        "quality": 80,
+        "previous_derivatives": [
+          {
+            "path": "assets/listing/27.webp",
+            "width": 1600,
+            "height": 1108,
+            "sha256": "098465b2b5fc62ceefa4f67a8fe93a1df5bc309f1db231c9e201a09d457bf01c"
+          },
+          {
+            "path": "assets/listing/27-small.webp",
+            "width": 720,
+            "height": 499,
+            "sha256": "c886c9cb0f584fc5da9b3366ac2f1df0372e81129a237dae6a5f12f3aad1083c"
+          }
+        ]
+      }
     },
     {
       "position": 28,
@@ -1127,47 +1743,75 @@
       "derivatives": [
         {
           "path": "assets/listing/28.webp",
-          "width": 1330,
-          "height": 882,
-          "sha256": "4511bff30c56da94f0f964a8bb6c98a770706e9c80a6e52116932ea5d5a53ed0",
-          "margin_trim": {
-            "input_size": [
-              1346,
-              896
-            ],
-            "input_sha256": "036df9eeb5a3b62fa6d48b7184f2671e37e498a54ed039bf767801707157306b",
-            "xywh": [
-              9,
-              8,
-              1330,
-              882
-            ],
-            "retained_rgb_sha256": "e8e5ce0107a970d1c17062706eaeda9b1b9cb8309917ea61567757166d9ffdc7"
-          }
+          "width": 1280,
+          "height": 960,
+          "sha256": "6b79bf8e30f9e949fd257ae6b5860c0f1fa9dbd73c56c317cffa12f2d1b1580c"
         },
         {
           "path": "assets/listing/28-small.webp",
-          "width": 713,
-          "height": 472,
-          "sha256": "ce08d5c7cb2272d697368af7d37a05eb7f4dbf478d3a52d4fe403dd215e53c46",
-          "margin_trim": {
-            "input_size": [
-              720,
-              479
-            ],
-            "input_sha256": "a92642b8520e80f76eed1e6bea7c68a55fe00f6bb94681f2a260eb47acd4ddea",
-            "xywh": [
-              4,
-              4,
-              713,
-              472
-            ],
-            "retained_rgb_sha256": "33fec99481b504256eb2721df112cca1b3a1c8bd4cba6cf3d8b6de68032758a2"
-          }
+          "width": 720,
+          "height": 540,
+          "sha256": "3e06a27e418f5075055c4c4af60b40b7daefd6d181cebd702d93eeeeaa75e7c5"
         }
       ],
       "edited_source": "edited-listing-photos/28.png",
-      "edited_source_sha256": "a31162b80cdbadef85c112cc2e9c7a81252d9c06e3b93ade861a879271204221"
+      "edited_source_sha256": "a31162b80cdbadef85c112cc2e9c7a81252d9c06e3b93ade861a879271204221",
+      "redfin_source": {
+        "redfin_position": 41,
+        "file": "redfin-41.jpg",
+        "url": "https://ssl.cdn-redfin.com/photo/235/bigphoto/198/WVMO2008198_40_6.jpg",
+        "sha256": "2f6f900910176b7cc83789528e220fb6e4da85f0b73fbc4e4fdfcb79ed6e1b04",
+        "size": [
+          1280,
+          960
+        ],
+        "visual_match": "Leafless aerial, chimney end, wrapping deck and circular bed.",
+        "approval": "colonial-1x4, 2026-10-06",
+        "crop_xywh": null,
+        "quality": 80,
+        "previous_derivatives": [
+          {
+            "path": "assets/listing/28.webp",
+            "width": 1330,
+            "height": 882,
+            "sha256": "4511bff30c56da94f0f964a8bb6c98a770706e9c80a6e52116932ea5d5a53ed0",
+            "margin_trim": {
+              "input_size": [
+                1346,
+                896
+              ],
+              "input_sha256": "036df9eeb5a3b62fa6d48b7184f2671e37e498a54ed039bf767801707157306b",
+              "xywh": [
+                9,
+                8,
+                1330,
+                882
+              ],
+              "retained_rgb_sha256": "e8e5ce0107a970d1c17062706eaeda9b1b9cb8309917ea61567757166d9ffdc7"
+            }
+          },
+          {
+            "path": "assets/listing/28-small.webp",
+            "width": 713,
+            "height": 472,
+            "sha256": "ce08d5c7cb2272d697368af7d37a05eb7f4dbf478d3a52d4fe403dd215e53c46",
+            "margin_trim": {
+              "input_size": [
+                720,
+                479
+              ],
+              "input_sha256": "a92642b8520e80f76eed1e6bea7c68a55fe00f6bb94681f2a260eb47acd4ddea",
+              "xywh": [
+                4,
+                4,
+                713,
+                472
+              ],
+              "retained_rgb_sha256": "33fec99481b504256eb2721df112cca1b3a1c8bd4cba6cf3d8b6de68032758a2"
+            }
+          }
+        ]
+      }
     },
     {
       "position": 29,
@@ -1182,47 +1826,75 @@
       "derivatives": [
         {
           "path": "assets/listing/29.webp",
-          "width": 1444,
-          "height": 960,
-          "sha256": "fa9d1513cf7f14608ee96c0d9b76f91da8f16f75d9a98973df952cf7ace141c7",
-          "margin_trim": {
-            "input_size": [
-              1458,
-              976
-            ],
-            "input_sha256": "bffda6d0f6acef1973932ebec15b3a2f711bc757f53187cbfd6a8c3a1983c2da",
-            "xywh": [
-              8,
-              9,
-              1444,
-              960
-            ],
-            "retained_rgb_sha256": "bd1e0ce7eac17c9bfec80029e51e1dca57366fdf3c8f5325f96dda14948ea97b"
-          }
+          "width": 1280,
+          "height": 850,
+          "sha256": "a55473203adfabb77d1774718dc289031c58dcc689bb4c5089b07493b7a5002b"
         },
         {
           "path": "assets/listing/29-small.webp",
-          "width": 715,
-          "height": 475,
-          "sha256": "2c5936c671daf3fbaa5dea584867d610d7d66a8b061ed7162e845a5117b97d8f",
-          "margin_trim": {
-            "input_size": [
-              720,
-              482
-            ],
-            "input_sha256": "51aee825191dc759f0652c634b0467caef8c99439d470649f2836711460385b0",
-            "xywh": [
-              3,
-              4,
-              715,
-              475
-            ],
-            "retained_rgb_sha256": "1412619cd9055a0ca9b65f254456a43c47eddebe4bf43a23c1d73d1c7fceb33e"
-          }
+          "width": 720,
+          "height": 478,
+          "sha256": "8de9e23b3c225aca362483c423a0348803c5da2a556087c11af97a425035e973"
         }
       ],
       "edited_source": "edited-listing-photos/29.png",
-      "edited_source_sha256": "40c173fe7ea5514bdb6073cd8e3e4da9c88f81fb987b381ce14924564ff80639"
+      "edited_source_sha256": "40c173fe7ea5514bdb6073cd8e3e4da9c88f81fb987b381ce14924564ff80639",
+      "redfin_source": {
+        "redfin_position": 42,
+        "file": "redfin-42.jpg",
+        "url": "https://ssl.cdn-redfin.com/photo/235/bigphoto/198/WVMO2008198_41_6.jpg",
+        "sha256": "521f22ab913a5302792f900e7c75ab96d7b11eb15a33617fc99bd05ebc7c7690",
+        "size": [
+          1280,
+          850
+        ],
+        "visual_match": "Deck plant pot, white chairs and woods.",
+        "approval": "colonial-1x4, 2026-10-06",
+        "crop_xywh": null,
+        "quality": 80,
+        "previous_derivatives": [
+          {
+            "path": "assets/listing/29.webp",
+            "width": 1444,
+            "height": 960,
+            "sha256": "fa9d1513cf7f14608ee96c0d9b76f91da8f16f75d9a98973df952cf7ace141c7",
+            "margin_trim": {
+              "input_size": [
+                1458,
+                976
+              ],
+              "input_sha256": "bffda6d0f6acef1973932ebec15b3a2f711bc757f53187cbfd6a8c3a1983c2da",
+              "xywh": [
+                8,
+                9,
+                1444,
+                960
+              ],
+              "retained_rgb_sha256": "bd1e0ce7eac17c9bfec80029e51e1dca57366fdf3c8f5325f96dda14948ea97b"
+            }
+          },
+          {
+            "path": "assets/listing/29-small.webp",
+            "width": 715,
+            "height": 475,
+            "sha256": "2c5936c671daf3fbaa5dea584867d610d7d66a8b061ed7162e845a5117b97d8f",
+            "margin_trim": {
+              "input_size": [
+                720,
+                482
+              ],
+              "input_sha256": "51aee825191dc759f0652c634b0467caef8c99439d470649f2836711460385b0",
+              "xywh": [
+                3,
+                4,
+                715,
+                475
+              ],
+              "retained_rgb_sha256": "1412619cd9055a0ca9b65f254456a43c47eddebe4bf43a23c1d73d1c7fceb33e"
+            }
+          }
+        ]
+      }
     },
     {
       "position": 30,
@@ -1291,47 +1963,75 @@
       "derivatives": [
         {
           "path": "assets/listing/32.webp",
-          "width": 1444,
-          "height": 814,
-          "sha256": "f83a2720bd6f89739737c2508601afacdd94ed3b586062e3054cf76168e0fbce",
-          "margin_trim": {
-            "input_size": [
-              1456,
-              832
-            ],
-            "input_sha256": "d634f98b4a4007056665413af01be028bea6adf8a491c54f93a7fd39d9a6bbac",
-            "xywh": [
-              4,
-              9,
-              1444,
-              814
-            ],
-            "retained_rgb_sha256": "606dcf00caddeb1a85c641810170843ecf30e75bfe297d4354d7edac77d0441e"
-          }
+          "width": 1280,
+          "height": 720,
+          "sha256": "8e0f09a528d21261cb60ecd20fdd297ce35ab135d62a00dea3cfcabf796486e7"
         },
         {
           "path": "assets/listing/32-small.webp",
-          "width": 716,
-          "height": 403,
-          "sha256": "059eec2f2a2bd22d5ffe65c21c410d79b8da108c1aeb0f59280e39464c8c36df",
-          "margin_trim": {
-            "input_size": [
-              720,
-              411
-            ],
-            "input_sha256": "4e2aeffbc01782b91cb90a9b85cfd568b3188fa4fff3861ca66fd302967387a5",
-            "xywh": [
-              1,
-              4,
-              716,
-              403
-            ],
-            "retained_rgb_sha256": "4b761ac45042c2b18acac2fdf4aedd419f45ba01d3a2ae8b4fb0e9eecd7b3e34"
-          }
+          "width": 720,
+          "height": 405,
+          "sha256": "be20c61e01ba03e6a354003c1f7ea28fc6b4195b72079c9bfbf5ea321babf679"
         }
       ],
       "edited_source": "edited-listing-photos/32.png",
-      "edited_source_sha256": "908cd827da2cef46286d90df3d4351c4f963f908828af09a69cebc1d42f3cbbd"
+      "edited_source_sha256": "908cd827da2cef46286d90df3d4351c4f963f908828af09a69cebc1d42f3cbbd",
+      "redfin_source": {
+        "redfin_position": 43,
+        "file": "redfin-43.jpg",
+        "url": "https://ssl.cdn-redfin.com/photo/235/bigphoto/198/WVMO2008198_42_6.jpg",
+        "sha256": "d442b181b975d59cc6291192705cec51b0b9c8a176c169df7ae849ece75ceb34",
+        "size": [
+          1280,
+          720
+        ],
+        "visual_match": "Identical parcel outline and 2.90-acre label; source disclaimer retained.",
+        "approval": "colonial-1x4, 2026-10-06",
+        "crop_xywh": null,
+        "quality": 80,
+        "previous_derivatives": [
+          {
+            "path": "assets/listing/32.webp",
+            "width": 1444,
+            "height": 814,
+            "sha256": "f83a2720bd6f89739737c2508601afacdd94ed3b586062e3054cf76168e0fbce",
+            "margin_trim": {
+              "input_size": [
+                1456,
+                832
+              ],
+              "input_sha256": "d634f98b4a4007056665413af01be028bea6adf8a491c54f93a7fd39d9a6bbac",
+              "xywh": [
+                4,
+                9,
+                1444,
+                814
+              ],
+              "retained_rgb_sha256": "606dcf00caddeb1a85c641810170843ecf30e75bfe297d4354d7edac77d0441e"
+            }
+          },
+          {
+            "path": "assets/listing/32-small.webp",
+            "width": 716,
+            "height": 403,
+            "sha256": "059eec2f2a2bd22d5ffe65c21c410d79b8da108c1aeb0f59280e39464c8c36df",
+            "margin_trim": {
+              "input_size": [
+                720,
+                411
+              ],
+              "input_sha256": "4e2aeffbc01782b91cb90a9b85cfd568b3188fa4fff3861ca66fd302967387a5",
+              "xywh": [
+                1,
+                4,
+                716,
+                403
+              ],
+              "retained_rgb_sha256": "4b761ac45042c2b18acac2fdf4aedd419f45ba01d3a2ae8b4fb0e9eecd7b3e34"
+            }
+          }
+        ]
+      }
     },
     {
       "position": 33,
@@ -1346,47 +2046,75 @@
       "derivatives": [
         {
           "path": "assets/listing/33.webp",
-          "width": 1444,
-          "height": 814,
-          "sha256": "bbf8e6e55120d2c24a938e5b8972f97c035ee083009c3ffab645fa755fa8207c",
-          "margin_trim": {
-            "input_size": [
-              1454,
-              824
-            ],
-            "input_sha256": "48054b94afcb48fa0f048b587a61fea1ce9c5bf9b1f5a7397d8b5e4110a83f1a",
-            "xywh": [
-              4,
-              5,
-              1444,
-              814
-            ],
-            "retained_rgb_sha256": "fce88bce01c2c1e7074c2e1fff12bc8349a6c03bb226ed440430b51001f5e707"
-          }
+          "width": 1280,
+          "height": 720,
+          "sha256": "2d42f805bac0d60fdbdf4f89adb7eb302ab7b636b08396bb7c8eeca4d71e9094"
         },
         {
           "path": "assets/listing/33-small.webp",
-          "width": 717,
-          "height": 404,
-          "sha256": "364a30ba0f064daa5263f38d7e6b30b77031df6ebab4d217c0baad977290fff4",
-          "margin_trim": {
-            "input_size": [
-              720,
-              408
-            ],
-            "input_sha256": "c6369432212d0d656d0ec2fe70a930cb4529fe8512a3e783428716a94d9f998c",
-            "xywh": [
-              1,
-              2,
-              717,
-              404
-            ],
-            "retained_rgb_sha256": "ac53d1eefc39f1c48241eb00d7991832fe17755f02177a1a57242e5fe334490c"
-          }
+          "width": 720,
+          "height": 405,
+          "sha256": "049f9675b1e952b85ce686584331778654af07f3af931237756a978db00bd34d"
         }
       ],
       "edited_source": "edited-listing-photos/33.png",
-      "edited_source_sha256": "23ea70d002394ae18d2534ebdadc2a0541401c2d8a85a37e2a8fbc4790a24c7f"
+      "edited_source_sha256": "23ea70d002394ae18d2534ebdadc2a0541401c2d8a85a37e2a8fbc4790a24c7f",
+      "redfin_source": {
+        "redfin_position": 10,
+        "file": "redfin-10.jpg",
+        "url": "https://ssl.cdn-redfin.com/photo/235/bigphoto/198/WVMO2008198_9_4.jpg",
+        "sha256": "117c705bd04b104dc52592f4cde1065e7d574a3e2e332e9d9ccc48c287eadcb1",
+        "size": [
+          1280,
+          720
+        ],
+        "visual_match": "Same location pin, forest canopy and ridge.",
+        "approval": "colonial-1x4, 2026-10-06",
+        "crop_xywh": null,
+        "quality": 80,
+        "previous_derivatives": [
+          {
+            "path": "assets/listing/33.webp",
+            "width": 1444,
+            "height": 814,
+            "sha256": "bbf8e6e55120d2c24a938e5b8972f97c035ee083009c3ffab645fa755fa8207c",
+            "margin_trim": {
+              "input_size": [
+                1454,
+                824
+              ],
+              "input_sha256": "48054b94afcb48fa0f048b587a61fea1ce9c5bf9b1f5a7397d8b5e4110a83f1a",
+              "xywh": [
+                4,
+                5,
+                1444,
+                814
+              ],
+              "retained_rgb_sha256": "fce88bce01c2c1e7074c2e1fff12bc8349a6c03bb226ed440430b51001f5e707"
+            }
+          },
+          {
+            "path": "assets/listing/33-small.webp",
+            "width": 717,
+            "height": 404,
+            "sha256": "364a30ba0f064daa5263f38d7e6b30b77031df6ebab4d217c0baad977290fff4",
+            "margin_trim": {
+              "input_size": [
+                720,
+                408
+              ],
+              "input_sha256": "c6369432212d0d656d0ec2fe70a930cb4529fe8512a3e783428716a94d9f998c",
+              "xywh": [
+                1,
+                2,
+                717,
+                404
+              ],
+              "retained_rgb_sha256": "ac53d1eefc39f1c48241eb00d7991832fe17755f02177a1a57242e5fe334490c"
+            }
+          }
+        ]
+      }
     },
     {
       "position": 34,
