@@ -1,0 +1,419 @@
+{
+  "model": "gemini-3-pro-image-preview",
+  "master": ".impeccable/mocks/seasons/v2/summer.jpg",
+  "master_sha256": "6d91f6f3993b5014b1be640c8a2eb51428762af3f05c35beed9bec26147bd9ab",
+  "status": "Private twelve-scene trial for owner review; eight genuine intermediates plus four immutable approved anchors. AI fine textures and occluded surfaces may differ; not documentary seasonal photography.",
+  "images": [
+    {
+      "id": "early-fall",
+      "label": "Early fall",
+      "between": [
+        "summer",
+        "fall"
+      ],
+      "fraction": 0.3333333333333333,
+      "prompt": "Create ONE genuinely new, photorealistic in-between seasonal photograph. NOT a blend, collage, ghosted double exposure or transition composite. IMAGE 1 is the immutable CAMERA / ARCHITECTURE MASTER. IMAGE 2 and IMAGE 3 are approved SEASONAL endpoint references ONLY. The output must keep IMAGE 1's exact full-frame crop, front-left viewpoint, house scale, geometry and architectural coordinates: every roof edge, chimney, dormer, window frame/mullion, cedar board, star, deck/railing/lattice, stonework, garage and porch post. Preserve bird feeder/pole, birdbath, red grill and existing tree trunks/branches in precisely the same places. Never adopt another camera or recompose. Same real property, no new objects or landscaping. Only vegetation season, snow/frost, daylight direction/color and physically plausible existing-window light may change. Preserve the existing lower-left MLS mark. Keep all panes and fine structural lines sharp and singular. Natural restrained colors, no HDR, fantasy glow or sunbeams. Use both neighboring approved references to interpolate appearance, but use the unchanged master for structure.  This stage is 1/3 of the seasonal change from IMAGE 2 to IMAGE 3. Early September: mostly green canopy with subtle yellow/red tips, slightly more moss and a few scattered dry leaves. Sun is mid-afternoon, gently warmer and lower than summer, sky stays mostly clear pale blue with very faint wisps. Lawn remains close to summer with a little more shaded green. Windows mostly reflective; barely any interior warmth.",
+      "references": [
+        {
+          "path": ".impeccable/mocks/seasons/v2/summer.jpg",
+          "sha256": "6d91f6f3993b5014b1be640c8a2eb51428762af3f05c35beed9bec26147bd9ab"
+        },
+        {
+          "path": ".impeccable/mocks/seasons/v2/summer.jpg",
+          "sha256": "6d91f6f3993b5014b1be640c8a2eb51428762af3f05c35beed9bec26147bd9ab"
+        },
+        {
+          "path": ".impeccable/mocks/seasons/v2/fall.webp",
+          "sha256": "d385466c94ca792065e24df27518f3dcaa41b3940e5db4da68cb1b980921cf50"
+        }
+      ],
+      "raw_path": ".pi/artifacts/seasons/v3/early-fall-generated.jpg",
+      "raw_sha256": "359c359b7804f33b4d3024266ce2ca9f6e0d9b804bc6f961568589d9767b5d4d",
+      "preview_path": ".impeccable/mocks/seasons/v3/turning-leaves.webp",
+      "preview_sha256": "abf53f81ac8c82f8335af0b0a500da1ca631a03862c14854a25d66aaa0b35942",
+      "registration": {
+        "algorithm": "Robust affine fit to native Vision revision-1 flow on stable architectural texture; no dense warp",
+        "dx_normalized_xy1": [
+          -0.24412349223405813,
+          0.014720886902969224,
+          0.017283035487164367
+        ],
+        "dy_normalized_xy1": [
+          -0.30102999278747006,
+          -10.241930870999814,
+          -2.779564441818529
+        ],
+        "height": 848,
+        "inliers": 2715,
+        "matches": 2715,
+        "median_displacement_px": 8.002821685303541,
+        "p95_displacement_px": 12.611767867698491,
+        "width": 1280
+      },
+      "sequence_id": "turning-leaves"
+    },
+    {
+      "id": "turning-leaves",
+      "label": "Turning leaves",
+      "between": [
+        "summer",
+        "fall"
+      ],
+      "fraction": 0.6666666666666666,
+      "prompt": "Create ONE genuinely new, photorealistic in-between seasonal photograph. NOT a blend, collage, ghosted double exposure or transition composite. IMAGE 1 is the immutable CAMERA / ARCHITECTURE MASTER. IMAGE 2 and IMAGE 3 are approved SEASONAL endpoint references ONLY. The output must keep IMAGE 1's exact full-frame crop, front-left viewpoint, house scale, geometry and architectural coordinates: every roof edge, chimney, dormer, window frame/mullion, cedar board, star, deck/railing/lattice, stonework, garage and porch post. Preserve bird feeder/pole, birdbath, red grill and existing tree trunks/branches in precisely the same places. Never adopt another camera or recompose. Same real property, no new objects or landscaping. Only vegetation season, snow/frost, daylight direction/color and physically plausible existing-window light may change. Preserve the existing lower-left MLS mark. Keep all panes and fine structural lines sharp and singular. Natural restrained colors, no HDR, fantasy glow or sunbeams. Use both neighboring approved references to interpolate appearance, but use the unchanged master for structure.  This stage is 2/3 of the seasonal change from IMAGE 2 to IMAGE 3. Early October: mixed green, amber and muted red canopy, about two thirds toward the autumn reference, moderate fallen leaves and shaded moss. Warm late-afternoon sun approaching golden hour, soft wispy clouds. Existing windows only a very restrained hint of warm light, NEVER bright yellow or orange.",
+      "references": [
+        {
+          "path": ".impeccable/mocks/seasons/v2/summer.jpg",
+          "sha256": "6d91f6f3993b5014b1be640c8a2eb51428762af3f05c35beed9bec26147bd9ab"
+        },
+        {
+          "path": ".impeccable/mocks/seasons/v2/summer.jpg",
+          "sha256": "6d91f6f3993b5014b1be640c8a2eb51428762af3f05c35beed9bec26147bd9ab"
+        },
+        {
+          "path": ".impeccable/mocks/seasons/v2/fall.webp",
+          "sha256": "d385466c94ca792065e24df27518f3dcaa41b3940e5db4da68cb1b980921cf50"
+        }
+      ],
+      "raw_path": ".pi/artifacts/seasons/v3/turning-leaves-generated.jpg",
+      "raw_sha256": "b80fd64eeddbbf945b7c5c9acb56f8adb2af34796044e329f14268a223e67606",
+      "preview_path": ".impeccable/mocks/seasons/v3/early-fall.webp",
+      "preview_sha256": "b0d87c98817b17aa08abf51d434ac52d2ef294f3f04518a0b998364d95d1238c",
+      "registration": {
+        "algorithm": "Robust affine fit to native Vision revision-1 flow on stable architectural texture; no dense warp",
+        "dx_normalized_xy1": [
+          -0.04012489362435663,
+          -0.0033616104086468712,
+          0.046448783806138906
+        ],
+        "dy_normalized_xy1": [
+          -0.0021216073518218123,
+          -9.438956114629097,
+          -3.5294363714434795
+        ],
+        "height": 848,
+        "inliers": 2707,
+        "matches": 2715,
+        "median_displacement_px": 8.249035908812646,
+        "p95_displacement_px": 12.435593402521512,
+        "width": 1280
+      },
+      "sequence_id": "early-fall"
+    },
+    {
+      "id": "first-frost",
+      "label": "First frost",
+      "between": [
+        "fall",
+        "winter"
+      ],
+      "fraction": 0.3333333333333333,
+      "prompt": "Create ONE genuinely new, photorealistic in-between seasonal photograph. NOT a blend, collage, ghosted double exposure or transition composite. IMAGE 1 is the immutable CAMERA / ARCHITECTURE MASTER. IMAGE 2 and IMAGE 3 are approved SEASONAL endpoint references ONLY. The output must keep IMAGE 1's exact full-frame crop, front-left viewpoint, house scale, geometry and architectural coordinates: every roof edge, chimney, dormer, window frame/mullion, cedar board, star, deck/railing/lattice, stonework, garage and porch post. Preserve bird feeder/pole, birdbath, red grill and existing tree trunks/branches in precisely the same places. Never adopt another camera or recompose. Same real property, no new objects or landscaping. Only vegetation season, snow/frost, daylight direction/color and physically plausible existing-window light may change. Preserve the existing lower-left MLS mark. Keep all panes and fine structural lines sharp and singular. Natural restrained colors, no HDR, fantasy glow or sunbeams. Use both neighboring approved references to interpolate appearance, but use the unchanged master for structure.  This stage is 1/3 of the seasonal change from IMAGE 2 to IMAGE 3. Late November: roughly half the remaining autumn leaves have fallen, red/russet foliage thins to reveal existing branches. Brown fallen leaves with a delicate pale frost on shaded lawn and roof edges, NOT a snow blanket. Sunset after golden hour, muted peach sky transitioning to cooler blue, slightly cooler house and ground. Existing window glow between subtle autumn and winter warmth, with frames fully preserved.",
+      "references": [
+        {
+          "path": ".impeccable/mocks/seasons/v2/summer.jpg",
+          "sha256": "6d91f6f3993b5014b1be640c8a2eb51428762af3f05c35beed9bec26147bd9ab"
+        },
+        {
+          "path": ".impeccable/mocks/seasons/v2/fall.webp",
+          "sha256": "d385466c94ca792065e24df27518f3dcaa41b3940e5db4da68cb1b980921cf50"
+        },
+        {
+          "path": ".impeccable/mocks/seasons/v2/winter.webp",
+          "sha256": "e596718f0282259777d15fb83852f0b350a6531172d258a6de513e9c29316e17"
+        }
+      ],
+      "raw_path": ".pi/artifacts/seasons/v3/first-frost-generated.jpg",
+      "raw_sha256": "0c23eaced26677db6eeec569d4940af96441b3a26cfe77629d53f1879b408f32",
+      "preview_path": ".impeccable/mocks/seasons/v3/first-frost.webp",
+      "preview_sha256": "72de7334a433b6b5c67f1b2cf70afaaf1d251fc274083d7ed6c171bf79e1bed4",
+      "registration": {
+        "algorithm": "Robust affine fit to native Vision revision-1 flow on stable architectural texture; no dense warp",
+        "dx_normalized_xy1": [
+          0.10429615989379967,
+          -0.3069280916619215,
+          0.18458711788921545
+        ],
+        "dy_normalized_xy1": [
+          -0.13715546831763012,
+          -9.50029794765677,
+          -3.282929415122797
+        ],
+        "height": 848,
+        "inliers": 2714,
+        "matches": 2715,
+        "median_displacement_px": 8.057231882581716,
+        "p95_displacement_px": 12.33810301440228,
+        "width": 1280
+      },
+      "sequence_id": "first-frost"
+    },
+    {
+      "id": "first-snow",
+      "label": "First snow",
+      "between": [
+        "fall",
+        "winter"
+      ],
+      "fraction": 0.6666666666666666,
+      "prompt": "Create ONE genuinely new, photorealistic in-between seasonal photograph. NOT a blend, collage, ghosted double exposure or transition composite. IMAGE 1 is the immutable CAMERA / ARCHITECTURE MASTER. IMAGE 2 and IMAGE 3 are approved SEASONAL endpoint references ONLY. The output must keep IMAGE 1's exact full-frame crop, front-left viewpoint, house scale, geometry and architectural coordinates: every roof edge, chimney, dormer, window frame/mullion, cedar board, star, deck/railing/lattice, stonework, garage and porch post. Preserve bird feeder/pole, birdbath, red grill and existing tree trunks/branches in precisely the same places. Never adopt another camera or recompose. Same real property, no new objects or landscaping. Only vegetation season, snow/frost, daylight direction/color and physically plausible existing-window light may change. Preserve the existing lower-left MLS mark. Keep all panes and fine structural lines sharp and singular. Natural restrained colors, no HDR, fantasy glow or sunbeams. Use both neighboring approved references to interpolate appearance, but use the unchanged master for structure.  This stage is 2/3 of the seasonal change from IMAGE 2 to IMAGE 3. Early December: mostly bare branches with a few lingering russet leaves. Thin, interrupted snow cover across roof and lawn, brown grass and leaf litter still visible on sloped patches, intermediate between frost and deep winter. Early blue hour, muted cool blue and peach sky, moderate golden glow within existing window panes. No falling snow particles.",
+      "references": [
+        {
+          "path": ".impeccable/mocks/seasons/v2/summer.jpg",
+          "sha256": "6d91f6f3993b5014b1be640c8a2eb51428762af3f05c35beed9bec26147bd9ab"
+        },
+        {
+          "path": ".impeccable/mocks/seasons/v2/fall.webp",
+          "sha256": "d385466c94ca792065e24df27518f3dcaa41b3940e5db4da68cb1b980921cf50"
+        },
+        {
+          "path": ".impeccable/mocks/seasons/v2/winter.webp",
+          "sha256": "e596718f0282259777d15fb83852f0b350a6531172d258a6de513e9c29316e17"
+        }
+      ],
+      "raw_path": ".pi/artifacts/seasons/v3/first-snow-generated.jpg",
+      "raw_sha256": "2c0169398512ea0d609f06e6a2aa7111eb24006d5723eb81e345bb183258a8c0",
+      "preview_path": ".impeccable/mocks/seasons/v3/first-snow.webp",
+      "preview_sha256": "b955bfec41d9ce8da751c009857777bb26e551daa94c29c5258f34819e4a55bd",
+      "registration": {
+        "algorithm": "Robust affine fit to native Vision revision-1 flow on stable architectural texture; no dense warp",
+        "dx_normalized_xy1": [
+          0.2481289171411533,
+          0.3675452373835913,
+          -0.29111679211450203
+        ],
+        "dy_normalized_xy1": [
+          0.18985240855168814,
+          -10.399654583797833,
+          -2.8684734924200295
+        ],
+        "height": 848,
+        "inliers": 2659,
+        "matches": 2715,
+        "median_displacement_px": 7.925270703606367,
+        "p95_displacement_px": 12.607571219546358,
+        "width": 1280
+      },
+      "sequence_id": "first-snow"
+    },
+    {
+      "id": "snowmelt",
+      "label": "Snowmelt",
+      "between": [
+        "winter",
+        "spring"
+      ],
+      "fraction": 0.3333333333333333,
+      "prompt": "Create ONE genuinely new, photorealistic in-between seasonal photograph. NOT a blend, collage, ghosted double exposure or transition composite. IMAGE 1 is the immutable CAMERA / ARCHITECTURE MASTER. IMAGE 2 and IMAGE 3 are approved SEASONAL endpoint references ONLY. The output must keep IMAGE 1's exact full-frame crop, front-left viewpoint, house scale, geometry and architectural coordinates: every roof edge, chimney, dormer, window frame/mullion, cedar board, star, deck/railing/lattice, stonework, garage and porch post. Preserve bird feeder/pole, birdbath, red grill and existing tree trunks/branches in precisely the same places. Never adopt another camera or recompose. Same real property, no new objects or landscaping. Only vegetation season, snow/frost, daylight direction/color and physically plausible existing-window light may change. Preserve the existing lower-left MLS mark. Keep all panes and fine structural lines sharp and singular. Natural restrained colors, no HDR, fantasy glow or sunbeams. Use both neighboring approved references to interpolate appearance, but use the unchanged master for structure.  This stage is 1/3 of the seasonal change from IMAGE 2 to IMAGE 3. Late February thaw: bare branches with very subtle buds, snow cover receding to broad white patches occupying about half the lawn and roof, damp brown-green grass emerging. Cold early dawn with pink-peach horizon and blue snowy shadows, slightly brighter and warmer than winter dusk. Existing warm windows remain but less prominent. No flowers, no extra paths or objects.",
+      "references": [
+        {
+          "path": ".impeccable/mocks/seasons/v2/summer.jpg",
+          "sha256": "6d91f6f3993b5014b1be640c8a2eb51428762af3f05c35beed9bec26147bd9ab"
+        },
+        {
+          "path": ".impeccable/mocks/seasons/v2/winter.webp",
+          "sha256": "e596718f0282259777d15fb83852f0b350a6531172d258a6de513e9c29316e17"
+        },
+        {
+          "path": ".impeccable/mocks/seasons/v2/spring.webp",
+          "sha256": "07667a496104b74750f06e6050a2e59bd93c7662af6195becb45bd7d4c61e069"
+        }
+      ],
+      "raw_path": ".pi/artifacts/seasons/v3/snowmelt-generated.jpg",
+      "raw_sha256": "63fc7a23ac8656d8653823194bc775ed327952d81a5fe56796e48a547dc6ec79",
+      "preview_path": ".impeccable/mocks/seasons/v3/snowmelt.webp",
+      "preview_sha256": "e724168bb245b744244b6d838df3427c57d1f3f5a7e344d7d83e99789597ec6b",
+      "registration": {
+        "algorithm": "Robust affine fit to native Vision revision-1 flow on stable architectural texture; no dense warp",
+        "dx_normalized_xy1": [
+          0.15356121919742172,
+          0.24335338749506252,
+          -0.07469231231341453
+        ],
+        "dy_normalized_xy1": [
+          0.1631928680085524,
+          -9.996282002724632,
+          -3.1022385941134965
+        ],
+        "height": 848,
+        "inliers": 2678,
+        "matches": 2715,
+        "median_displacement_px": 7.97363342618598,
+        "p95_displacement_px": 12.476642672730065,
+        "width": 1280
+      },
+      "sequence_id": "snowmelt"
+    },
+    {
+      "id": "new-growth",
+      "label": "New growth",
+      "between": [
+        "winter",
+        "spring"
+      ],
+      "fraction": 0.6666666666666666,
+      "prompt": "Create ONE genuinely new, photorealistic in-between seasonal photograph. NOT a blend, collage, ghosted double exposure or transition composite. IMAGE 1 is the immutable CAMERA / ARCHITECTURE MASTER. IMAGE 2 and IMAGE 3 are approved SEASONAL endpoint references ONLY. The output must keep IMAGE 1's exact full-frame crop, front-left viewpoint, house scale, geometry and architectural coordinates: every roof edge, chimney, dormer, window frame/mullion, cedar board, star, deck/railing/lattice, stonework, garage and porch post. Preserve bird feeder/pole, birdbath, red grill and existing tree trunks/branches in precisely the same places. Never adopt another camera or recompose. Same real property, no new objects or landscaping. Only vegetation season, snow/frost, daylight direction/color and physically plausible existing-window light may change. Preserve the existing lower-left MLS mark. Keep all panes and fine structural lines sharp and singular. Natural restrained colors, no HDR, fantasy glow or sunbeams. Use both neighboring approved references to interpolate appearance, but use the unchanged master for structure.  This stage is 2/3 of the seasonal change from IMAGE 2 to IMAGE 3. Early April: snow almost gone, only tiny residual patches in deepest shade, damp moss and fresh soft green grass emerging. Light young green buds and sparse new leaves on exact existing branches, canopy halfway to full spring. Soft warm sunrise, dewy lawn, cool sheltered shadows, windows mostly reflective with only tiny retained warmth. No added flower beds or new plants.",
+      "references": [
+        {
+          "path": ".impeccable/mocks/seasons/v2/summer.jpg",
+          "sha256": "6d91f6f3993b5014b1be640c8a2eb51428762af3f05c35beed9bec26147bd9ab"
+        },
+        {
+          "path": ".impeccable/mocks/seasons/v2/winter.webp",
+          "sha256": "e596718f0282259777d15fb83852f0b350a6531172d258a6de513e9c29316e17"
+        },
+        {
+          "path": ".impeccable/mocks/seasons/v2/spring.webp",
+          "sha256": "07667a496104b74750f06e6050a2e59bd93c7662af6195becb45bd7d4c61e069"
+        }
+      ],
+      "raw_path": ".pi/artifacts/seasons/v3/new-growth-generated.jpg",
+      "raw_sha256": "fa6bc957999dbcd2733893bae0416dfc6e93120f2c271ffaeaabcbb93d8c6313",
+      "preview_path": ".impeccable/mocks/seasons/v3/new-growth.webp",
+      "preview_sha256": "745f89b555bbc83bf5f46ab2cfe5d662e75479fc7eb2e8d0007e2ee71be1381a",
+      "registration": {
+        "algorithm": "Robust affine fit to native Vision revision-1 flow on stable architectural texture; no dense warp",
+        "dx_normalized_xy1": [
+          -0.2516142512703914,
+          1.235455439187777,
+          -0.5133699984949655
+        ],
+        "dy_normalized_xy1": [
+          0.0779290399370434,
+          -10.009657706327763,
+          -3.059103597720808
+        ],
+        "height": 848,
+        "inliers": 2698,
+        "matches": 2715,
+        "median_displacement_px": 7.987819088920364,
+        "p95_displacement_px": 12.49211560659926,
+        "width": 1280
+      },
+      "sequence_id": "new-growth"
+    },
+    {
+      "id": "late-spring",
+      "label": "Late spring",
+      "between": [
+        "spring",
+        "summer"
+      ],
+      "fraction": 0.3333333333333333,
+      "prompt": "Create ONE genuinely new, photorealistic in-between seasonal photograph. NOT a blend, collage, ghosted double exposure or transition composite. IMAGE 1 is the immutable CAMERA / ARCHITECTURE MASTER. IMAGE 2 and IMAGE 3 are approved SEASONAL endpoint references ONLY. The output must keep IMAGE 1's exact full-frame crop, front-left viewpoint, house scale, geometry and architectural coordinates: every roof edge, chimney, dormer, window frame/mullion, cedar board, star, deck/railing/lattice, stonework, garage and porch post. Preserve bird feeder/pole, birdbath, red grill and existing tree trunks/branches in precisely the same places. Never adopt another camera or recompose. Same real property, no new objects or landscaping. Only vegetation season, snow/frost, daylight direction/color and physically plausible existing-window light may change. Preserve the existing lower-left MLS mark. Keep all panes and fine structural lines sharp and singular. Natural restrained colors, no HDR, fantasy glow or sunbeams. Use both neighboring approved references to interpolate appearance, but use the unchanged master for structure.  This stage is 1/3 of the seasonal change from IMAGE 2 to IMAGE 3. Late May: lush lawn still fresh but less dew than spring, canopy becoming fuller and deeper green. Morning sun is higher and slightly less golden than spring, warm clear blue sky. Most grass stays lush; small dry or sparse areas begin matching summer. Windows reflective, no interior glow.",
+      "references": [
+        {
+          "path": ".impeccable/mocks/seasons/v2/summer.jpg",
+          "sha256": "6d91f6f3993b5014b1be640c8a2eb51428762af3f05c35beed9bec26147bd9ab"
+        },
+        {
+          "path": ".impeccable/mocks/seasons/v2/spring.webp",
+          "sha256": "07667a496104b74750f06e6050a2e59bd93c7662af6195becb45bd7d4c61e069"
+        },
+        {
+          "path": ".impeccable/mocks/seasons/v2/summer.jpg",
+          "sha256": "6d91f6f3993b5014b1be640c8a2eb51428762af3f05c35beed9bec26147bd9ab"
+        }
+      ],
+      "raw_path": ".pi/artifacts/seasons/v3/late-spring-generated.jpg",
+      "raw_sha256": "42d8594998c5c780f95a6286ceb9b2ad12071344f93270ec89ab28c6041a51ca",
+      "preview_path": ".impeccable/mocks/seasons/v3/late-spring.webp",
+      "preview_sha256": "84ff6333049ac41a7aeb826006b678fce0bd0ca600b41461886ed23d12e854ff",
+      "registration": {
+        "algorithm": "Robust affine fit to native Vision revision-1 flow on stable architectural texture; no dense warp",
+        "dx_normalized_xy1": [
+          0.07776737663181492,
+          -0.8525741102680334,
+          0.5487735610742185
+        ],
+        "dy_normalized_xy1": [
+          -0.1431484674553922,
+          -10.08427925103182,
+          -3.0974549490973424
+        ],
+        "height": 848,
+        "inliers": 2694,
+        "matches": 2715,
+        "median_displacement_px": 8.164878799789674,
+        "p95_displacement_px": 12.710060075773992,
+        "width": 1280
+      },
+      "sequence_id": "late-spring"
+    },
+    {
+      "id": "midsummer",
+      "label": "Midsummer",
+      "between": [
+        "spring",
+        "summer"
+      ],
+      "fraction": 0.6666666666666666,
+      "prompt": "Create ONE genuinely new, photorealistic in-between seasonal photograph. NOT a blend, collage, ghosted double exposure or transition composite. IMAGE 1 is the immutable CAMERA / ARCHITECTURE MASTER. IMAGE 2 and IMAGE 3 are approved SEASONAL endpoint references ONLY. The output must keep IMAGE 1's exact full-frame crop, front-left viewpoint, house scale, geometry and architectural coordinates: every roof edge, chimney, dormer, window frame/mullion, cedar board, star, deck/railing/lattice, stonework, garage and porch post. Preserve bird feeder/pole, birdbath, red grill and existing tree trunks/branches in precisely the same places. Never adopt another camera or recompose. Same real property, no new objects or landscaping. Only vegetation season, snow/frost, daylight direction/color and physically plausible existing-window light may change. Preserve the existing lower-left MLS mark. Keep all panes and fine structural lines sharp and singular. Natural restrained colors, no HDR, fantasy glow or sunbeams. Use both neighboring approved references to interpolate appearance, but use the unchanged master for structure.  This stage is 2/3 of the seasonal change from IMAGE 2 to IMAGE 3. July: mature deep green woodland canopy close to original summer, lawn moderately less lush with original bare and dry areas gradually returning. Higher late-morning sun approaching original summer daylight, neutral-warm rather than golden, clear blue sky matching original summer. No dew, no interior window glow. Preserve original summer vegetation shapes and all objects as closely as possible.",
+      "references": [
+        {
+          "path": ".impeccable/mocks/seasons/v2/summer.jpg",
+          "sha256": "6d91f6f3993b5014b1be640c8a2eb51428762af3f05c35beed9bec26147bd9ab"
+        },
+        {
+          "path": ".impeccable/mocks/seasons/v2/spring.webp",
+          "sha256": "07667a496104b74750f06e6050a2e59bd93c7662af6195becb45bd7d4c61e069"
+        },
+        {
+          "path": ".impeccable/mocks/seasons/v2/summer.jpg",
+          "sha256": "6d91f6f3993b5014b1be640c8a2eb51428762af3f05c35beed9bec26147bd9ab"
+        }
+      ],
+      "raw_path": ".pi/artifacts/seasons/v3/midsummer-generated.jpg",
+      "raw_sha256": "a936edf9c06ec6933da0a7bfbb60bad67590e6e944ddfcd333af800a1278b0c9",
+      "preview_path": ".impeccable/mocks/seasons/v3/midsummer.webp",
+      "preview_sha256": "6e5a8cb50c33b9d57acefe6a1b18b14fb9fbde7f9122f6ebacbd5a2e024341b5",
+      "registration": {
+        "algorithm": "Robust affine fit to native Vision revision-1 flow on stable architectural texture; no dense warp",
+        "dx_normalized_xy1": [
+          0.15186168576526216,
+          0.18635946542626808,
+          -0.15436553274486742
+        ],
+        "dy_normalized_xy1": [
+          -0.24459812419779697,
+          -10.06995520328023,
+          -3.002065022566949
+        ],
+        "height": 848,
+        "inliers": 2715,
+        "matches": 2715,
+        "median_displacement_px": 8.111843860036865,
+        "p95_displacement_px": 12.640060978828194,
+        "width": 1280
+      },
+      "sequence_id": "midsummer"
+    }
+  ],
+  "ordering_note": "Autumn intermediate outputs swapped after visual review: generated turning-leaves is greener/bluer and generated early-fall is redder/warmer. Prompt intent is retained above; actual visual appearance determines playback order.",
+  "finishing": "Existing align.swift: one robust affine camera correction, no dense warp. Restore original master MLS crop137x45 at0,803; WebPquality90. Four v2 anchors unchanged.",
+  "alignment_validation": {
+    "report": ".impeccable/mocks/seasons/v3/alignment-check.json",
+    "command": "python3 .impeccable/mocks/seasons/measure-alignment.py v3",
+    "automated_gate": "INCONCLUSIVE for first-frost and first-snow dormer_window_foot: residual0px but NCC0.284368/0.233028 below0.4. All other selected architectural points pass existing2px/>0.4 gate; thresholds unchanged. Six of eight scenes pass all four selected points.",
+    "manual_review": "All12 full frames and all12 adjacent50% blends, including wrap, inspected. Enlarged original/first-frost/first-snow dormer crops show stable roof/window-frame placement; reflective foliage replaced by lit interior reduces NCC. Generated glass/mullion details and vegetation can differ. This is review evidence, not automatic pixel-perfect certification.",
+    "private_evidence": [
+      ".pi/artifacts/seasons/v3/targets-sheet.jpg",
+      ".pi/artifacts/seasons/v3/midpoints-sheet.jpg",
+      ".pi/artifacts/seasons/v3/uncertain-window-check.png"
+    ]
+  },
+  "sequence": [
+    "v2/summer.jpg",
+    "v3/early-fall.webp",
+    "v3/turning-leaves.webp",
+    "v2/fall.webp",
+    "v3/first-frost.webp",
+    "v3/first-snow.webp",
+    "v2/winter.webp",
+    "v3/snowmelt.webp",
+    "v3/new-growth.webp",
+    "v2/spring.webp",
+    "v3/late-spring.webp",
+    "v3/midsummer.webp"
+  ]
+}

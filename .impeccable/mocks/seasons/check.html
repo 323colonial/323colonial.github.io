@@ -20,23 +20,28 @@ try {
     check();
   });
   const images = [...doc.querySelectorAll('.scene img')];
-  assert(images.length === 4 && images.every(img => img.complete && img.naturalWidth === 1280 && img.naturalHeight === 848), 'Four matching-size images load');
+  assert(images.length === 12 && images.every(img => img.complete && img.naturalWidth === 1280 && img.naturalHeight === 848), 'Twelve matching-size images load');
+  assert(new Set(images.map(img => img.src)).size === 12, 'Twelve distinct source scenes');
+  assert([0, 3, 6, 9].every((i, n) => images[i].getAttribute('src') === ['v2/summer.jpg', 'v2/fall.webp', 'v2/winter.webp', 'v2/spring.webp'][n]), 'Approved anchor paths unchanged');
+  assert((await fetch('four.html')).ok && doc.querySelector('a[href="four.html"]'), 'Four-frame baseline remains available');
   assert(images[0].getAttribute('src') === 'v2/summer.jpg', 'Summer uses original hero');
   const animations = doc.querySelector('.scene').getAnimations({ subtree: true });
-  assert(animations.length === 4, 'Four season animations exist');
+  assert(animations.length === 12, 'Twelve scene animations exist');
   assert(animations.every(a => a.effect.getTiming().duration === 5000), 'Complete four-season cycle lasts five seconds');
   const toggle = doc.querySelector('#play');
   if (toggle.textContent === 'Pause') toggle.click();
   assert(animations.every(a => a.playState === 'paused'), 'Pause freezes all layers');
-  for (const [i, season] of ['Summer', 'Fall', 'Winter', 'Spring'].entries()) {
+  const step = 5000 / 12;
+  for (let i = 0; i < 12; i++) {
     doc.querySelector(`[data-season="${i}"]`).click();
-    assert(animations.every(a => a.currentTime === i * 1250 && a.playState === 'paused'), `${season} selects still frame`);
-    assert(Math.abs(Number(frame.contentWindow.getComputedStyle(images[i]).opacity) - 1) < .01, `${season} selected image is opaque`);
+    assert(animations.every(a => Math.abs(a.currentTime - i * step) < .001 && a.playState === 'paused'), `Scene ${i} selects still frame`);
+    assert(Math.abs(Number(frame.contentWindow.getComputedStyle(images[i]).opacity) - 1) < .01, `Scene ${i} selected image is opaque`);
+    for (const fraction of [.25, .5, .75]) {
+      animations.forEach(a => { a.currentTime = (i + fraction) * step; });
+      const opacity = images.map(img => Number(frame.contentWindow.getComputedStyle(img).opacity));
+      assert(opacity.every((value, j) => Math.abs(value - (j === i ? 1 - fraction : j === (i + 1) % 12 ? fraction : 0)) < .01), `Scene ${i}: continuous adjacent fade at ${fraction}, including wrap`);
+    }
   }
-  doc.querySelector('[data-season="0"]').click();
-  animations.forEach(a => { a.currentTime = 5000 * 5 / 24; });
-  const opacity = images.map(img => Number(frame.contentWindow.getComputedStyle(img).opacity));
-  assert(Math.abs(opacity[0] - .5) < .02 && Math.abs(opacity[1] - .5) < .02, 'Mid-fade blends summer/fall evenly');
   assert(frame.contentWindow.getComputedStyle(images[0]).mixBlendMode === 'plus-lighter', 'Crossfade avoids dark midpoint');
   doc.querySelector('[data-season="0"]').click();
   toggle.click();
@@ -44,10 +49,15 @@ try {
     assert(animations.every(a => a.playState === 'paused') && toggle.disabled, 'Reduced motion stays static');
   } else {
     assert(animations.every(a => a.playState === 'running'), 'Play resumes timeline');
+    animations.forEach(a => { a.currentTime = step / 2; });
     toggle.click();
+    assert(doc.querySelector('#status').textContent.includes('Late summer → Early fall'), 'Paused midpoint names both blended scenes');
+    assert(!doc.querySelector('[data-season][aria-pressed="true"]'), 'Paused blend does not claim one selected still');
   }
+  doc.querySelector('#sequence').open = true;
+  assert(frame.contentWindow.getComputedStyle(doc.querySelector('.targets.sequence')).gridTemplateColumns.split(' ').length === 3, 'Desktop contact sheet has three columns in playback order');
   assert(!doc.querySelector('script[src*="analytics"]'), 'No analytics in private preview');
-  result.textContent = 'PASS — images, timing, crossfade, pause, season selection, playback and original source';
+  result.textContent = 'PASS — 12 distinct scenes, unchanged anchors, continuous 5s loop, all 12 fades and wrap, pause labels, still selection and playback';
 } catch (error) {
   result.textContent = `FAIL — ${error.message}`;
 }

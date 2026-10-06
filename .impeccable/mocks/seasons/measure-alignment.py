@@ -4,10 +4,16 @@ import math
 from pathlib import Path
 import re
 import subprocess
+import sys
 import tempfile
 
 root = Path(__file__).resolve().parent
-work = Path('.pi/artifacts/seasons/v2')
+version = sys.argv[1] if len(sys.argv) > 1 else 'v2'
+assert version in ('v2', 'v3'), 'Usage: measure-alignment.py [v2|v3]'
+work = Path('.pi/artifacts/seasons') / version
+sources = {name: (work / ('spring-lush.png' if name == 'spring' else f'{name}-unregistered.png'), root / f'v2/{name}.webp') for name in ('spring', 'fall', 'winter')}
+if version == 'v3':
+    sources = {record['sequence_id']: (work / f"{record['id']}-unregistered.png", Path(record['preview_path'])) for record in json.loads((root / 'v3/provenance.json').read_text())['images']}
 # Validation points are not the wall-texture fitting regions in align.swift.
 points = {'main_dormer_peak': (614, 124), 'dormer_window_foot': (581, 291),
           'porch_post_top': (814, 383), 'porch_post_foot': (961, 548),
@@ -21,10 +27,9 @@ with tempfile.TemporaryDirectory() as folder:
     folder = Path(folder)
     master = folder / 'master.png'
     subprocess.run(['magick', str(root / 'v2/summer.jpg'), '-colorspace', 'gray', '-morphology', 'Edge', 'Diamond:1', str(master)], check=True)
-    for season in ('spring', 'fall', 'winter'):
+    for season, pair in sources.items():
         report[season] = {}
-        for version in ('before', 'after'):
-            source = work / ('spring-lush.png' if season == 'spring' else f'{season}-unregistered.png') if version == 'before' else root / f'v2/{season}.webp'
+        for version, source in zip(('before', 'after'), pair):
             edges = folder / 'edges.png'
             subprocess.run(['magick', str(source), '-colorspace', 'gray', '-morphology', 'Edge', 'Diamond:1', str(edges)], check=True)
             values = {}
