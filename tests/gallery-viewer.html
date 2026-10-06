@@ -31,12 +31,15 @@ try {
   const nextPreview = () => doc.querySelector('#next-photo img');
   const previewMatches = (preview, index) => preview && !preview.hidden &&
     preview.getAttribute('src') === links[index].querySelector('img').getAttribute('src');
-  const checkDots = (index, label) => {
-    const dots = [...dialog.querySelectorAll('.photo-dots > span')];
-    check(dots.length === links.length && dots.every((dot, i) => dot.classList.contains('is-current') === (i === index)), label);
+  const checkPosition = (index, label) => {
+    const title = doc.querySelector('#viewer-title');
+    check(title.textContent === `Photo ${index + 1} of ${links.length}` &&
+      win.getComputedStyle(title).clipPath === 'none' && title.getBoundingClientRect().width > 1 &&
+      title.getAttribute('aria-live') === 'polite' && dialog.getAttribute('aria-labelledby') === title.id &&
+      !dialog.querySelector('.photo-dots'), label);
   };
   open(5);
-  checkDots(5, 'direct opener selects matching dot');
+  checkPosition(5, 'direct opener shows matching visible, live position without dots');
   check(previewMatches(previousPreview(), 4) && previewMatches(nextPreview(), 6), 'adjacent previews use existing small property images');
   check(previousPreview()?.alt === '' && nextPreview()?.alt === '', 'decorative previews preserve button names');
   check(doc.activeElement.textContent === 'Close', 'initial focus on Close');
@@ -48,7 +51,7 @@ try {
   check(previewMatches(nextPreview(), 7), 'Next refreshes preview to following photo');
   dialog.dispatchEvent(new win.KeyboardEvent('keydown', {key: 'ArrowLeft', bubbles: true}));
   check(image.getAttribute('src') === 'assets/listing/06.webp', 'ArrowLeft returns previous image');
-  checkDots(5, 'ArrowLeft updates dots');
+  checkPosition(5, 'ArrowLeft updates visible position');
   image.dispatchEvent(new win.Event('error'));
   check(!doc.querySelector('#viewer-error').hidden, 'load error has visible recovery');
   doc.querySelector('#next-photo').click();
@@ -60,11 +63,11 @@ try {
   open(0);
   doc.querySelector('#previous-photo').click();
   check(image.getAttribute('src') === 'assets/listing/73.webp', 'Previous wraps first to last');
-  checkDots(72, 'Previous wraps highlight to rightmost dot');
+  checkPosition(72, 'Previous wraps visible position to last photo');
   check(previewMatches(previousPreview(), 71) && previewMatches(nextPreview(), 0), 'previews wrap with gallery order');
   doc.querySelector('#next-photo').click();
   check(image.getAttribute('src') === 'assets/listing/01.webp', 'Next wraps last to first');
-  checkDots(0, 'Next wraps highlight to leftmost dot');
+  checkPosition(0, 'Next wraps visible position to first photo');
   dialog.close();
   for (const [width, height] of [[844, 390], [320, 256]]) {
     frame.style.width = `${width}px`;
@@ -72,14 +75,12 @@ try {
     await new Promise(resolve => win.requestAnimationFrame(() => win.requestAnimationFrame(resolve)));
     open(2);
     await image.decode();
-    const imageBox = image.getBoundingClientRect();
-    const photoWidth = Math.min(imageBox.width, imageBox.height * image.naturalWidth / image.naturalHeight);
-    const dots = dialog.querySelector('.photo-dots');
-    const box = dots?.getBoundingClientRect();
-    check(box && box.width <= photoWidth - 16 && Math.abs((box.left + box.right) / 2 - (imageBox.left + imageBox.right) / 2) < 1,
-      `${width}x${height}: all dots fit contained photo, not side gutters`);
-    check(dots && win.getComputedStyle(dots).backgroundColor === 'rgba(0, 0, 0, 0)' && win.getComputedStyle(dots).transitionDuration === '0s',
-      `${width}x${height}: no backing strip or added animation`);
+    checkPosition(2, `${width}x${height}: visible position without dots`);
+    const titleBox = doc.querySelector('#viewer-title').getBoundingClientRect();
+    const closeBox = dialog.querySelector('button').getBoundingClientRect();
+    check(titleBox.right <= closeBox.left || titleBox.bottom <= closeBox.top,
+      `${width}x${height}: position does not overlap Close`);
+    check(dialog.scrollWidth <= dialog.clientWidth, `${width}x${height}: no viewer horizontal overflow`);
     dialog.close();
   }
   frame.style.width = '390px';
@@ -107,30 +108,9 @@ try {
     await new Promise(resolve => { frame.onload = resolve; frame.src = `../${route}.html`; });
     const gridDoc = frame.contentDocument;
     const gridWin = frame.contentWindow;
-    if (route === 'index') {
-      // Catalog positioning must read all geometry before changing dot styles.
-      // Observe real DOM writes, not elapsed time (which varies by machine).
-      const mutations = new gridWin.MutationObserver(() => {});
-      gridDoc.querySelectorAll('#all-photos .photo-dots').forEach(dots =>
-        mutations.observe(dots, {attributes: true, attributeFilter: ['style']}));
-      let readsAfterWrites = 0;
-      const getters = [[gridWin.Element.prototype, 'clientWidth'],
-        [gridWin.Element.prototype, 'clientHeight'], [gridWin.HTMLElement.prototype, 'offsetWidth']];
-      const originals = getters.map(([proto, key]) => Object.getOwnPropertyDescriptor(proto, key));
-      try {
-        getters.forEach(([proto, key], i) => Object.defineProperty(proto, key, {
-          ...originals[i], get() {
-            if (mutations.takeRecords().length) readsAfterWrites++;
-            return originals[i].get.call(this);
-          }
-        }));
-        gridDoc.querySelector('[data-all-photos]').click();
-      } finally {
-        getters.forEach(([proto, key], i) => Object.defineProperty(proto, key, originals[i]));
-        mutations.disconnect();
-      }
-      check(readsAfterWrites === 0, `catalog batches geometry before dot writes (${readsAfterWrites} read-after-write flushes)`);
-    }
+    if (route === 'index') gridDoc.querySelector('[data-all-photos]').click();
+    check(!gridDoc.querySelector('.gallery-grid .photo-dots, #photo-viewer .photo-dots'),
+      `${route}: no catalog/viewer dot DOM or positioning work`);
     const grid = gridDoc.querySelector('.gallery-grid');
     const figures = [...grid.children];
     const images = figures.map(figure => figure.querySelector('img'));
@@ -147,42 +127,39 @@ try {
         frame.style.width = `${width}px`;
         await new Promise(resolve => gridWin.requestAnimationFrame(() => gridWin.requestAnimationFrame(resolve)));
         const columns = width <= 700 ? 1 : width <= 1000 ? 2 : 3;
-        if (route === 'index' && variant === 'original') {
-          check(figures.length === 73 && figures.every((figure, index) => {
-            const number = figure.querySelector('.photo-number');
-            const dots = [...figure.querySelectorAll('.photo-dots > span')];
-            const box = figure.querySelector('.photo-dots')?.getBoundingClientRect();
-            const imageBox = figure.querySelector('img').getBoundingClientRect();
-            return number.textContent === `${index + 1} / 73` && gridWin.getComputedStyle(number).clipPath === 'inset(50%)'
-              && dots.length === 73 && dots.every((dot, i) => dot.classList.contains('is-current') === (i === index))
-              && box.left >= imageBox.left && box.right <= imageBox.right && box.bottom <= imageBox.bottom && box.top > imageBox.top
-              && box.bottom <= imageBox.top + (imageBox.height + Math.min(imageBox.height, imageBox.width * images[index].naturalHeight / images[index].naturalWidth)) / 2;
-          }), `index ${width}px: catalog dots replace numbers, fit images and preserve accessible order`);
+        if (variant === 'original') {
+          check(figures.length === 73 && figures.every((figure, index) =>
+            figure.querySelector('.photo-number').textContent === `${index + 1} / 73` &&
+            figure.querySelector('a').getAttribute('aria-label').startsWith(`Enlarge photo ${index + 1}:`) &&
+            (route === 'index'
+              ? gridWin.getComputedStyle(figure.querySelector('.photo-number')).clipPath === 'inset(50%)'
+              : gridWin.getComputedStyle(figure.querySelector('.photo-number')).display === 'none')) &&
+            !grid.querySelector('.photo-dots'),
+            `${route} ${width}px: catalog keeps accessible order without visible counters or dots`);
           const viewer = gridDoc.querySelector('#photo-viewer');
           const opener = figures[0].querySelector('a');
           opener.focus();
           opener.click();
           check(figures.every((figure, index) => {
-            const dots = [...viewer.querySelectorAll('.photo-dots > span')];
-            const box = viewer.querySelector('.photo-dots')?.getBoundingClientRect();
-            const imageBox = gridDoc.querySelector('#viewer-image').getBoundingClientRect();
-            const matches = gridDoc.querySelector('#viewer-title').textContent === `Photo ${index + 1} of 73`
-              && gridWin.getComputedStyle(gridDoc.querySelector('#viewer-title')).clipPath === 'inset(50%)'
-              && dots.length === 73 && dots.every((dot, i) => dot.classList.contains('is-current') === (i === index))
-              && dots.every((dot, i) => !i || dot.getBoundingClientRect().left > dots[i - 1].getBoundingClientRect().left)
-              && box.left >= imageBox.left && box.right <= imageBox.right && box.bottom <= imageBox.bottom && box.top > imageBox.top
-              && box.bottom <= imageBox.top + (imageBox.height + Math.min(imageBox.height, imageBox.width * images[index].naturalHeight / images[index].naturalWidth)) / 2
+            const title = gridDoc.querySelector('#viewer-title');
+            const titleBox = title.getBoundingClientRect();
+            const closeBox = viewer.querySelector('button').getBoundingClientRect();
+            const matches = title.textContent === `Photo ${index + 1} of 73`
+              && gridWin.getComputedStyle(title).clipPath === 'none' && titleBox.width > 1
+              && (titleBox.right <= closeBox.left || titleBox.bottom <= closeBox.top)
+              && title.getAttribute('aria-live') === 'polite' && viewer.getAttribute('aria-labelledby') === title.id
+              && !viewer.querySelector('.photo-dots')
               && gridDoc.querySelector('#viewer-image').getAttribute('src') === figure.querySelector('a').getAttribute('href')
               && gridDoc.querySelector('#viewer-caption .caption-text').textContent === figure.querySelector('.caption-text').textContent
               && !gridDoc.querySelector('#viewer-caption .photo-number');
             gridDoc.querySelector('#next-photo').click();
             return matches;
-          }), `index ${width}px: all viewer dots match positions, fit images and retain exact captions/accessible title`);
+          }), `${route} ${width}px: all 73 visible live positions match photos and exact captions without dots`);
           viewer.querySelector('button').click();
           await new Promise(resolve => gridWin.requestAnimationFrame(() => gridWin.requestAnimationFrame(resolve)));
-          check(!viewer.open && gridDoc.activeElement === opener, `index ${width}px: viewer Close restores catalog focus`);
+          check(!viewer.open && gridDoc.activeElement === opener, `${route} ${width}px: viewer Close restores catalog focus`);
           const catalog = gridDoc.querySelector('#all-photos');
-          check(catalog.scrollWidth <= catalog.clientWidth, `index ${width}px: catalog has no horizontal overflow`);
+          if (catalog) check(catalog.open && catalog.scrollWidth <= catalog.clientWidth, `index ${width}px: catalog has no horizontal overflow`);
         }
         const failures = [];
         if (gridWin.getComputedStyle(grid).gridTemplateColumns.split(' ').length !== columns) failures.push('column count');
