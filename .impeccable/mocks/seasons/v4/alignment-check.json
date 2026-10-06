@@ -1,0 +1,1124 @@
+{
+  "early-fall": {
+    "before": {
+      "main_dormer_peak": {
+        "dx_px": 0,
+        "dy_px": -5,
+        "distance_px": 5.0,
+        "correlation": 0.907083
+      },
+      "dormer_window_foot": {
+        "dx_px": 0,
+        "dy_px": -6,
+        "distance_px": 6.0,
+        "correlation": 0.375782
+      },
+      "porch_post_top": {
+        "dx_px": 0,
+        "dy_px": -7,
+        "distance_px": 7.0,
+        "correlation": 0.788803
+      },
+      "porch_post_foot": {
+        "dx_px": 0,
+        "dy_px": -9,
+        "distance_px": 9.0,
+        "correlation": 0.752145
+      },
+      "garage_jamb_top": {
+        "dx_px": 0,
+        "dy_px": -8,
+        "distance_px": 8.0,
+        "correlation": 0.865526
+      },
+      "deck_newel": {
+        "dx_px": 0,
+        "dy_px": -9,
+        "distance_px": 9.0,
+        "correlation": 0.851869
+      },
+      "bird_feeder_pole": {
+        "dx_px": 0,
+        "dy_px": -10,
+        "distance_px": 10.0,
+        "correlation": 0.624012
+      },
+      "birdbath": {
+        "dx_px": 0,
+        "dy_px": -10,
+        "distance_px": 10.0,
+        "correlation": 0.776728
+      }
+    },
+    "after": {
+      "main_dormer_peak": {
+        "dx_px": 1,
+        "dy_px": 0,
+        "distance_px": 1.0,
+        "correlation": 0.953107
+      },
+      "dormer_window_foot": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.574407
+      },
+      "porch_post_top": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.818743
+      },
+      "porch_post_foot": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.765692
+      },
+      "garage_jamb_top": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.862913
+      },
+      "deck_newel": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.868252
+      },
+      "bird_feeder_pole": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.628345
+      },
+      "birdbath": {
+        "dx_px": -1,
+        "dy_px": 0,
+        "distance_px": 1.0,
+        "correlation": 0.778195
+      }
+    }
+  },
+  "turning-leaves": {
+    "before": {
+      "main_dormer_peak": {
+        "dx_px": 0,
+        "dy_px": -5,
+        "distance_px": 5.0,
+        "correlation": 0.878254
+      },
+      "dormer_window_foot": {
+        "dx_px": 2,
+        "dy_px": -6,
+        "distance_px": 6.325,
+        "correlation": 0.605747
+      },
+      "porch_post_top": {
+        "dx_px": 0,
+        "dy_px": -7,
+        "distance_px": 7.0,
+        "correlation": 0.771708
+      },
+      "porch_post_foot": {
+        "dx_px": 0,
+        "dy_px": -9,
+        "distance_px": 9.0,
+        "correlation": 0.789115
+      },
+      "garage_jamb_top": {
+        "dx_px": 0,
+        "dy_px": -8,
+        "distance_px": 8.0,
+        "correlation": 0.836496
+      },
+      "deck_newel": {
+        "dx_px": 0,
+        "dy_px": -9,
+        "distance_px": 9.0,
+        "correlation": 0.827173
+      },
+      "bird_feeder_pole": {
+        "dx_px": 0,
+        "dy_px": -10,
+        "distance_px": 10.0,
+        "correlation": 0.679781
+      },
+      "birdbath": {
+        "dx_px": 0,
+        "dy_px": -10,
+        "distance_px": 10.0,
+        "correlation": 0.749532
+      }
+    },
+    "after": {
+      "main_dormer_peak": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.908841
+      },
+      "dormer_window_foot": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.735446
+      },
+      "porch_post_top": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.802039
+      },
+      "porch_post_foot": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.790435
+      },
+      "garage_jamb_top": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.839421
+      },
+      "deck_newel": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.832946
+      },
+      "bird_feeder_pole": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.704292
+      },
+      "birdbath": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.779673
+      }
+    }
+  },
+  "fall": {
+    "before": {
+      "main_dormer_peak": {
+        "dx_px": 0,
+        "dy_px": -4,
+        "distance_px": 4.0,
+        "correlation": 0.88241
+      },
+      "dormer_window_foot": {
+        "dx_px": 0,
+        "dy_px": -6,
+        "distance_px": 6.0,
+        "correlation": 0.617422
+      },
+      "porch_post_top": {
+        "dx_px": 0,
+        "dy_px": -7,
+        "distance_px": 7.0,
+        "correlation": 0.77899
+      },
+      "porch_post_foot": {
+        "dx_px": 0,
+        "dy_px": -9,
+        "distance_px": 9.0,
+        "correlation": 0.791033
+      },
+      "garage_jamb_top": {
+        "dx_px": 0,
+        "dy_px": -8,
+        "distance_px": 8.0,
+        "correlation": 0.864991
+      },
+      "deck_newel": {
+        "dx_px": 0,
+        "dy_px": -9,
+        "distance_px": 9.0,
+        "correlation": 0.861349
+      },
+      "bird_feeder_pole": {
+        "dx_px": 0,
+        "dy_px": -10,
+        "distance_px": 10.0,
+        "correlation": 0.723414
+      },
+      "birdbath": {
+        "dx_px": 0,
+        "dy_px": -10,
+        "distance_px": 10.0,
+        "correlation": 0.732816
+      }
+    },
+    "after": {
+      "main_dormer_peak": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.901923
+      },
+      "dormer_window_foot": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.690785
+      },
+      "porch_post_top": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.821134
+      },
+      "porch_post_foot": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.826572
+      },
+      "garage_jamb_top": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.85717
+      },
+      "deck_newel": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.870161
+      },
+      "bird_feeder_pole": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.747735
+      },
+      "birdbath": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.797871
+      }
+    }
+  },
+  "first-frost": {
+    "before": {
+      "main_dormer_peak": {
+        "dx_px": 0,
+        "dy_px": -4,
+        "distance_px": 4.0,
+        "correlation": 0.926393
+      },
+      "dormer_window_foot": {
+        "dx_px": 74,
+        "dy_px": 38,
+        "distance_px": 83.187,
+        "correlation": 0.322996
+      },
+      "porch_post_top": {
+        "dx_px": 0,
+        "dy_px": -7,
+        "distance_px": 7.0,
+        "correlation": 0.717508
+      },
+      "porch_post_foot": {
+        "dx_px": 0,
+        "dy_px": -9,
+        "distance_px": 9.0,
+        "correlation": 0.762758
+      },
+      "garage_jamb_top": {
+        "dx_px": 0,
+        "dy_px": -8,
+        "distance_px": 8.0,
+        "correlation": 0.702788
+      },
+      "deck_newel": {
+        "dx_px": 0,
+        "dy_px": -9,
+        "distance_px": 9.0,
+        "correlation": 0.813972
+      },
+      "bird_feeder_pole": {
+        "dx_px": 0,
+        "dy_px": -10,
+        "distance_px": 10.0,
+        "correlation": 0.645223
+      },
+      "birdbath": {
+        "dx_px": 0,
+        "dy_px": -10,
+        "distance_px": 10.0,
+        "correlation": 0.740907
+      }
+    },
+    "after": {
+      "main_dormer_peak": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.896771
+      },
+      "dormer_window_foot": {
+        "dx_px": 75,
+        "dy_px": 45,
+        "distance_px": 87.464,
+        "correlation": 0.30438
+      },
+      "porch_post_top": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.770371
+      },
+      "porch_post_foot": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.795121
+      },
+      "garage_jamb_top": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.738603
+      },
+      "deck_newel": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.830287
+      },
+      "bird_feeder_pole": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.662172
+      },
+      "birdbath": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.773544
+      }
+    }
+  },
+  "first-snow": {
+    "before": {
+      "main_dormer_peak": {
+        "dx_px": 1,
+        "dy_px": -4,
+        "distance_px": 4.123,
+        "correlation": 0.817032
+      },
+      "dormer_window_foot": {
+        "dx_px": -11,
+        "dy_px": 40,
+        "distance_px": 41.485,
+        "correlation": 0.258171
+      },
+      "porch_post_top": {
+        "dx_px": 0,
+        "dy_px": -8,
+        "distance_px": 8.0,
+        "correlation": 0.27404
+      },
+      "porch_post_foot": {
+        "dx_px": 0,
+        "dy_px": -9,
+        "distance_px": 9.0,
+        "correlation": 0.533554
+      },
+      "garage_jamb_top": {
+        "dx_px": -1,
+        "dy_px": -8,
+        "distance_px": 8.062,
+        "correlation": 0.650917
+      },
+      "deck_newel": {
+        "dx_px": 0,
+        "dy_px": -9,
+        "distance_px": 9.0,
+        "correlation": 0.721818
+      },
+      "bird_feeder_pole": {
+        "dx_px": 3,
+        "dy_px": 59,
+        "distance_px": 59.076,
+        "correlation": 0.312859
+      },
+      "birdbath": {
+        "dx_px": 0,
+        "dy_px": -10,
+        "distance_px": 10.0,
+        "correlation": 0.742051
+      }
+    },
+    "after": {
+      "main_dormer_peak": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.828554
+      },
+      "dormer_window_foot": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.24272
+      },
+      "porch_post_top": {
+        "dx_px": 7,
+        "dy_px": 1,
+        "distance_px": 7.071,
+        "correlation": 0.280441
+      },
+      "porch_post_foot": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.535243
+      },
+      "garage_jamb_top": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.687033
+      },
+      "deck_newel": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.740911
+      },
+      "bird_feeder_pole": {
+        "dx_px": 3,
+        "dy_px": 69,
+        "distance_px": 69.065,
+        "correlation": 0.30929
+      },
+      "birdbath": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.768629
+      }
+    }
+  },
+  "winter": {
+    "before": {
+      "main_dormer_peak": {
+        "dx_px": 1,
+        "dy_px": -3,
+        "distance_px": 3.162,
+        "correlation": 0.824964
+      },
+      "dormer_window_foot": {
+        "dx_px": 1,
+        "dy_px": -6,
+        "distance_px": 6.083,
+        "correlation": 0.48238
+      },
+      "porch_post_top": {
+        "dx_px": 0,
+        "dy_px": -7,
+        "distance_px": 7.0,
+        "correlation": 0.221935
+      },
+      "porch_post_foot": {
+        "dx_px": 0,
+        "dy_px": -9,
+        "distance_px": 9.0,
+        "correlation": 0.318726
+      },
+      "garage_jamb_top": {
+        "dx_px": -1,
+        "dy_px": -8,
+        "distance_px": 8.062,
+        "correlation": 0.664105
+      },
+      "deck_newel": {
+        "dx_px": 0,
+        "dy_px": -9,
+        "distance_px": 9.0,
+        "correlation": 0.651639
+      },
+      "bird_feeder_pole": {
+        "dx_px": 1,
+        "dy_px": 32,
+        "distance_px": 32.016,
+        "correlation": 0.401372
+      },
+      "birdbath": {
+        "dx_px": -1,
+        "dy_px": -11,
+        "distance_px": 11.045,
+        "correlation": 0.503886
+      }
+    },
+    "after": {
+      "main_dormer_peak": {
+        "dx_px": 3,
+        "dy_px": 2,
+        "distance_px": 3.606,
+        "correlation": 0.80723
+      },
+      "dormer_window_foot": {
+        "dx_px": 1,
+        "dy_px": 0,
+        "distance_px": 1.0,
+        "correlation": 0.475943
+      },
+      "porch_post_top": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.266311
+      },
+      "porch_post_foot": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.33863
+      },
+      "garage_jamb_top": {
+        "dx_px": 0,
+        "dy_px": 1,
+        "distance_px": 1.0,
+        "correlation": 0.645005
+      },
+      "deck_newel": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.681014
+      },
+      "bird_feeder_pole": {
+        "dx_px": 0,
+        "dy_px": 37,
+        "distance_px": 37.0,
+        "correlation": 0.412358
+      },
+      "birdbath": {
+        "dx_px": -1,
+        "dy_px": 0,
+        "distance_px": 1.0,
+        "correlation": 0.516249
+      }
+    }
+  },
+  "snowmelt": {
+    "before": {
+      "main_dormer_peak": {
+        "dx_px": 1,
+        "dy_px": -3,
+        "distance_px": 3.162,
+        "correlation": 0.826309
+      },
+      "dormer_window_foot": {
+        "dx_px": 1,
+        "dy_px": -6,
+        "distance_px": 6.083,
+        "correlation": 0.523457
+      },
+      "porch_post_top": {
+        "dx_px": 0,
+        "dy_px": -7,
+        "distance_px": 7.0,
+        "correlation": 0.288689
+      },
+      "porch_post_foot": {
+        "dx_px": -15,
+        "dy_px": 15,
+        "distance_px": 21.213,
+        "correlation": 0.256678
+      },
+      "garage_jamb_top": {
+        "dx_px": -1,
+        "dy_px": -8,
+        "distance_px": 8.062,
+        "correlation": 0.64047
+      },
+      "deck_newel": {
+        "dx_px": 0,
+        "dy_px": -9,
+        "distance_px": 9.0,
+        "correlation": 0.569283
+      },
+      "bird_feeder_pole": {
+        "dx_px": -1,
+        "dy_px": -10,
+        "distance_px": 10.05,
+        "correlation": 0.352515
+      },
+      "birdbath": {
+        "dx_px": -1,
+        "dy_px": -11,
+        "distance_px": 11.045,
+        "correlation": 0.321342
+      }
+    },
+    "after": {
+      "main_dormer_peak": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.818671
+      },
+      "dormer_window_foot": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.501024
+      },
+      "porch_post_top": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.294995
+      },
+      "porch_post_foot": {
+        "dx_px": 0,
+        "dy_px": -13,
+        "distance_px": 13.0,
+        "correlation": 0.261373
+      },
+      "garage_jamb_top": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.687404
+      },
+      "deck_newel": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.581394
+      },
+      "bird_feeder_pole": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.348207
+      },
+      "birdbath": {
+        "dx_px": -1,
+        "dy_px": -1,
+        "distance_px": 1.414,
+        "correlation": 0.31973
+      }
+    }
+  },
+  "new-growth": {
+    "before": {
+      "main_dormer_peak": {
+        "dx_px": 1,
+        "dy_px": -4,
+        "distance_px": 4.123,
+        "correlation": 0.836977
+      },
+      "dormer_window_foot": {
+        "dx_px": 0,
+        "dy_px": -6,
+        "distance_px": 6.0,
+        "correlation": 0.339083
+      },
+      "porch_post_top": {
+        "dx_px": 7,
+        "dy_px": -6,
+        "distance_px": 9.22,
+        "correlation": 0.334362
+      },
+      "porch_post_foot": {
+        "dx_px": 0,
+        "dy_px": -10,
+        "distance_px": 10.0,
+        "correlation": 0.593561
+      },
+      "garage_jamb_top": {
+        "dx_px": 0,
+        "dy_px": -8,
+        "distance_px": 8.0,
+        "correlation": 0.652969
+      },
+      "deck_newel": {
+        "dx_px": 0,
+        "dy_px": -9,
+        "distance_px": 9.0,
+        "correlation": 0.599493
+      },
+      "bird_feeder_pole": {
+        "dx_px": 0,
+        "dy_px": -10,
+        "distance_px": 10.0,
+        "correlation": 0.317969
+      },
+      "birdbath": {
+        "dx_px": 0,
+        "dy_px": -10,
+        "distance_px": 10.0,
+        "correlation": 0.472501
+      }
+    },
+    "after": {
+      "main_dormer_peak": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.846247
+      },
+      "dormer_window_foot": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.357367
+      },
+      "porch_post_top": {
+        "dx_px": 7,
+        "dy_px": 1,
+        "distance_px": 7.071,
+        "correlation": 0.359423
+      },
+      "porch_post_foot": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.606901
+      },
+      "garage_jamb_top": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.652325
+      },
+      "deck_newel": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.606838
+      },
+      "bird_feeder_pole": {
+        "dx_px": 3,
+        "dy_px": 69,
+        "distance_px": 69.065,
+        "correlation": 0.334364
+      },
+      "birdbath": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.495115
+      }
+    }
+  },
+  "spring": {
+    "before": {
+      "main_dormer_peak": {
+        "dx_px": -1,
+        "dy_px": -5,
+        "distance_px": 5.099,
+        "correlation": 0.89888
+      },
+      "dormer_window_foot": {
+        "dx_px": -1,
+        "dy_px": -7,
+        "distance_px": 7.071,
+        "correlation": 0.631958
+      },
+      "porch_post_top": {
+        "dx_px": -1,
+        "dy_px": -8,
+        "distance_px": 8.062,
+        "correlation": 0.612341
+      },
+      "porch_post_foot": {
+        "dx_px": 0,
+        "dy_px": -10,
+        "distance_px": 10.0,
+        "correlation": 0.626
+      },
+      "garage_jamb_top": {
+        "dx_px": -1,
+        "dy_px": -8,
+        "distance_px": 8.062,
+        "correlation": 0.415835
+      },
+      "deck_newel": {
+        "dx_px": 0,
+        "dy_px": -9,
+        "distance_px": 9.0,
+        "correlation": 0.665788
+      },
+      "bird_feeder_pole": {
+        "dx_px": 0,
+        "dy_px": -10,
+        "distance_px": 10.0,
+        "correlation": 0.609927
+      },
+      "birdbath": {
+        "dx_px": -1,
+        "dy_px": -11,
+        "distance_px": 11.045,
+        "correlation": 0.445765
+      }
+    },
+    "after": {
+      "main_dormer_peak": {
+        "dx_px": -2,
+        "dy_px": -1,
+        "distance_px": 2.236,
+        "correlation": 0.847699
+      },
+      "dormer_window_foot": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.623931
+      },
+      "porch_post_top": {
+        "dx_px": -1,
+        "dy_px": 0,
+        "distance_px": 1.0,
+        "correlation": 0.573032
+      },
+      "porch_post_foot": {
+        "dx_px": -1,
+        "dy_px": 0,
+        "distance_px": 1.0,
+        "correlation": 0.651494
+      },
+      "garage_jamb_top": {
+        "dx_px": -1,
+        "dy_px": -1,
+        "distance_px": 1.414,
+        "correlation": 0.390055
+      },
+      "deck_newel": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.697153
+      },
+      "bird_feeder_pole": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.636731
+      },
+      "birdbath": {
+        "dx_px": -1,
+        "dy_px": 0,
+        "distance_px": 1.0,
+        "correlation": 0.450397
+      }
+    }
+  },
+  "late-spring": {
+    "before": {
+      "main_dormer_peak": {
+        "dx_px": -1,
+        "dy_px": -5,
+        "distance_px": 5.099,
+        "correlation": 0.846712
+      },
+      "dormer_window_foot": {
+        "dx_px": -1,
+        "dy_px": -7,
+        "distance_px": 7.071,
+        "correlation": 0.610516
+      },
+      "porch_post_top": {
+        "dx_px": -1,
+        "dy_px": -7,
+        "distance_px": 7.071,
+        "correlation": 0.669083
+      },
+      "porch_post_foot": {
+        "dx_px": 0,
+        "dy_px": -9,
+        "distance_px": 9.0,
+        "correlation": 0.666582
+      },
+      "garage_jamb_top": {
+        "dx_px": 0,
+        "dy_px": -8,
+        "distance_px": 8.0,
+        "correlation": 0.7946
+      },
+      "deck_newel": {
+        "dx_px": 0,
+        "dy_px": -9,
+        "distance_px": 9.0,
+        "correlation": 0.80377
+      },
+      "bird_feeder_pole": {
+        "dx_px": 0,
+        "dy_px": -10,
+        "distance_px": 10.0,
+        "correlation": 0.614191
+      },
+      "birdbath": {
+        "dx_px": 0,
+        "dy_px": -11,
+        "distance_px": 11.0,
+        "correlation": 0.551329
+      }
+    },
+    "after": {
+      "main_dormer_peak": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.880935
+      },
+      "dormer_window_foot": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.754704
+      },
+      "porch_post_top": {
+        "dx_px": -1,
+        "dy_px": 0,
+        "distance_px": 1.0,
+        "correlation": 0.712179
+      },
+      "porch_post_foot": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.672403
+      },
+      "garage_jamb_top": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.789767
+      },
+      "deck_newel": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.81774
+      },
+      "bird_feeder_pole": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.629172
+      },
+      "birdbath": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.578946
+      }
+    }
+  },
+  "midsummer": {
+    "before": {
+      "main_dormer_peak": {
+        "dx_px": 0,
+        "dy_px": -5,
+        "distance_px": 5.0,
+        "correlation": 0.885261
+      },
+      "dormer_window_foot": {
+        "dx_px": 0,
+        "dy_px": -6,
+        "distance_px": 6.0,
+        "correlation": 0.742934
+      },
+      "porch_post_top": {
+        "dx_px": 0,
+        "dy_px": -7,
+        "distance_px": 7.0,
+        "correlation": 0.766762
+      },
+      "porch_post_foot": {
+        "dx_px": 1,
+        "dy_px": -10,
+        "distance_px": 10.05,
+        "correlation": 0.761428
+      },
+      "garage_jamb_top": {
+        "dx_px": 1,
+        "dy_px": -8,
+        "distance_px": 8.062,
+        "correlation": 0.867024
+      },
+      "deck_newel": {
+        "dx_px": 0,
+        "dy_px": -9,
+        "distance_px": 9.0,
+        "correlation": 0.904768
+      },
+      "bird_feeder_pole": {
+        "dx_px": 0,
+        "dy_px": -10,
+        "distance_px": 10.0,
+        "correlation": 0.801012
+      },
+      "birdbath": {
+        "dx_px": 1,
+        "dy_px": -10,
+        "distance_px": 10.05,
+        "correlation": 0.817646
+      }
+    },
+    "after": {
+      "main_dormer_peak": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.892049
+      },
+      "dormer_window_foot": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.854827
+      },
+      "porch_post_top": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.850335
+      },
+      "porch_post_foot": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.845142
+      },
+      "garage_jamb_top": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.887332
+      },
+      "deck_newel": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.916397
+      },
+      "bird_feeder_pole": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.867542
+      },
+      "birdbath": {
+        "dx_px": 0,
+        "dy_px": 0,
+        "distance_px": 0.0,
+        "correlation": 0.824806
+      }
+    }
+  }
+}

@@ -58,17 +58,17 @@
     <figure>
       <div class="scene" role="img" aria-label="Original late-summer photograph of 323 Colonial Drive, viewed from the front-left corner.">
         <img src="v2/summer.jpg" data-name="Late summer" width="1280" height="848" alt="" fetchpriority="high">
-        <img src="v4/early-fall.webp" data-name="Early fall" width="1280" height="848" alt="">
-        <img src="v4/turning-leaves.webp" data-name="Turning leaves" width="1280" height="848" alt="">
-        <img src="v4/fall.webp" data-name="Fall" width="1280" height="848" alt="">
-        <img src="v4/first-frost.webp" data-name="First frost" width="1280" height="848" alt="">
-        <img src="v4/first-snow.webp" data-name="First snow" width="1280" height="848" alt="">
-        <img src="v4/winter.webp" data-name="Winter" width="1280" height="848" alt="">
-        <img src="v4/snowmelt.webp" data-name="Snowmelt" width="1280" height="848" alt="">
-        <img src="v4/new-growth.webp" data-name="New growth" width="1280" height="848" alt="">
-        <img src="v4/spring.webp" data-name="Spring" width="1280" height="848" alt="">
-        <img src="v4/late-spring.webp" data-name="Late spring" width="1280" height="848" alt="">
-        <img src="v4/midsummer.webp" data-name="Midsummer" width="1280" height="848" alt="">
+        <img src="v3/early-fall.webp" data-name="Early fall" width="1280" height="848" alt="">
+        <img src="v3/turning-leaves.webp" data-name="Turning leaves" width="1280" height="848" alt="">
+        <img src="v2/fall.webp" data-name="Fall" width="1280" height="848" alt="">
+        <img src="v3/first-frost.webp" data-name="First frost" width="1280" height="848" alt="">
+        <img src="v3/first-snow.webp" data-name="First snow" width="1280" height="848" alt="">
+        <img src="v2/winter.webp" data-name="Winter" width="1280" height="848" alt="">
+        <img src="v3/snowmelt.webp" data-name="Snowmelt" width="1280" height="848" alt="">
+        <img src="v3/new-growth.webp" data-name="New growth" width="1280" height="848" alt="">
+        <img src="v2/spring.webp" data-name="Spring" width="1280" height="848" alt="">
+        <img src="v3/late-spring.webp" data-name="Late spring" width="1280" height="848" alt="">
+        <img src="v3/midsummer.webp" data-name="Midsummer" width="1280" height="848" alt="">
       </div>
       <div id="controls" hidden>
         <div class="seasons" role="group" aria-label="Choose a still scene"></div>
@@ -76,25 +76,24 @@
       </div>
       <figcaption>
         <p id="status">Original late-summer photograph. Loading seasonal study…</p>
-        <p>12 scenes · 5s full year · continuous dissolves. Late summer is the unchanged original; all 11 generated scenes are revised AI concepts with a shared lighting and ground progression. Live site unchanged.</p>
-        <p><a href="twelve-before.html">Previous twelve-frame trial</a> · <a href="four.html">Earlier four-frame loop</a></p>
-        <p>Owner review pending. Strict alignment check has not passed: some window matches are uncertain, and two roof landmarks exceed the 2px target. Not cleared for publication.</p>
+        <p>12 scenes · 5s full year · continuous dissolves. Late summer is the unchanged original; the other 11 scenes are AI-edited concepts. Four approved targets plus eight new seasonal stages. Live site unchanged.</p>
+        <p><a href="four.html">Compare the previous four-frame loop</a></p>
       </figcaption>
     </figure>
     <details>
-      <summary>Earlier four targets · before continuity corrections</summary>
+      <summary>Compare four seasonal targets</summary>
       <div class="targets">
         <figure><img src="v2/spring.webp" width="1280" height="848" alt="Spring concept: lush grass in golden morning light."><figcaption>Spring · golden morning</figcaption></figure>
         <figure><img src="v2/summer.jpg" width="1280" height="848" alt="Unchanged high-quality late-summer photograph."><figcaption>Late summer · unchanged original</figcaption></figure>
         <figure><img src="v2/fall.webp" width="1280" height="848" alt="Fall concept: red foliage, moss and fallen leaves, evening sky and subtle window warmth."><figcaption>Fall · golden evening, quieter windows</figcaption></figure>
         <figure><img src="v2/winter.webp" width="1280" height="848" alt="Winter concept: snow at dusk with warm golden windows."><figcaption>Winter · blue-hour warmth</figcaption></figure>
       </div>
-      <p>Historical targets shown for comparison, not the revised frames playing above. Their files remain unchanged; revised seasonal scenes are separate. Fine AI-generated details can still differ from the original.</p>
+      <p>Four approved targets remain unchanged. Camera alignment corrected to the high-quality original; fine AI-generated details can still differ.</p>
     </details>
     <details id="sequence">
       <summary>Compare all twelve scenes in playback order</summary>
       <div class="targets sequence"></div>
-      <p>Snow retreats through dormant grass before spring growth. Daylight and warm house lights follow a shared progression. This is an art-directed concept, not a physical sunlight simulation; generated fine detail can still shift during dissolves.</p>
+      <p>Eight new scenes bridge the approved targets. Lighting, foliage and snow evolve together; generated fine detail can still shift during dissolves.</p>
     </details>
   </main>
   <script type="module">
@@ -116,7 +115,7 @@
       thumbnail.removeAttribute('fetchpriority');
       thumbnail.alt = `${names[index]} ${index === 0 ? 'original photograph' : 'AI seasonal concept'}.`;
       const caption = document.createElement('figcaption');
-      caption.textContent = `${index + 1}. ${names[index]}${index === 0 ? ' · unchanged original' : ' · revised'}`;
+      caption.textContent = `${index + 1}. ${names[index]}${index % 3 === 0 ? ' · approved target' : ''}`;
       figure.append(thumbnail, caption);
       document.querySelector('#sequence .targets').append(figure);
       return button;

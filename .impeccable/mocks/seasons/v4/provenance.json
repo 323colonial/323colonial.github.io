@@ -1,0 +1,1146 @@
+{
+  "model": "gemini-3-pro-image-preview",
+  "master": ".impeccable/mocks/seasons/v2/summer.jpg",
+  "master_sha256": "6d91f6f3993b5014b1be640c8a2eb51428762af3f05c35beed9bec26147bd9ab",
+  "schedule": [
+    {
+      "id": "summer",
+      "ambient_relative": 1.0,
+      "direct_relative": 1.0,
+      "practical_mix": 0.0,
+      "snow_target_percent": 0,
+      "direction": "Unchanged original summer daylight and sparse mature grass."
+    },
+    {
+      "id": "early-fall",
+      "ambient_relative": 0.98,
+      "direct_relative": 0.88,
+      "practical_mix": 0.01,
+      "snow_target_percent": 0,
+      "direction": "Afternoon: sun slightly lower toward camera-right than master, shadows slightly longer. Canopy90% green/10% muted yellow; lawn subtly less green than master, a few fallen leaves. NO sunset pink yet."
+    },
+    {
+      "id": "turning-leaves",
+      "ambient_relative": 0.94,
+      "direct_relative": 0.68,
+      "practical_mix": 0.04,
+      "snow_target_percent": 0,
+      "direction": "Late afternoon: camera-right sun lower again, shadows somewhat longer/softer. Canopy65% green/35% amber/russet. Moderate scattered leaves; grass slightly drier olive than previous stage. Sky pale blue, only very subtle warm wisps."
+    },
+    {
+      "id": "fall",
+      "ambient_relative": 0.86,
+      "direct_relative": 0.44,
+      "practical_mix": 0.1,
+      "snow_target_percent": 0,
+      "direction": "Golden evening: low camera-right sun, long softened shadows. Canopy35% green/65% red/russet/gold, retain a little green; slightly thinner than turning-leaves. Grass olive/dormant with moss only in existing shaded patches and moderate fallen leaves, NOT a uniform lush carpet. Warm sky restrained, no exaggerated sunset."
+    },
+    {
+      "id": "first-frost",
+      "ambient_relative": 0.77,
+      "direct_relative": 0.2,
+      "practical_mix": 0.22,
+      "snow_target_percent": 5,
+      "direction": "Sunset: very low camera-right sun almost gone, weak long shadows blending into diffuse skylight. IMPORTANT reduce existing leaf density by about HALF relative to autumn; many existing branches newly visible, remaining leaves muted brown/russet, not full dense red canopy. Fine frost and tiny snow traces on shaded5% of lawn/roof. Mostly damp dormant brown/olive grass with leaf litter. No spotlighting."
+    },
+    {
+      "id": "first-snow",
+      "ambient_relative": 0.68,
+      "direct_relative": 0.03,
+      "practical_mix": 0.36,
+      "snow_target_percent": 40,
+      "direction": "After sunset: diffuse cool sky, practically no direct sun and NO crisp sunny lawn patches. Existing branches mostly bare with a few brown leaves. Thin snow covers about40% of lawn and roof in coherent connected patches, not uniformly dusting every surface; exposed60% is dormant brown/olive grass. Snow begins in far-right shaded rise and left/below-deck shade, retaining exposed middle/foreground. Cool sky with faint peach at horizon."
+    },
+    {
+      "id": "winter",
+      "ambient_relative": 0.6,
+      "direct_relative": 0.0,
+      "practical_mix": 0.48,
+      "snow_target_percent": 85,
+      "direction": "Winter blue hour: soft diffuse cool light only, NO direct sunlight, NO hard white solar spot on red grill. Snow blanket covers about85% lawn and roof; preserve tiny dormant-grass margins in exposed foreground/near path so the next thaw does not reveal an entirely new lawn. Bare branches, minimal snow tracery rather than giant branch clumps. Clearly legible house and snow, not dark night. Golden cozy winter character will be restored in finishing; lamps off in this base image."
+    },
+    {
+      "id": "snowmelt",
+      "ambient_relative": 0.68,
+      "direct_relative": 0.03,
+      "practical_mix": 0.36,
+      "snow_target_percent": 60,
+      "direction": "Very early dawn: diffuse blue-peach sky, no hard direct solar patches yet. Thaw: snow still covers about60% lawn/roof, SAME patches as winter shrinking from exposed middle/foreground toward far-right rise and below-deck shade. Exposed40% is mostly damp STRAW-BROWN / muted OLIVE dormant grass, not bright green. Bare branches with tiny buds. Slightly brighter than winter, no orange porch glow in base."
+    },
+    {
+      "id": "new-growth",
+      "ambient_relative": 0.77,
+      "direct_relative": 0.2,
+      "practical_mix": 0.22,
+      "snow_target_percent": 30,
+      "direction": "Sunrise: weak low sun from camera-left, very soft elongated shadows extending generally rightward; warm highlights only where reachable, no hard noon-white grill highlight. Snow still covers about30% lawn/roof, shrinking SAME shaded patches as snowmelt, especially far-right rise and below-deck shade. Newly exposed grass predominantly subdued straw/olive with small muted-green shoots; do NOT jump to lush spring green. Sparse buds/leaves on about20% existing canopy, majority branches still visible."
+    },
+    {
+      "id": "spring",
+      "ambient_relative": 0.86,
+      "direct_relative": 0.44,
+      "practical_mix": 0.1,
+      "snow_target_percent": 5,
+      "direction": "Early spring golden morning: low camera-left sun, soft long shadows consistent across house/yard/grill, not a copy of summer noon shadows. Last5% snow only tiny deep-shade remnants, no large banks. Lawn now predominantly muted fresh green but still mixed olive/straw, short growth, modest fine dew; NOT the old uniformly lush bright lime lawn. Fresh leaves about55% canopy density with existing branches visible. Preserve inviting morning character without a giant brightness jump."
+    },
+    {
+      "id": "late-spring",
+      "ambient_relative": 0.94,
+      "direct_relative": 0.68,
+      "practical_mix": 0.04,
+      "snow_target_percent": 0,
+      "direction": "Later spring, rising morning sun: direct light stronger, camera-left toward overhead, shorter softer shadows than spring. Snow fully gone. Lawn noticeably fuller soft green than early spring, but mixed natural patches and original terrain, not artificial turf; dew mostly evaporated. Canopy85% fresh green, naturally full. Red grill enamel highlight small/modest, light direction consistent, not chrome."
+    },
+    {
+      "id": "midsummer",
+      "ambient_relative": 0.98,
+      "direct_relative": 0.88,
+      "practical_mix": 0.01,
+      "snow_target_percent": 0,
+      "direction": "Late morning summer: sun approaches original master light direction/elevation, shadows and grill reflections nearly converge to master without jumping. Canopy mature deep green, full. Lawn begins drying back: mix mature green and original sparse/olive patches, between lush late spring and original late summer. Sky nearly master blue. No warm interior or exterior lamps in base."
+    }
+  ],
+  "images": [
+    {
+      "id": "early-fall",
+      "sequence_id": "early-fall",
+      "schedule": {
+        "id": "early-fall",
+        "ambient_relative": 0.98,
+        "direct_relative": 0.88,
+        "practical_mix": 0.01,
+        "snow_target_percent": 0,
+        "direction": "Afternoon: sun slightly lower toward camera-right than master, shadows slightly longer. Canopy90% green/10% muted yellow; lawn subtly less green than master, a few fallen leaves. NO sunset pink yet."
+      },
+      "prompt": "Retouch IMAGE 2 for one stage of a camera-locked ANNUAL TIMELAPSE. This corrects continuity, not a redesign. IMAGE 1 is the exact structural/material/camera master. IMAGE 2 is the existing target to revise. IMAGE 3/4 are previous/next OLD targets for object/terrain/foliage correspondence only; their lighting and grass jumps are flawed and must NOT be copied. IMAGE 5 is the OLD full contact sheet for context, not a montage to reproduce. Return ONE full-frame sharp photorealistic image, never a collage or double exposure.\nLOCK to IMAGE 1 every roof/chimney/dormer outline, scale/perspective, siding board, window/pane/mullion, star, porch post, stone, deck/lattice, bird feeder/pole, birdbath and red grill. Same crop and fixed tree trunks/branch positions. No invented furniture, path, flowers or decorations. Preserve lower-left MLS watermark. Only foliage, snow, grass and coherent physical lighting may change.\nWhole sequence: high summer daylight -> progressively lower camera-right afternoon/evening -> diffuse winter blue hour -> diffuse dawn -> low camera-left spring morning -> rising summer daylight. Winter is the diffuse bridge between sunset and dawn, not an abrupt reversal of hard shadows. All shadows in THIS frame must agree with its single sun and soften under diffuse sky. Tree shade, lawn, stone, roof and cedar all follow that source. Do NOT simply tint the previous lighting. Sky reflections are soft/broad; red enamel grill keeps its material, NO newly invented chrome. Its broad sky sheen dims/cools at twilight, with NO noon-white specular flare when sun is absent. A small direct highlight may appear only when the stated sun can reach it. Do not make the entire grill glow or relocate/reshape it.\nGround patch topology stays continuous: same sparse soil/grass/moss locations, consistent snow patches accumulating/retreating from shaded right rise and below-deck areas. Each stage changes modestly, NO instant carpet-green grass after snow, and no identical frozen ground/shadow texture through multiple adjacent frames. These are approximate art-direction targets, not permission to add a white overlay.\nIMPORTANT PRACTICAL LIGHTS: turn OFF ALL existing interior window illumination and ALL exterior wall lanterns in this base edit, including their orange wall spill. Windows must retain real panes and subdued sky/environment reflection (winter bare branches, summer leaves). Lamps retain exact fixtures but no emissive yellow cores/halos. One controlled warm-light envelope will be added AFTER registration. Do not add any new lights. Keep twilight clearly exposed/legible, with natural cool diffuse lighting rather than black crushed shadows.\n\nSHARED SCHEDULE (art-direction targets; output ONLY requested stage):\n[{\"id\": \"summer\", \"ambient_relative\": 1.0, \"direct_relative\": 1.0, \"practical_mix\": 0.0, \"snow_target_percent\": 0, \"direction\": \"Unchanged original summer daylight and sparse mature grass.\"}, {\"id\": \"early-fall\", \"ambient_relative\": 0.98, \"direct_relative\": 0.88, \"practical_mix\": 0.01, \"snow_target_percent\": 0, \"direction\": \"Afternoon: sun slightly lower toward camera-right than master, shadows slightly longer. Canopy90% green/10% muted yellow; lawn subtly less green than master, a few fallen leaves. NO sunset pink yet.\"}, {\"id\": \"turning-leaves\", \"ambient_relative\": 0.94, \"direct_relative\": 0.68, \"practical_mix\": 0.04, \"snow_target_percent\": 0, \"direction\": \"Late afternoon: camera-right sun lower again, shadows somewhat longer/softer. Canopy65% green/35% amber/russet. Moderate scattered leaves; grass slightly drier olive than previous stage. Sky pale blue, only very subtle warm wisps.\"}, {\"id\": \"fall\", \"ambient_relative\": 0.86, \"direct_relative\": 0.44, \"practical_mix\": 0.1, \"snow_target_percent\": 0, \"direction\": \"Golden evening: low camera-right sun, long softened shadows. Canopy35% green/65% red/russet/gold, retain a little green; slightly thinner than turning-leaves. Grass olive/dormant with moss only in existing shaded patches and moderate fallen leaves, NOT a uniform lush carpet. Warm sky restrained, no exaggerated sunset.\"}, {\"id\": \"first-frost\", \"ambient_relative\": 0.77, \"direct_relative\": 0.2, \"practical_mix\": 0.22, \"snow_target_percent\": 5, \"direction\": \"Sunset: very low camera-right sun almost gone, weak long shadows blending into diffuse skylight. IMPORTANT reduce existing leaf density by about HALF relative to autumn; many existing branches newly visible, remaining leaves muted brown/russet, not full dense red canopy. Fine frost and tiny snow traces on shaded5% of lawn/roof. Mostly damp dormant brown/olive grass with leaf litter. No spotlighting.\"}, {\"id\": \"first-snow\", \"ambient_relative\": 0.68, \"direct_relative\": 0.03, \"practical_mix\": 0.36, \"snow_target_percent\": 40, \"direction\": \"After sunset: diffuse cool sky, practically no direct sun and NO crisp sunny lawn patches. Existing branches mostly bare with a few brown leaves. Thin snow covers about40% of lawn and roof in coherent connected patches, not uniformly dusting every surface; exposed60% is dormant brown/olive grass. Snow begins in far-right shaded rise and left/below-deck shade, retaining exposed middle/foreground. Cool sky with faint peach at horizon.\"}, {\"id\": \"winter\", \"ambient_relative\": 0.6, \"direct_relative\": 0.0, \"practical_mix\": 0.48, \"snow_target_percent\": 85, \"direction\": \"Winter blue hour: soft diffuse cool light only, NO direct sunlight, NO hard white solar spot on red grill. Snow blanket covers about85% lawn and roof; preserve tiny dormant-grass margins in exposed foreground/near path so the next thaw does not reveal an entirely new lawn. Bare branches, minimal snow tracery rather than giant branch clumps. Clearly legible house and snow, not dark night. Golden cozy winter character will be restored in finishing; lamps off in this base image.\"}, {\"id\": \"snowmelt\", \"ambient_relative\": 0.68, \"direct_relative\": 0.03, \"practical_mix\": 0.36, \"snow_target_percent\": 60, \"direction\": \"Very early dawn: diffuse blue-peach sky, no hard direct solar patches yet. Thaw: snow still covers about60% lawn/roof, SAME patches as winter shrinking from exposed middle/foreground toward far-right rise and below-deck shade. Exposed40% is mostly damp STRAW-BROWN / muted OLIVE dormant grass, not bright green. Bare branches with tiny buds. Slightly brighter than winter, no orange porch glow in base.\"}, {\"id\": \"new-growth\", \"ambient_relative\": 0.77, \"direct_relative\": 0.2, \"practical_mix\": 0.22, \"snow_target_percent\": 30, \"direction\": \"Sunrise: weak low sun from camera-left, very soft elongated shadows extending generally rightward; warm highlights only where reachable, no hard noon-white grill highlight. Snow still covers about30% lawn/roof, shrinking SAME shaded patches as snowmelt, especially far-right rise and below-deck shade. Newly exposed grass predominantly subdued straw/olive with small muted-green shoots; do NOT jump to lush spring green. Sparse buds/leaves on about20% existing canopy, majority branches still visible.\"}, {\"id\": \"spring\", \"ambient_relative\": 0.86, \"direct_relative\": 0.44, \"practical_mix\": 0.1, \"snow_target_percent\": 5, \"direction\": \"Early spring golden morning: low camera-left sun, soft long shadows consistent across house/yard/grill, not a copy of summer noon shadows. Last5% snow only tiny deep-shade remnants, no large banks. Lawn now predominantly muted fresh green but still mixed olive/straw, short growth, modest fine dew; NOT the old uniformly lush bright lime lawn. Fresh leaves about55% canopy density with existing branches visible. Preserve inviting morning character without a giant brightness jump.\"}, {\"id\": \"late-spring\", \"ambient_relative\": 0.94, \"direct_relative\": 0.68, \"practical_mix\": 0.04, \"snow_target_percent\": 0, \"direction\": \"Later spring, rising morning sun: direct light stronger, camera-left toward overhead, shorter softer shadows than spring. Snow fully gone. Lawn noticeably fuller soft green than early spring, but mixed natural patches and original terrain, not artificial turf; dew mostly evaporated. Canopy85% fresh green, naturally full. Red grill enamel highlight small/modest, light direction consistent, not chrome.\"}, {\"id\": \"midsummer\", \"ambient_relative\": 0.98, \"direct_relative\": 0.88, \"practical_mix\": 0.01, \"snow_target_percent\": 0, \"direction\": \"Late morning summer: sun approaches original master light direction/elevation, shadows and grill reflections nearly converge to master without jumping. Canopy mature deep green, full. Lawn begins drying back: mix mature green and original sparse/olive patches, between lush late spring and original late summer. Sky nearly master blue. No warm interior or exterior lamps in base.\"}]\nREQUESTED STAGE: {\"id\": \"early-fall\", \"ambient_relative\": 0.98, \"direct_relative\": 0.88, \"practical_mix\": 0.01, \"snow_target_percent\": 0, \"direction\": \"Afternoon: sun slightly lower toward camera-right than master, shadows slightly longer. Canopy90% green/10% muted yellow; lawn subtly less green than master, a few fallen leaves. NO sunset pink yet.\"}",
+      "references": [
+        {
+          "path": ".impeccable/mocks/seasons/v2/summer.jpg",
+          "sha256": "6d91f6f3993b5014b1be640c8a2eb51428762af3f05c35beed9bec26147bd9ab"
+        },
+        {
+          "path": ".impeccable/mocks/seasons/v3/early-fall.webp",
+          "sha256": "b0d87c98817b17aa08abf51d434ac52d2ef294f3f04518a0b998364d95d1238c"
+        },
+        {
+          "path": ".impeccable/mocks/seasons/v2/summer.jpg",
+          "sha256": "6d91f6f3993b5014b1be640c8a2eb51428762af3f05c35beed9bec26147bd9ab"
+        },
+        {
+          "path": ".impeccable/mocks/seasons/v3/turning-leaves.webp",
+          "sha256": "abf53f81ac8c82f8335af0b0a500da1ca631a03862c14854a25d66aaa0b35942"
+        },
+        {
+          "path": ".pi/artifacts/seasons/v3/targets-sheet.jpg",
+          "sha256": "ab43abd4ed1d8ace7e333e50b90fd24348ee8006e28df508f317b675996215a0"
+        }
+      ],
+      "raw_path": ".pi/artifacts/seasons/v4/early-fall-generated.jpg",
+      "raw_sha256": "fea0cd19bacb126ef0f18861cf47bb068a82e9377df75eabb4603f3b3318e6ab",
+      "unregistered_path": ".pi/artifacts/seasons/v4/early-fall-unregistered.png",
+      "registration": {
+        "algorithm": "Robust affine fit to native Vision revision-1 flow on stable architectural texture; no dense warp",
+        "dx_normalized_xy1": [
+          0.17320220073197665,
+          2.186525943803685,
+          -1.2854223186897018
+        ],
+        "dy_normalized_xy1": [
+          -0.12470662349097547,
+          -10.238529403847009,
+          -2.88001421406013
+        ],
+        "height": 848,
+        "inliers": 2710,
+        "matches": 2715,
+        "median_displacement_px": 8.014355346262427,
+        "p95_displacement_px": 12.657378954421914,
+        "width": 1280
+      },
+      "preview_path": ".impeccable/mocks/seasons/v4/early-fall.webp",
+      "preview_sha256": "ca4671580231ae70d143897f8268a20652dea77eb0ad2121ff9f4a4b7f78cfd4",
+      "reflection_bare_mix": 0.08,
+      "practical_mix": 0.01
+    },
+    {
+      "id": "turning-leaves",
+      "sequence_id": "turning-leaves",
+      "schedule": {
+        "id": "turning-leaves",
+        "ambient_relative": 0.94,
+        "direct_relative": 0.68,
+        "practical_mix": 0.04,
+        "snow_target_percent": 0,
+        "direction": "Late afternoon: camera-right sun lower again, shadows somewhat longer/softer. Canopy65% green/35% amber/russet. Moderate scattered leaves; grass slightly drier olive than previous stage. Sky pale blue, only very subtle warm wisps."
+      },
+      "prompt": "Retouch IMAGE 2 for one stage of a camera-locked ANNUAL TIMELAPSE. This corrects continuity, not a redesign. IMAGE 1 is the exact structural/material/camera master. IMAGE 2 is the existing target to revise. IMAGE 3/4 are previous/next OLD targets for object/terrain/foliage correspondence only; their lighting and grass jumps are flawed and must NOT be copied. IMAGE 5 is the OLD full contact sheet for context, not a montage to reproduce. Return ONE full-frame sharp photorealistic image, never a collage or double exposure.\nLOCK to IMAGE 1 every roof/chimney/dormer outline, scale/perspective, siding board, window/pane/mullion, star, porch post, stone, deck/lattice, bird feeder/pole, birdbath and red grill. Same crop and fixed tree trunks/branch positions. No invented furniture, path, flowers or decorations. Preserve lower-left MLS watermark. Only foliage, snow, grass and coherent physical lighting may change.\nWhole sequence: high summer daylight -> progressively lower camera-right afternoon/evening -> diffuse winter blue hour -> diffuse dawn -> low camera-left spring morning -> rising summer daylight. Winter is the diffuse bridge between sunset and dawn, not an abrupt reversal of hard shadows. All shadows in THIS frame must agree with its single sun and soften under diffuse sky. Tree shade, lawn, stone, roof and cedar all follow that source. Do NOT simply tint the previous lighting. Sky reflections are soft/broad; red enamel grill keeps its material, NO newly invented chrome. Its broad sky sheen dims/cools at twilight, with NO noon-white specular flare when sun is absent. A small direct highlight may appear only when the stated sun can reach it. Do not make the entire grill glow or relocate/reshape it.\nGround patch topology stays continuous: same sparse soil/grass/moss locations, consistent snow patches accumulating/retreating from shaded right rise and below-deck areas. Each stage changes modestly, NO instant carpet-green grass after snow, and no identical frozen ground/shadow texture through multiple adjacent frames. These are approximate art-direction targets, not permission to add a white overlay.\nIMPORTANT PRACTICAL LIGHTS: turn OFF ALL existing interior window illumination and ALL exterior wall lanterns in this base edit, including their orange wall spill. Windows must retain real panes and subdued sky/environment reflection (winter bare branches, summer leaves). Lamps retain exact fixtures but no emissive yellow cores/halos. One controlled warm-light envelope will be added AFTER registration. Do not add any new lights. Keep twilight clearly exposed/legible, with natural cool diffuse lighting rather than black crushed shadows.\n\nSHARED SCHEDULE (art-direction targets; output ONLY requested stage):\n[{\"id\": \"summer\", \"ambient_relative\": 1.0, \"direct_relative\": 1.0, \"practical_mix\": 0.0, \"snow_target_percent\": 0, \"direction\": \"Unchanged original summer daylight and sparse mature grass.\"}, {\"id\": \"early-fall\", \"ambient_relative\": 0.98, \"direct_relative\": 0.88, \"practical_mix\": 0.01, \"snow_target_percent\": 0, \"direction\": \"Afternoon: sun slightly lower toward camera-right than master, shadows slightly longer. Canopy90% green/10% muted yellow; lawn subtly less green than master, a few fallen leaves. NO sunset pink yet.\"}, {\"id\": \"turning-leaves\", \"ambient_relative\": 0.94, \"direct_relative\": 0.68, \"practical_mix\": 0.04, \"snow_target_percent\": 0, \"direction\": \"Late afternoon: camera-right sun lower again, shadows somewhat longer/softer. Canopy65% green/35% amber/russet. Moderate scattered leaves; grass slightly drier olive than previous stage. Sky pale blue, only very subtle warm wisps.\"}, {\"id\": \"fall\", \"ambient_relative\": 0.86, \"direct_relative\": 0.44, \"practical_mix\": 0.1, \"snow_target_percent\": 0, \"direction\": \"Golden evening: low camera-right sun, long softened shadows. Canopy35% green/65% red/russet/gold, retain a little green; slightly thinner than turning-leaves. Grass olive/dormant with moss only in existing shaded patches and moderate fallen leaves, NOT a uniform lush carpet. Warm sky restrained, no exaggerated sunset.\"}, {\"id\": \"first-frost\", \"ambient_relative\": 0.77, \"direct_relative\": 0.2, \"practical_mix\": 0.22, \"snow_target_percent\": 5, \"direction\": \"Sunset: very low camera-right sun almost gone, weak long shadows blending into diffuse skylight. IMPORTANT reduce existing leaf density by about HALF relative to autumn; many existing branches newly visible, remaining leaves muted brown/russet, not full dense red canopy. Fine frost and tiny snow traces on shaded5% of lawn/roof. Mostly damp dormant brown/olive grass with leaf litter. No spotlighting.\"}, {\"id\": \"first-snow\", \"ambient_relative\": 0.68, \"direct_relative\": 0.03, \"practical_mix\": 0.36, \"snow_target_percent\": 40, \"direction\": \"After sunset: diffuse cool sky, practically no direct sun and NO crisp sunny lawn patches. Existing branches mostly bare with a few brown leaves. Thin snow covers about40% of lawn and roof in coherent connected patches, not uniformly dusting every surface; exposed60% is dormant brown/olive grass. Snow begins in far-right shaded rise and left/below-deck shade, retaining exposed middle/foreground. Cool sky with faint peach at horizon.\"}, {\"id\": \"winter\", \"ambient_relative\": 0.6, \"direct_relative\": 0.0, \"practical_mix\": 0.48, \"snow_target_percent\": 85, \"direction\": \"Winter blue hour: soft diffuse cool light only, NO direct sunlight, NO hard white solar spot on red grill. Snow blanket covers about85% lawn and roof; preserve tiny dormant-grass margins in exposed foreground/near path so the next thaw does not reveal an entirely new lawn. Bare branches, minimal snow tracery rather than giant branch clumps. Clearly legible house and snow, not dark night. Golden cozy winter character will be restored in finishing; lamps off in this base image.\"}, {\"id\": \"snowmelt\", \"ambient_relative\": 0.68, \"direct_relative\": 0.03, \"practical_mix\": 0.36, \"snow_target_percent\": 60, \"direction\": \"Very early dawn: diffuse blue-peach sky, no hard direct solar patches yet. Thaw: snow still covers about60% lawn/roof, SAME patches as winter shrinking from exposed middle/foreground toward far-right rise and below-deck shade. Exposed40% is mostly damp STRAW-BROWN / muted OLIVE dormant grass, not bright green. Bare branches with tiny buds. Slightly brighter than winter, no orange porch glow in base.\"}, {\"id\": \"new-growth\", \"ambient_relative\": 0.77, \"direct_relative\": 0.2, \"practical_mix\": 0.22, \"snow_target_percent\": 30, \"direction\": \"Sunrise: weak low sun from camera-left, very soft elongated shadows extending generally rightward; warm highlights only where reachable, no hard noon-white grill highlight. Snow still covers about30% lawn/roof, shrinking SAME shaded patches as snowmelt, especially far-right rise and below-deck shade. Newly exposed grass predominantly subdued straw/olive with small muted-green shoots; do NOT jump to lush spring green. Sparse buds/leaves on about20% existing canopy, majority branches still visible.\"}, {\"id\": \"spring\", \"ambient_relative\": 0.86, \"direct_relative\": 0.44, \"practical_mix\": 0.1, \"snow_target_percent\": 5, \"direction\": \"Early spring golden morning: low camera-left sun, soft long shadows consistent across house/yard/grill, not a copy of summer noon shadows. Last5% snow only tiny deep-shade remnants, no large banks. Lawn now predominantly muted fresh green but still mixed olive/straw, short growth, modest fine dew; NOT the old uniformly lush bright lime lawn. Fresh leaves about55% canopy density with existing branches visible. Preserve inviting morning character without a giant brightness jump.\"}, {\"id\": \"late-spring\", \"ambient_relative\": 0.94, \"direct_relative\": 0.68, \"practical_mix\": 0.04, \"snow_target_percent\": 0, \"direction\": \"Later spring, rising morning sun: direct light stronger, camera-left toward overhead, shorter softer shadows than spring. Snow fully gone. Lawn noticeably fuller soft green than early spring, but mixed natural patches and original terrain, not artificial turf; dew mostly evaporated. Canopy85% fresh green, naturally full. Red grill enamel highlight small/modest, light direction consistent, not chrome.\"}, {\"id\": \"midsummer\", \"ambient_relative\": 0.98, \"direct_relative\": 0.88, \"practical_mix\": 0.01, \"snow_target_percent\": 0, \"direction\": \"Late morning summer: sun approaches original master light direction/elevation, shadows and grill reflections nearly converge to master without jumping. Canopy mature deep green, full. Lawn begins drying back: mix mature green and original sparse/olive patches, between lush late spring and original late summer. Sky nearly master blue. No warm interior or exterior lamps in base.\"}]\nREQUESTED STAGE: {\"id\": \"turning-leaves\", \"ambient_relative\": 0.94, \"direct_relative\": 0.68, \"practical_mix\": 0.04, \"snow_target_percent\": 0, \"direction\": \"Late afternoon: camera-right sun lower again, shadows somewhat longer/softer. Canopy65% green/35% amber/russet. Moderate scattered leaves; grass slightly drier olive than previous stage. Sky pale blue, only very subtle warm wisps.\"}",
+      "references": [
+        {
+          "path": ".impeccable/mocks/seasons/v2/summer.jpg",
+          "sha256": "6d91f6f3993b5014b1be640c8a2eb51428762af3f05c35beed9bec26147bd9ab"
+        },
+        {
+          "path": ".impeccable/mocks/seasons/v3/turning-leaves.webp",
+          "sha256": "abf53f81ac8c82f8335af0b0a500da1ca631a03862c14854a25d66aaa0b35942"
+        },
+        {
+          "path": ".impeccable/mocks/seasons/v3/early-fall.webp",
+          "sha256": "b0d87c98817b17aa08abf51d434ac52d2ef294f3f04518a0b998364d95d1238c"
+        },
+        {
+          "path": ".impeccable/mocks/seasons/v2/fall.webp",
+          "sha256": "d385466c94ca792065e24df27518f3dcaa41b3940e5db4da68cb1b980921cf50"
+        },
+        {
+          "path": ".pi/artifacts/seasons/v3/targets-sheet.jpg",
+          "sha256": "ab43abd4ed1d8ace7e333e50b90fd24348ee8006e28df508f317b675996215a0"
+        }
+      ],
+      "raw_path": ".pi/artifacts/seasons/v4/turning-leaves-generated.jpg",
+      "raw_sha256": "cafdecaf50eebec3f98bcdce2447f0ed7af9def533daa6bb3f7ccf4d5ed7cb63",
+      "unregistered_path": ".pi/artifacts/seasons/v4/turning-leaves-unregistered.png",
+      "registration": {
+        "algorithm": "Robust affine fit to native Vision revision-1 flow on stable architectural texture; no dense warp",
+        "dx_normalized_xy1": [
+          0.29446008798366247,
+          -0.815022661881517,
+          0.4257223534776047
+        ],
+        "dy_normalized_xy1": [
+          0.16118951149743688,
+          -10.010771010202383,
+          -3.054950290333051
+        ],
+        "height": 848,
+        "inliers": 2712,
+        "matches": 2715,
+        "median_displacement_px": 7.935443209908591,
+        "p95_displacement_px": 12.442889026446332,
+        "width": 1280
+      },
+      "preview_path": ".impeccable/mocks/seasons/v4/turning-leaves.webp",
+      "preview_sha256": "cf8d86136c6a15c7ff0c6740eaf4398bc945c0dbe590bf6f1379bd950b100fd1",
+      "reflection_bare_mix": 0.2,
+      "practical_mix": 0.04
+    },
+    {
+      "id": "fall",
+      "sequence_id": "fall",
+      "schedule": {
+        "id": "fall",
+        "ambient_relative": 0.86,
+        "direct_relative": 0.44,
+        "practical_mix": 0.1,
+        "snow_target_percent": 0,
+        "direction": "Golden evening: low camera-right sun, long softened shadows. Canopy35% green/65% red/russet/gold, retain a little green; slightly thinner than turning-leaves. Grass olive/dormant with moss only in existing shaded patches and moderate fallen leaves, NOT a uniform lush carpet. Warm sky restrained, no exaggerated sunset."
+      },
+      "prompt": "Retouch IMAGE 2 for one stage of a camera-locked ANNUAL TIMELAPSE. This corrects continuity, not a redesign. IMAGE 1 is the exact structural/material/camera master. IMAGE 2 is the existing target to revise. IMAGE 3/4 are previous/next OLD targets for object/terrain/foliage correspondence only; their lighting and grass jumps are flawed and must NOT be copied. IMAGE 5 is the OLD full contact sheet for context, not a montage to reproduce. Return ONE full-frame sharp photorealistic image, never a collage or double exposure.\nLOCK to IMAGE 1 every roof/chimney/dormer outline, scale/perspective, siding board, window/pane/mullion, star, porch post, stone, deck/lattice, bird feeder/pole, birdbath and red grill. Same crop and fixed tree trunks/branch positions. No invented furniture, path, flowers or decorations. Preserve lower-left MLS watermark. Only foliage, snow, grass and coherent physical lighting may change.\nWhole sequence: high summer daylight -> progressively lower camera-right afternoon/evening -> diffuse winter blue hour -> diffuse dawn -> low camera-left spring morning -> rising summer daylight. Winter is the diffuse bridge between sunset and dawn, not an abrupt reversal of hard shadows. All shadows in THIS frame must agree with its single sun and soften under diffuse sky. Tree shade, lawn, stone, roof and cedar all follow that source. Do NOT simply tint the previous lighting. Sky reflections are soft/broad; red enamel grill keeps its material, NO newly invented chrome. Its broad sky sheen dims/cools at twilight, with NO noon-white specular flare when sun is absent. A small direct highlight may appear only when the stated sun can reach it. Do not make the entire grill glow or relocate/reshape it.\nGround patch topology stays continuous: same sparse soil/grass/moss locations, consistent snow patches accumulating/retreating from shaded right rise and below-deck areas. Each stage changes modestly, NO instant carpet-green grass after snow, and no identical frozen ground/shadow texture through multiple adjacent frames. These are approximate art-direction targets, not permission to add a white overlay.\nIMPORTANT PRACTICAL LIGHTS: turn OFF ALL existing interior window illumination and ALL exterior wall lanterns in this base edit, including their orange wall spill. Windows must retain real panes and subdued sky/environment reflection (winter bare branches, summer leaves). Lamps retain exact fixtures but no emissive yellow cores/halos. One controlled warm-light envelope will be added AFTER registration. Do not add any new lights. Keep twilight clearly exposed/legible, with natural cool diffuse lighting rather than black crushed shadows.\n\nSHARED SCHEDULE (art-direction targets; output ONLY requested stage):\n[{\"id\": \"summer\", \"ambient_relative\": 1.0, \"direct_relative\": 1.0, \"practical_mix\": 0.0, \"snow_target_percent\": 0, \"direction\": \"Unchanged original summer daylight and sparse mature grass.\"}, {\"id\": \"early-fall\", \"ambient_relative\": 0.98, \"direct_relative\": 0.88, \"practical_mix\": 0.01, \"snow_target_percent\": 0, \"direction\": \"Afternoon: sun slightly lower toward camera-right than master, shadows slightly longer. Canopy90% green/10% muted yellow; lawn subtly less green than master, a few fallen leaves. NO sunset pink yet.\"}, {\"id\": \"turning-leaves\", \"ambient_relative\": 0.94, \"direct_relative\": 0.68, \"practical_mix\": 0.04, \"snow_target_percent\": 0, \"direction\": \"Late afternoon: camera-right sun lower again, shadows somewhat longer/softer. Canopy65% green/35% amber/russet. Moderate scattered leaves; grass slightly drier olive than previous stage. Sky pale blue, only very subtle warm wisps.\"}, {\"id\": \"fall\", \"ambient_relative\": 0.86, \"direct_relative\": 0.44, \"practical_mix\": 0.1, \"snow_target_percent\": 0, \"direction\": \"Golden evening: low camera-right sun, long softened shadows. Canopy35% green/65% red/russet/gold, retain a little green; slightly thinner than turning-leaves. Grass olive/dormant with moss only in existing shaded patches and moderate fallen leaves, NOT a uniform lush carpet. Warm sky restrained, no exaggerated sunset.\"}, {\"id\": \"first-frost\", \"ambient_relative\": 0.77, \"direct_relative\": 0.2, \"practical_mix\": 0.22, \"snow_target_percent\": 5, \"direction\": \"Sunset: very low camera-right sun almost gone, weak long shadows blending into diffuse skylight. IMPORTANT reduce existing leaf density by about HALF relative to autumn; many existing branches newly visible, remaining leaves muted brown/russet, not full dense red canopy. Fine frost and tiny snow traces on shaded5% of lawn/roof. Mostly damp dormant brown/olive grass with leaf litter. No spotlighting.\"}, {\"id\": \"first-snow\", \"ambient_relative\": 0.68, \"direct_relative\": 0.03, \"practical_mix\": 0.36, \"snow_target_percent\": 40, \"direction\": \"After sunset: diffuse cool sky, practically no direct sun and NO crisp sunny lawn patches. Existing branches mostly bare with a few brown leaves. Thin snow covers about40% of lawn and roof in coherent connected patches, not uniformly dusting every surface; exposed60% is dormant brown/olive grass. Snow begins in far-right shaded rise and left/below-deck shade, retaining exposed middle/foreground. Cool sky with faint peach at horizon.\"}, {\"id\": \"winter\", \"ambient_relative\": 0.6, \"direct_relative\": 0.0, \"practical_mix\": 0.48, \"snow_target_percent\": 85, \"direction\": \"Winter blue hour: soft diffuse cool light only, NO direct sunlight, NO hard white solar spot on red grill. Snow blanket covers about85% lawn and roof; preserve tiny dormant-grass margins in exposed foreground/near path so the next thaw does not reveal an entirely new lawn. Bare branches, minimal snow tracery rather than giant branch clumps. Clearly legible house and snow, not dark night. Golden cozy winter character will be restored in finishing; lamps off in this base image.\"}, {\"id\": \"snowmelt\", \"ambient_relative\": 0.68, \"direct_relative\": 0.03, \"practical_mix\": 0.36, \"snow_target_percent\": 60, \"direction\": \"Very early dawn: diffuse blue-peach sky, no hard direct solar patches yet. Thaw: snow still covers about60% lawn/roof, SAME patches as winter shrinking from exposed middle/foreground toward far-right rise and below-deck shade. Exposed40% is mostly damp STRAW-BROWN / muted OLIVE dormant grass, not bright green. Bare branches with tiny buds. Slightly brighter than winter, no orange porch glow in base.\"}, {\"id\": \"new-growth\", \"ambient_relative\": 0.77, \"direct_relative\": 0.2, \"practical_mix\": 0.22, \"snow_target_percent\": 30, \"direction\": \"Sunrise: weak low sun from camera-left, very soft elongated shadows extending generally rightward; warm highlights only where reachable, no hard noon-white grill highlight. Snow still covers about30% lawn/roof, shrinking SAME shaded patches as snowmelt, especially far-right rise and below-deck shade. Newly exposed grass predominantly subdued straw/olive with small muted-green shoots; do NOT jump to lush spring green. Sparse buds/leaves on about20% existing canopy, majority branches still visible.\"}, {\"id\": \"spring\", \"ambient_relative\": 0.86, \"direct_relative\": 0.44, \"practical_mix\": 0.1, \"snow_target_percent\": 5, \"direction\": \"Early spring golden morning: low camera-left sun, soft long shadows consistent across house/yard/grill, not a copy of summer noon shadows. Last5% snow only tiny deep-shade remnants, no large banks. Lawn now predominantly muted fresh green but still mixed olive/straw, short growth, modest fine dew; NOT the old uniformly lush bright lime lawn. Fresh leaves about55% canopy density with existing branches visible. Preserve inviting morning character without a giant brightness jump.\"}, {\"id\": \"late-spring\", \"ambient_relative\": 0.94, \"direct_relative\": 0.68, \"practical_mix\": 0.04, \"snow_target_percent\": 0, \"direction\": \"Later spring, rising morning sun: direct light stronger, camera-left toward overhead, shorter softer shadows than spring. Snow fully gone. Lawn noticeably fuller soft green than early spring, but mixed natural patches and original terrain, not artificial turf; dew mostly evaporated. Canopy85% fresh green, naturally full. Red grill enamel highlight small/modest, light direction consistent, not chrome.\"}, {\"id\": \"midsummer\", \"ambient_relative\": 0.98, \"direct_relative\": 0.88, \"practical_mix\": 0.01, \"snow_target_percent\": 0, \"direction\": \"Late morning summer: sun approaches original master light direction/elevation, shadows and grill reflections nearly converge to master without jumping. Canopy mature deep green, full. Lawn begins drying back: mix mature green and original sparse/olive patches, between lush late spring and original late summer. Sky nearly master blue. No warm interior or exterior lamps in base.\"}]\nREQUESTED STAGE: {\"id\": \"fall\", \"ambient_relative\": 0.86, \"direct_relative\": 0.44, \"practical_mix\": 0.1, \"snow_target_percent\": 0, \"direction\": \"Golden evening: low camera-right sun, long softened shadows. Canopy35% green/65% red/russet/gold, retain a little green; slightly thinner than turning-leaves. Grass olive/dormant with moss only in existing shaded patches and moderate fallen leaves, NOT a uniform lush carpet. Warm sky restrained, no exaggerated sunset.\"}",
+      "references": [
+        {
+          "path": ".impeccable/mocks/seasons/v2/summer.jpg",
+          "sha256": "6d91f6f3993b5014b1be640c8a2eb51428762af3f05c35beed9bec26147bd9ab"
+        },
+        {
+          "path": ".impeccable/mocks/seasons/v2/fall.webp",
+          "sha256": "d385466c94ca792065e24df27518f3dcaa41b3940e5db4da68cb1b980921cf50"
+        },
+        {
+          "path": ".impeccable/mocks/seasons/v3/turning-leaves.webp",
+          "sha256": "abf53f81ac8c82f8335af0b0a500da1ca631a03862c14854a25d66aaa0b35942"
+        },
+        {
+          "path": ".impeccable/mocks/seasons/v3/first-frost.webp",
+          "sha256": "72de7334a433b6b5c67f1b2cf70afaaf1d251fc274083d7ed6c171bf79e1bed4"
+        },
+        {
+          "path": ".pi/artifacts/seasons/v3/targets-sheet.jpg",
+          "sha256": "ab43abd4ed1d8ace7e333e50b90fd24348ee8006e28df508f317b675996215a0"
+        }
+      ],
+      "raw_path": ".pi/artifacts/seasons/v4/fall-generated.jpg",
+      "raw_sha256": "f363078b63a9e2efb4746b80a5fc9882bbc220db712b4da1a50e2ab6f3dfe28e",
+      "correction": {
+        "source": ".impeccable/mocks/seasons/v2/fall.webp",
+        "source_sha256": "d385466c94ca792065e24df27518f3dcaa41b3940e5db4da68cb1b980921cf50",
+        "prompt": "Edit ONLY this supplied photograph of the RED CEDAR CHALET. This is a precise photo edit, NOT a newly imagined house. Preserve the exact house, camera, scale, crop, roof/dormers/chimney, cedar siding, stonework, star, every window/pane, deck/lattice, walkway, birdbath, bird feeder and ROUND RED CHARCOAL GRILL. Keep fixed tree trunks/branch positions and lower-left MLS mark. Do not add or remove structures, change perspective, replace cedar with vinyl siding or invent different landscaping. Only apply the following restrained seasonal/light changes to the attached image. Single full-frame edited photo, no collage, no double exposure.\nGolden evening: low camera-right sun, long softened shadows. Canopy35% green/65% red/russet/gold, retain a little green; slightly thinner than turning-leaves. Grass olive/dormant with moss only in existing shaded patches and moderate fallen leaves, NOT a uniform lush carpet. Warm sky restrained, no exaggerated sunset.\nKeep all lighting coherent: direct sun and shadows agree; no hard sun patch or white solar specular in diffuse twilight. Red grill is glossy red enamel, not chrome; preserve its shape and let its sky highlight soften/dim when daylight is weak. Turn OFF interior window lights and existing exterior lanterns, including their warm spill, but keep fixtures and glass/reflections: controlled warm light is added later. Keep scene clearly exposed and photorealistic. Do not change anything else.",
+        "raw_path": ".pi/artifacts/seasons/v4/fall-corrected.jpg",
+        "raw_sha256": "7eff4a00b550e9145b235880afe06ae1c485036dcfa27765c6786581b4874cf2",
+        "unregistered_path": ".pi/artifacts/seasons/v4/fall-corrected.png",
+        "reason": "Original multi-reference/full-schedule request failed visual camera/property fidelity. Single-photo correction replaces rejected or insufficiently changed candidate; no previous trial asset overwritten."
+      },
+      "unregistered_path": ".pi/artifacts/seasons/v4/fall-corrected.png",
+      "registration": {
+        "algorithm": "Robust affine fit to native Vision revision-1 flow on stable architectural texture; no dense warp",
+        "dx_normalized_xy1": [
+          0.009844485471201665,
+          0.4308773743113491,
+          -0.28957681588577405
+        ],
+        "dy_normalized_xy1": [
+          -0.013082971538262059,
+          -9.596770731771487,
+          -3.227247606437171
+        ],
+        "height": 848,
+        "inliers": 2710,
+        "matches": 2715,
+        "median_displacement_px": 8.025975396708386,
+        "p95_displacement_px": 12.290504139915564,
+        "width": 1280
+      },
+      "preview_path": ".impeccable/mocks/seasons/v4/fall.webp",
+      "preview_sha256": "d9e4354bd9939fe7573c1d99ac2d4104e9c06f1e11fb8d31cf17e11f7d8e72eb",
+      "reflection_bare_mix": 0.4,
+      "practical_mix": 0.1
+    },
+    {
+      "id": "first-frost",
+      "sequence_id": "first-frost",
+      "schedule": {
+        "id": "first-frost",
+        "ambient_relative": 0.77,
+        "direct_relative": 0.2,
+        "practical_mix": 0.22,
+        "snow_target_percent": 5,
+        "direction": "Sunset: very low camera-right sun almost gone, weak long shadows blending into diffuse skylight. IMPORTANT reduce existing leaf density by about HALF relative to autumn; many existing branches newly visible, remaining leaves muted brown/russet, not full dense red canopy. Fine frost and tiny snow traces on shaded5% of lawn/roof. Mostly damp dormant brown/olive grass with leaf litter. No spotlighting."
+      },
+      "prompt": "Retouch IMAGE 2 for one stage of a camera-locked ANNUAL TIMELAPSE. This corrects continuity, not a redesign. IMAGE 1 is the exact structural/material/camera master. IMAGE 2 is the existing target to revise. IMAGE 3/4 are previous/next OLD targets for object/terrain/foliage correspondence only; their lighting and grass jumps are flawed and must NOT be copied. IMAGE 5 is the OLD full contact sheet for context, not a montage to reproduce. Return ONE full-frame sharp photorealistic image, never a collage or double exposure.\nLOCK to IMAGE 1 every roof/chimney/dormer outline, scale/perspective, siding board, window/pane/mullion, star, porch post, stone, deck/lattice, bird feeder/pole, birdbath and red grill. Same crop and fixed tree trunks/branch positions. No invented furniture, path, flowers or decorations. Preserve lower-left MLS watermark. Only foliage, snow, grass and coherent physical lighting may change.\nWhole sequence: high summer daylight -> progressively lower camera-right afternoon/evening -> diffuse winter blue hour -> diffuse dawn -> low camera-left spring morning -> rising summer daylight. Winter is the diffuse bridge between sunset and dawn, not an abrupt reversal of hard shadows. All shadows in THIS frame must agree with its single sun and soften under diffuse sky. Tree shade, lawn, stone, roof and cedar all follow that source. Do NOT simply tint the previous lighting. Sky reflections are soft/broad; red enamel grill keeps its material, NO newly invented chrome. Its broad sky sheen dims/cools at twilight, with NO noon-white specular flare when sun is absent. A small direct highlight may appear only when the stated sun can reach it. Do not make the entire grill glow or relocate/reshape it.\nGround patch topology stays continuous: same sparse soil/grass/moss locations, consistent snow patches accumulating/retreating from shaded right rise and below-deck areas. Each stage changes modestly, NO instant carpet-green grass after snow, and no identical frozen ground/shadow texture through multiple adjacent frames. These are approximate art-direction targets, not permission to add a white overlay.\nIMPORTANT PRACTICAL LIGHTS: turn OFF ALL existing interior window illumination and ALL exterior wall lanterns in this base edit, including their orange wall spill. Windows must retain real panes and subdued sky/environment reflection (winter bare branches, summer leaves). Lamps retain exact fixtures but no emissive yellow cores/halos. One controlled warm-light envelope will be added AFTER registration. Do not add any new lights. Keep twilight clearly exposed/legible, with natural cool diffuse lighting rather than black crushed shadows.\n\nSHARED SCHEDULE (art-direction targets; output ONLY requested stage):\n[{\"id\": \"summer\", \"ambient_relative\": 1.0, \"direct_relative\": 1.0, \"practical_mix\": 0.0, \"snow_target_percent\": 0, \"direction\": \"Unchanged original summer daylight and sparse mature grass.\"}, {\"id\": \"early-fall\", \"ambient_relative\": 0.98, \"direct_relative\": 0.88, \"practical_mix\": 0.01, \"snow_target_percent\": 0, \"direction\": \"Afternoon: sun slightly lower toward camera-right than master, shadows slightly longer. Canopy90% green/10% muted yellow; lawn subtly less green than master, a few fallen leaves. NO sunset pink yet.\"}, {\"id\": \"turning-leaves\", \"ambient_relative\": 0.94, \"direct_relative\": 0.68, \"practical_mix\": 0.04, \"snow_target_percent\": 0, \"direction\": \"Late afternoon: camera-right sun lower again, shadows somewhat longer/softer. Canopy65% green/35% amber/russet. Moderate scattered leaves; grass slightly drier olive than previous stage. Sky pale blue, only very subtle warm wisps.\"}, {\"id\": \"fall\", \"ambient_relative\": 0.86, \"direct_relative\": 0.44, \"practical_mix\": 0.1, \"snow_target_percent\": 0, \"direction\": \"Golden evening: low camera-right sun, long softened shadows. Canopy35% green/65% red/russet/gold, retain a little green; slightly thinner than turning-leaves. Grass olive/dormant with moss only in existing shaded patches and moderate fallen leaves, NOT a uniform lush carpet. Warm sky restrained, no exaggerated sunset.\"}, {\"id\": \"first-frost\", \"ambient_relative\": 0.77, \"direct_relative\": 0.2, \"practical_mix\": 0.22, \"snow_target_percent\": 5, \"direction\": \"Sunset: very low camera-right sun almost gone, weak long shadows blending into diffuse skylight. IMPORTANT reduce existing leaf density by about HALF relative to autumn; many existing branches newly visible, remaining leaves muted brown/russet, not full dense red canopy. Fine frost and tiny snow traces on shaded5% of lawn/roof. Mostly damp dormant brown/olive grass with leaf litter. No spotlighting.\"}, {\"id\": \"first-snow\", \"ambient_relative\": 0.68, \"direct_relative\": 0.03, \"practical_mix\": 0.36, \"snow_target_percent\": 40, \"direction\": \"After sunset: diffuse cool sky, practically no direct sun and NO crisp sunny lawn patches. Existing branches mostly bare with a few brown leaves. Thin snow covers about40% of lawn and roof in coherent connected patches, not uniformly dusting every surface; exposed60% is dormant brown/olive grass. Snow begins in far-right shaded rise and left/below-deck shade, retaining exposed middle/foreground. Cool sky with faint peach at horizon.\"}, {\"id\": \"winter\", \"ambient_relative\": 0.6, \"direct_relative\": 0.0, \"practical_mix\": 0.48, \"snow_target_percent\": 85, \"direction\": \"Winter blue hour: soft diffuse cool light only, NO direct sunlight, NO hard white solar spot on red grill. Snow blanket covers about85% lawn and roof; preserve tiny dormant-grass margins in exposed foreground/near path so the next thaw does not reveal an entirely new lawn. Bare branches, minimal snow tracery rather than giant branch clumps. Clearly legible house and snow, not dark night. Golden cozy winter character will be restored in finishing; lamps off in this base image.\"}, {\"id\": \"snowmelt\", \"ambient_relative\": 0.68, \"direct_relative\": 0.03, \"practical_mix\": 0.36, \"snow_target_percent\": 60, \"direction\": \"Very early dawn: diffuse blue-peach sky, no hard direct solar patches yet. Thaw: snow still covers about60% lawn/roof, SAME patches as winter shrinking from exposed middle/foreground toward far-right rise and below-deck shade. Exposed40% is mostly damp STRAW-BROWN / muted OLIVE dormant grass, not bright green. Bare branches with tiny buds. Slightly brighter than winter, no orange porch glow in base.\"}, {\"id\": \"new-growth\", \"ambient_relative\": 0.77, \"direct_relative\": 0.2, \"practical_mix\": 0.22, \"snow_target_percent\": 30, \"direction\": \"Sunrise: weak low sun from camera-left, very soft elongated shadows extending generally rightward; warm highlights only where reachable, no hard noon-white grill highlight. Snow still covers about30% lawn/roof, shrinking SAME shaded patches as snowmelt, especially far-right rise and below-deck shade. Newly exposed grass predominantly subdued straw/olive with small muted-green shoots; do NOT jump to lush spring green. Sparse buds/leaves on about20% existing canopy, majority branches still visible.\"}, {\"id\": \"spring\", \"ambient_relative\": 0.86, \"direct_relative\": 0.44, \"practical_mix\": 0.1, \"snow_target_percent\": 5, \"direction\": \"Early spring golden morning: low camera-left sun, soft long shadows consistent across house/yard/grill, not a copy of summer noon shadows. Last5% snow only tiny deep-shade remnants, no large banks. Lawn now predominantly muted fresh green but still mixed olive/straw, short growth, modest fine dew; NOT the old uniformly lush bright lime lawn. Fresh leaves about55% canopy density with existing branches visible. Preserve inviting morning character without a giant brightness jump.\"}, {\"id\": \"late-spring\", \"ambient_relative\": 0.94, \"direct_relative\": 0.68, \"practical_mix\": 0.04, \"snow_target_percent\": 0, \"direction\": \"Later spring, rising morning sun: direct light stronger, camera-left toward overhead, shorter softer shadows than spring. Snow fully gone. Lawn noticeably fuller soft green than early spring, but mixed natural patches and original terrain, not artificial turf; dew mostly evaporated. Canopy85% fresh green, naturally full. Red grill enamel highlight small/modest, light direction consistent, not chrome.\"}, {\"id\": \"midsummer\", \"ambient_relative\": 0.98, \"direct_relative\": 0.88, \"practical_mix\": 0.01, \"snow_target_percent\": 0, \"direction\": \"Late morning summer: sun approaches original master light direction/elevation, shadows and grill reflections nearly converge to master without jumping. Canopy mature deep green, full. Lawn begins drying back: mix mature green and original sparse/olive patches, between lush late spring and original late summer. Sky nearly master blue. No warm interior or exterior lamps in base.\"}]\nREQUESTED STAGE: {\"id\": \"first-frost\", \"ambient_relative\": 0.77, \"direct_relative\": 0.2, \"practical_mix\": 0.22, \"snow_target_percent\": 5, \"direction\": \"Sunset: very low camera-right sun almost gone, weak long shadows blending into diffuse skylight. IMPORTANT reduce existing leaf density by about HALF relative to autumn; many existing branches newly visible, remaining leaves muted brown/russet, not full dense red canopy. Fine frost and tiny snow traces on shaded5% of lawn/roof. Mostly damp dormant brown/olive grass with leaf litter. No spotlighting.\"}",
+      "references": [
+        {
+          "path": ".impeccable/mocks/seasons/v2/summer.jpg",
+          "sha256": "6d91f6f3993b5014b1be640c8a2eb51428762af3f05c35beed9bec26147bd9ab"
+        },
+        {
+          "path": ".impeccable/mocks/seasons/v3/first-frost.webp",
+          "sha256": "72de7334a433b6b5c67f1b2cf70afaaf1d251fc274083d7ed6c171bf79e1bed4"
+        },
+        {
+          "path": ".impeccable/mocks/seasons/v2/fall.webp",
+          "sha256": "d385466c94ca792065e24df27518f3dcaa41b3940e5db4da68cb1b980921cf50"
+        },
+        {
+          "path": ".impeccable/mocks/seasons/v3/first-snow.webp",
+          "sha256": "b955bfec41d9ce8da751c009857777bb26e551daa94c29c5258f34819e4a55bd"
+        },
+        {
+          "path": ".pi/artifacts/seasons/v3/targets-sheet.jpg",
+          "sha256": "ab43abd4ed1d8ace7e333e50b90fd24348ee8006e28df508f317b675996215a0"
+        }
+      ],
+      "raw_path": ".pi/artifacts/seasons/v4/first-frost-generated.jpg",
+      "raw_sha256": "b434d5a0999289dc6bca23c7df4ecc5df1cb070298579f3cb59e7ee9da9fc740",
+      "correction": {
+        "source": ".impeccable/mocks/seasons/v3/first-frost.webp",
+        "source_sha256": "72de7334a433b6b5c67f1b2cf70afaaf1d251fc274083d7ed6c171bf79e1bed4",
+        "prompt": "Edit ONLY this supplied photograph of the RED CEDAR CHALET. This is a precise photo edit, NOT a newly imagined house. Preserve the exact house, camera, scale, crop, roof/dormers/chimney, cedar siding, stonework, star, every window/pane, deck/lattice, walkway, birdbath, bird feeder and ROUND RED CHARCOAL GRILL. Keep fixed tree trunks/branch positions and lower-left MLS mark. Do not add or remove structures, change perspective, replace cedar with vinyl siding or invent different landscaping. Only apply the following restrained seasonal/light changes to the attached image. Single full-frame edited photo, no collage, no double exposure.\nSunset: very low camera-right sun almost gone, weak long shadows blending into diffuse skylight. IMPORTANT reduce existing leaf density by about HALF relative to autumn; many existing branches newly visible, remaining leaves muted brown/russet, not full dense red canopy. Fine frost and tiny snow traces on shaded5% of lawn/roof. Mostly damp dormant brown/olive grass with leaf litter. No spotlighting.\nKeep all lighting coherent: direct sun and shadows agree; no hard sun patch or white solar specular in diffuse twilight. Red grill is glossy red enamel, not chrome; preserve its shape and let its sky highlight soften/dim when daylight is weak. Turn OFF interior window lights and existing exterior lanterns, including their warm spill, but keep fixtures and glass/reflections: controlled warm light is added later. Keep scene clearly exposed and photorealistic. Do not change anything else.",
+        "raw_path": ".pi/artifacts/seasons/v4/first-frost-corrected.jpg",
+        "raw_sha256": "f5ffc2ad35910d010b70a9e4d13912e8eaac546999b007c6321ad8ad0e7d0465",
+        "unregistered_path": ".pi/artifacts/seasons/v4/first-frost-corrected.png",
+        "reason": "Original multi-reference/full-schedule request failed visual camera/property fidelity. Single-photo correction replaces rejected or insufficiently changed candidate; no previous trial asset overwritten."
+      },
+      "unregistered_path": ".pi/artifacts/seasons/v4/first-frost-corrected.png",
+      "registration": {
+        "algorithm": "Robust affine fit to native Vision revision-1 flow on stable architectural texture; no dense warp",
+        "dx_normalized_xy1": [
+          -0.08301558781050696,
+          0.9949927566912462,
+          -0.5531560596511339
+        ],
+        "dy_normalized_xy1": [
+          0.12930107358437207,
+          -10.436228430199167,
+          -2.801727598035478
+        ],
+        "height": 848,
+        "inliers": 2711,
+        "matches": 2715,
+        "median_displacement_px": 7.907190350646307,
+        "p95_displacement_px": 12.613591636718404,
+        "width": 1280
+      },
+      "preview_path": ".impeccable/mocks/seasons/v4/first-frost.webp",
+      "preview_sha256": "de033f58e4b6a6d8b27ec86a1ddd066c7906874c9b276ed7be94492d0866fd0b",
+      "reflection_bare_mix": 0.7,
+      "practical_mix": 0.22,
+      "ground_snow_mask_fraction": 0.05
+    },
+    {
+      "id": "first-snow",
+      "sequence_id": "first-snow",
+      "schedule": {
+        "id": "first-snow",
+        "ambient_relative": 0.68,
+        "direct_relative": 0.03,
+        "practical_mix": 0.36,
+        "snow_target_percent": 40,
+        "direction": "After sunset: diffuse cool sky, practically no direct sun and NO crisp sunny lawn patches. Existing branches mostly bare with a few brown leaves. Thin snow covers about40% of lawn and roof in coherent connected patches, not uniformly dusting every surface; exposed60% is dormant brown/olive grass. Snow begins in far-right shaded rise and left/below-deck shade, retaining exposed middle/foreground. Cool sky with faint peach at horizon."
+      },
+      "prompt": "Retouch IMAGE 2 for one stage of a camera-locked ANNUAL TIMELAPSE. This corrects continuity, not a redesign. IMAGE 1 is the exact structural/material/camera master. IMAGE 2 is the existing target to revise. IMAGE 3/4 are previous/next OLD targets for object/terrain/foliage correspondence only; their lighting and grass jumps are flawed and must NOT be copied. IMAGE 5 is the OLD full contact sheet for context, not a montage to reproduce. Return ONE full-frame sharp photorealistic image, never a collage or double exposure.\nLOCK to IMAGE 1 every roof/chimney/dormer outline, scale/perspective, siding board, window/pane/mullion, star, porch post, stone, deck/lattice, bird feeder/pole, birdbath and red grill. Same crop and fixed tree trunks/branch positions. No invented furniture, path, flowers or decorations. Preserve lower-left MLS watermark. Only foliage, snow, grass and coherent physical lighting may change.\nWhole sequence: high summer daylight -> progressively lower camera-right afternoon/evening -> diffuse winter blue hour -> diffuse dawn -> low camera-left spring morning -> rising summer daylight. Winter is the diffuse bridge between sunset and dawn, not an abrupt reversal of hard shadows. All shadows in THIS frame must agree with its single sun and soften under diffuse sky. Tree shade, lawn, stone, roof and cedar all follow that source. Do NOT simply tint the previous lighting. Sky reflections are soft/broad; red enamel grill keeps its material, NO newly invented chrome. Its broad sky sheen dims/cools at twilight, with NO noon-white specular flare when sun is absent. A small direct highlight may appear only when the stated sun can reach it. Do not make the entire grill glow or relocate/reshape it.\nGround patch topology stays continuous: same sparse soil/grass/moss locations, consistent snow patches accumulating/retreating from shaded right rise and below-deck areas. Each stage changes modestly, NO instant carpet-green grass after snow, and no identical frozen ground/shadow texture through multiple adjacent frames. These are approximate art-direction targets, not permission to add a white overlay.\nIMPORTANT PRACTICAL LIGHTS: turn OFF ALL existing interior window illumination and ALL exterior wall lanterns in this base edit, including their orange wall spill. Windows must retain real panes and subdued sky/environment reflection (winter bare branches, summer leaves). Lamps retain exact fixtures but no emissive yellow cores/halos. One controlled warm-light envelope will be added AFTER registration. Do not add any new lights. Keep twilight clearly exposed/legible, with natural cool diffuse lighting rather than black crushed shadows.\n\nSHARED SCHEDULE (art-direction targets; output ONLY requested stage):\n[{\"id\": \"summer\", \"ambient_relative\": 1.0, \"direct_relative\": 1.0, \"practical_mix\": 0.0, \"snow_target_percent\": 0, \"direction\": \"Unchanged original summer daylight and sparse mature grass.\"}, {\"id\": \"early-fall\", \"ambient_relative\": 0.98, \"direct_relative\": 0.88, \"practical_mix\": 0.01, \"snow_target_percent\": 0, \"direction\": \"Afternoon: sun slightly lower toward camera-right than master, shadows slightly longer. Canopy90% green/10% muted yellow; lawn subtly less green than master, a few fallen leaves. NO sunset pink yet.\"}, {\"id\": \"turning-leaves\", \"ambient_relative\": 0.94, \"direct_relative\": 0.68, \"practical_mix\": 0.04, \"snow_target_percent\": 0, \"direction\": \"Late afternoon: camera-right sun lower again, shadows somewhat longer/softer. Canopy65% green/35% amber/russet. Moderate scattered leaves; grass slightly drier olive than previous stage. Sky pale blue, only very subtle warm wisps.\"}, {\"id\": \"fall\", \"ambient_relative\": 0.86, \"direct_relative\": 0.44, \"practical_mix\": 0.1, \"snow_target_percent\": 0, \"direction\": \"Golden evening: low camera-right sun, long softened shadows. Canopy35% green/65% red/russet/gold, retain a little green; slightly thinner than turning-leaves. Grass olive/dormant with moss only in existing shaded patches and moderate fallen leaves, NOT a uniform lush carpet. Warm sky restrained, no exaggerated sunset.\"}, {\"id\": \"first-frost\", \"ambient_relative\": 0.77, \"direct_relative\": 0.2, \"practical_mix\": 0.22, \"snow_target_percent\": 5, \"direction\": \"Sunset: very low camera-right sun almost gone, weak long shadows blending into diffuse skylight. IMPORTANT reduce existing leaf density by about HALF relative to autumn; many existing branches newly visible, remaining leaves muted brown/russet, not full dense red canopy. Fine frost and tiny snow traces on shaded5% of lawn/roof. Mostly damp dormant brown/olive grass with leaf litter. No spotlighting.\"}, {\"id\": \"first-snow\", \"ambient_relative\": 0.68, \"direct_relative\": 0.03, \"practical_mix\": 0.36, \"snow_target_percent\": 40, \"direction\": \"After sunset: diffuse cool sky, practically no direct sun and NO crisp sunny lawn patches. Existing branches mostly bare with a few brown leaves. Thin snow covers about40% of lawn and roof in coherent connected patches, not uniformly dusting every surface; exposed60% is dormant brown/olive grass. Snow begins in far-right shaded rise and left/below-deck shade, retaining exposed middle/foreground. Cool sky with faint peach at horizon.\"}, {\"id\": \"winter\", \"ambient_relative\": 0.6, \"direct_relative\": 0.0, \"practical_mix\": 0.48, \"snow_target_percent\": 85, \"direction\": \"Winter blue hour: soft diffuse cool light only, NO direct sunlight, NO hard white solar spot on red grill. Snow blanket covers about85% lawn and roof; preserve tiny dormant-grass margins in exposed foreground/near path so the next thaw does not reveal an entirely new lawn. Bare branches, minimal snow tracery rather than giant branch clumps. Clearly legible house and snow, not dark night. Golden cozy winter character will be restored in finishing; lamps off in this base image.\"}, {\"id\": \"snowmelt\", \"ambient_relative\": 0.68, \"direct_relative\": 0.03, \"practical_mix\": 0.36, \"snow_target_percent\": 60, \"direction\": \"Very early dawn: diffuse blue-peach sky, no hard direct solar patches yet. Thaw: snow still covers about60% lawn/roof, SAME patches as winter shrinking from exposed middle/foreground toward far-right rise and below-deck shade. Exposed40% is mostly damp STRAW-BROWN / muted OLIVE dormant grass, not bright green. Bare branches with tiny buds. Slightly brighter than winter, no orange porch glow in base.\"}, {\"id\": \"new-growth\", \"ambient_relative\": 0.77, \"direct_relative\": 0.2, \"practical_mix\": 0.22, \"snow_target_percent\": 30, \"direction\": \"Sunrise: weak low sun from camera-left, very soft elongated shadows extending generally rightward; warm highlights only where reachable, no hard noon-white grill highlight. Snow still covers about30% lawn/roof, shrinking SAME shaded patches as snowmelt, especially far-right rise and below-deck shade. Newly exposed grass predominantly subdued straw/olive with small muted-green shoots; do NOT jump to lush spring green. Sparse buds/leaves on about20% existing canopy, majority branches still visible.\"}, {\"id\": \"spring\", \"ambient_relative\": 0.86, \"direct_relative\": 0.44, \"practical_mix\": 0.1, \"snow_target_percent\": 5, \"direction\": \"Early spring golden morning: low camera-left sun, soft long shadows consistent across house/yard/grill, not a copy of summer noon shadows. Last5% snow only tiny deep-shade remnants, no large banks. Lawn now predominantly muted fresh green but still mixed olive/straw, short growth, modest fine dew; NOT the old uniformly lush bright lime lawn. Fresh leaves about55% canopy density with existing branches visible. Preserve inviting morning character without a giant brightness jump.\"}, {\"id\": \"late-spring\", \"ambient_relative\": 0.94, \"direct_relative\": 0.68, \"practical_mix\": 0.04, \"snow_target_percent\": 0, \"direction\": \"Later spring, rising morning sun: direct light stronger, camera-left toward overhead, shorter softer shadows than spring. Snow fully gone. Lawn noticeably fuller soft green than early spring, but mixed natural patches and original terrain, not artificial turf; dew mostly evaporated. Canopy85% fresh green, naturally full. Red grill enamel highlight small/modest, light direction consistent, not chrome.\"}, {\"id\": \"midsummer\", \"ambient_relative\": 0.98, \"direct_relative\": 0.88, \"practical_mix\": 0.01, \"snow_target_percent\": 0, \"direction\": \"Late morning summer: sun approaches original master light direction/elevation, shadows and grill reflections nearly converge to master without jumping. Canopy mature deep green, full. Lawn begins drying back: mix mature green and original sparse/olive patches, between lush late spring and original late summer. Sky nearly master blue. No warm interior or exterior lamps in base.\"}]\nREQUESTED STAGE: {\"id\": \"first-snow\", \"ambient_relative\": 0.68, \"direct_relative\": 0.03, \"practical_mix\": 0.36, \"snow_target_percent\": 40, \"direction\": \"After sunset: diffuse cool sky, practically no direct sun and NO crisp sunny lawn patches. Existing branches mostly bare with a few brown leaves. Thin snow covers about40% of lawn and roof in coherent connected patches, not uniformly dusting every surface; exposed60% is dormant brown/olive grass. Snow begins in far-right shaded rise and left/below-deck shade, retaining exposed middle/foreground. Cool sky with faint peach at horizon.\"}",
+      "references": [
+        {
+          "path": ".impeccable/mocks/seasons/v2/summer.jpg",
+          "sha256": "6d91f6f3993b5014b1be640c8a2eb51428762af3f05c35beed9bec26147bd9ab"
+        },
+        {
+          "path": ".impeccable/mocks/seasons/v3/first-snow.webp",
+          "sha256": "b955bfec41d9ce8da751c009857777bb26e551daa94c29c5258f34819e4a55bd"
+        },
+        {
+          "path": ".impeccable/mocks/seasons/v3/first-frost.webp",
+          "sha256": "72de7334a433b6b5c67f1b2cf70afaaf1d251fc274083d7ed6c171bf79e1bed4"
+        },
+        {
+          "path": ".impeccable/mocks/seasons/v2/winter.webp",
+          "sha256": "e596718f0282259777d15fb83852f0b350a6531172d258a6de513e9c29316e17"
+        },
+        {
+          "path": ".pi/artifacts/seasons/v3/targets-sheet.jpg",
+          "sha256": "ab43abd4ed1d8ace7e333e50b90fd24348ee8006e28df508f317b675996215a0"
+        }
+      ],
+      "raw_path": ".pi/artifacts/seasons/v4/first-snow-generated.jpg",
+      "raw_sha256": "bc67720ebdf29e6b51f2039cd843f69083c537332b00b29bcb82c4128c7c1dfb",
+      "correction": {
+        "source": ".impeccable/mocks/seasons/v3/first-snow.webp",
+        "source_sha256": "b955bfec41d9ce8da751c009857777bb26e551daa94c29c5258f34819e4a55bd",
+        "prompt": "Edit ONLY this supplied photograph of the RED CEDAR CHALET. This is a precise photo edit, NOT a newly imagined house. Preserve the exact house, camera, scale, crop, roof/dormers/chimney, cedar siding, stonework, star, every window/pane, deck/lattice, walkway, birdbath, bird feeder and ROUND RED CHARCOAL GRILL. Keep fixed tree trunks/branch positions and lower-left MLS mark. Do not add or remove structures, change perspective, replace cedar with vinyl siding or invent different landscaping. Only apply the following restrained seasonal/light changes to the attached image. Single full-frame edited photo, no collage, no double exposure.\nAfter sunset: diffuse cool sky, practically no direct sun and NO crisp sunny lawn patches. Existing branches mostly bare with a few brown leaves. Thin snow covers about40% of lawn and roof in coherent connected patches, not uniformly dusting every surface; exposed60% is dormant brown/olive grass. Snow begins in far-right shaded rise and left/below-deck shade, retaining exposed middle/foreground. Cool sky with faint peach at horizon.\nKeep all lighting coherent: direct sun and shadows agree; no hard sun patch or white solar specular in diffuse twilight. Red grill is glossy red enamel, not chrome; preserve its shape and let its sky highlight soften/dim when daylight is weak. Turn OFF interior window lights and existing exterior lanterns, including their warm spill, but keep fixtures and glass/reflections: controlled warm light is added later. Keep scene clearly exposed and photorealistic. Do not change anything else.",
+        "raw_path": ".pi/artifacts/seasons/v4/first-snow-corrected.jpg",
+        "raw_sha256": "4de017efea40bb4bc5b3f755220d5f0d6779db29b1cbe6a7857dadb2d10c1e5f",
+        "unregistered_path": ".pi/artifacts/seasons/v4/first-snow-corrected.png",
+        "reason": "Original multi-reference/full-schedule request failed visual camera/property fidelity. Single-photo correction replaces rejected or insufficiently changed candidate; no previous trial asset overwritten."
+      },
+      "unregistered_path": ".pi/artifacts/seasons/v4/first-snow-corrected.png",
+      "registration": {
+        "algorithm": "Robust affine fit to native Vision revision-1 flow on stable architectural texture; no dense warp",
+        "dx_normalized_xy1": [
+          -0.8100116597878526,
+          -0.38064762620709763,
+          0.5892502642021078
+        ],
+        "dy_normalized_xy1": [
+          0.14076683923991554,
+          -10.376074610159373,
+          -2.760218674785272
+        ],
+        "height": 848,
+        "inliers": 2521,
+        "matches": 2715,
+        "median_displacement_px": 7.834651951637919,
+        "p95_displacement_px": 12.506744861478516,
+        "width": 1280
+      },
+      "preview_path": ".impeccable/mocks/seasons/v4/first-snow.webp",
+      "preview_sha256": "e0ee138abdabd2142bbd31557add723ca4f29b6f2cd9d07a717b9bc655e8a517",
+      "reflection_bare_mix": 0.95,
+      "practical_mix": 0.36,
+      "ground_snow_mask_fraction": 0.4
+    },
+    {
+      "id": "winter",
+      "sequence_id": "winter",
+      "schedule": {
+        "id": "winter",
+        "ambient_relative": 0.6,
+        "direct_relative": 0.0,
+        "practical_mix": 0.48,
+        "snow_target_percent": 85,
+        "direction": "Winter blue hour: soft diffuse cool light only, NO direct sunlight, NO hard white solar spot on red grill. Snow blanket covers about85% lawn and roof; preserve tiny dormant-grass margins in exposed foreground/near path so the next thaw does not reveal an entirely new lawn. Bare branches, minimal snow tracery rather than giant branch clumps. Clearly legible house and snow, not dark night. Golden cozy winter character will be restored in finishing; lamps off in this base image."
+      },
+      "prompt": "Retouch IMAGE 2 for one stage of a camera-locked ANNUAL TIMELAPSE. This corrects continuity, not a redesign. IMAGE 1 is the exact structural/material/camera master. IMAGE 2 is the existing target to revise. IMAGE 3/4 are previous/next OLD targets for object/terrain/foliage correspondence only; their lighting and grass jumps are flawed and must NOT be copied. IMAGE 5 is the OLD full contact sheet for context, not a montage to reproduce. Return ONE full-frame sharp photorealistic image, never a collage or double exposure.\nLOCK to IMAGE 1 every roof/chimney/dormer outline, scale/perspective, siding board, window/pane/mullion, star, porch post, stone, deck/lattice, bird feeder/pole, birdbath and red grill. Same crop and fixed tree trunks/branch positions. No invented furniture, path, flowers or decorations. Preserve lower-left MLS watermark. Only foliage, snow, grass and coherent physical lighting may change.\nWhole sequence: high summer daylight -> progressively lower camera-right afternoon/evening -> diffuse winter blue hour -> diffuse dawn -> low camera-left spring morning -> rising summer daylight. Winter is the diffuse bridge between sunset and dawn, not an abrupt reversal of hard shadows. All shadows in THIS frame must agree with its single sun and soften under diffuse sky. Tree shade, lawn, stone, roof and cedar all follow that source. Do NOT simply tint the previous lighting. Sky reflections are soft/broad; red enamel grill keeps its material, NO newly invented chrome. Its broad sky sheen dims/cools at twilight, with NO noon-white specular flare when sun is absent. A small direct highlight may appear only when the stated sun can reach it. Do not make the entire grill glow or relocate/reshape it.\nGround patch topology stays continuous: same sparse soil/grass/moss locations, consistent snow patches accumulating/retreating from shaded right rise and below-deck areas. Each stage changes modestly, NO instant carpet-green grass after snow, and no identical frozen ground/shadow texture through multiple adjacent frames. These are approximate art-direction targets, not permission to add a white overlay.\nIMPORTANT PRACTICAL LIGHTS: turn OFF ALL existing interior window illumination and ALL exterior wall lanterns in this base edit, including their orange wall spill. Windows must retain real panes and subdued sky/environment reflection (winter bare branches, summer leaves). Lamps retain exact fixtures but no emissive yellow cores/halos. One controlled warm-light envelope will be added AFTER registration. Do not add any new lights. Keep twilight clearly exposed/legible, with natural cool diffuse lighting rather than black crushed shadows.\n\nSHARED SCHEDULE (art-direction targets; output ONLY requested stage):\n[{\"id\": \"summer\", \"ambient_relative\": 1.0, \"direct_relative\": 1.0, \"practical_mix\": 0.0, \"snow_target_percent\": 0, \"direction\": \"Unchanged original summer daylight and sparse mature grass.\"}, {\"id\": \"early-fall\", \"ambient_relative\": 0.98, \"direct_relative\": 0.88, \"practical_mix\": 0.01, \"snow_target_percent\": 0, \"direction\": \"Afternoon: sun slightly lower toward camera-right than master, shadows slightly longer. Canopy90% green/10% muted yellow; lawn subtly less green than master, a few fallen leaves. NO sunset pink yet.\"}, {\"id\": \"turning-leaves\", \"ambient_relative\": 0.94, \"direct_relative\": 0.68, \"practical_mix\": 0.04, \"snow_target_percent\": 0, \"direction\": \"Late afternoon: camera-right sun lower again, shadows somewhat longer/softer. Canopy65% green/35% amber/russet. Moderate scattered leaves; grass slightly drier olive than previous stage. Sky pale blue, only very subtle warm wisps.\"}, {\"id\": \"fall\", \"ambient_relative\": 0.86, \"direct_relative\": 0.44, \"practical_mix\": 0.1, \"snow_target_percent\": 0, \"direction\": \"Golden evening: low camera-right sun, long softened shadows. Canopy35% green/65% red/russet/gold, retain a little green; slightly thinner than turning-leaves. Grass olive/dormant with moss only in existing shaded patches and moderate fallen leaves, NOT a uniform lush carpet. Warm sky restrained, no exaggerated sunset.\"}, {\"id\": \"first-frost\", \"ambient_relative\": 0.77, \"direct_relative\": 0.2, \"practical_mix\": 0.22, \"snow_target_percent\": 5, \"direction\": \"Sunset: very low camera-right sun almost gone, weak long shadows blending into diffuse skylight. IMPORTANT reduce existing leaf density by about HALF relative to autumn; many existing branches newly visible, remaining leaves muted brown/russet, not full dense red canopy. Fine frost and tiny snow traces on shaded5% of lawn/roof. Mostly damp dormant brown/olive grass with leaf litter. No spotlighting.\"}, {\"id\": \"first-snow\", \"ambient_relative\": 0.68, \"direct_relative\": 0.03, \"practical_mix\": 0.36, \"snow_target_percent\": 40, \"direction\": \"After sunset: diffuse cool sky, practically no direct sun and NO crisp sunny lawn patches. Existing branches mostly bare with a few brown leaves. Thin snow covers about40% of lawn and roof in coherent connected patches, not uniformly dusting every surface; exposed60% is dormant brown/olive grass. Snow begins in far-right shaded rise and left/below-deck shade, retaining exposed middle/foreground. Cool sky with faint peach at horizon.\"}, {\"id\": \"winter\", \"ambient_relative\": 0.6, \"direct_relative\": 0.0, \"practical_mix\": 0.48, \"snow_target_percent\": 85, \"direction\": \"Winter blue hour: soft diffuse cool light only, NO direct sunlight, NO hard white solar spot on red grill. Snow blanket covers about85% lawn and roof; preserve tiny dormant-grass margins in exposed foreground/near path so the next thaw does not reveal an entirely new lawn. Bare branches, minimal snow tracery rather than giant branch clumps. Clearly legible house and snow, not dark night. Golden cozy winter character will be restored in finishing; lamps off in this base image.\"}, {\"id\": \"snowmelt\", \"ambient_relative\": 0.68, \"direct_relative\": 0.03, \"practical_mix\": 0.36, \"snow_target_percent\": 60, \"direction\": \"Very early dawn: diffuse blue-peach sky, no hard direct solar patches yet. Thaw: snow still covers about60% lawn/roof, SAME patches as winter shrinking from exposed middle/foreground toward far-right rise and below-deck shade. Exposed40% is mostly damp STRAW-BROWN / muted OLIVE dormant grass, not bright green. Bare branches with tiny buds. Slightly brighter than winter, no orange porch glow in base.\"}, {\"id\": \"new-growth\", \"ambient_relative\": 0.77, \"direct_relative\": 0.2, \"practical_mix\": 0.22, \"snow_target_percent\": 30, \"direction\": \"Sunrise: weak low sun from camera-left, very soft elongated shadows extending generally rightward; warm highlights only where reachable, no hard noon-white grill highlight. Snow still covers about30% lawn/roof, shrinking SAME shaded patches as snowmelt, especially far-right rise and below-deck shade. Newly exposed grass predominantly subdued straw/olive with small muted-green shoots; do NOT jump to lush spring green. Sparse buds/leaves on about20% existing canopy, majority branches still visible.\"}, {\"id\": \"spring\", \"ambient_relative\": 0.86, \"direct_relative\": 0.44, \"practical_mix\": 0.1, \"snow_target_percent\": 5, \"direction\": \"Early spring golden morning: low camera-left sun, soft long shadows consistent across house/yard/grill, not a copy of summer noon shadows. Last5% snow only tiny deep-shade remnants, no large banks. Lawn now predominantly muted fresh green but still mixed olive/straw, short growth, modest fine dew; NOT the old uniformly lush bright lime lawn. Fresh leaves about55% canopy density with existing branches visible. Preserve inviting morning character without a giant brightness jump.\"}, {\"id\": \"late-spring\", \"ambient_relative\": 0.94, \"direct_relative\": 0.68, \"practical_mix\": 0.04, \"snow_target_percent\": 0, \"direction\": \"Later spring, rising morning sun: direct light stronger, camera-left toward overhead, shorter softer shadows than spring. Snow fully gone. Lawn noticeably fuller soft green than early spring, but mixed natural patches and original terrain, not artificial turf; dew mostly evaporated. Canopy85% fresh green, naturally full. Red grill enamel highlight small/modest, light direction consistent, not chrome.\"}, {\"id\": \"midsummer\", \"ambient_relative\": 0.98, \"direct_relative\": 0.88, \"practical_mix\": 0.01, \"snow_target_percent\": 0, \"direction\": \"Late morning summer: sun approaches original master light direction/elevation, shadows and grill reflections nearly converge to master without jumping. Canopy mature deep green, full. Lawn begins drying back: mix mature green and original sparse/olive patches, between lush late spring and original late summer. Sky nearly master blue. No warm interior or exterior lamps in base.\"}]\nREQUESTED STAGE: {\"id\": \"winter\", \"ambient_relative\": 0.6, \"direct_relative\": 0.0, \"practical_mix\": 0.48, \"snow_target_percent\": 85, \"direction\": \"Winter blue hour: soft diffuse cool light only, NO direct sunlight, NO hard white solar spot on red grill. Snow blanket covers about85% lawn and roof; preserve tiny dormant-grass margins in exposed foreground/near path so the next thaw does not reveal an entirely new lawn. Bare branches, minimal snow tracery rather than giant branch clumps. Clearly legible house and snow, not dark night. Golden cozy winter character will be restored in finishing; lamps off in this base image.\"}",
+      "references": [
+        {
+          "path": ".impeccable/mocks/seasons/v2/summer.jpg",
+          "sha256": "6d91f6f3993b5014b1be640c8a2eb51428762af3f05c35beed9bec26147bd9ab"
+        },
+        {
+          "path": ".impeccable/mocks/seasons/v2/winter.webp",
+          "sha256": "e596718f0282259777d15fb83852f0b350a6531172d258a6de513e9c29316e17"
+        },
+        {
+          "path": ".impeccable/mocks/seasons/v3/first-snow.webp",
+          "sha256": "b955bfec41d9ce8da751c009857777bb26e551daa94c29c5258f34819e4a55bd"
+        },
+        {
+          "path": ".impeccable/mocks/seasons/v3/snowmelt.webp",
+          "sha256": "e724168bb245b744244b6d838df3427c57d1f3f5a7e344d7d83e99789597ec6b"
+        },
+        {
+          "path": ".pi/artifacts/seasons/v3/targets-sheet.jpg",
+          "sha256": "ab43abd4ed1d8ace7e333e50b90fd24348ee8006e28df508f317b675996215a0"
+        }
+      ],
+      "raw_path": ".pi/artifacts/seasons/v4/winter-generated.jpg",
+      "raw_sha256": "ca9560ee9941298483f137bb4a5f934be99df8f54acc6a2a5ceed2394e0c1833",
+      "correction": {
+        "source": ".impeccable/mocks/seasons/v2/winter.webp",
+        "source_sha256": "e596718f0282259777d15fb83852f0b350a6531172d258a6de513e9c29316e17",
+        "prompt": "Edit ONLY this supplied photograph of the RED CEDAR CHALET. This is a precise photo edit, NOT a newly imagined house. Preserve the exact house, camera, scale, crop, roof/dormers/chimney, cedar siding, stonework, star, every window/pane, deck/lattice, walkway, birdbath, bird feeder and ROUND RED CHARCOAL GRILL. Keep fixed tree trunks/branch positions and lower-left MLS mark. Do not add or remove structures, change perspective, replace cedar with vinyl siding or invent different landscaping. Only apply the following restrained seasonal/light changes to the attached image. Single full-frame edited photo, no collage, no double exposure.\nWinter blue hour: soft diffuse cool light only, NO direct sunlight, NO hard white solar spot on red grill. Snow blanket covers about85% lawn and roof; preserve tiny dormant-grass margins in exposed foreground/near path so the next thaw does not reveal an entirely new lawn. Bare branches, minimal snow tracery rather than giant branch clumps. Clearly legible house and snow, not dark night. Golden cozy winter character will be restored in finishing; lamps off in this base image.\nKeep all lighting coherent: direct sun and shadows agree; no hard sun patch or white solar specular in diffuse twilight. Red grill is glossy red enamel, not chrome; preserve its shape and let its sky highlight soften/dim when daylight is weak. Turn OFF interior window lights and existing exterior lanterns, including their warm spill, but keep fixtures and glass/reflections: controlled warm light is added later. Keep scene clearly exposed and photorealistic. Do not change anything else.",
+        "raw_path": ".pi/artifacts/seasons/v4/winter-corrected.jpg",
+        "raw_sha256": "bbacfc3e0b2846e3f0baf4f0a51f3f1283a10ae4423c01384edaaff8414c95f1",
+        "unregistered_path": ".pi/artifacts/seasons/v4/winter-corrected.png",
+        "reason": "Original multi-reference/full-schedule request failed visual camera/property fidelity. Single-photo correction replaces rejected or insufficiently changed candidate; no previous trial asset overwritten."
+      },
+      "unregistered_path": ".pi/artifacts/seasons/v4/winter-corrected.png",
+      "registration": {
+        "algorithm": "Robust affine fit to native Vision revision-1 flow on stable architectural texture; no dense warp",
+        "dx_normalized_xy1": [
+          0.011673246519393112,
+          4.4811822220376385,
+          -2.721520572260882
+        ],
+        "dy_normalized_xy1": [
+          -0.23414105053135026,
+          -9.615498176322806,
+          -3.202118540024978
+        ],
+        "height": 848,
+        "inliers": 2223,
+        "matches": 2525,
+        "median_displacement_px": 8.096534312354619,
+        "p95_displacement_px": 12.496923284966892,
+        "width": 1280
+      },
+      "preview_path": ".impeccable/mocks/seasons/v4/winter.webp",
+      "preview_sha256": "83668fb7b56a8e25a6fbebfb2474277feda95c18d2a770d70e9ea74362487d25",
+      "reflection_bare_mix": 1,
+      "practical_mix": 0.48
+    },
+    {
+      "id": "snowmelt",
+      "sequence_id": "snowmelt",
+      "schedule": {
+        "id": "snowmelt",
+        "ambient_relative": 0.68,
+        "direct_relative": 0.03,
+        "practical_mix": 0.36,
+        "snow_target_percent": 60,
+        "direction": "Very early dawn: diffuse blue-peach sky, no hard direct solar patches yet. Thaw: snow still covers about60% lawn/roof, SAME patches as winter shrinking from exposed middle/foreground toward far-right rise and below-deck shade. Exposed40% is mostly damp STRAW-BROWN / muted OLIVE dormant grass, not bright green. Bare branches with tiny buds. Slightly brighter than winter, no orange porch glow in base."
+      },
+      "prompt": "Retouch IMAGE 2 for one stage of a camera-locked ANNUAL TIMELAPSE. This corrects continuity, not a redesign. IMAGE 1 is the exact structural/material/camera master. IMAGE 2 is the existing target to revise. IMAGE 3/4 are previous/next OLD targets for object/terrain/foliage correspondence only; their lighting and grass jumps are flawed and must NOT be copied. IMAGE 5 is the OLD full contact sheet for context, not a montage to reproduce. Return ONE full-frame sharp photorealistic image, never a collage or double exposure.\nLOCK to IMAGE 1 every roof/chimney/dormer outline, scale/perspective, siding board, window/pane/mullion, star, porch post, stone, deck/lattice, bird feeder/pole, birdbath and red grill. Same crop and fixed tree trunks/branch positions. No invented furniture, path, flowers or decorations. Preserve lower-left MLS watermark. Only foliage, snow, grass and coherent physical lighting may change.\nWhole sequence: high summer daylight -> progressively lower camera-right afternoon/evening -> diffuse winter blue hour -> diffuse dawn -> low camera-left spring morning -> rising summer daylight. Winter is the diffuse bridge between sunset and dawn, not an abrupt reversal of hard shadows. All shadows in THIS frame must agree with its single sun and soften under diffuse sky. Tree shade, lawn, stone, roof and cedar all follow that source. Do NOT simply tint the previous lighting. Sky reflections are soft/broad; red enamel grill keeps its material, NO newly invented chrome. Its broad sky sheen dims/cools at twilight, with NO noon-white specular flare when sun is absent. A small direct highlight may appear only when the stated sun can reach it. Do not make the entire grill glow or relocate/reshape it.\nGround patch topology stays continuous: same sparse soil/grass/moss locations, consistent snow patches accumulating/retreating from shaded right rise and below-deck areas. Each stage changes modestly, NO instant carpet-green grass after snow, and no identical frozen ground/shadow texture through multiple adjacent frames. These are approximate art-direction targets, not permission to add a white overlay.\nIMPORTANT PRACTICAL LIGHTS: turn OFF ALL existing interior window illumination and ALL exterior wall lanterns in this base edit, including their orange wall spill. Windows must retain real panes and subdued sky/environment reflection (winter bare branches, summer leaves). Lamps retain exact fixtures but no emissive yellow cores/halos. One controlled warm-light envelope will be added AFTER registration. Do not add any new lights. Keep twilight clearly exposed/legible, with natural cool diffuse lighting rather than black crushed shadows.\n\nSHARED SCHEDULE (art-direction targets; output ONLY requested stage):\n[{\"id\": \"summer\", \"ambient_relative\": 1.0, \"direct_relative\": 1.0, \"practical_mix\": 0.0, \"snow_target_percent\": 0, \"direction\": \"Unchanged original summer daylight and sparse mature grass.\"}, {\"id\": \"early-fall\", \"ambient_relative\": 0.98, \"direct_relative\": 0.88, \"practical_mix\": 0.01, \"snow_target_percent\": 0, \"direction\": \"Afternoon: sun slightly lower toward camera-right than master, shadows slightly longer. Canopy90% green/10% muted yellow; lawn subtly less green than master, a few fallen leaves. NO sunset pink yet.\"}, {\"id\": \"turning-leaves\", \"ambient_relative\": 0.94, \"direct_relative\": 0.68, \"practical_mix\": 0.04, \"snow_target_percent\": 0, \"direction\": \"Late afternoon: camera-right sun lower again, shadows somewhat longer/softer. Canopy65% green/35% amber/russet. Moderate scattered leaves; grass slightly drier olive than previous stage. Sky pale blue, only very subtle warm wisps.\"}, {\"id\": \"fall\", \"ambient_relative\": 0.86, \"direct_relative\": 0.44, \"practical_mix\": 0.1, \"snow_target_percent\": 0, \"direction\": \"Golden evening: low camera-right sun, long softened shadows. Canopy35% green/65% red/russet/gold, retain a little green; slightly thinner than turning-leaves. Grass olive/dormant with moss only in existing shaded patches and moderate fallen leaves, NOT a uniform lush carpet. Warm sky restrained, no exaggerated sunset.\"}, {\"id\": \"first-frost\", \"ambient_relative\": 0.77, \"direct_relative\": 0.2, \"practical_mix\": 0.22, \"snow_target_percent\": 5, \"direction\": \"Sunset: very low camera-right sun almost gone, weak long shadows blending into diffuse skylight. IMPORTANT reduce existing leaf density by about HALF relative to autumn; many existing branches newly visible, remaining leaves muted brown/russet, not full dense red canopy. Fine frost and tiny snow traces on shaded5% of lawn/roof. Mostly damp dormant brown/olive grass with leaf litter. No spotlighting.\"}, {\"id\": \"first-snow\", \"ambient_relative\": 0.68, \"direct_relative\": 0.03, \"practical_mix\": 0.36, \"snow_target_percent\": 40, \"direction\": \"After sunset: diffuse cool sky, practically no direct sun and NO crisp sunny lawn patches. Existing branches mostly bare with a few brown leaves. Thin snow covers about40% of lawn and roof in coherent connected patches, not uniformly dusting every surface; exposed60% is dormant brown/olive grass. Snow begins in far-right shaded rise and left/below-deck shade, retaining exposed middle/foreground. Cool sky with faint peach at horizon.\"}, {\"id\": \"winter\", \"ambient_relative\": 0.6, \"direct_relative\": 0.0, \"practical_mix\": 0.48, \"snow_target_percent\": 85, \"direction\": \"Winter blue hour: soft diffuse cool light only, NO direct sunlight, NO hard white solar spot on red grill. Snow blanket covers about85% lawn and roof; preserve tiny dormant-grass margins in exposed foreground/near path so the next thaw does not reveal an entirely new lawn. Bare branches, minimal snow tracery rather than giant branch clumps. Clearly legible house and snow, not dark night. Golden cozy winter character will be restored in finishing; lamps off in this base image.\"}, {\"id\": \"snowmelt\", \"ambient_relative\": 0.68, \"direct_relative\": 0.03, \"practical_mix\": 0.36, \"snow_target_percent\": 60, \"direction\": \"Very early dawn: diffuse blue-peach sky, no hard direct solar patches yet. Thaw: snow still covers about60% lawn/roof, SAME patches as winter shrinking from exposed middle/foreground toward far-right rise and below-deck shade. Exposed40% is mostly damp STRAW-BROWN / muted OLIVE dormant grass, not bright green. Bare branches with tiny buds. Slightly brighter than winter, no orange porch glow in base.\"}, {\"id\": \"new-growth\", \"ambient_relative\": 0.77, \"direct_relative\": 0.2, \"practical_mix\": 0.22, \"snow_target_percent\": 30, \"direction\": \"Sunrise: weak low sun from camera-left, very soft elongated shadows extending generally rightward; warm highlights only where reachable, no hard noon-white grill highlight. Snow still covers about30% lawn/roof, shrinking SAME shaded patches as snowmelt, especially far-right rise and below-deck shade. Newly exposed grass predominantly subdued straw/olive with small muted-green shoots; do NOT jump to lush spring green. Sparse buds/leaves on about20% existing canopy, majority branches still visible.\"}, {\"id\": \"spring\", \"ambient_relative\": 0.86, \"direct_relative\": 0.44, \"practical_mix\": 0.1, \"snow_target_percent\": 5, \"direction\": \"Early spring golden morning: low camera-left sun, soft long shadows consistent across house/yard/grill, not a copy of summer noon shadows. Last5% snow only tiny deep-shade remnants, no large banks. Lawn now predominantly muted fresh green but still mixed olive/straw, short growth, modest fine dew; NOT the old uniformly lush bright lime lawn. Fresh leaves about55% canopy density with existing branches visible. Preserve inviting morning character without a giant brightness jump.\"}, {\"id\": \"late-spring\", \"ambient_relative\": 0.94, \"direct_relative\": 0.68, \"practical_mix\": 0.04, \"snow_target_percent\": 0, \"direction\": \"Later spring, rising morning sun: direct light stronger, camera-left toward overhead, shorter softer shadows than spring. Snow fully gone. Lawn noticeably fuller soft green than early spring, but mixed natural patches and original terrain, not artificial turf; dew mostly evaporated. Canopy85% fresh green, naturally full. Red grill enamel highlight small/modest, light direction consistent, not chrome.\"}, {\"id\": \"midsummer\", \"ambient_relative\": 0.98, \"direct_relative\": 0.88, \"practical_mix\": 0.01, \"snow_target_percent\": 0, \"direction\": \"Late morning summer: sun approaches original master light direction/elevation, shadows and grill reflections nearly converge to master without jumping. Canopy mature deep green, full. Lawn begins drying back: mix mature green and original sparse/olive patches, between lush late spring and original late summer. Sky nearly master blue. No warm interior or exterior lamps in base.\"}]\nREQUESTED STAGE: {\"id\": \"snowmelt\", \"ambient_relative\": 0.68, \"direct_relative\": 0.03, \"practical_mix\": 0.36, \"snow_target_percent\": 60, \"direction\": \"Very early dawn: diffuse blue-peach sky, no hard direct solar patches yet. Thaw: snow still covers about60% lawn/roof, SAME patches as winter shrinking from exposed middle/foreground toward far-right rise and below-deck shade. Exposed40% is mostly damp STRAW-BROWN / muted OLIVE dormant grass, not bright green. Bare branches with tiny buds. Slightly brighter than winter, no orange porch glow in base.\"}",
+      "references": [
+        {
+          "path": ".impeccable/mocks/seasons/v2/summer.jpg",
+          "sha256": "6d91f6f3993b5014b1be640c8a2eb51428762af3f05c35beed9bec26147bd9ab"
+        },
+        {
+          "path": ".impeccable/mocks/seasons/v3/snowmelt.webp",
+          "sha256": "e724168bb245b744244b6d838df3427c57d1f3f5a7e344d7d83e99789597ec6b"
+        },
+        {
+          "path": ".impeccable/mocks/seasons/v2/winter.webp",
+          "sha256": "e596718f0282259777d15fb83852f0b350a6531172d258a6de513e9c29316e17"
+        },
+        {
+          "path": ".impeccable/mocks/seasons/v3/new-growth.webp",
+          "sha256": "745f89b555bbc83bf5f46ab2cfe5d662e75479fc7eb2e8d0007e2ee71be1381a"
+        },
+        {
+          "path": ".pi/artifacts/seasons/v3/targets-sheet.jpg",
+          "sha256": "ab43abd4ed1d8ace7e333e50b90fd24348ee8006e28df508f317b675996215a0"
+        }
+      ],
+      "raw_path": ".pi/artifacts/seasons/v4/snowmelt-generated.jpg",
+      "raw_sha256": "7fb60f839146f1558a074c075580936b01bdc97ee933c00a9ca9960cf3e7800f",
+      "unregistered_path": ".pi/artifacts/seasons/v4/snowmelt-unregistered.png",
+      "registration": {
+        "algorithm": "Robust affine fit to native Vision revision-1 flow on stable architectural texture; no dense warp",
+        "dx_normalized_xy1": [
+          -0.7963412635548233,
+          -0.8719443885028969,
+          0.8883222284458011
+        ],
+        "dy_normalized_xy1": [
+          0.5053562606668155,
+          -11.117181935852294,
+          -2.5861857884325152
+        ],
+        "height": 848,
+        "inliers": 2679,
+        "matches": 2715,
+        "median_displacement_px": 7.8447096302039085,
+        "p95_displacement_px": 12.849277004220676,
+        "width": 1280
+      },
+      "preview_path": ".impeccable/mocks/seasons/v4/snowmelt.webp",
+      "preview_sha256": "5f33fd679d927814f1bbcc2c8d378dbd0e247c23bbd69516c9927322e3a0ef4d",
+      "reflection_bare_mix": 0.95,
+      "practical_mix": 0.36,
+      "ground_snow_mask_fraction": 0.65
+    },
+    {
+      "id": "new-growth",
+      "sequence_id": "new-growth",
+      "schedule": {
+        "id": "new-growth",
+        "ambient_relative": 0.77,
+        "direct_relative": 0.2,
+        "practical_mix": 0.22,
+        "snow_target_percent": 30,
+        "direction": "Sunrise: weak low sun from camera-left, very soft elongated shadows extending generally rightward; warm highlights only where reachable, no hard noon-white grill highlight. Snow still covers about30% lawn/roof, shrinking SAME shaded patches as snowmelt, especially far-right rise and below-deck shade. Newly exposed grass predominantly subdued straw/olive with small muted-green shoots; do NOT jump to lush spring green. Sparse buds/leaves on about20% existing canopy, majority branches still visible."
+      },
+      "prompt": "Retouch IMAGE 2 for one stage of a camera-locked ANNUAL TIMELAPSE. This corrects continuity, not a redesign. IMAGE 1 is the exact structural/material/camera master. IMAGE 2 is the existing target to revise. IMAGE 3/4 are previous/next OLD targets for object/terrain/foliage correspondence only; their lighting and grass jumps are flawed and must NOT be copied. IMAGE 5 is the OLD full contact sheet for context, not a montage to reproduce. Return ONE full-frame sharp photorealistic image, never a collage or double exposure.\nLOCK to IMAGE 1 every roof/chimney/dormer outline, scale/perspective, siding board, window/pane/mullion, star, porch post, stone, deck/lattice, bird feeder/pole, birdbath and red grill. Same crop and fixed tree trunks/branch positions. No invented furniture, path, flowers or decorations. Preserve lower-left MLS watermark. Only foliage, snow, grass and coherent physical lighting may change.\nWhole sequence: high summer daylight -> progressively lower camera-right afternoon/evening -> diffuse winter blue hour -> diffuse dawn -> low camera-left spring morning -> rising summer daylight. Winter is the diffuse bridge between sunset and dawn, not an abrupt reversal of hard shadows. All shadows in THIS frame must agree with its single sun and soften under diffuse sky. Tree shade, lawn, stone, roof and cedar all follow that source. Do NOT simply tint the previous lighting. Sky reflections are soft/broad; red enamel grill keeps its material, NO newly invented chrome. Its broad sky sheen dims/cools at twilight, with NO noon-white specular flare when sun is absent. A small direct highlight may appear only when the stated sun can reach it. Do not make the entire grill glow or relocate/reshape it.\nGround patch topology stays continuous: same sparse soil/grass/moss locations, consistent snow patches accumulating/retreating from shaded right rise and below-deck areas. Each stage changes modestly, NO instant carpet-green grass after snow, and no identical frozen ground/shadow texture through multiple adjacent frames. These are approximate art-direction targets, not permission to add a white overlay.\nIMPORTANT PRACTICAL LIGHTS: turn OFF ALL existing interior window illumination and ALL exterior wall lanterns in this base edit, including their orange wall spill. Windows must retain real panes and subdued sky/environment reflection (winter bare branches, summer leaves). Lamps retain exact fixtures but no emissive yellow cores/halos. One controlled warm-light envelope will be added AFTER registration. Do not add any new lights. Keep twilight clearly exposed/legible, with natural cool diffuse lighting rather than black crushed shadows.\n\nSHARED SCHEDULE (art-direction targets; output ONLY requested stage):\n[{\"id\": \"summer\", \"ambient_relative\": 1.0, \"direct_relative\": 1.0, \"practical_mix\": 0.0, \"snow_target_percent\": 0, \"direction\": \"Unchanged original summer daylight and sparse mature grass.\"}, {\"id\": \"early-fall\", \"ambient_relative\": 0.98, \"direct_relative\": 0.88, \"practical_mix\": 0.01, \"snow_target_percent\": 0, \"direction\": \"Afternoon: sun slightly lower toward camera-right than master, shadows slightly longer. Canopy90% green/10% muted yellow; lawn subtly less green than master, a few fallen leaves. NO sunset pink yet.\"}, {\"id\": \"turning-leaves\", \"ambient_relative\": 0.94, \"direct_relative\": 0.68, \"practical_mix\": 0.04, \"snow_target_percent\": 0, \"direction\": \"Late afternoon: camera-right sun lower again, shadows somewhat longer/softer. Canopy65% green/35% amber/russet. Moderate scattered leaves; grass slightly drier olive than previous stage. Sky pale blue, only very subtle warm wisps.\"}, {\"id\": \"fall\", \"ambient_relative\": 0.86, \"direct_relative\": 0.44, \"practical_mix\": 0.1, \"snow_target_percent\": 0, \"direction\": \"Golden evening: low camera-right sun, long softened shadows. Canopy35% green/65% red/russet/gold, retain a little green; slightly thinner than turning-leaves. Grass olive/dormant with moss only in existing shaded patches and moderate fallen leaves, NOT a uniform lush carpet. Warm sky restrained, no exaggerated sunset.\"}, {\"id\": \"first-frost\", \"ambient_relative\": 0.77, \"direct_relative\": 0.2, \"practical_mix\": 0.22, \"snow_target_percent\": 5, \"direction\": \"Sunset: very low camera-right sun almost gone, weak long shadows blending into diffuse skylight. IMPORTANT reduce existing leaf density by about HALF relative to autumn; many existing branches newly visible, remaining leaves muted brown/russet, not full dense red canopy. Fine frost and tiny snow traces on shaded5% of lawn/roof. Mostly damp dormant brown/olive grass with leaf litter. No spotlighting.\"}, {\"id\": \"first-snow\", \"ambient_relative\": 0.68, \"direct_relative\": 0.03, \"practical_mix\": 0.36, \"snow_target_percent\": 40, \"direction\": \"After sunset: diffuse cool sky, practically no direct sun and NO crisp sunny lawn patches. Existing branches mostly bare with a few brown leaves. Thin snow covers about40% of lawn and roof in coherent connected patches, not uniformly dusting every surface; exposed60% is dormant brown/olive grass. Snow begins in far-right shaded rise and left/below-deck shade, retaining exposed middle/foreground. Cool sky with faint peach at horizon.\"}, {\"id\": \"winter\", \"ambient_relative\": 0.6, \"direct_relative\": 0.0, \"practical_mix\": 0.48, \"snow_target_percent\": 85, \"direction\": \"Winter blue hour: soft diffuse cool light only, NO direct sunlight, NO hard white solar spot on red grill. Snow blanket covers about85% lawn and roof; preserve tiny dormant-grass margins in exposed foreground/near path so the next thaw does not reveal an entirely new lawn. Bare branches, minimal snow tracery rather than giant branch clumps. Clearly legible house and snow, not dark night. Golden cozy winter character will be restored in finishing; lamps off in this base image.\"}, {\"id\": \"snowmelt\", \"ambient_relative\": 0.68, \"direct_relative\": 0.03, \"practical_mix\": 0.36, \"snow_target_percent\": 60, \"direction\": \"Very early dawn: diffuse blue-peach sky, no hard direct solar patches yet. Thaw: snow still covers about60% lawn/roof, SAME patches as winter shrinking from exposed middle/foreground toward far-right rise and below-deck shade. Exposed40% is mostly damp STRAW-BROWN / muted OLIVE dormant grass, not bright green. Bare branches with tiny buds. Slightly brighter than winter, no orange porch glow in base.\"}, {\"id\": \"new-growth\", \"ambient_relative\": 0.77, \"direct_relative\": 0.2, \"practical_mix\": 0.22, \"snow_target_percent\": 30, \"direction\": \"Sunrise: weak low sun from camera-left, very soft elongated shadows extending generally rightward; warm highlights only where reachable, no hard noon-white grill highlight. Snow still covers about30% lawn/roof, shrinking SAME shaded patches as snowmelt, especially far-right rise and below-deck shade. Newly exposed grass predominantly subdued straw/olive with small muted-green shoots; do NOT jump to lush spring green. Sparse buds/leaves on about20% existing canopy, majority branches still visible.\"}, {\"id\": \"spring\", \"ambient_relative\": 0.86, \"direct_relative\": 0.44, \"practical_mix\": 0.1, \"snow_target_percent\": 5, \"direction\": \"Early spring golden morning: low camera-left sun, soft long shadows consistent across house/yard/grill, not a copy of summer noon shadows. Last5% snow only tiny deep-shade remnants, no large banks. Lawn now predominantly muted fresh green but still mixed olive/straw, short growth, modest fine dew; NOT the old uniformly lush bright lime lawn. Fresh leaves about55% canopy density with existing branches visible. Preserve inviting morning character without a giant brightness jump.\"}, {\"id\": \"late-spring\", \"ambient_relative\": 0.94, \"direct_relative\": 0.68, \"practical_mix\": 0.04, \"snow_target_percent\": 0, \"direction\": \"Later spring, rising morning sun: direct light stronger, camera-left toward overhead, shorter softer shadows than spring. Snow fully gone. Lawn noticeably fuller soft green than early spring, but mixed natural patches and original terrain, not artificial turf; dew mostly evaporated. Canopy85% fresh green, naturally full. Red grill enamel highlight small/modest, light direction consistent, not chrome.\"}, {\"id\": \"midsummer\", \"ambient_relative\": 0.98, \"direct_relative\": 0.88, \"practical_mix\": 0.01, \"snow_target_percent\": 0, \"direction\": \"Late morning summer: sun approaches original master light direction/elevation, shadows and grill reflections nearly converge to master without jumping. Canopy mature deep green, full. Lawn begins drying back: mix mature green and original sparse/olive patches, between lush late spring and original late summer. Sky nearly master blue. No warm interior or exterior lamps in base.\"}]\nREQUESTED STAGE: {\"id\": \"new-growth\", \"ambient_relative\": 0.77, \"direct_relative\": 0.2, \"practical_mix\": 0.22, \"snow_target_percent\": 30, \"direction\": \"Sunrise: weak low sun from camera-left, very soft elongated shadows extending generally rightward; warm highlights only where reachable, no hard noon-white grill highlight. Snow still covers about30% lawn/roof, shrinking SAME shaded patches as snowmelt, especially far-right rise and below-deck shade. Newly exposed grass predominantly subdued straw/olive with small muted-green shoots; do NOT jump to lush spring green. Sparse buds/leaves on about20% existing canopy, majority branches still visible.\"}",
+      "references": [
+        {
+          "path": ".impeccable/mocks/seasons/v2/summer.jpg",
+          "sha256": "6d91f6f3993b5014b1be640c8a2eb51428762af3f05c35beed9bec26147bd9ab"
+        },
+        {
+          "path": ".impeccable/mocks/seasons/v3/new-growth.webp",
+          "sha256": "745f89b555bbc83bf5f46ab2cfe5d662e75479fc7eb2e8d0007e2ee71be1381a"
+        },
+        {
+          "path": ".impeccable/mocks/seasons/v3/snowmelt.webp",
+          "sha256": "e724168bb245b744244b6d838df3427c57d1f3f5a7e344d7d83e99789597ec6b"
+        },
+        {
+          "path": ".impeccable/mocks/seasons/v2/spring.webp",
+          "sha256": "07667a496104b74750f06e6050a2e59bd93c7662af6195becb45bd7d4c61e069"
+        },
+        {
+          "path": ".pi/artifacts/seasons/v3/targets-sheet.jpg",
+          "sha256": "ab43abd4ed1d8ace7e333e50b90fd24348ee8006e28df508f317b675996215a0"
+        }
+      ],
+      "raw_path": ".pi/artifacts/seasons/v4/new-growth-generated.jpg",
+      "raw_sha256": "4cf5a2874635bbddf2855f89aa26808b26f64a0a75883305157294b59b78a381",
+      "correction": {
+        "source": ".impeccable/mocks/seasons/v3/new-growth.webp",
+        "source_sha256": "745f89b555bbc83bf5f46ab2cfe5d662e75479fc7eb2e8d0007e2ee71be1381a",
+        "prompt": "Edit ONLY this supplied photograph of the RED CEDAR CHALET. This is a precise photo edit, NOT a newly imagined house. Preserve the exact house, camera, scale, crop, roof/dormers/chimney, cedar siding, stonework, star, every window/pane, deck/lattice, walkway, birdbath, bird feeder and ROUND RED CHARCOAL GRILL. Keep fixed tree trunks/branch positions and lower-left MLS mark. Do not add or remove structures, change perspective, replace cedar with vinyl siding or invent different landscaping. Only apply the following restrained seasonal/light changes to the attached image. Single full-frame edited photo, no collage, no double exposure.\nSunrise: weak low sun from camera-left, very soft elongated shadows extending generally rightward; warm highlights only where reachable, no hard noon-white grill highlight. Snow still covers about30% lawn/roof, shrinking SAME shaded patches as snowmelt, especially far-right rise and below-deck shade. Newly exposed grass predominantly subdued straw/olive with small muted-green shoots; do NOT jump to lush spring green. Sparse buds/leaves on about20% existing canopy, majority branches still visible.\nKeep all lighting coherent: direct sun and shadows agree; no hard sun patch or white solar specular in diffuse twilight. Red grill is glossy red enamel, not chrome; preserve its shape and let its sky highlight soften/dim when daylight is weak. Turn OFF interior window lights and existing exterior lanterns, including their warm spill, but keep fixtures and glass/reflections: controlled warm light is added later. Keep scene clearly exposed and photorealistic. Do not change anything else.",
+        "raw_path": ".pi/artifacts/seasons/v4/new-growth-corrected.jpg",
+        "raw_sha256": "cbf85f2fb752eabb9d5c443b871e08d8ff029fd845abfd0724af17e960bdc5d3",
+        "unregistered_path": ".pi/artifacts/seasons/v4/new-growth-corrected.png",
+        "reason": "Original multi-reference/full-schedule request failed visual camera/property fidelity. Single-photo correction replaces rejected or insufficiently changed candidate; no previous trial asset overwritten."
+      },
+      "unregistered_path": ".pi/artifacts/seasons/v4/new-growth-corrected.png",
+      "registration": {
+        "algorithm": "Robust affine fit to native Vision revision-1 flow on stable architectural texture; no dense warp",
+        "dx_normalized_xy1": [
+          0.18311707204745312,
+          -0.06008403581961368,
+          -0.03052321620970925
+        ],
+        "dy_normalized_xy1": [
+          -0.16601541558554173,
+          -9.904116854905094,
+          -3.019250573363402
+        ],
+        "height": 848,
+        "inliers": 2688,
+        "matches": 2715,
+        "median_displacement_px": 8.007651134990933,
+        "p95_displacement_px": 12.466801731426312,
+        "width": 1280
+      },
+      "preview_path": ".impeccable/mocks/seasons/v4/new-growth.webp",
+      "preview_sha256": "11fecbaca1cae19390a9798ededcb3784674b1a7b3ad37e175f80c1de1d71ab6",
+      "reflection_bare_mix": 0.8,
+      "practical_mix": 0.22,
+      "ground_snow_mask_fraction": 0.35
+    },
+    {
+      "id": "spring",
+      "sequence_id": "spring",
+      "schedule": {
+        "id": "spring",
+        "ambient_relative": 0.86,
+        "direct_relative": 0.44,
+        "practical_mix": 0.1,
+        "snow_target_percent": 5,
+        "direction": "Early spring golden morning: low camera-left sun, soft long shadows consistent across house/yard/grill, not a copy of summer noon shadows. Last5% snow only tiny deep-shade remnants, no large banks. Lawn now predominantly muted fresh green but still mixed olive/straw, short growth, modest fine dew; NOT the old uniformly lush bright lime lawn. Fresh leaves about55% canopy density with existing branches visible. Preserve inviting morning character without a giant brightness jump."
+      },
+      "prompt": "Retouch IMAGE 2 for one stage of a camera-locked ANNUAL TIMELAPSE. This corrects continuity, not a redesign. IMAGE 1 is the exact structural/material/camera master. IMAGE 2 is the existing target to revise. IMAGE 3/4 are previous/next OLD targets for object/terrain/foliage correspondence only; their lighting and grass jumps are flawed and must NOT be copied. IMAGE 5 is the OLD full contact sheet for context, not a montage to reproduce. Return ONE full-frame sharp photorealistic image, never a collage or double exposure.\nLOCK to IMAGE 1 every roof/chimney/dormer outline, scale/perspective, siding board, window/pane/mullion, star, porch post, stone, deck/lattice, bird feeder/pole, birdbath and red grill. Same crop and fixed tree trunks/branch positions. No invented furniture, path, flowers or decorations. Preserve lower-left MLS watermark. Only foliage, snow, grass and coherent physical lighting may change.\nWhole sequence: high summer daylight -> progressively lower camera-right afternoon/evening -> diffuse winter blue hour -> diffuse dawn -> low camera-left spring morning -> rising summer daylight. Winter is the diffuse bridge between sunset and dawn, not an abrupt reversal of hard shadows. All shadows in THIS frame must agree with its single sun and soften under diffuse sky. Tree shade, lawn, stone, roof and cedar all follow that source. Do NOT simply tint the previous lighting. Sky reflections are soft/broad; red enamel grill keeps its material, NO newly invented chrome. Its broad sky sheen dims/cools at twilight, with NO noon-white specular flare when sun is absent. A small direct highlight may appear only when the stated sun can reach it. Do not make the entire grill glow or relocate/reshape it.\nGround patch topology stays continuous: same sparse soil/grass/moss locations, consistent snow patches accumulating/retreating from shaded right rise and below-deck areas. Each stage changes modestly, NO instant carpet-green grass after snow, and no identical frozen ground/shadow texture through multiple adjacent frames. These are approximate art-direction targets, not permission to add a white overlay.\nIMPORTANT PRACTICAL LIGHTS: turn OFF ALL existing interior window illumination and ALL exterior wall lanterns in this base edit, including their orange wall spill. Windows must retain real panes and subdued sky/environment reflection (winter bare branches, summer leaves). Lamps retain exact fixtures but no emissive yellow cores/halos. One controlled warm-light envelope will be added AFTER registration. Do not add any new lights. Keep twilight clearly exposed/legible, with natural cool diffuse lighting rather than black crushed shadows.\n\nSHARED SCHEDULE (art-direction targets; output ONLY requested stage):\n[{\"id\": \"summer\", \"ambient_relative\": 1.0, \"direct_relative\": 1.0, \"practical_mix\": 0.0, \"snow_target_percent\": 0, \"direction\": \"Unchanged original summer daylight and sparse mature grass.\"}, {\"id\": \"early-fall\", \"ambient_relative\": 0.98, \"direct_relative\": 0.88, \"practical_mix\": 0.01, \"snow_target_percent\": 0, \"direction\": \"Afternoon: sun slightly lower toward camera-right than master, shadows slightly longer. Canopy90% green/10% muted yellow; lawn subtly less green than master, a few fallen leaves. NO sunset pink yet.\"}, {\"id\": \"turning-leaves\", \"ambient_relative\": 0.94, \"direct_relative\": 0.68, \"practical_mix\": 0.04, \"snow_target_percent\": 0, \"direction\": \"Late afternoon: camera-right sun lower again, shadows somewhat longer/softer. Canopy65% green/35% amber/russet. Moderate scattered leaves; grass slightly drier olive than previous stage. Sky pale blue, only very subtle warm wisps.\"}, {\"id\": \"fall\", \"ambient_relative\": 0.86, \"direct_relative\": 0.44, \"practical_mix\": 0.1, \"snow_target_percent\": 0, \"direction\": \"Golden evening: low camera-right sun, long softened shadows. Canopy35% green/65% red/russet/gold, retain a little green; slightly thinner than turning-leaves. Grass olive/dormant with moss only in existing shaded patches and moderate fallen leaves, NOT a uniform lush carpet. Warm sky restrained, no exaggerated sunset.\"}, {\"id\": \"first-frost\", \"ambient_relative\": 0.77, \"direct_relative\": 0.2, \"practical_mix\": 0.22, \"snow_target_percent\": 5, \"direction\": \"Sunset: very low camera-right sun almost gone, weak long shadows blending into diffuse skylight. IMPORTANT reduce existing leaf density by about HALF relative to autumn; many existing branches newly visible, remaining leaves muted brown/russet, not full dense red canopy. Fine frost and tiny snow traces on shaded5% of lawn/roof. Mostly damp dormant brown/olive grass with leaf litter. No spotlighting.\"}, {\"id\": \"first-snow\", \"ambient_relative\": 0.68, \"direct_relative\": 0.03, \"practical_mix\": 0.36, \"snow_target_percent\": 40, \"direction\": \"After sunset: diffuse cool sky, practically no direct sun and NO crisp sunny lawn patches. Existing branches mostly bare with a few brown leaves. Thin snow covers about40% of lawn and roof in coherent connected patches, not uniformly dusting every surface; exposed60% is dormant brown/olive grass. Snow begins in far-right shaded rise and left/below-deck shade, retaining exposed middle/foreground. Cool sky with faint peach at horizon.\"}, {\"id\": \"winter\", \"ambient_relative\": 0.6, \"direct_relative\": 0.0, \"practical_mix\": 0.48, \"snow_target_percent\": 85, \"direction\": \"Winter blue hour: soft diffuse cool light only, NO direct sunlight, NO hard white solar spot on red grill. Snow blanket covers about85% lawn and roof; preserve tiny dormant-grass margins in exposed foreground/near path so the next thaw does not reveal an entirely new lawn. Bare branches, minimal snow tracery rather than giant branch clumps. Clearly legible house and snow, not dark night. Golden cozy winter character will be restored in finishing; lamps off in this base image.\"}, {\"id\": \"snowmelt\", \"ambient_relative\": 0.68, \"direct_relative\": 0.03, \"practical_mix\": 0.36, \"snow_target_percent\": 60, \"direction\": \"Very early dawn: diffuse blue-peach sky, no hard direct solar patches yet. Thaw: snow still covers about60% lawn/roof, SAME patches as winter shrinking from exposed middle/foreground toward far-right rise and below-deck shade. Exposed40% is mostly damp STRAW-BROWN / muted OLIVE dormant grass, not bright green. Bare branches with tiny buds. Slightly brighter than winter, no orange porch glow in base.\"}, {\"id\": \"new-growth\", \"ambient_relative\": 0.77, \"direct_relative\": 0.2, \"practical_mix\": 0.22, \"snow_target_percent\": 30, \"direction\": \"Sunrise: weak low sun from camera-left, very soft elongated shadows extending generally rightward; warm highlights only where reachable, no hard noon-white grill highlight. Snow still covers about30% lawn/roof, shrinking SAME shaded patches as snowmelt, especially far-right rise and below-deck shade. Newly exposed grass predominantly subdued straw/olive with small muted-green shoots; do NOT jump to lush spring green. Sparse buds/leaves on about20% existing canopy, majority branches still visible.\"}, {\"id\": \"spring\", \"ambient_relative\": 0.86, \"direct_relative\": 0.44, \"practical_mix\": 0.1, \"snow_target_percent\": 5, \"direction\": \"Early spring golden morning: low camera-left sun, soft long shadows consistent across house/yard/grill, not a copy of summer noon shadows. Last5% snow only tiny deep-shade remnants, no large banks. Lawn now predominantly muted fresh green but still mixed olive/straw, short growth, modest fine dew; NOT the old uniformly lush bright lime lawn. Fresh leaves about55% canopy density with existing branches visible. Preserve inviting morning character without a giant brightness jump.\"}, {\"id\": \"late-spring\", \"ambient_relative\": 0.94, \"direct_relative\": 0.68, \"practical_mix\": 0.04, \"snow_target_percent\": 0, \"direction\": \"Later spring, rising morning sun: direct light stronger, camera-left toward overhead, shorter softer shadows than spring. Snow fully gone. Lawn noticeably fuller soft green than early spring, but mixed natural patches and original terrain, not artificial turf; dew mostly evaporated. Canopy85% fresh green, naturally full. Red grill enamel highlight small/modest, light direction consistent, not chrome.\"}, {\"id\": \"midsummer\", \"ambient_relative\": 0.98, \"direct_relative\": 0.88, \"practical_mix\": 0.01, \"snow_target_percent\": 0, \"direction\": \"Late morning summer: sun approaches original master light direction/elevation, shadows and grill reflections nearly converge to master without jumping. Canopy mature deep green, full. Lawn begins drying back: mix mature green and original sparse/olive patches, between lush late spring and original late summer. Sky nearly master blue. No warm interior or exterior lamps in base.\"}]\nREQUESTED STAGE: {\"id\": \"spring\", \"ambient_relative\": 0.86, \"direct_relative\": 0.44, \"practical_mix\": 0.1, \"snow_target_percent\": 5, \"direction\": \"Early spring golden morning: low camera-left sun, soft long shadows consistent across house/yard/grill, not a copy of summer noon shadows. Last5% snow only tiny deep-shade remnants, no large banks. Lawn now predominantly muted fresh green but still mixed olive/straw, short growth, modest fine dew; NOT the old uniformly lush bright lime lawn. Fresh leaves about55% canopy density with existing branches visible. Preserve inviting morning character without a giant brightness jump.\"}",
+      "references": [
+        {
+          "path": ".impeccable/mocks/seasons/v2/summer.jpg",
+          "sha256": "6d91f6f3993b5014b1be640c8a2eb51428762af3f05c35beed9bec26147bd9ab"
+        },
+        {
+          "path": ".impeccable/mocks/seasons/v2/spring.webp",
+          "sha256": "07667a496104b74750f06e6050a2e59bd93c7662af6195becb45bd7d4c61e069"
+        },
+        {
+          "path": ".impeccable/mocks/seasons/v3/new-growth.webp",
+          "sha256": "745f89b555bbc83bf5f46ab2cfe5d662e75479fc7eb2e8d0007e2ee71be1381a"
+        },
+        {
+          "path": ".impeccable/mocks/seasons/v3/late-spring.webp",
+          "sha256": "84ff6333049ac41a7aeb826006b678fce0bd0ca600b41461886ed23d12e854ff"
+        },
+        {
+          "path": ".pi/artifacts/seasons/v3/targets-sheet.jpg",
+          "sha256": "ab43abd4ed1d8ace7e333e50b90fd24348ee8006e28df508f317b675996215a0"
+        }
+      ],
+      "raw_path": ".pi/artifacts/seasons/v4/spring-generated.jpg",
+      "raw_sha256": "9d709d96fb93f63f3805944a4a7ea67e5b218f3019b44663bbef81fd773127e8",
+      "correction": {
+        "source": ".impeccable/mocks/seasons/v2/spring.webp",
+        "source_sha256": "07667a496104b74750f06e6050a2e59bd93c7662af6195becb45bd7d4c61e069",
+        "prompt": "Edit ONLY this supplied photograph of the RED CEDAR CHALET. This is a precise photo edit, NOT a newly imagined house. Preserve the exact house, camera, scale, crop, roof/dormers/chimney, cedar siding, stonework, star, every window/pane, deck/lattice, walkway, birdbath, bird feeder and ROUND RED CHARCOAL GRILL. Keep fixed tree trunks/branch positions and lower-left MLS mark. Do not add or remove structures, change perspective, replace cedar with vinyl siding or invent different landscaping. Only apply the following restrained seasonal/light changes to the attached image. Single full-frame edited photo, no collage, no double exposure.\nEarly spring golden morning: low camera-left sun, soft long shadows consistent across house/yard/grill, not a copy of summer noon shadows. Last5% snow only tiny deep-shade remnants, no large banks. Lawn now predominantly muted fresh green but still mixed olive/straw, short growth, modest fine dew; NOT the old uniformly lush bright lime lawn. Fresh leaves about55% canopy density with existing branches visible. Preserve inviting morning character without a giant brightness jump.\nKeep all lighting coherent: direct sun and shadows agree; no hard sun patch or white solar specular in diffuse twilight. Red grill is glossy red enamel, not chrome; preserve its shape and let its sky highlight soften/dim when daylight is weak. Turn OFF interior window lights and existing exterior lanterns, including their warm spill, but keep fixtures and glass/reflections: controlled warm light is added later. Keep scene clearly exposed and photorealistic. Do not change anything else.",
+        "raw_path": ".pi/artifacts/seasons/v4/spring-corrected.jpg",
+        "raw_sha256": "30f69f49f899ef68473f9b539edad797dea06fdccd7b5841ee74e0e1b11d49fa",
+        "unregistered_path": ".pi/artifacts/seasons/v4/spring-corrected.png",
+        "reason": "Original multi-reference/full-schedule request failed visual camera/property fidelity. Single-photo correction replaces rejected or insufficiently changed candidate; no previous trial asset overwritten."
+      },
+      "unregistered_path": ".pi/artifacts/seasons/v4/spring-corrected.png",
+      "registration": {
+        "algorithm": "Robust affine fit to native Vision revision-1 flow on stable architectural texture; no dense warp",
+        "dx_normalized_xy1": [
+          0.642384441398054,
+          -1.5571683510197298,
+          0.7053975889822804
+        ],
+        "dy_normalized_xy1": [
+          0.535169876262819,
+          -10.19145682570947,
+          -3.0779778193992047
+        ],
+        "height": 848,
+        "inliers": 2557,
+        "matches": 2715,
+        "median_displacement_px": 7.865786673508193,
+        "p95_displacement_px": 12.456408538642153,
+        "width": 1280
+      },
+      "preview_path": ".impeccable/mocks/seasons/v4/spring.webp",
+      "preview_sha256": "7dc17ee8e9ce82cfb050807694fbb1ebb9c1a5116f21e07df8a31fd9160fd27c",
+      "reflection_bare_mix": 0.5,
+      "practical_mix": 0.1,
+      "ground_snow_mask_fraction": 0.08
+    },
+    {
+      "id": "late-spring",
+      "sequence_id": "late-spring",
+      "schedule": {
+        "id": "late-spring",
+        "ambient_relative": 0.94,
+        "direct_relative": 0.68,
+        "practical_mix": 0.04,
+        "snow_target_percent": 0,
+        "direction": "Later spring, rising morning sun: direct light stronger, camera-left toward overhead, shorter softer shadows than spring. Snow fully gone. Lawn noticeably fuller soft green than early spring, but mixed natural patches and original terrain, not artificial turf; dew mostly evaporated. Canopy85% fresh green, naturally full. Red grill enamel highlight small/modest, light direction consistent, not chrome."
+      },
+      "prompt": "Retouch IMAGE 2 for one stage of a camera-locked ANNUAL TIMELAPSE. This corrects continuity, not a redesign. IMAGE 1 is the exact structural/material/camera master. IMAGE 2 is the existing target to revise. IMAGE 3/4 are previous/next OLD targets for object/terrain/foliage correspondence only; their lighting and grass jumps are flawed and must NOT be copied. IMAGE 5 is the OLD full contact sheet for context, not a montage to reproduce. Return ONE full-frame sharp photorealistic image, never a collage or double exposure.\nLOCK to IMAGE 1 every roof/chimney/dormer outline, scale/perspective, siding board, window/pane/mullion, star, porch post, stone, deck/lattice, bird feeder/pole, birdbath and red grill. Same crop and fixed tree trunks/branch positions. No invented furniture, path, flowers or decorations. Preserve lower-left MLS watermark. Only foliage, snow, grass and coherent physical lighting may change.\nWhole sequence: high summer daylight -> progressively lower camera-right afternoon/evening -> diffuse winter blue hour -> diffuse dawn -> low camera-left spring morning -> rising summer daylight. Winter is the diffuse bridge between sunset and dawn, not an abrupt reversal of hard shadows. All shadows in THIS frame must agree with its single sun and soften under diffuse sky. Tree shade, lawn, stone, roof and cedar all follow that source. Do NOT simply tint the previous lighting. Sky reflections are soft/broad; red enamel grill keeps its material, NO newly invented chrome. Its broad sky sheen dims/cools at twilight, with NO noon-white specular flare when sun is absent. A small direct highlight may appear only when the stated sun can reach it. Do not make the entire grill glow or relocate/reshape it.\nGround patch topology stays continuous: same sparse soil/grass/moss locations, consistent snow patches accumulating/retreating from shaded right rise and below-deck areas. Each stage changes modestly, NO instant carpet-green grass after snow, and no identical frozen ground/shadow texture through multiple adjacent frames. These are approximate art-direction targets, not permission to add a white overlay.\nIMPORTANT PRACTICAL LIGHTS: turn OFF ALL existing interior window illumination and ALL exterior wall lanterns in this base edit, including their orange wall spill. Windows must retain real panes and subdued sky/environment reflection (winter bare branches, summer leaves). Lamps retain exact fixtures but no emissive yellow cores/halos. One controlled warm-light envelope will be added AFTER registration. Do not add any new lights. Keep twilight clearly exposed/legible, with natural cool diffuse lighting rather than black crushed shadows.\n\nSHARED SCHEDULE (art-direction targets; output ONLY requested stage):\n[{\"id\": \"summer\", \"ambient_relative\": 1.0, \"direct_relative\": 1.0, \"practical_mix\": 0.0, \"snow_target_percent\": 0, \"direction\": \"Unchanged original summer daylight and sparse mature grass.\"}, {\"id\": \"early-fall\", \"ambient_relative\": 0.98, \"direct_relative\": 0.88, \"practical_mix\": 0.01, \"snow_target_percent\": 0, \"direction\": \"Afternoon: sun slightly lower toward camera-right than master, shadows slightly longer. Canopy90% green/10% muted yellow; lawn subtly less green than master, a few fallen leaves. NO sunset pink yet.\"}, {\"id\": \"turning-leaves\", \"ambient_relative\": 0.94, \"direct_relative\": 0.68, \"practical_mix\": 0.04, \"snow_target_percent\": 0, \"direction\": \"Late afternoon: camera-right sun lower again, shadows somewhat longer/softer. Canopy65% green/35% amber/russet. Moderate scattered leaves; grass slightly drier olive than previous stage. Sky pale blue, only very subtle warm wisps.\"}, {\"id\": \"fall\", \"ambient_relative\": 0.86, \"direct_relative\": 0.44, \"practical_mix\": 0.1, \"snow_target_percent\": 0, \"direction\": \"Golden evening: low camera-right sun, long softened shadows. Canopy35% green/65% red/russet/gold, retain a little green; slightly thinner than turning-leaves. Grass olive/dormant with moss only in existing shaded patches and moderate fallen leaves, NOT a uniform lush carpet. Warm sky restrained, no exaggerated sunset.\"}, {\"id\": \"first-frost\", \"ambient_relative\": 0.77, \"direct_relative\": 0.2, \"practical_mix\": 0.22, \"snow_target_percent\": 5, \"direction\": \"Sunset: very low camera-right sun almost gone, weak long shadows blending into diffuse skylight. IMPORTANT reduce existing leaf density by about HALF relative to autumn; many existing branches newly visible, remaining leaves muted brown/russet, not full dense red canopy. Fine frost and tiny snow traces on shaded5% of lawn/roof. Mostly damp dormant brown/olive grass with leaf litter. No spotlighting.\"}, {\"id\": \"first-snow\", \"ambient_relative\": 0.68, \"direct_relative\": 0.03, \"practical_mix\": 0.36, \"snow_target_percent\": 40, \"direction\": \"After sunset: diffuse cool sky, practically no direct sun and NO crisp sunny lawn patches. Existing branches mostly bare with a few brown leaves. Thin snow covers about40% of lawn and roof in coherent connected patches, not uniformly dusting every surface; exposed60% is dormant brown/olive grass. Snow begins in far-right shaded rise and left/below-deck shade, retaining exposed middle/foreground. Cool sky with faint peach at horizon.\"}, {\"id\": \"winter\", \"ambient_relative\": 0.6, \"direct_relative\": 0.0, \"practical_mix\": 0.48, \"snow_target_percent\": 85, \"direction\": \"Winter blue hour: soft diffuse cool light only, NO direct sunlight, NO hard white solar spot on red grill. Snow blanket covers about85% lawn and roof; preserve tiny dormant-grass margins in exposed foreground/near path so the next thaw does not reveal an entirely new lawn. Bare branches, minimal snow tracery rather than giant branch clumps. Clearly legible house and snow, not dark night. Golden cozy winter character will be restored in finishing; lamps off in this base image.\"}, {\"id\": \"snowmelt\", \"ambient_relative\": 0.68, \"direct_relative\": 0.03, \"practical_mix\": 0.36, \"snow_target_percent\": 60, \"direction\": \"Very early dawn: diffuse blue-peach sky, no hard direct solar patches yet. Thaw: snow still covers about60% lawn/roof, SAME patches as winter shrinking from exposed middle/foreground toward far-right rise and below-deck shade. Exposed40% is mostly damp STRAW-BROWN / muted OLIVE dormant grass, not bright green. Bare branches with tiny buds. Slightly brighter than winter, no orange porch glow in base.\"}, {\"id\": \"new-growth\", \"ambient_relative\": 0.77, \"direct_relative\": 0.2, \"practical_mix\": 0.22, \"snow_target_percent\": 30, \"direction\": \"Sunrise: weak low sun from camera-left, very soft elongated shadows extending generally rightward; warm highlights only where reachable, no hard noon-white grill highlight. Snow still covers about30% lawn/roof, shrinking SAME shaded patches as snowmelt, especially far-right rise and below-deck shade. Newly exposed grass predominantly subdued straw/olive with small muted-green shoots; do NOT jump to lush spring green. Sparse buds/leaves on about20% existing canopy, majority branches still visible.\"}, {\"id\": \"spring\", \"ambient_relative\": 0.86, \"direct_relative\": 0.44, \"practical_mix\": 0.1, \"snow_target_percent\": 5, \"direction\": \"Early spring golden morning: low camera-left sun, soft long shadows consistent across house/yard/grill, not a copy of summer noon shadows. Last5% snow only tiny deep-shade remnants, no large banks. Lawn now predominantly muted fresh green but still mixed olive/straw, short growth, modest fine dew; NOT the old uniformly lush bright lime lawn. Fresh leaves about55% canopy density with existing branches visible. Preserve inviting morning character without a giant brightness jump.\"}, {\"id\": \"late-spring\", \"ambient_relative\": 0.94, \"direct_relative\": 0.68, \"practical_mix\": 0.04, \"snow_target_percent\": 0, \"direction\": \"Later spring, rising morning sun: direct light stronger, camera-left toward overhead, shorter softer shadows than spring. Snow fully gone. Lawn noticeably fuller soft green than early spring, but mixed natural patches and original terrain, not artificial turf; dew mostly evaporated. Canopy85% fresh green, naturally full. Red grill enamel highlight small/modest, light direction consistent, not chrome.\"}, {\"id\": \"midsummer\", \"ambient_relative\": 0.98, \"direct_relative\": 0.88, \"practical_mix\": 0.01, \"snow_target_percent\": 0, \"direction\": \"Late morning summer: sun approaches original master light direction/elevation, shadows and grill reflections nearly converge to master without jumping. Canopy mature deep green, full. Lawn begins drying back: mix mature green and original sparse/olive patches, between lush late spring and original late summer. Sky nearly master blue. No warm interior or exterior lamps in base.\"}]\nREQUESTED STAGE: {\"id\": \"late-spring\", \"ambient_relative\": 0.94, \"direct_relative\": 0.68, \"practical_mix\": 0.04, \"snow_target_percent\": 0, \"direction\": \"Later spring, rising morning sun: direct light stronger, camera-left toward overhead, shorter softer shadows than spring. Snow fully gone. Lawn noticeably fuller soft green than early spring, but mixed natural patches and original terrain, not artificial turf; dew mostly evaporated. Canopy85% fresh green, naturally full. Red grill enamel highlight small/modest, light direction consistent, not chrome.\"}",
+      "references": [
+        {
+          "path": ".impeccable/mocks/seasons/v2/summer.jpg",
+          "sha256": "6d91f6f3993b5014b1be640c8a2eb51428762af3f05c35beed9bec26147bd9ab"
+        },
+        {
+          "path": ".impeccable/mocks/seasons/v3/late-spring.webp",
+          "sha256": "84ff6333049ac41a7aeb826006b678fce0bd0ca600b41461886ed23d12e854ff"
+        },
+        {
+          "path": ".impeccable/mocks/seasons/v2/spring.webp",
+          "sha256": "07667a496104b74750f06e6050a2e59bd93c7662af6195becb45bd7d4c61e069"
+        },
+        {
+          "path": ".impeccable/mocks/seasons/v3/midsummer.webp",
+          "sha256": "6e5a8cb50c33b9d57acefe6a1b18b14fb9fbde7f9122f6ebacbd5a2e024341b5"
+        },
+        {
+          "path": ".pi/artifacts/seasons/v3/targets-sheet.jpg",
+          "sha256": "ab43abd4ed1d8ace7e333e50b90fd24348ee8006e28df508f317b675996215a0"
+        }
+      ],
+      "raw_path": ".pi/artifacts/seasons/v4/late-spring-generated.jpg",
+      "raw_sha256": "d7bc009b5d1eba66b149f1969a8aee7d21952cf0caa39e32e4c3fefe767c792d",
+      "correction": {
+        "source": ".impeccable/mocks/seasons/v3/late-spring.webp",
+        "source_sha256": "84ff6333049ac41a7aeb826006b678fce0bd0ca600b41461886ed23d12e854ff",
+        "prompt": "Edit ONLY this supplied photograph of the RED CEDAR CHALET. This is a precise photo edit, NOT a newly imagined house. Preserve the exact house, camera, scale, crop, roof/dormers/chimney, cedar siding, stonework, star, every window/pane, deck/lattice, walkway, birdbath, bird feeder and ROUND RED CHARCOAL GRILL. Keep fixed tree trunks/branch positions and lower-left MLS mark. Do not add or remove structures, change perspective, replace cedar with vinyl siding or invent different landscaping. Only apply the following restrained seasonal/light changes to the attached image. Single full-frame edited photo, no collage, no double exposure.\nLater spring, rising morning sun: direct light stronger, camera-left toward overhead, shorter softer shadows than spring. Snow fully gone. Lawn noticeably fuller soft green than early spring, but mixed natural patches and original terrain, not artificial turf; dew mostly evaporated. Canopy85% fresh green, naturally full. Red grill enamel highlight small/modest, light direction consistent, not chrome.\nKeep all lighting coherent: direct sun and shadows agree; no hard sun patch or white solar specular in diffuse twilight. Red grill is glossy red enamel, not chrome; preserve its shape and let its sky highlight soften/dim when daylight is weak. Turn OFF interior window lights and existing exterior lanterns, including their warm spill, but keep fixtures and glass/reflections: controlled warm light is added later. Keep scene clearly exposed and photorealistic. Do not change anything else.",
+        "raw_path": ".pi/artifacts/seasons/v4/late-spring-corrected.jpg",
+        "raw_sha256": "b393f31612c8c0d22ca17f78aa4786be69a5132a8007d6c4ffa081601fc93c94",
+        "unregistered_path": ".pi/artifacts/seasons/v4/late-spring-corrected.png",
+        "reason": "Original multi-reference/full-schedule request failed visual camera/property fidelity. Single-photo correction replaces rejected or insufficiently changed candidate; no previous trial asset overwritten."
+      },
+      "unregistered_path": ".pi/artifacts/seasons/v4/late-spring-corrected.png",
+      "registration": {
+        "algorithm": "Robust affine fit to native Vision revision-1 flow on stable architectural texture; no dense warp",
+        "dx_normalized_xy1": [
+          -0.020093601608676695,
+          0.25169481909392344,
+          -0.1493134040892351
+        ],
+        "dy_normalized_xy1": [
+          0.08202652881684151,
+          -10.076825879496738,
+          -3.0716090874898074
+        ],
+        "height": 848,
+        "inliers": 2676,
+        "matches": 2715,
+        "median_displacement_px": 8.02862565177717,
+        "p95_displacement_px": 12.553709145798614,
+        "width": 1280
+      },
+      "preview_path": ".impeccable/mocks/seasons/v4/late-spring.webp",
+      "preview_sha256": "8299a06dbcc8bbf580d9f66418f13753b35b2f8f4422b44366a479d134906945",
+      "reflection_bare_mix": 0.18,
+      "practical_mix": 0.04
+    },
+    {
+      "id": "midsummer",
+      "sequence_id": "midsummer",
+      "schedule": {
+        "id": "midsummer",
+        "ambient_relative": 0.98,
+        "direct_relative": 0.88,
+        "practical_mix": 0.01,
+        "snow_target_percent": 0,
+        "direction": "Late morning summer: sun approaches original master light direction/elevation, shadows and grill reflections nearly converge to master without jumping. Canopy mature deep green, full. Lawn begins drying back: mix mature green and original sparse/olive patches, between lush late spring and original late summer. Sky nearly master blue. No warm interior or exterior lamps in base."
+      },
+      "prompt": "Retouch IMAGE 2 for one stage of a camera-locked ANNUAL TIMELAPSE. This corrects continuity, not a redesign. IMAGE 1 is the exact structural/material/camera master. IMAGE 2 is the existing target to revise. IMAGE 3/4 are previous/next OLD targets for object/terrain/foliage correspondence only; their lighting and grass jumps are flawed and must NOT be copied. IMAGE 5 is the OLD full contact sheet for context, not a montage to reproduce. Return ONE full-frame sharp photorealistic image, never a collage or double exposure.\nLOCK to IMAGE 1 every roof/chimney/dormer outline, scale/perspective, siding board, window/pane/mullion, star, porch post, stone, deck/lattice, bird feeder/pole, birdbath and red grill. Same crop and fixed tree trunks/branch positions. No invented furniture, path, flowers or decorations. Preserve lower-left MLS watermark. Only foliage, snow, grass and coherent physical lighting may change.\nWhole sequence: high summer daylight -> progressively lower camera-right afternoon/evening -> diffuse winter blue hour -> diffuse dawn -> low camera-left spring morning -> rising summer daylight. Winter is the diffuse bridge between sunset and dawn, not an abrupt reversal of hard shadows. All shadows in THIS frame must agree with its single sun and soften under diffuse sky. Tree shade, lawn, stone, roof and cedar all follow that source. Do NOT simply tint the previous lighting. Sky reflections are soft/broad; red enamel grill keeps its material, NO newly invented chrome. Its broad sky sheen dims/cools at twilight, with NO noon-white specular flare when sun is absent. A small direct highlight may appear only when the stated sun can reach it. Do not make the entire grill glow or relocate/reshape it.\nGround patch topology stays continuous: same sparse soil/grass/moss locations, consistent snow patches accumulating/retreating from shaded right rise and below-deck areas. Each stage changes modestly, NO instant carpet-green grass after snow, and no identical frozen ground/shadow texture through multiple adjacent frames. These are approximate art-direction targets, not permission to add a white overlay.\nIMPORTANT PRACTICAL LIGHTS: turn OFF ALL existing interior window illumination and ALL exterior wall lanterns in this base edit, including their orange wall spill. Windows must retain real panes and subdued sky/environment reflection (winter bare branches, summer leaves). Lamps retain exact fixtures but no emissive yellow cores/halos. One controlled warm-light envelope will be added AFTER registration. Do not add any new lights. Keep twilight clearly exposed/legible, with natural cool diffuse lighting rather than black crushed shadows.\n\nSHARED SCHEDULE (art-direction targets; output ONLY requested stage):\n[{\"id\": \"summer\", \"ambient_relative\": 1.0, \"direct_relative\": 1.0, \"practical_mix\": 0.0, \"snow_target_percent\": 0, \"direction\": \"Unchanged original summer daylight and sparse mature grass.\"}, {\"id\": \"early-fall\", \"ambient_relative\": 0.98, \"direct_relative\": 0.88, \"practical_mix\": 0.01, \"snow_target_percent\": 0, \"direction\": \"Afternoon: sun slightly lower toward camera-right than master, shadows slightly longer. Canopy90% green/10% muted yellow; lawn subtly less green than master, a few fallen leaves. NO sunset pink yet.\"}, {\"id\": \"turning-leaves\", \"ambient_relative\": 0.94, \"direct_relative\": 0.68, \"practical_mix\": 0.04, \"snow_target_percent\": 0, \"direction\": \"Late afternoon: camera-right sun lower again, shadows somewhat longer/softer. Canopy65% green/35% amber/russet. Moderate scattered leaves; grass slightly drier olive than previous stage. Sky pale blue, only very subtle warm wisps.\"}, {\"id\": \"fall\", \"ambient_relative\": 0.86, \"direct_relative\": 0.44, \"practical_mix\": 0.1, \"snow_target_percent\": 0, \"direction\": \"Golden evening: low camera-right sun, long softened shadows. Canopy35% green/65% red/russet/gold, retain a little green; slightly thinner than turning-leaves. Grass olive/dormant with moss only in existing shaded patches and moderate fallen leaves, NOT a uniform lush carpet. Warm sky restrained, no exaggerated sunset.\"}, {\"id\": \"first-frost\", \"ambient_relative\": 0.77, \"direct_relative\": 0.2, \"practical_mix\": 0.22, \"snow_target_percent\": 5, \"direction\": \"Sunset: very low camera-right sun almost gone, weak long shadows blending into diffuse skylight. IMPORTANT reduce existing leaf density by about HALF relative to autumn; many existing branches newly visible, remaining leaves muted brown/russet, not full dense red canopy. Fine frost and tiny snow traces on shaded5% of lawn/roof. Mostly damp dormant brown/olive grass with leaf litter. No spotlighting.\"}, {\"id\": \"first-snow\", \"ambient_relative\": 0.68, \"direct_relative\": 0.03, \"practical_mix\": 0.36, \"snow_target_percent\": 40, \"direction\": \"After sunset: diffuse cool sky, practically no direct sun and NO crisp sunny lawn patches. Existing branches mostly bare with a few brown leaves. Thin snow covers about40% of lawn and roof in coherent connected patches, not uniformly dusting every surface; exposed60% is dormant brown/olive grass. Snow begins in far-right shaded rise and left/below-deck shade, retaining exposed middle/foreground. Cool sky with faint peach at horizon.\"}, {\"id\": \"winter\", \"ambient_relative\": 0.6, \"direct_relative\": 0.0, \"practical_mix\": 0.48, \"snow_target_percent\": 85, \"direction\": \"Winter blue hour: soft diffuse cool light only, NO direct sunlight, NO hard white solar spot on red grill. Snow blanket covers about85% lawn and roof; preserve tiny dormant-grass margins in exposed foreground/near path so the next thaw does not reveal an entirely new lawn. Bare branches, minimal snow tracery rather than giant branch clumps. Clearly legible house and snow, not dark night. Golden cozy winter character will be restored in finishing; lamps off in this base image.\"}, {\"id\": \"snowmelt\", \"ambient_relative\": 0.68, \"direct_relative\": 0.03, \"practical_mix\": 0.36, \"snow_target_percent\": 60, \"direction\": \"Very early dawn: diffuse blue-peach sky, no hard direct solar patches yet. Thaw: snow still covers about60% lawn/roof, SAME patches as winter shrinking from exposed middle/foreground toward far-right rise and below-deck shade. Exposed40% is mostly damp STRAW-BROWN / muted OLIVE dormant grass, not bright green. Bare branches with tiny buds. Slightly brighter than winter, no orange porch glow in base.\"}, {\"id\": \"new-growth\", \"ambient_relative\": 0.77, \"direct_relative\": 0.2, \"practical_mix\": 0.22, \"snow_target_percent\": 30, \"direction\": \"Sunrise: weak low sun from camera-left, very soft elongated shadows extending generally rightward; warm highlights only where reachable, no hard noon-white grill highlight. Snow still covers about30% lawn/roof, shrinking SAME shaded patches as snowmelt, especially far-right rise and below-deck shade. Newly exposed grass predominantly subdued straw/olive with small muted-green shoots; do NOT jump to lush spring green. Sparse buds/leaves on about20% existing canopy, majority branches still visible.\"}, {\"id\": \"spring\", \"ambient_relative\": 0.86, \"direct_relative\": 0.44, \"practical_mix\": 0.1, \"snow_target_percent\": 5, \"direction\": \"Early spring golden morning: low camera-left sun, soft long shadows consistent across house/yard/grill, not a copy of summer noon shadows. Last5% snow only tiny deep-shade remnants, no large banks. Lawn now predominantly muted fresh green but still mixed olive/straw, short growth, modest fine dew; NOT the old uniformly lush bright lime lawn. Fresh leaves about55% canopy density with existing branches visible. Preserve inviting morning character without a giant brightness jump.\"}, {\"id\": \"late-spring\", \"ambient_relative\": 0.94, \"direct_relative\": 0.68, \"practical_mix\": 0.04, \"snow_target_percent\": 0, \"direction\": \"Later spring, rising morning sun: direct light stronger, camera-left toward overhead, shorter softer shadows than spring. Snow fully gone. Lawn noticeably fuller soft green than early spring, but mixed natural patches and original terrain, not artificial turf; dew mostly evaporated. Canopy85% fresh green, naturally full. Red grill enamel highlight small/modest, light direction consistent, not chrome.\"}, {\"id\": \"midsummer\", \"ambient_relative\": 0.98, \"direct_relative\": 0.88, \"practical_mix\": 0.01, \"snow_target_percent\": 0, \"direction\": \"Late morning summer: sun approaches original master light direction/elevation, shadows and grill reflections nearly converge to master without jumping. Canopy mature deep green, full. Lawn begins drying back: mix mature green and original sparse/olive patches, between lush late spring and original late summer. Sky nearly master blue. No warm interior or exterior lamps in base.\"}]\nREQUESTED STAGE: {\"id\": \"midsummer\", \"ambient_relative\": 0.98, \"direct_relative\": 0.88, \"practical_mix\": 0.01, \"snow_target_percent\": 0, \"direction\": \"Late morning summer: sun approaches original master light direction/elevation, shadows and grill reflections nearly converge to master without jumping. Canopy mature deep green, full. Lawn begins drying back: mix mature green and original sparse/olive patches, between lush late spring and original late summer. Sky nearly master blue. No warm interior or exterior lamps in base.\"}",
+      "references": [
+        {
+          "path": ".impeccable/mocks/seasons/v2/summer.jpg",
+          "sha256": "6d91f6f3993b5014b1be640c8a2eb51428762af3f05c35beed9bec26147bd9ab"
+        },
+        {
+          "path": ".impeccable/mocks/seasons/v3/midsummer.webp",
+          "sha256": "6e5a8cb50c33b9d57acefe6a1b18b14fb9fbde7f9122f6ebacbd5a2e024341b5"
+        },
+        {
+          "path": ".impeccable/mocks/seasons/v3/late-spring.webp",
+          "sha256": "84ff6333049ac41a7aeb826006b678fce0bd0ca600b41461886ed23d12e854ff"
+        },
+        {
+          "path": ".impeccable/mocks/seasons/v2/summer.jpg",
+          "sha256": "6d91f6f3993b5014b1be640c8a2eb51428762af3f05c35beed9bec26147bd9ab"
+        },
+        {
+          "path": ".pi/artifacts/seasons/v3/targets-sheet.jpg",
+          "sha256": "ab43abd4ed1d8ace7e333e50b90fd24348ee8006e28df508f317b675996215a0"
+        }
+      ],
+      "raw_path": ".pi/artifacts/seasons/v4/midsummer-generated.jpg",
+      "raw_sha256": "8d32526782f8817841f9fe5dc15de479437fde20cca70a29cf846fb39221eadc",
+      "unregistered_path": ".pi/artifacts/seasons/v4/midsummer-unregistered.png",
+      "registration": {
+        "algorithm": "Robust affine fit to native Vision revision-1 flow on stable architectural texture; no dense warp",
+        "dx_normalized_xy1": [
+          1.2648420401345128,
+          0.8573428489775181,
+          -0.7983047917558502
+        ],
+        "dy_normalized_xy1": [
+          -0.24130212566934386,
+          -9.643571997071307,
+          -3.159956765360961
+        ],
+        "height": 848,
+        "inliers": 2715,
+        "matches": 2715,
+        "median_displacement_px": 8.069704173468665,
+        "p95_displacement_px": 12.418351014750977,
+        "width": 1280
+      },
+      "preview_path": ".impeccable/mocks/seasons/v4/midsummer.webp",
+      "preview_sha256": "e587c271929aad17e449ebc35ca46fef83c4fac48672644286079f22e4c889e3",
+      "reflection_bare_mix": 0.05,
+      "practical_mix": 0.01
+    }
+  ],
+  "sequence": [
+    "v2/summer.jpg",
+    "v4/early-fall.webp",
+    "v4/turning-leaves.webp",
+    "v4/fall.webp",
+    "v4/first-frost.webp",
+    "v4/first-snow.webp",
+    "v4/winter.webp",
+    "v4/snowmelt.webp",
+    "v4/new-growth.webp",
+    "v4/spring.webp",
+    "v4/late-spring.webp",
+    "v4/midsummer.webp"
+  ],
+  "status": "Private continuity revision ready for owner viewing, NOT signed off: strict alignment gate failed. Original summer and historical v2/v3 unchanged. Keep colonial-29s open.",
+  "finishing": {
+    "method": "One robust affine registration; generated environmental lighting/ground plus common masked window/fixture envelope, no dense warp. Original watermark restored. WebPquality90. Prior assets untouched.",
+    "glass_polygons_source": "v2/provenance.json fall_window_treatment.polygons_master_pixels",
+    "glass_polygons_master_pixels": [
+      [
+        [
+          357,
+          193
+        ],
+        [
+          390,
+          318
+        ],
+        [
+          390,
+          350
+        ],
+        [
+          358,
+          366
+        ]
+      ],
+      [
+        [
+          359,
+          399
+        ],
+        [
+          373,
+          393
+        ],
+        [
+          373,
+          454
+        ],
+        [
+          359,
+          454
+        ]
+      ],
+      [
+        [
+          589,
+          211
+        ],
+        [
+          631,
+          223
+        ],
+        [
+          631,
+          283
+        ],
+        [
+          589,
+          275
+        ]
+      ],
+      [
+        [
+          580,
+          390
+        ],
+        [
+          625,
+          394
+        ],
+        [
+          625,
+          477
+        ],
+        [
+          580,
+          476
+        ]
+      ],
+      [
+        [
+          636,
+          396
+        ],
+        [
+          686,
+          400
+        ],
+        [
+          686,
+          480
+        ],
+        [
+          636,
+          479
+        ]
+      ],
+      [
+        [
+          795,
+          429
+        ],
+        [
+          803,
+          426
+        ],
+        [
+          807,
+          443
+        ],
+        [
+          805,
+          471
+        ],
+        [
+          797,
+          474
+        ]
+      ],
+      [
+        [
+          926,
+          428
+        ],
+        [
+          946,
+          432
+        ],
+        [
+          946,
+          481
+        ],
+        [
+          926,
+          481
+        ]
+      ],
+      [
+        [
+          965,
+          433
+        ],
+        [
+          974,
+          434
+        ],
+        [
+          974,
+          474
+        ],
+        [
+          965,
+          474
+        ]
+      ],
+      [
+        [
+          1054,
+          331
+        ],
+        [
+          1068,
+          335
+        ],
+        [
+          1068,
+          380
+        ],
+        [
+          1054,
+          377
+        ]
+      ],
+      [
+        [
+          1039,
+          455
+        ],
+        [
+          1057,
+          458
+        ],
+        [
+          1057,
+          470
+        ],
+        [
+          1039,
+          467
+        ]
+      ],
+      [
+        [
+          1090,
+          460
+        ],
+        [
+          1115,
+          463
+        ],
+        [
+          1115,
+          475
+        ],
+        [
+          1090,
+          472
+        ]
+      ]
+    ],
+    "fixture_cores_xy": [
+      [
+        395,
+        390
+      ],
+      [
+        774,
+        416
+      ],
+      [
+        849,
+        424
+      ],
+      [
+        1147,
+        465
+      ]
+    ],
+    "practical_mask_sha256": "765770dc697cac5c2d6d9fbc6cfff9d1e1f70bff7db53d7e145850627a474746",
+    "warm_source": "v2/winter.webp",
+    "warm_source_sha256": "e596718f0282259777d15fb83852f0b350a6531172d258a6de513e9c29316e17",
+    "winter_reflection_source": ".pi/artifacts/seasons/v4/winter-off.png",
+    "reflection_bare_mixes": [
+      0,
+      0.08,
+      0.2,
+      0.4,
+      0.7,
+      0.95,
+      1,
+      0.95,
+      0.8,
+      0.5,
+      0.18,
+      0.05
+    ],
+    "light_strengths": [
+      0.0,
+      0.01,
+      0.04,
+      0.1,
+      0.22,
+      0.36,
+      0.48,
+      0.36,
+      0.22,
+      0.1,
+      0.04,
+      0.01
+    ],
+    "regression": "Sky pixel500,50 unchanged by masked finishing in every new frame.",
+    "local_recipe": ".pi/artifacts/seasons/v4/finish.py",
+    "local_recipe_sha256": "bc816b72c553e4996afe8a03f4b42a0686950e529550b54eaac28e279e0d28a0"
+  },
+  "rejected_batch_note": "Six original five-reference/full-schedule outputs changed property/viewpoint and were rejected (fall,first-snow,winter,new-growth,spring,late-spring). First-frost also replaced to improve leaf thinning. Single-photo correction retained actual cedar chalet, verified on winter before correcting remaining six. Original rejected raw hashes retained as provenance, never used as final sources.",
+  "ground_finishing": {
+    "method": "One seeded, spatially biased patch field, nested masks and registered winter-ground texture. Local lawn-only composites exclude path, birdbath and feeder pole. Exposed new-growth/spring grass graded straw/olive before late-spring green. Fractions describe added mask area, NOT measured total snow coverage.",
+    "seed": 29,
+    "mask_fractions": {
+      "first-frost": 0.05,
+      "first-snow": 0.4,
+      "snowmelt": 0.65,
+      "new-growth": 0.35,
+      "spring": 0.08
+    },
+    "regressions": [
+      "Snow masks nested in increasing coverage order",
+      "Sky pixel unchanged for every scene"
+    ],
+    "ground_mask_sha256": "f7a3abf30d1e0bd3763b70dfc0398b3d490dd52ac9fafb6686cd92bd8ab9f60c"
+  },
+  "verification": {
+    "alignment_command": "python3 .impeccable/mocks/seasons/measure-alignment.py v4",
+    "alignment_status": "FAIL \u2014 unchanged strict threshold; owner review required",
+    "alignment_report": "v4/alignment-check.json",
+    "alignment_limit": "Low-confidence changed window matches cannot establish displacement. Winter roof peak 3.606px and spring roof peak 2.236px exceed 2px. Do not treat low-correlation first-frost match as actual 87px house drift. No pixel-perfect claim.",
+    "browser": "check.html PASS in normal and reduced-motion modes; all12 fade intervals and wrap. Mobile390px no overflow. Visual continuity proof checklist audited.",
+    "review": "93b8f9f7-849e-4e73-ba19-923826b0a36f: no confirmed blocker to explicitly disclosed owner preview; not production approval.",
+    "finishing_check": "Nested snow masks, light strength<=0.5, unchanged sky pixel and immutable master assertions pass in local finish.py."
+  }
+}

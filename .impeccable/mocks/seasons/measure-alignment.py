@@ -9,11 +9,11 @@ import tempfile
 
 root = Path(__file__).resolve().parent
 version = sys.argv[1] if len(sys.argv) > 1 else 'v2'
-assert version in ('v2', 'v3'), 'Usage: measure-alignment.py [v2|v3]'
+assert version in ('v2', 'v3', 'v4'), 'Usage: measure-alignment.py [v2|v3|v4]'
 work = Path('.pi/artifacts/seasons') / version
 sources = {name: (work / ('spring-lush.png' if name == 'spring' else f'{name}-unregistered.png'), root / f'v2/{name}.webp') for name in ('spring', 'fall', 'winter')}
-if version == 'v3':
-    sources = {record['sequence_id']: (work / f"{record['id']}-unregistered.png", Path(record['preview_path'])) for record in json.loads((root / 'v3/provenance.json').read_text())['images']}
+if version != 'v2':
+    sources = {record['sequence_id']: (Path(record.get('unregistered_path', work / f"{record['id']}-unregistered.png")), Path(record['preview_path'])) for record in json.loads((root / version / 'provenance.json').read_text())['images']}
 # Validation points are not the wall-texture fitting regions in align.swift.
 points = {'main_dormer_peak': (614, 124), 'dormer_window_foot': (581, 291),
           'porch_post_top': (814, 383), 'porch_post_foot': (961, 548),

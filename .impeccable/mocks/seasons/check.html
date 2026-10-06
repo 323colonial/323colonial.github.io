@@ -22,7 +22,8 @@ try {
   const images = [...doc.querySelectorAll('.scene img')];
   assert(images.length === 12 && images.every(img => img.complete && img.naturalWidth === 1280 && img.naturalHeight === 848), 'Twelve matching-size images load');
   assert(new Set(images.map(img => img.src)).size === 12, 'Twelve distinct source scenes');
-  assert([0, 3, 6, 9].every((i, n) => images[i].getAttribute('src') === ['v2/summer.jpg', 'v2/fall.webp', 'v2/winter.webp', 'v2/spring.webp'][n]), 'Approved anchor paths unchanged');
+  assert(images.slice(1).every(img => img.getAttribute('src').startsWith('v4/')), 'All eleven generated scenes use continuity revision');
+  assert((await fetch('twelve-before.html')).ok && doc.querySelector('a[href="twelve-before.html"]'), 'Previous twelve-frame trial remains available');
   assert((await fetch('four.html')).ok && doc.querySelector('a[href="four.html"]'), 'Four-frame baseline remains available');
   assert(images[0].getAttribute('src') === 'v2/summer.jpg', 'Summer uses original hero');
   const animations = doc.querySelector('.scene').getAnimations({ subtree: true });
@@ -57,7 +58,7 @@ try {
   doc.querySelector('#sequence').open = true;
   assert(frame.contentWindow.getComputedStyle(doc.querySelector('.targets.sequence')).gridTemplateColumns.split(' ').length === 3, 'Desktop contact sheet has three columns in playback order');
   assert(!doc.querySelector('script[src*="analytics"]'), 'No analytics in private preview');
-  result.textContent = 'PASS — 12 distinct scenes, unchanged anchors, continuous 5s loop, all 12 fades and wrap, pause labels, still selection and playback';
+  result.textContent = 'PASS — 12 continuity scenes, original summer, prior comparisons, continuous 5s loop, all 12 fades and wrap, pause labels, still selection and playback';
 } catch (error) {
   result.textContent = `FAIL — ${error.message}`;
 }
