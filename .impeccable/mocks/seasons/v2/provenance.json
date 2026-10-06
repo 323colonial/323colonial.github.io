@@ -1,0 +1,348 @@
+{
+  "source": ".impeccable/mocks/seasons/v2/summer.jpg",
+  "source_original": "/Users/hays/Downloads/redfin-colonial-2026-10-06/redfin-01.jpg",
+  "source_sha256": "6d91f6f3993b5014b1be640c8a2eb51428762af3f05c35beed9bec26147bd9ab",
+  "source_dimensions": [
+    1280,
+    848
+  ],
+  "source_season": "Owner-confirmed late summer; unchanged original JPEG bytes.",
+  "model": "gemini-3-pro-image-preview",
+  "common_prompt": "Edit IMAGE 1, the exact camera-locked master photograph of this real house. Produce a photorealistic seasonal version of IMAGE 1, not a new composition. CRITICAL: preserve the pixel coordinates of every architectural edge, exact house scale/perspective, roof silhouette, chimney, dormers, porch posts, star, windows and their individual panes, doors, stonework, deck railing and lattice. Keep bird feeder, birdbath and red grill exactly in place. Do not zoom, crop, rotate, add or remove structural objects. Preserve all framing and tree branch positions, except leaves may change seasonally. Do not copy the viewpoint of any other image. Preserve the existing lower-left MLS watermark in the same place. No text overlays or collage. Return only one full-frame photograph. Make requested light changes coherent and physically plausible; no fake flare, fantasy sunbeams, HDR halos or excessive saturation. ",
+  "images": {
+    "spring": {
+      "prompt": "SPRING, late April/early May: noticeably lush vibrant soft green grass covering the existing lawn, fine glistening morning dew catching low sun in many tiny natural highlights, especially foreground grass. Moist moss in existing shady patches. Fresh young pale-green woodland canopy. Warm MORNING GOLDEN HOUR light skims the lawn and reddish cedar, cool shaded pockets, delicately warm clear sky. Dew is tiny and photoreal, not glitter, oversized water droplets or a hazy overlay. Inviting fresh morning, not midday. Preserve exact house architecture and existing terrain.",
+      "raw_path": ".pi/artifacts/seasons/v2/spring-generated.jpg",
+      "raw_sha256": "ef275cfadaf6c99cdfcd01adc7e4bb7299cc9e433493963f56eb6ef2cd29bf6e",
+      "unregistered_path": ".pi/artifacts/seasons/v2/spring-unregistered.png",
+      "reference": null,
+      "reference_sha256": null,
+      "lawn_revision": {
+        "prompt": "Make ONE localized edit to this supplied photograph: replace the existing sparse, patchy foreground lawn with noticeably dense, lush, healthy fresh spring grass, naturally uneven woodland grass but with no dry brown bare patches. Keep existing yard slope, walkway, birdbath and all objects precisely unchanged. Add realistic glistening morning dew catching the golden sun: many very fine bright dewdrop highlights on individual blades, clearest across foreground, never fake glitter or oversized drops. Grass should be visibly fresher, greener and fuller, with soft moss in shade, not yellow, not a manicured golf course. Preserve the lovely low warm morning golden-hour sunlight, sky, trees, entire house and EXACT camera/pixel registration from input. Do NOT change architecture or composition, add objects or alter the watermark. Return the full-frame photorealistic edited image.",
+        "source": ".pi/artifacts/seasons/v2/spring-generated.jpg",
+        "raw_path": ".pi/artifacts/seasons/v2/spring-lush.jpg",
+        "raw_sha256": "335c7324313c1f9966130477eb2e07f30ae9d9b744e85f93b3454c7cbf39c6a9"
+      },
+      "preview_path": ".impeccable/mocks/seasons/v2/spring.webp",
+      "preview_sha256": "07667a496104b74750f06e6050a2e59bd93c7662af6195becb45bd7d4c61e069",
+      "registration": {
+        "algorithm": "Robust affine fit to native Vision revision-1 flow on stable architectural texture; no dense warp",
+        "dx_normalized_xy1": [
+          1.0319663406571153,
+          -0.8625433099879416,
+          0.25773146695624805
+        ],
+        "dy_normalized_xy1": [
+          0.18268417059168854,
+          -10.562673942643029,
+          -2.8069348347634775
+        ],
+        "height": 848,
+        "inliers": 2622,
+        "matches": 2715,
+        "median_displacement_px": 7.963569262789195,
+        "p95_displacement_px": 12.706800604610317,
+        "width": 1280
+      }
+    },
+    "fall": {
+      "prompt": "AUTUMN at evening golden hour, warmer and more red than previous concept. IMAGE 2 shows actual surrounding autumn woods: use that ecological variety, then emphasize natural crimson, burgundy, vermilion and rusty red leaves on several deciduous trees and foreground branches, balanced with amber/gold and some residual green. More soft forest moss visibly occupying shaded patches of existing sloping lawn, not a uniformly landscaped carpet. Scatter a credible layer of red/gold/brown fallen leaves on grass and path margins. Long low EVENING GOLDEN HOUR light across yard and cedar siding. Delicate wispy high clouds in warm pale-blue sky. Subtle golden interior light shines through ONLY existing window panes, a gentle warm glow and very restrained spill near the facade; glass panes and mullions stay exactly in place. No new flowers, trees, paths or decorations. Master IMAGE 1 alone governs camera and architecture.",
+      "raw_path": ".pi/artifacts/seasons/v2/fall-generated.jpg",
+      "raw_sha256": "31ff24cadbc3c877d976a303654ccff10c447ff1dab56918d876167790a00c04",
+      "unregistered_path": ".pi/artifacts/seasons/v2/fall-unregistered.png",
+      "reference": "/Users/hays/Downloads/redfin-colonial-2026-10-06/redfin-14.jpg",
+      "reference_sha256": "1f394875f22dc20829843772d0bd96ae2a4e1ea45684fa2594ba15ba2765f59a",
+      "preview_path": ".impeccable/mocks/seasons/v2/fall.webp",
+      "preview_sha256": "d385466c94ca792065e24df27518f3dcaa41b3940e5db4da68cb1b980921cf50",
+      "registration": {
+        "algorithm": "Robust affine fit to native Vision revision-1 flow on stable architectural texture; no dense warp",
+        "dx_normalized_xy1": [
+          0.2344847674795089,
+          -0.09283900238170875,
+          0.20227037412743124
+        ],
+        "dy_normalized_xy1": [
+          -0.14210516169425497,
+          -10.465916860496236,
+          -2.82911233199496
+        ],
+        "height": 848,
+        "inliers": 2715,
+        "matches": 2715,
+        "median_displacement_px": 8.088412078661895,
+        "p95_displacement_px": 12.80276100984205,
+        "width": 1280
+      }
+    },
+    "winter": {
+      "prompt": "WINTER DUSK, based on actual snow appearance of IMAGE 2 but exact IMAGE 1 camera. Keep substantial smooth snow blanket on roof/lawn, snow-traced bare branches and the original terrain, birdbath and deck; actual house stays exact. Blue hour approaching twilight: cool muted blue/lavender snowy shadows and a faint peach-pink horizon beneath a soft dusky blue sky. Lovely warm golden light pours gently from existing windows, preserving every frame/mullion, and existing wall lanterns are lit. Warm interior against cool snow; localized believable amber light near windows/porch, no invented floodlights or huge orange pools. Exterior dark enough to feel dusk but house and snow remain clearly legible. No Christmas decorations, falling-snow overlay, smoke or extra objects. Do not adopt IMAGE 2 viewpoint or its foreground trunks.",
+      "raw_path": ".pi/artifacts/seasons/v2/winter-generated.jpg",
+      "raw_sha256": "1d6f846da248307ae6a658debb2b451949e3242db3e45d5c7b6f2cbc405c31d5",
+      "unregistered_path": ".pi/artifacts/seasons/v2/winter-unregistered.png",
+      "reference": "/Users/hays/Downloads/redfin-colonial-2026-10-06/redfin-13.jpg",
+      "reference_sha256": "f66cb0dffdcbc387e233824b6a095b205744e83198cd1c490b33823a7ab8d7f2",
+      "preview_path": ".impeccable/mocks/seasons/v2/winter.webp",
+      "preview_sha256": "e596718f0282259777d15fb83852f0b350a6531172d258a6de513e9c29316e17",
+      "registration": {
+        "algorithm": "Robust affine fit to native Vision revision-1 flow on stable architectural texture; no dense warp",
+        "dx_normalized_xy1": [
+          0.7953569649288293,
+          0.7803327677832197,
+          -0.6526558662601339
+        ],
+        "dy_normalized_xy1": [
+          0.01390570240671487,
+          -9.521945811555868,
+          -3.3217418012338387
+        ],
+        "height": 848,
+        "inliers": 2644,
+        "matches": 2715,
+        "median_displacement_px": 8.07689114946646,
+        "p95_displacement_px": 12.311464144807772,
+        "width": 1280
+      }
+    }
+  },
+  "status": "Private revised AI seasonal concepts. Architectural camera alignment corrected; generated textures are not identical to original. Four targets for owner review, no 24-frame sequence or public integration.",
+  "fall_window_treatment": {
+    "polygons_master_pixels": [
+      [
+        [
+          357,
+          193
+        ],
+        [
+          390,
+          318
+        ],
+        [
+          390,
+          350
+        ],
+        [
+          358,
+          366
+        ]
+      ],
+      [
+        [
+          359,
+          399
+        ],
+        [
+          373,
+          393
+        ],
+        [
+          373,
+          454
+        ],
+        [
+          359,
+          454
+        ]
+      ],
+      [
+        [
+          589,
+          211
+        ],
+        [
+          631,
+          223
+        ],
+        [
+          631,
+          283
+        ],
+        [
+          589,
+          275
+        ]
+      ],
+      [
+        [
+          580,
+          390
+        ],
+        [
+          625,
+          394
+        ],
+        [
+          625,
+          477
+        ],
+        [
+          580,
+          476
+        ]
+      ],
+      [
+        [
+          636,
+          396
+        ],
+        [
+          686,
+          400
+        ],
+        [
+          686,
+          480
+        ],
+        [
+          636,
+          479
+        ]
+      ],
+      [
+        [
+          795,
+          429
+        ],
+        [
+          803,
+          426
+        ],
+        [
+          807,
+          443
+        ],
+        [
+          805,
+          471
+        ],
+        [
+          797,
+          474
+        ]
+      ],
+      [
+        [
+          926,
+          428
+        ],
+        [
+          946,
+          432
+        ],
+        [
+          946,
+          481
+        ],
+        [
+          926,
+          481
+        ]
+      ],
+      [
+        [
+          965,
+          433
+        ],
+        [
+          974,
+          434
+        ],
+        [
+          974,
+          474
+        ],
+        [
+          965,
+          474
+        ]
+      ],
+      [
+        [
+          1054,
+          331
+        ],
+        [
+          1068,
+          335
+        ],
+        [
+          1068,
+          380
+        ],
+        [
+          1054,
+          377
+        ]
+      ],
+      [
+        [
+          1039,
+          455
+        ],
+        [
+          1057,
+          458
+        ],
+        [
+          1057,
+          470
+        ],
+        [
+          1039,
+          467
+        ]
+      ],
+      [
+        [
+          1090,
+          460
+        ],
+        [
+          1115,
+          463
+        ],
+        [
+          1115,
+          475
+        ],
+        [
+          1090,
+          472
+        ]
+      ]
+    ],
+    "original_reflection_mix": 0.75,
+    "reflection_brightness_percent": 85,
+    "reflection_saturation_percent": 70,
+    "warm_tint": "#bc824a at 12%",
+    "mask_feather_sigma": 1
+  },
+  "finishing": "finish-targets.py restores unchanged master watermark crop at x0/y803, 137x45; WebP quality90. Summer JPEG byte-identical. Global robust affine camera registration only, no dense seasonal warp.",
+  "verification": {
+    "synthetic_translation": {
+      "shift_px": [
+        9,
+        6
+      ],
+      "mae_before": 0.176368,
+      "mae_after": 0.006677,
+      "command": "python3 .impeccable/mocks/seasons/check-alignment.py"
+    },
+    "landmark_report": ".impeccable/mocks/seasons/v2/alignment-check.json",
+    "landmark_command": "python3 .impeccable/mocks/seasons/measure-alignment.py",
+    "comparable_landmarks": [
+      "main_dormer_peak",
+      "dormer_window_foot",
+      "garage_jamb_top",
+      "deck_newel"
+    ],
+    "worst_comparable_residual_px": {
+      "spring": 1.0,
+      "fall": 0.0,
+      "winter": 1.414
+    },
+    "limitations": "Not a pixel-perfect guarantee. Porch, snow and thin pole differ in appearance; local correlation ambiguous. Enlarged source/winter window and post crops plus half-blend views inspected visually. Changes of foliage, light and snow still necessarily dissolve. Dense seasonal optical-flow warp was rejected because it bent architecture; only one affine transform is used.",
+    "browser_check": ".impeccable/mocks/seasons/check.html",
+    "cycle_ms": 5000,
+    "summer": "Raw original JPEG bytes unchanged, hash checked."
+  }
+}

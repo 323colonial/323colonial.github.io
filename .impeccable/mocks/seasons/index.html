@@ -16,7 +16,7 @@
     header > p { text-align: right; }
     main { max-width: 1280px; margin: auto; }
     figure { margin: 0; }
-    .scene { position: relative; isolation: isolate; aspect-ratio: 1600 / 1060; }
+    .scene { position: relative; isolation: isolate; aspect-ratio: 1280 / 848; }
     .scene img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; mix-blend-mode: plus-lighter; }
     .scene img:not(:first-child) { opacity: 0; }
     #controls { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 24px; padding: 14px 24px 0; }
@@ -31,6 +31,12 @@
     figcaption { padding: 14px 24px 24px; font-size: 13px; line-height: 1.65; color: #50564f; }
     figcaption p { margin: 0; }
     #status { margin-bottom: 5px; color: #252d29; }
+    details { margin: 0 24px 24px; }
+    summary { min-height: 44px; padding-block: 12px; cursor: pointer; color: #593a32; }
+    .targets { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+    .targets img { display: block; width: 100%; height: auto; }
+    .targets figcaption { padding: 8px 0; }
+    @media (max-width: 600px) { .targets { grid-template-columns: 1fr; } }
     @media (max-width: 600px) {
       header { padding: 18px 20px; align-items: flex-start; gap: 16px; }
       h1 { font-size: 25px; }
@@ -49,10 +55,10 @@
   <main>
     <figure>
       <div class="scene" role="img" aria-label="Original late-summer photograph of 323 Colonial Drive, viewed from the front-left corner.">
-        <img src="../../../assets/listing/01.webp" width="1600" height="1060" alt="" fetchpriority="high">
-        <img src="fall.webp" width="1600" height="1060" alt="">
-        <img src="winter.webp" width="1600" height="1060" alt="">
-        <img src="spring.webp" width="1600" height="1060" alt="">
+        <img src="v2/summer.jpg" width="1280" height="848" alt="" fetchpriority="high">
+        <img src="v2/fall.webp" width="1280" height="848" alt="">
+        <img src="v2/winter.webp" width="1280" height="848" alt="">
+        <img src="v2/spring.webp" width="1280" height="848" alt="">
       </div>
       <div id="controls" hidden>
         <div class="seasons" role="group" aria-label="Choose a still season">
@@ -68,6 +74,16 @@
         <p>Seasonal visualizations: spring, fall and winter are AI-edited concepts; late summer is the original photo. Fall and winter use actual property photos as seasonal references. Live site unchanged.</p>
       </figcaption>
     </figure>
+    <details>
+      <summary>Compare four seasonal targets</summary>
+      <div class="targets">
+        <figure><img src="v2/spring.webp" width="1280" height="848" alt="Spring concept: lush grass in golden morning light."><figcaption>Spring · golden morning</figcaption></figure>
+        <figure><img src="v2/summer.jpg" width="1280" height="848" alt="Unchanged high-quality late-summer photograph."><figcaption>Late summer · unchanged original</figcaption></figure>
+        <figure><img src="v2/fall.webp" width="1280" height="848" alt="Fall concept: red foliage, moss and fallen leaves, evening sky and subtle window warmth."><figcaption>Fall · golden evening, quieter windows</figcaption></figure>
+        <figure><img src="v2/winter.webp" width="1280" height="848" alt="Winter concept: snow at dusk with warm golden windows."><figcaption>Winter · blue-hour warmth</figcaption></figure>
+      </div>
+      <p>Camera alignment corrected to the high-quality original. Fine AI-generated details can still differ. Four targets for review; the 24-frame sequence is not built yet.</p>
+    </details>
   </main>
   <script type="module">
     const scene = document.querySelector('.scene');
@@ -77,6 +93,8 @@
     const buttons = [...document.querySelectorAll('[data-season]')];
     const images = [...scene.querySelectorAll('img')];
     const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+    const cycle = 5000;
+    const step = cycle / images.length;
     try {
       await Promise.all(images.map(image => image.decode()));
       const animations = images.map((image, index) => image.animate([
@@ -85,7 +103,7 @@
         { opacity: 0, offset: 1 / 4 },
         { opacity: 0, offset: 11 / 12 },
         { opacity: 1, offset: 1 }
-      ], { duration: 36000, iterations: Infinity, delay: -((4 - index) % 4) * 9000 }));
+      ], { duration: cycle, iterations: Infinity, delay: -((4 - index) % 4) * step }));
       animations.forEach(animation => { animation.pause(); animation.currentTime = 0; });
       let playing = !reduced.matches;
       let inView = true;
@@ -98,7 +116,7 @@
         toggle.textContent = reduced.matches ? 'Motion off' : playing ? 'Pause' : 'Play';
         buttons.forEach(button => button.setAttribute('aria-pressed', String(!playing && Number(button.dataset.season) === selected)));
         status.textContent = playing
-          ? '6s hold · 3s dissolve · Choose a season to hold that view.'
+          ? '5s full year · Choose a season to hold that view.'
           : `${names[selected]} still · ${reduced.matches ? 'Reduced motion respected.' : 'Play to cycle through the year.'}`;
         scene.setAttribute('aria-label', playing
           ? 'Seasonal crossfade of the same front-left view of 323 Colonial Drive. Spring, fall and winter are AI concepts; late summer is the original photograph.'
@@ -106,13 +124,13 @@
       }
       toggle.addEventListener('click', () => {
         playing = !playing;
-        if (!playing) selected = Math.floor(((animations[0].currentTime ?? 0) % 36000) / 9000);
+        if (!playing) selected = Math.floor(((animations[0].currentTime ?? 0) % cycle) / step);
         sync();
       });
       buttons.forEach(button => button.addEventListener('click', () => {
         playing = false;
         selected = Number(button.dataset.season);
-        animations.forEach(animation => { animation.pause(); animation.currentTime = selected * 9000; });
+        animations.forEach(animation => { animation.pause(); animation.currentTime = selected * step; });
         sync();
       }));
       reduced.addEventListener('change', () => {
