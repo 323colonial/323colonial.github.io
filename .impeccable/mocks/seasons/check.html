@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><title>Seasonal preview checks</title>
+<h1 id="result">Running seasonal preview checks…</h1>
+<iframe title="Seasonal preview under test" width="1100" height="900"></iframe>
+<script type="module">
+const result = document.querySelector('#result');
+const assert = (value, message) => { if (!value) throw new Error(message); };
+try {
+  assert((await fetch('index.html')).ok, 'Seasonal preview must exist');
+  const frame = document.querySelector('iframe');
+  await new Promise(resolve => { frame.onload = resolve; frame.src = 'index.html'; });
+  const doc = frame.contentDocument;
+  await new Promise((resolve, reject) => {
+    const check = () => {
+      if (!doc.querySelector('#controls').hidden) { observer.disconnect(); clearTimeout(timeout); resolve(); }
+    };
+    const observer = new MutationObserver(check);
+    const timeout = setTimeout(() => { observer.disconnect(); reject(new Error('Preview images did not become ready')); }, 10000);
+    observer.observe(doc.body, { attributes: true, subtree: true });
+    check();
+  });
+  const images = [...doc.querySelectorAll('.scene img')];
+  assert(images.length === 4 && images.every(img => img.complete && img.naturalWidth === 1600), 'Four matching-size images load');
+  assert(images[0].getAttribute('src') === '../../../assets/listing/01.webp', 'Summer uses original hero');
+  const animations = doc.querySelector('.scene').getAnimations({ subtree: true });
+  assert(animations.length === 4, 'Four season animations exist');
+  assert(animations.every(a => a.effect.getTiming().duration === 36000), 'Four nine-second season slots');
+  const toggle = doc.querySelector('#play');
+  if (toggle.textContent === 'Pause') toggle.click();
+  assert(animations.every(a => a.playState === 'paused'), 'Pause freezes all layers');
+  for (const [i, season] of ['Summer', 'Fall', 'Winter', 'Spring'].entries()) {
+    doc.querySelector(`[data-season="${i}"]`).click();
+    assert(animations.every(a => a.currentTime === i * 9000 && a.playState === 'paused'), `${season} selects still frame`);
+    assert(Math.abs(Number(frame.contentWindow.getComputedStyle(images[i]).opacity) - 1) < .01, `${season} selected image is opaque`);
+  }
+  doc.querySelector('[data-season="0"]').click();
+  animations.forEach(a => { a.currentTime = 7500; });
+  const opacity = images.map(img => Number(frame.contentWindow.getComputedStyle(img).opacity));
+  assert(Math.abs(opacity[0] - .5) < .02 && Math.abs(opacity[1] - .5) < .02, 'Mid-fade blends summer/fall evenly');
+  assert(frame.contentWindow.getComputedStyle(images[0]).mixBlendMode === 'plus-lighter', 'Crossfade avoids dark midpoint');
+  doc.querySelector('[data-season="0"]').click();
+  toggle.click();
+  if (frame.contentWindow.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    assert(animations.every(a => a.playState === 'paused') && toggle.disabled, 'Reduced motion stays static');
+  } else {
+    assert(animations.every(a => a.playState === 'running'), 'Play resumes timeline');
+    toggle.click();
+  }
+  assert(!doc.querySelector('script[src*="analytics"]'), 'No analytics in private preview');
+  result.textContent = 'PASS — images, timing, crossfade, pause, season selection, playback and original source';
+} catch (error) {
+  result.textContent = `FAIL — ${error.message}`;
+}
+</script></html>

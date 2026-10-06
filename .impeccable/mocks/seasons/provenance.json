@@ -1,0 +1,58 @@
+{
+  "source": "assets/listing/01.webp",
+  "source_sha256": "46cbc68eb1788480302cd83e2d04137c6ed04de5eb47055f429edbc861c29903",
+  "model": "gemini-3-pro-image-preview",
+  "status": "Private conceptual seasonal edits; summer is the unchanged actual photograph.",
+  "common_prompt": "Edit the attached actual property photograph, not a new composition. This is one frame of a registered seasonal crossfade. Match the original camera, perspective, framing, aspect ratio and every architectural edge exactly. Keep the same house size and position, chimney, rooflines, dormers, glass panes, doors, garage, star, siding, stonework, deck, railings, lattice, grill, bird feeder, birdbath, walkway and land contours. Keep all tree trunks and branches at their original positions. Do not add or remove buildings, objects, decorative plantings or lights. Do not zoom, rotate, crop, move the camera, invent architecture, add text or add borders. Preserve fine photographic detail and natural West Virginia woodland character. Only change seasonal foliage, ground cover and plausible light as described. Return a single full-frame photorealistic edited photograph, not a grid or collage. ",
+  "season_prompts": {
+    "spring": "Late April in the Appalachian foothills. Fresh translucent chartreuse and pale green deciduous leaves, smaller and more delicate than summer leaves, lush fresh grass, clear soft morning sunlight with a pale blue sky. Keep existing evergreens. No invented flowering trees or landscaped flower beds. Restrained, believable renewal; preserve all visible house details.",
+    "fall": "Late October in the Appalachian foothills. Existing deciduous foliage turns honey gold, ochre, copper and muted russet with a little residual green; existing evergreens remain green. Scattered naturally fallen leaves on the lawn and beside the walkway. Clear pale blue sky and soft late-afternoon amber light. Rich but realistic autumn, not neon orange. Preserve all visible house details.",
+    "winter": "A calm January afternoon after a light snowfall in the Appalachian foothills. Existing deciduous trees bare, keeping exact branch structure wherever visible; evergreens retain needles with modest snow dusting. Thin natural snow over lawn, birdbath rim, deck rails and roof surfaces, no deep drifts; walkway remains legible. Pale cool blue sky and soft winter daylight, quiet warm glow inside existing windows, not exaggerated yellow panes. No Christmas decorations, no falling-snow overlay, no people. Snow follows existing geometry; preserve all house details."
+  },
+  "images": {
+    "spring": {
+      "generated_path": ".pi/artifacts/seasons/spring.jpg",
+      "generated_sha256": "7f89f28dabc5b02f9861fca9f1e403a0d230012fd68fc2f5353b4e2bf8aca19e",
+      "mime_type": "image/jpeg",
+      "preview_path": ".impeccable/mocks/seasons/spring.webp",
+      "preview_sha256": "50b835e823ac138a006057bd2ca28de9f89e0bbce596926507d736748d962498"
+    },
+    "fall": {
+      "generated_path": ".pi/artifacts/seasons/fall-reference.jpg",
+      "generated_sha256": "ac7045fbfc241ac3aadbb08b8a4ae2f120f26fde4eef7e5ae2759c6312afed62",
+      "mime_type": "image/jpeg",
+      "preview_path": ".impeccable/mocks/seasons/fall.webp",
+      "preview_sha256": "61e197a2aa8f06e416c55905b5dd615258ec25b7e1e3947fcd64ecd19c884a3d",
+      "initial_concept": {
+        "generated_path": ".pi/artifacts/seasons/fall.jpg",
+        "generated_sha256": "26f83387b34225d90771487928b9ebd2c51c86bef6046bf72c156b7762c157ad",
+        "mime_type": "image/jpeg",
+        "preview_path": ".impeccable/mocks/seasons/fall.webp",
+        "preview_sha256": "1e67f350af8c0c71d34ac67e29469a236ac52dc1648eebceb557a87e58c1982b"
+      },
+      "seasonal_reference": "assets/listing/08.webp",
+      "seasonal_reference_sha256": "0eb522a6d5a31796b0aa841ddf8f7a699bd68580da8dbcb1d46c5583ab731f6c",
+      "revision_prompt": "IMAGE 2 is an actual autumn aerial photograph of these woods. Use its restrained mixed foliage palette: dusty russet and muted reddish leaves, ochre, faded gold, olive and substantial remaining green. Avoid making the whole canopy yellow or orange. Change only the seasonal appearance of IMAGE 1. The near leaves should show a plausible mixture of these tones. Scatter a few leaves on the lawn. Keep camera and all architectural geometry from IMAGE 1 EXACTLY. Do not import the aerial camera, hills or any structures from IMAGE 2. Soft natural autumn daylight, not theatrical sunset."
+    },
+    "winter": {
+      "generated_path": ".pi/artifacts/seasons/winter-reference.jpg",
+      "generated_sha256": "cc6bfcb030db044a6d95779324c803d477ec2e4c217b29c47f7d53710615920a",
+      "mime_type": "image/jpeg",
+      "preview_path": ".impeccable/mocks/seasons/winter.webp",
+      "preview_sha256": "36f10f7187f47ca5acde6c00b3c54c179442823b056f587c44919c2e9c2da764",
+      "initial_concept": {
+        "generated_path": ".pi/artifacts/seasons/winter.jpg",
+        "generated_sha256": "71436448485c3887aadbce8dab4e12df5aa0f1e49757096b0654bba54828ead9",
+        "mime_type": "image/jpeg",
+        "preview_path": ".impeccable/mocks/seasons/winter.webp",
+        "preview_sha256": "8292caee9762759dcc649425aa4f0784572f7347592a9fc33319cf7e8fdac26d"
+      },
+      "seasonal_reference": "assets/listing/09.webp",
+      "seasonal_reference_sha256": "793a9e6b0779fe4e38b1fcc51169d90ec99ac526bea663f1fbefe54a68b3900d",
+      "revision_prompt": "IMAGE 2 is an actual winter photograph of THIS HOUSE from a different angle. Match its real weather and material appearance: substantial continuous fresh white snow across lawn and roof, snow outlining bare deciduous branches, soft overcast pale gray sky, natural darker reddish-brown wood against snow, quiet winter daylight with windows unlit. Not blue sky, not twilight, not a shallow artificial snow dusting. Preserve the exact camera and architectural geometry of IMAGE 1, never switch to IMAGE 2 viewpoint. Preserve the birdbath, grill, deck, chimney, walkway location and porch posts from IMAGE 1, with snow settled naturally on their surfaces; walkway may be snow-covered. IMAGE 2 guides only snow coverage, vegetation and light, not changes to house, old paint color, trees or objects. Do not add the foreground tree trunks from IMAGE 2. No Christmas decor, fog, falling snow, new objects or extra windows."
+    }
+  },
+  "processing": "Gemini returned JPEG at 2528x1696. Raw outputs retained locally in .pi/artifacts/seasons/*.jpg. Preview derivatives resized to exact source canvas 1600x1060 using ImageMagick -resize 1600x1060! -strip -quality 85. No original asset modified. AI variants are approximate, not pixel-registered or factual seasonal evidence.",
+  "source_season": "Late summer, owner-confirmed.",
+  "revision_note": "Owner identified actual seasonal photos after first creative pass. Fall/winter regenerated using hero as camera/architecture source and real seasonal images as secondary appearance references. Higher-resolution hero work tracked separately in colonial-1x4; regenerate final variants from that source when available."
+}
