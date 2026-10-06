@@ -1,5 +1,6 @@
 const masthead = document.querySelector('.masthead');
 const summary = document.querySelector('.listing-summary');
+const heroImage = document.querySelector('.hero-photo img');
 const stories = [...document.querySelectorAll('.story')];
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 const narrow = matchMedia('(max-width: 800px)');
@@ -17,6 +18,8 @@ function updatePhotos() {
   if (!document.querySelector('dialog[open]')) {
     focusedPhoto = document.activeElement.closest('.story-photos figure');
   }
+  // Let the visible hero finish before competing speculative image requests.
+  const canPreload = !heroImage || heroImage.complete || heroImage.getBoundingClientRect().bottom <= 0;
   for (const track of tracks) {
     const bounds = track.story.getBoundingClientRect();
     const start = track.story.offsetTop + track.offset - track.stickyTop;
@@ -49,7 +52,7 @@ function updatePhotos() {
     }
     // Preload only nearby sequences, not the next frame of every distant story.
     const next = track.photos[index + 1]?.querySelector('img');
-    if (next && bounds.top < innerHeight * 2 && bounds.bottom > 0) next.loading = 'eager';
+    if (next && canPreload && bounds.top < innerHeight * 2 && bounds.bottom > 0) next.loading = 'eager';
   }
 }
 
@@ -102,6 +105,8 @@ function layoutStories() {
   updatePhotos();
 }
 
+heroImage?.addEventListener('load', updatePhotos);
+heroImage?.addEventListener('error', updatePhotos);
 addEventListener('scroll', () => {
   if (!pending) { pending = true; requestAnimationFrame(updatePhotos); }
 }, {passive: true});

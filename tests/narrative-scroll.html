@@ -56,6 +56,33 @@ try {
     frame.style.height = `${height}px`;
     doc.activeElement.blur();
     await settle();
+    // Speculative next photos must not compete with the visible, pending hero.
+    const hero = doc.querySelector('.hero-photo img');
+    const nextPhoto = story.querySelectorAll('.story-photos img')[1];
+    let heroComplete = false;
+    Object.defineProperty(hero, 'complete', {configurable: true, get: () => heroComplete});
+    try {
+      win.scrollTo(0, 0);
+      await settle();
+      nextPhoto.loading = 'lazy';
+      win.updatePhotos();
+      check(nextPhoto.loading === 'lazy', `${width}px: pending visible hero defers speculative preload`);
+      heroComplete = true;
+      nextPhoto.loading = 'lazy';
+      hero.dispatchEvent(new win.Event('load'));
+      check(nextPhoto.loading === 'eager', `${width}px: hero load resumes nearby preload`);
+      nextPhoto.loading = 'lazy';
+      hero.dispatchEvent(new win.Event('error'));
+      check(nextPhoto.loading === 'eager', `${width}px: hero error resumes nearby preload`);
+      heroComplete = false;
+      nextPhoto.loading = 'lazy';
+      win.scrollTo(0, hero.offsetTop + hero.offsetHeight + 1);
+      await settle();
+      check(nextPhoto.loading === 'eager', `${width}px: scrolling past pending hero resumes preload`);
+    } finally {
+      delete hero.complete;
+      win.updatePhotos();
+    }
     // Width changes notify both window resize and the header ResizeObserver.
     let rebuildWrites = 0;
     const rebuildObserver = new win.MutationObserver(records => { rebuildWrites += records.length; });
