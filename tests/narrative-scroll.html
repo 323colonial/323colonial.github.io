@@ -113,6 +113,17 @@ try {
       check(Math.abs(opacity(photos[1]) - early) < .01, `${label}: reverse scroll restores exact blend`);
       await seek(1);
       const counter = section.querySelector('.slide-count');
+      // Stay inside the hold: rounding at exactly 1 can leave a fractional blend.
+      await seek(1.05);
+      const counterText = counter.firstChild;
+      let photoChanges = 0;
+      const observer = new win.MutationObserver(records => { photoChanges += records.length; });
+      observer.observe(section.querySelector('.story-photos'), {
+        subtree: true, attributes: true, attributeFilter: ['hidden', 'inert', 'aria-hidden', 'style', 'class'],
+      });
+      try { await seek(1.1); } finally { observer.disconnect(); }
+      check(counter.firstChild === counterText, `${label}: unchanged position preserves counter text node`);
+      check(photoChanges === 0, `${label}: unchanged photo state avoids DOM writes (${photoChanges})`);
       const dots = section.querySelector('.photo-dots');
       const dotBox = dots?.getBoundingClientRect();
       const imageBox = photos[1].querySelector('img').getBoundingClientRect();

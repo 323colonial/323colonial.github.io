@@ -31,16 +31,22 @@ function updatePhotos() {
     const progress = focused < 0
       ? Math.floor(position) + Math.max(0, (position % 1 - .5) * 2) : focused;
     const index = Math.round(progress);
-    track.photos.forEach((photo, i) => {
-      const opacity = Math.max(0, 1 - Math.abs(i - progress));
-      photo.hidden = opacity === 0;
-      photo.style.setProperty('--photo-opacity', opacity);
-      photo.inert = i !== index;
-      photo.setAttribute('aria-hidden', String(i !== index));
-      track.dots.children[i].classList.toggle('is-current', i === index);
-    });
-    track.counter.textContent = `${index + 1} / ${track.photos.length}`;
-    track.dots.style.setProperty('--photo-inset', `${track.insets[index]}px`);
+    // Holds and distant stories retain their DOM state; layout rebuilds the tracks.
+    if (track.progress !== progress) {
+      track.photos.forEach((photo, i) => {
+        const opacity = Math.max(0, 1 - Math.abs(i - progress));
+        photo.hidden = opacity === 0;
+        photo.style.setProperty('--photo-opacity', opacity);
+        photo.inert = i !== index;
+        photo.setAttribute('aria-hidden', String(i !== index));
+        track.dots.children[i].classList.toggle('is-current', i === index);
+      });
+      const count = `${index + 1} / ${track.photos.length}`;
+      // Replacing unchanged text forces layout at the next story's geometry read.
+      if (track.counter.textContent !== count) track.counter.textContent = count;
+      track.dots.style.setProperty('--photo-inset', `${track.insets[index]}px`);
+      track.progress = progress;
+    }
     // Preload only nearby sequences, not the next frame of every distant story.
     const next = track.photos[index + 1]?.querySelector('img');
     if (next && bounds.top < innerHeight * 2 && bounds.bottom > 0) next.loading = 'eager';
