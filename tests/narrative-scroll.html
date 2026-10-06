@@ -56,6 +56,34 @@ try {
     frame.style.height = `${height}px`;
     doc.activeElement.blur();
     await settle();
+    // Width changes notify both window resize and the header ResizeObserver.
+    let rebuildWrites = 0;
+    const rebuildObserver = new win.MutationObserver(records => { rebuildWrites += records.length; });
+    rebuildObserver.observe(story, {attributes: true, attributeFilter: ['class']});
+    try {
+      frame.style.width = `${width - 20}px`;
+      await settle();
+      await settle();
+      check(rebuildWrites === 2, `${width}px: width resize rebuilds stories once (${rebuildWrites} class writes)`);
+    } finally {
+      rebuildObserver.disconnect();
+      frame.style.width = `${width}px`;
+      await settle();
+    }
+    // Height changes without a window resize must still update sticky clearance.
+    for (const [element, property] of [[header, '--header-height'], [facts, '--summary-height']]) {
+      const originalHeight = element.getBoundingClientRect().height;
+      try {
+        element.style.minHeight = `${originalHeight + 30}px`;
+        await settle();
+        check(parseFloat(doc.documentElement.style.getPropertyValue(property)) === element.getBoundingClientRect().height
+          && element.getBoundingClientRect().height >= originalHeight + 30,
+          `${width}px: observer updates ${property} without viewport resize`);
+      } finally {
+        element.style.removeProperty('min-height');
+        await settle();
+      }
+    }
     check(!/scroll to explore/i.test(doc.body.textContent), `${width}px: no scroll instructions`);
     for (const section of doc.querySelectorAll('.story')) {
       const label = `${width}px ${section.getAttribute('aria-label')}`;

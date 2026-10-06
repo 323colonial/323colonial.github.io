@@ -121,7 +121,12 @@ document.addEventListener('focusin', event => {
 document.addEventListener('focusout', () => requestAnimationFrame(updatePhotos));
 addEventListener('resize', layoutStories);
 reducedMotion.addEventListener('change', layoutStories);
-const headerObserver = new ResizeObserver(layoutStories);
+const headerObserver = new ResizeObserver(entries => {
+  // Window resize already lays out stories; only new header heights need another pass.
+  if (entries.some(({target}) => target.getBoundingClientRect().height !== parseFloat(
+    document.documentElement.style.getPropertyValue(target === masthead ? '--header-height' : '--summary-height')
+  ))) layoutStories();
+});
 headerObserver.observe(masthead);
 if (summary) headerObserver.observe(summary);
 document.fonts.ready.then(layoutStories);
