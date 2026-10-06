@@ -1,0 +1,95 @@
+{
+  "method": "Tone-only day-cycle relighting of four registered v4 frames. No new generation or coordinate transform; original snowbank contours and grass texture retained.",
+  "cycle_ms": 10000,
+  "images": [
+    {
+      "id": "first-frost",
+      "day_stage": "Deep dusk",
+      "source": "v4/first-frost.webp",
+      "source_sha256": "de033f58e4b6a6d8b27ec86a1ddd066c7906874c9b276ed7be94492d0866fd0b",
+      "rgb_multipliers": [
+        0.58,
+        0.6,
+        0.76
+      ],
+      "additional_warm_source_mix": 0.3,
+      "preview_path": "v5/first-frost.webp",
+      "preview_sha256": "2afb44d444fcef750e8d327be8860f99a4d4f87885d49a8a92f96302c0d4d8ea",
+      "sky_sample": 0.451534
+    },
+    {
+      "id": "first-snow",
+      "day_stage": "Late evening",
+      "source": "v4/first-snow.webp",
+      "source_sha256": "e0ee138abdabd2142bbd31557add723ca4f29b6f2cd9d07a717b9bc655e8a517",
+      "rgb_multipliers": [
+        0.38,
+        0.44,
+        0.6
+      ],
+      "additional_warm_source_mix": 0.66,
+      "preview_path": "v5/first-snow.webp",
+      "preview_sha256": "b38df2ca8246cb0ffd5bf1813344e53efa52488e1b9644ae081882de84de9aca",
+      "sky_sample": 0.335437
+    },
+    {
+      "id": "winter",
+      "day_stage": "Blue dawn",
+      "source": "v4/winter.webp",
+      "source_sha256": "83668fb7b56a8e25a6fbebfb2474277feda95c18d2a770d70e9ea74362487d25",
+      "rgb_multipliers": [
+        0.88,
+        0.92,
+        1.02
+      ],
+      "additional_warm_source_mix": 0.12,
+      "preview_path": "v5/winter.webp",
+      "preview_sha256": "6ee0d0b5dfde92eaa37d3e5c2d391a4397a63560be5d83b93269b0d53a378613",
+      "sky_sample": 0.694276
+    },
+    {
+      "id": "snowmelt",
+      "day_stage": "Sunrise",
+      "source": "v4/snowmelt.webp",
+      "source_sha256": "5f33fd679d927814f1bbcc2c8d378dbd0e247c23bbd69516c9927322e3a0ef4d",
+      "rgb_multipliers": [
+        1.08,
+        1.04,
+        0.97
+      ],
+      "additional_warm_source_mix": 0,
+      "preview_path": "v5/snowmelt.webp",
+      "preview_sha256": "3ff7d5a20e108f6fa8125d526cf8b919dea88b09d0ba3a35b701d6f5ccbaa57d",
+      "sky_sample": 0.721846
+    }
+  ],
+  "source_hashes": {
+    "v2/summer.jpg": "6d91f6f3993b5014b1be640c8a2eb51428762af3f05c35beed9bec26147bd9ab",
+    "v2/winter.webp": "e596718f0282259777d15fb83852f0b350a6531172d258a6de513e9c29316e17",
+    "v2/provenance.json": "fa75ab40b21a48c4864e0e25e3f0d1610d747f366647af8caf136e7518799d8b",
+    "v4/alignment-check.json": "2b17ae713b701ea5d3e4bc35b11ab954876ec66ce9851f214a94fee9d418609e",
+    "v4/early-fall.webp": "ca4671580231ae70d143897f8268a20652dea77eb0ad2121ff9f4a4b7f78cfd4",
+    "v4/fall.webp": "d9e4354bd9939fe7573c1d99ac2d4104e9c06f1e11fb8d31cf17e11f7d8e72eb",
+    "v4/first-frost.webp": "de033f58e4b6a6d8b27ec86a1ddd066c7906874c9b276ed7be94492d0866fd0b",
+    "v4/first-snow.webp": "e0ee138abdabd2142bbd31557add723ca4f29b6f2cd9d07a717b9bc655e8a517",
+    "v4/late-spring.webp": "8299a06dbcc8bbf580d9f66418f13753b35b2f8f4422b44366a479d134906945",
+    "v4/midsummer.webp": "e587c271929aad17e449ebc35ca46fef83c4fac48672644286079f22e4c889e3",
+    "v4/new-growth.webp": "11fecbaca1cae19390a9798ededcb3784674b1a7b3ad37e175f80c1de1d71ab6",
+    "v4/provenance.json": "c441a94445c3ef178d7637b2c8e472060c1bdc13620722a911fb6a4bf19c2b9e",
+    "v4/snowmelt.webp": "5f33fd679d927814f1bbcc2c8d378dbd0e247c23bbd69516c9927322e3a0ef4d",
+    "v4/spring.webp": "7dc17ee8e9ce82cfb050807694fbb1ebb9c1a5116f21e07df8a31fd9160fd27c",
+    "v4/turning-leaves.webp": "cf8d86136c6a15c7ff0c6740eaf4398bc945c0dbe590bf6f1379bd950b100fd1",
+    "v4/winter.webp": "83668fb7b56a8e25a6fbebfb2474277feda95c18d2a770d70e9ea74362487d25"
+  },
+  "warm_source": "v2/winter.webp",
+  "glass_geometry_source": "v2/provenance.json fall_window_treatment.polygons_master_pixels",
+  "recipe": "v5/relight.py",
+  "recipe_sha256": "afa0f4f1df5a66be5ff5aab663e5126f4c8c10b3726a158bc628ebe440a666c5",
+  "checks": [
+    "Immutable source hashes",
+    "1280x848 outputs",
+    "Night darkest, then dusk, dawn, sunrise sky sample",
+    "Practical-light mask leaves sky, snowbank and grill samples untouched"
+  ],
+  "limits": "Art-directed exposure/color simulation, not physically traced lighting. Inherits unresolved v4 landmark-check failures; no alignment pass claimed. Owner review pending; colonial-29s stays open."
+}

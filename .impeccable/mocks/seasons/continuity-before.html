@@ -27,9 +27,6 @@
     button:hover { text-decoration: underline; text-underline-offset: 5px; }
     button[aria-pressed="true"] { border-bottom-color: #593a32; font-weight: 700; }
     #play { border-color: #593a32; min-width: 100px; }
-    #timing { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 14px; }
-    #cycle-seconds { width: 88px; min-height: 44px; padding: 8px; border: 1px solid #969187; color: inherit; background: #faf8f1; font: inherit; }
-    #timing button { border-color: #593a32; }
     button:disabled { color: #50564f; border-color: #969187; cursor: default; text-decoration: none; }
     :focus-visible { outline: 3px solid #593a32; outline-offset: 3px; }
     figcaption { padding: 14px 24px 24px; font-size: 13px; line-height: 1.65; color: #50564f; }
@@ -64,10 +61,10 @@
         <img src="v4/early-fall.webp" data-name="Early fall" width="1280" height="848" alt="">
         <img src="v4/turning-leaves.webp" data-name="Turning leaves" width="1280" height="848" alt="">
         <img src="v4/fall.webp" data-name="Fall" width="1280" height="848" alt="">
-        <img src="v5/first-frost.webp" data-name="First frost" data-day="Deep dusk" width="1280" height="848" alt="">
-        <img src="v5/first-snow.webp" data-name="First snow" data-day="Late evening" width="1280" height="848" alt="">
-        <img src="v5/winter.webp" data-name="Winter" data-day="Blue dawn" width="1280" height="848" alt="">
-        <img src="v5/snowmelt.webp" data-name="Snowmelt" data-day="Sunrise" width="1280" height="848" alt="">
+        <img src="v4/first-frost.webp" data-name="First frost" width="1280" height="848" alt="">
+        <img src="v4/first-snow.webp" data-name="First snow" width="1280" height="848" alt="">
+        <img src="v4/winter.webp" data-name="Winter" width="1280" height="848" alt="">
+        <img src="v4/snowmelt.webp" data-name="Snowmelt" width="1280" height="848" alt="">
         <img src="v4/new-growth.webp" data-name="New growth" width="1280" height="848" alt="">
         <img src="v4/spring.webp" data-name="Spring" width="1280" height="848" alt="">
         <img src="v4/late-spring.webp" data-name="Late spring" width="1280" height="848" alt="">
@@ -76,16 +73,11 @@
       <div id="controls" hidden>
         <div class="seasons" role="group" aria-label="Choose a still scene"></div>
         <button type="button" id="play">Pause</button>
-        <form id="timing">
-          <label for="cycle-seconds">Full cycle (seconds)</label>
-          <input id="cycle-seconds" type="number" min="1" max="3600" step="0.1" value="10" required>
-          <button type="submit">Apply</button>
-        </form>
       </div>
       <figcaption>
         <p id="status">Original late-summer photograph. Loading seasonal study…</p>
-        <p>12 scenes · <span id="cycle-label">10s</span> full year · one day from midday through dusk, evening, dawn and morning. Late summer is the unchanged original; the other 11 scenes are AI concepts. Continuous dissolves; live site unchanged.</p>
-        <p><a href="continuity-before.html">Previous continuity trial</a> · <a href="twelve-before.html">Previous twelve-frame trial</a> · <a href="four.html">Earlier four-frame loop</a></p>
+        <p>12 scenes · 5s full year · continuous dissolves. Late summer is the unchanged original; all 11 generated scenes are revised AI concepts with a shared lighting and ground progression. Live site unchanged.</p>
+        <p><a href="twelve-before.html">Previous twelve-frame trial</a> · <a href="four.html">Earlier four-frame loop</a></p>
         <p>Owner review pending. Strict alignment check has not passed: some window matches are uncertain, and two roof landmarks exceed the 2px target. Not cleared for publication.</p>
       </figcaption>
     </figure>
@@ -102,7 +94,7 @@
     <details id="sequence">
       <summary>Compare all twelve scenes in playback order</summary>
       <div class="targets sequence"></div>
-      <p>First frost reaches deep dusk; first snow is late evening with the strongest house lights. Winter returns to blue dawn, snowmelt to sunrise, then spring morning brightens toward summer. Snow retreats through dormant grass before new growth. This is an art-directed concept, not a physical sunlight simulation; generated fine detail can still shift during dissolves.</p>
+      <p>Snow retreats through dormant grass before spring growth. Daylight and warm house lights follow a shared progression. This is an art-directed concept, not a physical sunlight simulation; generated fine detail can still shift during dissolves.</p>
     </details>
   </main>
   <script type="module">
@@ -124,15 +116,14 @@
       thumbnail.removeAttribute('fetchpriority');
       thumbnail.alt = `${names[index]} ${index === 0 ? 'original photograph' : 'AI seasonal concept'}.`;
       const caption = document.createElement('figcaption');
-      caption.textContent = `${index + 1}. ${names[index]}${index === 0 ? ' · unchanged original' : ` · ${image.dataset.day ?? 'revised'}`}`;
+      caption.textContent = `${index + 1}. ${names[index]}${index === 0 ? ' · unchanged original' : ' · revised'}`;
       figure.append(thumbnail, caption);
       document.querySelector('#sequence .targets').append(figure);
       return button;
     });
     const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-    const cycle = 10000;
+    const cycle = 5000;
     const step = cycle / images.length;
-    let cycleSeconds = 10;
     try {
       await Promise.all(images.map(image => image.decode()));
       const animations = images.map((image, index) => image.animate([
@@ -153,22 +144,12 @@
         toggle.textContent = reduced.matches ? 'Motion off' : playing ? 'Pause' : 'Play';
         buttons.forEach(button => button.setAttribute('aria-pressed', String(!playing && Number(button.dataset.season) === selected)));
         status.textContent = playing
-          ? `${cycleSeconds}s full year · 12 continuous seasonal stages. Choose a scene to hold that view.`
+          ? '5s full year · 12 continuous seasonal stages. Choose a scene to hold that view.'
           : `${heldView} · ${reduced.matches ? 'Reduced motion respected.' : 'Play to cycle through the year.'}`;
         scene.setAttribute('aria-label', playing
           ? 'Twelve-scene seasonal crossfade of the same front-left view of 323 Colonial Drive. Only late summer is an original photograph; other scenes are AI concepts.'
           : `${heldView}: ${selected === 0 ? 'original photograph' : 'AI seasonal visualization'} of 323 Colonial Drive, viewed from the front-left corner.`);
       }
-      document.querySelector('#timing').addEventListener('submit', event => {
-        event.preventDefault();
-        const input = document.querySelector('#cycle-seconds');
-        const next = input.valueAsNumber;
-        if (!input.checkValidity() || !Number.isFinite(next) || next <= 0) return;
-        cycleSeconds = next;
-        animations.forEach(animation => animation.updatePlaybackRate(cycle / (next * 1000)));
-        document.querySelector('#cycle-label').textContent = `${next}s`;
-        sync();
-      });
       toggle.addEventListener('click', () => {
         playing = !playing;
         if (!playing) {
