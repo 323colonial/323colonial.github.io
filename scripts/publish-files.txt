@@ -3,6 +3,10 @@ gallery.html
 listing.css
 gallery.js
 listing.js
+analytics.mjs
+analytics-core.mjs
+vendor/posthog-1.438.1.mjs
+vendor/posthog-LICENSE
 assets/listing/01.webp
 assets/listing/01-small.webp
 assets/listing/02.webp

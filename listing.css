@@ -115,6 +115,13 @@ dt { font: 13px/1.5 Arial, sans-serif; color: var(--muted); margin-bottom: 4px; 
 dd { font: 16px/1.5 Arial, sans-serif; margin: 0; }
 .site-footer { padding-block: 24px; font: 12px/1.6 Arial, sans-serif; color: var(--muted); }
 .site-footer p { margin: 0; }
+.analytics-notice { margin: 0; padding: 8px 20px; font: 13px/1.6 Arial, sans-serif; background: var(--paper); color: var(--ink); }
+.analytics-notice a { display: inline-flex; align-items: center; min-height: 44px; }
+.analytics-privacy { padding-block: 24px; font: 14px/1.6 Arial, sans-serif; }
+.analytics-privacy summary { width: fit-content; padding-block: 12px; }
+.analytics-privacy p { max-width: 75ch; margin-block: 16px; }
+.analytics-privacy button:disabled { cursor: default; background: var(--pewter-green); border-color: var(--pewter-green); }
+@media print { .analytics-notice, .analytics-privacy { display: none; } }
 .gallery-intro { padding-block: 40px; max-width: 760px; }
 .gallery-intro p { max-width: 60ch; }
 .gallery-intro p:last-child { margin-bottom: 0; }

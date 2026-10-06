@@ -1,0 +1,81 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><title>Running: analytics</title>
+<link rel="stylesheet" href="../listing.css"><main class="container">
+<h1>Offline PostHog integration</h1><p>No event leaves this browser. Real pinned SDK; synthetic origin replaces only location reads in the adapter.</p>
+<pre id="results">Running…</pre><button id="heatmap-test">Exercise heatmap</button>
+<dialog id="photo-viewer"><img id="viewer-image" src="../assets/listing/01.webp" width="320" height="212" alt="Test photo"></dialog>
+<dialog id="property-details">Property details</dialog><dialog id="all-photos">Photos</dialog>
+<section id="analytics-privacy"><button id="analytics-opt-out">Turn off PostHog analytics</button><p id="analytics-status" role="status"></p></section>
+</main><script type="module">
+const results = [];
+const check = (ok, text) => { results.push(`${ok ? 'PASS' : 'FAIL'}: ${text}`); render(); };
+const render = () => { document.querySelector('#results').textContent = results.join('\n'); document.title = results.some(r => r.startsWith('FAIL')) ? 'FAIL: analytics' : 'PASS: analytics'; };
+const nativeFetch = window.fetch.bind(window);
+window.payloads = [];
+window.requests = [];
+window.fetch = async (input, init = {}) => {
+  const url = new URL(typeof input === 'string' ? input : input.url, location.href);
+  if (url.origin === location.origin) return nativeFetch(input, init);
+  window.requests.push({ host: url.host, aborted: Boolean(init.signal?.aborted) });
+  if (init.signal?.aborted) throw new DOMException('Aborted', 'AbortError');
+  if (url.origin !== 'https://us.i.posthog.com') throw Error('Unexpected remote request blocked');
+  const body = typeof init.body === 'string' ? init.body : await new Response(init.body).text();
+  const envelope = JSON.parse(body);
+  window.payloads.push(...(envelope.batch || [envelope]));
+  window.dispatchEvent(new Event('captured'));
+  return new Response('{"status":1}', { status: 200, headers: { 'Content-Type': 'application/json' } });
+};
+window.XMLHttpRequest = class { withCredentials = false; open() { throw Error('XHR blocked by offline fixture'); } send() { throw Error('XHR blocked by offline fixture'); } };
+navigator.sendBeacon = () => { throw Error('Beacon blocked by offline fixture'); };
+const waitForPayload = event => new Promise((resolve, reject) => {
+  const done = () => { if (window.payloads.some(p => p.event === event)) { clearTimeout(timeout); window.removeEventListener('captured', done); resolve(); } };
+  const timeout = setTimeout(() => { window.removeEventListener('captured', done); reject(Error('No intercepted ' + event)); }, 5000);
+  window.addEventListener('captured', done); done();
+});
+localStorage.removeItem('colonial_analytics_opt_out');
+document.cookie = 'colonial_analytics=; Max-Age=0; Path=/; SameSite=Lax; Secure';
+try {
+  let code = await (await nativeFetch('../analytics.mjs')).text();
+  code = code.replace('start().catch(() => {', 'start().catch(error => { window.startError = error;')
+    .replace("from './analytics-core.mjs'",  `from '${new URL('../analytics-core.mjs', location.href)}'`)
+    .replace("import('./vendor/posthog-1.438.1.mjs')", `import('${new URL('../vendor/posthog-1.438.1.mjs', location.href)}')`)
+    .replaceAll('location.origin', "'https://323colonial.github.io'")
+    .replaceAll('location.href', "'https://323colonial.github.io/?utm_source=zillow&email=private@example.com'");
+  await import(URL.createObjectURL(new Blob([code], { type: 'text/javascript' })));
+  await new Promise((resolve, reject) => {
+    const status = document.querySelector('#analytics-status');
+    const observer = new MutationObserver(() => {
+      if (status.textContent.includes(' is on.')) { observer.disconnect(); clearTimeout(timeout); resolve(); }
+      else if (status.textContent.includes('unavailable')) { observer.disconnect(); clearTimeout(timeout); reject(window.startError || Error(status.textContent)); }
+    });
+    const timeout = setTimeout(() => { observer.disconnect(); reject(Error('SDK startup timed out: ' + status.textContent)); }, 5000);
+    observer.observe(status, { childList: true });
+    if (status.textContent.includes(' is on.')) { observer.disconnect(); clearTimeout(timeout); resolve(); }
+  });
+  const sdk = (await import('../vendor/posthog-1.438.1.mjs')).default;
+  window.testSDK = sdk;
+  await waitForPayload('$pageview');
+  check(window.payloads.some(p => p.event === '$pageview'), 'real SDK pageview reaches intercepted fetch');
+  const first = window.payloads.find(p => p.event === '$pageview');
+  check(first?.properties.$geoip_disable === true && first?.properties.$process_person_profile === false, 'full GeoIP and person processing disabled');
+  check(!/private@example|\$set|\$referrer|\$browser|\$device_id/.test(JSON.stringify(window.payloads)), 'initial SDK payload contains no private query, profile setters or high-entropy enrichment');
+  check(window.requests.every(r => r.host === 'us.i.posthog.com'), 'no flags, replay, external scripts or other product requests');
+  sdk.capture('$$heatmap', { $heatmap_data: { 'https://323colonial.github.io/gallery.html?email=private@example.com': [{x: 20, y: 40, type: 'click', target_fixed: false, text: 'private DOM'}] } });
+  await waitForPayload('$$heatmap');
+  const heatmap = window.payloads.find(p => p.event === '$$heatmap');
+  check(Boolean(heatmap?.properties.$heatmap_data['https://323colonial.github.io/gallery.html']), 'real SDK heatmap batching passes through sanitizer');
+  check(!/private DOM|private@example/.test(JSON.stringify(heatmap)), 'heatmap URL keys and coordinate fields minimized');
+  document.querySelector('#heatmap-test').addEventListener('click', () => {
+    // Native listener has buffered this trusted click before this callback.
+    const data = sdk.heatmaps?.getAndClearBuffer();
+    sdk.capture('$$heatmap', { $heatmap_data: data });
+    check(Boolean(data && Object.values(data).some(points => points.length)), 'pinned SDK captures real click coordinates');
+  });
+  document.querySelector('#analytics-opt-out').addEventListener('click', () => {
+    const count = window.payloads.length;
+    sdk.capture('outbound_click', { destination: 'brokerage-phone' });
+    check(window.payloads.length === count, 'opt-out blocks subsequent SDK events');
+    check(!document.cookie.includes('colonial_analytics='), 'opt-out removes analytics identifier');
+    check(sdk.config.fetch_options.signal.aborted, 'opt-out aborts pending and retry transport');
+  });
+} catch (error) { check(false, error.message); }
+</script></html>

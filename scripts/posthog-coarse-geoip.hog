@@ -1,0 +1,27 @@
+// Project 647943: event enrichment only. No print, person setters or full lookup copy.
+// Browser events set $geoip_disable=true to bypass the full built-in GeoIP template.
+// This deliberately ignores that flag and adds only the owner's approved coarse fields.
+// Project-level discard-IP removes $ip independently, after transformations.
+if (empty(event.properties?.$ip)) {
+    return event
+}
+let geo := geoipLookup(event.properties.$ip)
+if (not geo) {
+    return event
+}
+let coarse := {
+    '$geoip_country_name': geo.country?.names?.en,
+    '$geoip_country_code': geo.country?.isoCode,
+    '$geoip_city_name': geo.city?.names?.en
+}
+if (not empty(geo.subdivisions)) {
+    coarse['$geoip_subdivision_1_name'] := geo.subdivisions[1].names?.en
+    coarse['$geoip_subdivision_1_code'] := geo.subdivisions[1].isoCode
+}
+let result := event
+for (let key, value in coarse) {
+    if (value != null) {
+        result.properties[key] := value
+    }
+}
+return result

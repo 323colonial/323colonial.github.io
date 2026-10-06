@@ -60,12 +60,17 @@ for (const [file, route, title, description] of pages) {
 test('publish allowlist contains exactly required buyer files, never repository/private records', () => {
   assert.ok(existsSync('scripts/publish-files.txt'), 'explicit publish allowlist missing');
   const files = readFileSync('scripts/publish-files.txt', 'utf8').trim().split('\n');
-  const expected = ['index.html', 'gallery.html', 'listing.css', 'gallery.js', 'listing.js'];
+  const modules = ['analytics-core.mjs', 'vendor/posthog-1.438.1.mjs', 'vendor/posthog-LICENSE'];
+  const expected = ['index.html', 'gallery.html', 'listing.css', 'gallery.js', 'listing.js', 'analytics.mjs', ...modules];
+  const analytics = readFileSync('analytics.mjs', 'utf8');
+  assert.ok(analytics.includes("from './analytics-core.mjs'"));
+  assert.ok(analytics.includes("import('./vendor/posthog-1.438.1.mjs')"));
+  assert.match(readFileSync('vendor/posthog-LICENSE', 'utf8'), /MIT License/);
   for (let n = 1; n <= 73; n++) {
     for (const suffix of ['', '-small']) expected.push(`assets/listing/${String(n).padStart(2, '0')}${suffix}.webp`);
   }
   assert.deepEqual([...files].sort(), expected.sort());
-  const referenced = new Set(['index.html', 'gallery.html']);
+  const referenced = new Set(['index.html', 'gallery.html', ...modules]);
   for (const [file] of pages) {
     const doc = parseDocument(readFileSync(file, 'utf8'));
     for (const node of selectAll('[href], [src], [srcset], meta[property="og:image"]', doc)) {
