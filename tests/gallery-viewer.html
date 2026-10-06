@@ -107,7 +107,30 @@ try {
     await new Promise(resolve => { frame.onload = resolve; frame.src = `../${route}.html`; });
     const gridDoc = frame.contentDocument;
     const gridWin = frame.contentWindow;
-    if (route === 'index') gridDoc.querySelector('[data-all-photos]').click();
+    if (route === 'index') {
+      // Catalog positioning must read all geometry before changing dot styles.
+      // Observe real DOM writes, not elapsed time (which varies by machine).
+      const mutations = new gridWin.MutationObserver(() => {});
+      gridDoc.querySelectorAll('#all-photos .photo-dots').forEach(dots =>
+        mutations.observe(dots, {attributes: true, attributeFilter: ['style']}));
+      let readsAfterWrites = 0;
+      const getters = [[gridWin.Element.prototype, 'clientWidth'],
+        [gridWin.Element.prototype, 'clientHeight'], [gridWin.HTMLElement.prototype, 'offsetWidth']];
+      const originals = getters.map(([proto, key]) => Object.getOwnPropertyDescriptor(proto, key));
+      try {
+        getters.forEach(([proto, key], i) => Object.defineProperty(proto, key, {
+          ...originals[i], get() {
+            if (mutations.takeRecords().length) readsAfterWrites++;
+            return originals[i].get.call(this);
+          }
+        }));
+        gridDoc.querySelector('[data-all-photos]').click();
+      } finally {
+        getters.forEach(([proto, key], i) => Object.defineProperty(proto, key, originals[i]));
+        mutations.disconnect();
+      }
+      check(readsAfterWrites === 0, `catalog batches geometry before dot writes (${readsAfterWrites} read-after-write flushes)`);
+    }
     const grid = gridDoc.querySelector('.gallery-grid');
     const figures = [...grid.children];
     const images = figures.map(figure => figure.querySelector('img'));

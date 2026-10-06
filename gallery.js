@@ -111,12 +111,18 @@ if (catalog && typeof catalog.showModal === 'function') {
   links.forEach((link, i) => link.append(createPhotoDots(links.length, i)));
   const positionCatalogDots = () => {
     if (!catalog.open) return;
-    links.forEach(link => {
+    // Read every thumbnail before writing styles; interleaving forces layout per photo.
+    const positions = links.map(link => {
       const img = link.querySelector('img');
       const dots = link.querySelector('.photo-dots');
-      dots.style.bottom = `${10 + photoInset(img, img.clientWidth, img.clientHeight)}px`;
-      const photoWidth = Math.min(img.clientWidth, img.clientHeight * Number(img.getAttribute('width')) / Number(img.getAttribute('height')));
-      dots.style.setProperty('--dot-scale', Math.min(1, (photoWidth - 20) / dots.offsetWidth));
+      const width = img.clientWidth, height = img.clientHeight;
+      const bottom = 10 + photoInset(img, width, height);
+      const photoWidth = Math.min(width, height * Number(img.getAttribute('width')) / Number(img.getAttribute('height')));
+      return {dots, bottom, scale: Math.min(1, (photoWidth - 20) / dots.offsetWidth)};
+    });
+    positions.forEach(({dots, bottom, scale}) => {
+      dots.style.bottom = `${bottom}px`;
+      dots.style.setProperty('--dot-scale', scale);
     });
   };
   addEventListener('resize', positionCatalogDots);
