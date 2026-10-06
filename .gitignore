@@ -19,5 +19,6 @@ __pycache__/
 # Nix-linked development dependencies
 /node_modules/
 
-# Cloudflare
+# Analytics
 .cloudflare.*
+.posthog.*
