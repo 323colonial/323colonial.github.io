@@ -38,22 +38,18 @@ for (const [file, route, title, description] of pages) {
     assert.equal(oneMeta('meta[name="description"]'), description);
     const share = {
       'og:title': title, 'og:description': description, 'og:type': 'website',
-      'og:url': origin + route, 'og:image': origin + 'assets/listing/01.webp',
-      'og:image:type': 'image/webp', 'og:image:width': '1280', 'og:image:height': '848',
+      'og:url': origin + route, 'og:image': origin + 'assets/email/323-colonial-hero-small.gif',
+      'og:image:type': 'image/gif', 'og:image:width': '300', 'og:image:height': '199',
       'og:image:alt': 'Exterior of 323 Colonial Dr in Berkeley Springs, West Virginia.',
     };
     for (const [property, content] of Object.entries(share)) {
       assert.equal(oneMeta(`meta[property="${property}"]`), content, property);
     }
     assert.doesNotMatch(description, /gigabit|finished basement|Active/);
-    const bytes = readFileSync('assets/listing/01.webp');
-    assert.equal(bytes.subarray(0, 4).toString(), 'RIFF');
-    assert.equal(bytes.subarray(8, 12).toString(), 'WEBP');
-    const photo = JSON.parse(readFileSync('assets/listing/manifest.json')).photos[0];
-    const full = photo.derivatives.find(image => image.path === 'assets/listing/01.webp');
-    assert.equal(photo.position, 1);
-    assert.equal(full.width, Number(share['og:image:width']));
-    assert.equal(full.height, Number(share['og:image:height']));
+    const bytes = readFileSync(new URL(share['og:image']).pathname.slice(1));
+    assert.equal(bytes.subarray(0, 6).toString(), 'GIF89a');
+    assert.equal(bytes.readUInt16LE(6), Number(share['og:image:width']));
+    assert.equal(bytes.readUInt16LE(8), Number(share['og:image:height']));
   });
 }
 
