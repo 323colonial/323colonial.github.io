@@ -61,7 +61,8 @@ test('publish allowlist contains exactly required buyer files, never repository/
   assert.ok(existsSync('scripts/publish-files.txt'), 'explicit publish allowlist missing');
   const files = readFileSync('scripts/publish-files.txt', 'utf8').trim().split('\n');
   const modules = ['analytics-core.mjs', 'vendor/posthog-1.438.1.mjs', 'vendor/posthog-LICENSE'];
-  const expected = ['index.html', 'gallery.html', 'listing.css', 'gallery.js', 'listing.js', 'analytics.mjs', ...modules];
+  const seasons = ['early-fall', 'turning-leaves', 'fall', 'first-frost', 'first-snow', 'winter', 'snowmelt', 'new-growth', 'spring', 'late-spring', 'midsummer'].map(name => `assets/seasons/${name}.webp`);
+  const expected = ['index.html', 'gallery.html', 'listing.css', 'gallery.js', 'listing.js', 'seasonal-hero.js', 'analytics.mjs', ...modules, ...seasons];
   const analytics = readFileSync('analytics.mjs', 'utf8');
   assert.ok(analytics.includes("from './analytics-core.mjs'"));
   assert.ok(analytics.includes("import('./vendor/posthog-1.438.1.mjs')"));
@@ -73,9 +74,10 @@ test('publish allowlist contains exactly required buyer files, never repository/
   const referenced = new Set(['index.html', 'gallery.html', ...modules]);
   for (const [file] of pages) {
     const doc = parseDocument(readFileSync(file, 'utf8'));
-    for (const node of selectAll('[href], [src], [srcset], meta[property="og:image"]', doc)) {
+    for (const node of selectAll('[href], [src], [srcset], [data-seasons], meta[property="og:image"]', doc)) {
       const attrs = node.attribs;
       const values = [attrs.href, attrs.src, attrs.property === 'og:image' && attrs.content,
+        ...(attrs['data-seasons'] || '').split(' '),
         ...(attrs.srcset || '').split(',').map(candidate => candidate.trim().split(/\s+/)[0])];
       for (const value of values.filter(Boolean)) {
         const url = new URL(value, origin + file);

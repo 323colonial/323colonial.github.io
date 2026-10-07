@@ -1,0 +1,87 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Seasonal hero regression</title>
+<h1>Seasonal hero regression</h1>
+<pre id="results">Running…</pre>
+<iframe title="Seasonal homepage" style="width:100%;height:900px;border:0"></iframe>
+<script type="module">
+const frame = document.querySelector('iframe');
+const source = await fetch('../index.html').then(r => r.text());
+const results = [];
+const check = (ok, label) => results.push(`${ok ? 'PASS' : 'FAIL'}: ${label}`);
+const tick = () => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+async function load(mode = '') {
+  frame.removeAttribute('sandbox');
+  if (mode === 'no JS') frame.setAttribute('sandbox', 'allow-same-origin');
+  const setup = `<script>
+    const nativeMedia = window.matchMedia.bind(window);
+    window.heroMedia = new EventTarget(); heroMedia.matches = ${mode === 'reduced'};
+    window.matchMedia = query => query === '(prefers-reduced-motion: reduce)' ? heroMedia : nativeMedia(query);
+    if (${mode === 'save data'}) Object.defineProperty(navigator, 'connection', {value: {saveData: true}});
+    if (${mode === 'failed decode'}) {
+      const decode = HTMLImageElement.prototype.decode;
+      HTMLImageElement.prototype.decode = function() { return this.src.includes('/seasons/') ? Promise.reject(new Error('fixture decode failure')) : decode.call(this); };
+    }
+  <\/script>`;
+  await new Promise(resolve => {
+    frame.onload = resolve;
+    frame.srcdoc = source.replace('<head>', `<head><base href="${new URL('../', location.href)}">${setup}`);
+  });
+  await tick();
+  return frame.contentDocument;
+}
+try {
+  let doc = await load();
+  const win = frame.contentWindow;
+  const hero = doc.querySelector('.hero-photo');
+  const button = doc.querySelector('#hero-motion');
+  check(Boolean(button), 'footer motion control exists');
+  if (!button) throw new Error('Seasonal hero not implemented');
+  // Bounded frame wait, not a fixed animation delay.
+  for (let n = 0; n < 600 && button.hidden; n++) await tick();
+  const images = [...hero.querySelectorAll('img')];
+  const animations = images.flatMap(img => img.getAnimations());
+  check(images.length === 12 && animations.length === 12, 'all twelve decoded frames animate');
+  check(animations.every(a => a.effect.getTiming().duration === 24000 && a.effect.getTiming().iterations === Infinity), '24-second continuous loop');
+  check(doc.querySelector('.site-footer').contains(button) && !hero.querySelector('button, input, select') && win.getComputedStyle(hero.querySelector('figcaption')).display === 'none', 'image only; control lives in footer');
+  button.click();
+  await tick();
+  check(button.textContent === 'Resume animation' && animations.every(a => a.playState === 'paused'), 'footer pauses all layers');
+  let fades = true;
+  for (let i = 0; i < 12; i++) for (const fraction of [0, .25, .5, .75]) {
+    animations.forEach(a => { a.currentTime = (i + fraction) * 2000; });
+    const opacity = images.map(img => Number(win.getComputedStyle(img).opacity));
+    fades &&= Math.abs(opacity.reduce((a, b) => a + b, 0) - 1) < .001;
+    fades &&= Math.abs(opacity[i] - (1 - fraction)) < .001 && Math.abs(opacity[(i + 1) % 12] - fraction) < .001;
+  }
+  check(fades, 'all adjacent quarter/midpoint blends and summer wrap sum to one');
+  button.click(); await tick();
+  check(animations.every(a => a.playState === 'running'), 'footer resumes');
+  hero.querySelector('a').click(); await tick();
+  check(doc.querySelector('#photo-viewer').open && doc.querySelector('#viewer-image').getAttribute('src') === 'assets/listing/01.webp', 'hero opens original photograph');
+  check(animations.every(a => a.playState === 'paused'), 'modal pauses hero');
+  doc.querySelector('#photo-viewer').close(); await tick();
+  check(animations.every(a => a.playState === 'running'), 'modal close resumes');
+  Object.defineProperty(doc, 'hidden', {configurable: true, value: true});
+  doc.dispatchEvent(new Event('visibilitychange')); await tick();
+  check(animations.every(a => a.playState === 'paused'), 'hidden tab pauses');
+  delete doc.hidden; doc.dispatchEvent(new Event('visibilitychange')); await tick();
+  check(animations.every(a => a.playState === 'running'), 'visible tab resumes');
+  win.heroMedia.matches = true; win.heroMedia.dispatchEvent(new Event('change')); await tick();
+  check(button.hidden && Number(win.getComputedStyle(images[0]).opacity) === 1 && animations.every(a => a.playState === 'paused') && images.slice(1).every(img => win.getComputedStyle(img).display === 'none'), 'live reduced motion restores original');
+  win.heroMedia.matches = false; win.heroMedia.dispatchEvent(new Event('change')); await tick();
+  check(!button.hidden && animations.every(a => a.playState === 'running'), 'motion preference can resume');
+  win.scrollTo(0, doc.body.scrollHeight); await tick(); await tick();
+  check(animations.every(a => a.playState === 'paused'), 'offscreen pauses');
+  button.click(); win.scrollTo(0, 0); await tick(); await tick();
+  check(animations.every(a => a.playState === 'paused'), 'manual pause survives viewport return');
+  for (const mode of ['reduced', 'save data', 'no JS', 'failed decode']) {
+    doc = await load(mode);
+    for (let n = 0; n < 5; n++) await tick();
+    check(doc.querySelectorAll('.hero-photo img').length === 1 && doc.querySelector('#hero-motion').hidden && doc.querySelector('.hero-photo img').naturalWidth > 0, `${mode}: original only; no unusable control`);
+    if (mode !== 'failed decode') check(!frame.contentWindow.performance.getEntriesByType('resource').some(r => r.name.includes('/assets/seasons/')), `${mode}: no seasonal requests`);
+  }
+} catch (error) { check(false, error.message); }
+document.querySelector('#results').textContent = results.join('\n');
+document.title = results.some(row => row.startsWith('FAIL')) ? 'FAIL: seasonal hero' : 'PASS: seasonal hero';
+</script>

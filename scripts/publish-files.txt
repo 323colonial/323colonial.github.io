@@ -153,3 +153,15 @@ assets/listing/72.webp
 assets/listing/72-small.webp
 assets/listing/73.webp
 assets/listing/73-small.webp
+seasonal-hero.js
+assets/seasons/early-fall.webp
+assets/seasons/turning-leaves.webp
+assets/seasons/fall.webp
+assets/seasons/first-frost.webp
+assets/seasons/first-snow.webp
+assets/seasons/winter.webp
+assets/seasons/snowmelt.webp
+assets/seasons/new-growth.webp
+assets/seasons/spring.webp
+assets/seasons/late-spring.webp
+assets/seasons/midsummer.webp

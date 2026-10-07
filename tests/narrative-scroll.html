@@ -76,7 +76,7 @@ try {
       check(nextPhoto.loading === 'eager', `${width}px: hero error resumes nearby preload`);
       heroComplete = false;
       nextPhoto.loading = 'lazy';
-      win.scrollTo(0, hero.offsetTop + hero.offsetHeight + 1);
+      win.scrollTo(0, win.scrollY + hero.getBoundingClientRect().bottom + 1);
       await settle();
       check(nextPhoto.loading === 'eager', `${width}px: scrolling past pending hero resumes preload`);
     } finally {

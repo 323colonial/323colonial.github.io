@@ -1,0 +1,63 @@
+{
+  "bead": "colonial-29s",
+  "scope": "Owner-approved v6 sequence; homepage hero only. No deployment approval.",
+  "summer": "assets/listing/01.webp",
+  "limitations": "AI seasonal concepts, not documentary photographs. Inherited v4 strict alignment diagnostics remain failed/inconclusive; visual approval does not certify pixel-perfect registration.",
+  "frames": [
+    {
+      "path": "assets/seasons/early-fall.webp",
+      "source": ".impeccable/mocks/seasons/v4/early-fall.webp",
+      "sha256": "ca4671580231ae70d143897f8268a20652dea77eb0ad2121ff9f4a4b7f78cfd4"
+    },
+    {
+      "path": "assets/seasons/turning-leaves.webp",
+      "source": ".impeccable/mocks/seasons/v4/turning-leaves.webp",
+      "sha256": "cf8d86136c6a15c7ff0c6740eaf4398bc945c0dbe590bf6f1379bd950b100fd1"
+    },
+    {
+      "path": "assets/seasons/fall.webp",
+      "source": ".impeccable/mocks/seasons/v4/fall.webp",
+      "sha256": "d9e4354bd9939fe7573c1d99ac2d4104e9c06f1e11fb8d31cf17e11f7d8e72eb"
+    },
+    {
+      "path": "assets/seasons/first-frost.webp",
+      "source": ".impeccable/mocks/seasons/v6/first-frost.webp",
+      "sha256": "76c1da44fadd48fe389b8e0bbe5d1b8489eddcd320d90dddb619fb952cc5dd3b"
+    },
+    {
+      "path": "assets/seasons/first-snow.webp",
+      "source": ".impeccable/mocks/seasons/v6/first-snow.webp",
+      "sha256": "731fbe528decafe246195bd6ad974ae73dd223e92277dd3ac51bace78ab71488"
+    },
+    {
+      "path": "assets/seasons/winter.webp",
+      "source": ".impeccable/mocks/seasons/v5/winter.webp",
+      "sha256": "6ee0d0b5dfde92eaa37d3e5c2d391a4397a63560be5d83b93269b0d53a378613"
+    },
+    {
+      "path": "assets/seasons/snowmelt.webp",
+      "source": ".impeccable/mocks/seasons/v5/snowmelt.webp",
+      "sha256": "3ff7d5a20e108f6fa8125d526cf8b919dea88b09d0ba3a35b701d6f5ccbaa57d"
+    },
+    {
+      "path": "assets/seasons/new-growth.webp",
+      "source": ".impeccable/mocks/seasons/v4/new-growth.webp",
+      "sha256": "11fecbaca1cae19390a9798ededcb3784674b1a7b3ad37e175f80c1de1d71ab6"
+    },
+    {
+      "path": "assets/seasons/spring.webp",
+      "source": ".impeccable/mocks/seasons/v4/spring.webp",
+      "sha256": "7dc17ee8e9ce82cfb050807694fbb1ebb9c1a5116f21e07df8a31fd9160fd27c"
+    },
+    {
+      "path": "assets/seasons/late-spring.webp",
+      "source": ".impeccable/mocks/seasons/v4/late-spring.webp",
+      "sha256": "8299a06dbcc8bbf580d9f66418f13753b35b2f8f4422b44366a479d134906945"
+    },
+    {
+      "path": "assets/seasons/midsummer.webp",
+      "source": ".impeccable/mocks/seasons/v4/midsummer.webp",
+      "sha256": "e587c271929aad17e449ebc35ca46fef83c4fac48672644286079f22e4c889e3"
+    }
+  ]
+}
