@@ -1,0 +1,89 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Walkthrough regression</title>
+<h1>Walkthrough regression</h1>
+<pre id="results">Running…</pre>
+<iframe title="Walkthrough fixture" style="width:800px;height:400px;border:0"></iframe>
+<script type="module">
+const frame = document.querySelector('iframe');
+const source = await fetch('../walkthrough/index.html').then(r => r.text());
+const results = [];
+const check = (ok, name) => results.push(`${ok ? 'PASS' : 'FAIL'}: ${name}`);
+const tick = () => new Promise(resolve => requestAnimationFrame(resolve));
+async function load(missing = false) {
+  const setup = `<script>
+    window.fixtureFine = true;
+    window.matchMedia = q => ({matches:q === '(pointer: fine)' && window.fixtureFine});
+    window.requestAnimationFrame = fn => { window.nextFrame = fn; return 1; };
+    if (${missing}) {
+      const src = Object.getOwnPropertyDescriptor(HTMLImageElement.prototype, 'src');
+      Object.defineProperty(HTMLImageElement.prototype, 'src', {...src, set(value) {
+        src.set.call(this, value.includes('/tex/') ? new URL('missing-texture.webp', document.baseURI).href : value);
+      }});
+    }
+  <\/script>`;
+  await new Promise(resolve => {
+    frame.onload = resolve;
+    frame.srcdoc = source.replace('<head>', `<head><base href="${new URL('../walkthrough/', location.href)}">${setup}`);
+  });
+  for (let n = 0; n < 1800; n++) {
+    await tick();
+    const doc = frame.contentDocument;
+    if (doc?.getElementById('fail')?.hidden === false || frame.contentWindow.colonial) return doc;
+  }
+  throw new Error('Walkthrough load timed out');
+}
+try {
+  let doc = await load();
+  const win = frame.contentWindow, game = win.colonial;
+  check(Boolean(game), 'model and all required textures load');
+  if (!game) throw new Error(doc.getElementById('why').textContent);
+  const veil = doc.getElementById('start'), go = doc.getElementById('go');
+  go.scrollIntoView({block:'nearest'});
+  await tick();
+  const box = go.getBoundingClientRect();
+  check(box.top >= 0 && box.bottom <= win.innerHeight + 1, `start button reachable in 400px-high viewport (bounds ${box.top.toFixed(1)}–${box.bottom.toFixed(1)})`);
+  check(win.getComputedStyle(doc.getElementById('hud')).display === 'none', 'hidden HUD stays hidden');
+  win.fixtureFine = false;
+  game.begin();
+  game.teleport(4);
+  let now = win.performance.now() + 1000;
+  const draw = () => win.nextFrame(now += 50);
+  draw();
+  check(doc.getElementById('room').textContent.includes('Loft'), 'room teleport updates rendered view');
+  const key = code => win.dispatchEvent(new win.KeyboardEvent('keydown', {code, key:code}));
+  game.teleport(0);
+  draw();
+  key('KeyW');
+  const y = game.player.y;
+  draw();
+  check(game.player.y !== y, 'walking updates player');
+  win.dispatchEvent(new win.KeyboardEvent('keyup', {code:'KeyW'}));
+  game.player.grounded = false;
+  game.player.z += 1;
+  key('KeyK');
+  const position = [game.player.x, game.player.y, game.player.z];
+  draw(); draw();
+  check(JSON.stringify(position) === JSON.stringify([game.player.x, game.player.y, game.player.z]), 'note entry freezes airborne player');
+  doc.getElementById('notetext').dispatchEvent(new win.KeyboardEvent('keydown', {key:'Escape',bubbles:true}));
+  check(doc.getElementById('notebox').hidden, 'Escape cancels note without a write');
+  // Validate the public teleport hook at the query/input boundary, too.
+  let valid = true;
+  for (const value of [NaN, 1.5, Infinity, -1, 99]) {
+    try { game.teleport(value); } catch { valid = false; }
+  }
+  check(valid && [game.player.x, game.player.y, game.player.z].every(Number.isFinite), 'invalid room numbers cannot corrupt player');
+  const before = game.renderer.getContext();
+  win.dispatchEvent(new win.PageTransitionEvent('pagehide', {persisted:true}));
+  check(!before.isContextLost(), 'back-forward cache navigation keeps renderer alive');
+  game.renderer.dispose(); game.renderer.forceContextLoss();
+  doc = await load(true);
+  check(!doc.getElementById('fail').hidden && doc.getElementById('start').hidden, 'missing texture shows load failure, not a partial model');
+  // Leave a rendered success view for inspection, without a background render loop.
+  doc = await load();
+  frame.contentWindow.nextFrame(frame.contentWindow.performance.now() + 1000);
+  doc.getElementById('go').scrollIntoView({block:'nearest'});
+} catch (error) { check(false, error.stack || error.message); }
+document.getElementById('results').textContent = results.join('\n');
+document.title = results.some(row => row.startsWith('FAIL')) ? 'FAIL: walkthrough' : 'PASS: walkthrough';
+</script>

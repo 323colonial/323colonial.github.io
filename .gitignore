@@ -22,3 +22,9 @@ __pycache__/
 # Analytics
 .cloudflare.*
 .posthog.*
+
+# Browser-test scratch output
+/.playwright-mcp/
+/.walkthrough-notes/
+/assets/.walkthrough-stage.*/
+/assets/.walkthrough-previous.*/

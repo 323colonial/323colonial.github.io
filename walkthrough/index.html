@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Walk through 323 Colonial Dr</title>
+<meta name="description" content="A first-person walk through 323 Colonial Dr, Berkeley Springs, WV. An approximate 3D model built from the listing photographs.">
+<meta name="robots" content="noindex">
+<script type="importmap">
+{"imports": {"three": "../vendor/three-0.186.1/three.module.js", "three/addons/": "../vendor/three-0.186.1/addons/"}}
+</script>
+<style>
+  html, body { margin: 0; height: 100%; background: #14110f; color: #f3efe6; overflow: hidden;
+    font: 16px/1.45 Arial, Helvetica, sans-serif; -webkit-font-smoothing: antialiased; }
+  canvas#view { position: fixed; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; }
+  .veil { position: fixed; inset: 0; display: grid; place-items: center; padding: 24px;
+    background: rgba(20, 17, 15, .72); text-align: center; overflow-y: auto; }
+  [hidden] { display: none !important; }
+  .card { max-width: 34rem; }
+  h1 { font: 400 clamp(1.7rem, 4vw, 2.6rem)/1.1 Georgia, "Times New Roman", serif; margin: 0 0 .35em; }
+  .card p { margin: .6em 0; color: #d9d2c4; }
+  .keys { display: grid; grid-template-columns: auto 1fr; gap: .3em 1em; text-align: left; margin: 1.2em auto;
+    width: fit-content; color: #d9d2c4; font-size: .95rem; }
+  kbd { font: 600 .85rem/1 Arial, sans-serif; background: #2b2622; border: 1px solid #5a5148; border-radius: 4px;
+    padding: .28em .5em; color: #f3efe6; white-space: nowrap; }
+  button.go { font: 600 1.05rem/1 Arial, sans-serif; color: #14110f; background: #e9dfc8; border: 0; border-radius: 4px;
+    padding: .9em 1.6em; cursor: pointer; }
+  button.go:hover, button.go:focus-visible { background: #fff; outline: 2px solid #9bb09f; outline-offset: 3px; }
+  .bar { width: min(22rem, 70vw); height: 4px; background: #3a342e; margin: 1.2em auto 0; border-radius: 2px; overflow: hidden; }
+  .bar i { display: block; height: 100%; width: 0; background: #9bb09f; transition: width .2s; }
+  .hud { position: fixed; left: 0; right: 0; bottom: 0; display: flex; justify-content: space-between; align-items: end;
+    padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px)); pointer-events: none; font-size: .85rem;
+    color: #f3efe6; text-shadow: 0 1px 3px #000; }
+  .hud a { pointer-events: auto; color: inherit; }
+  #room { font: 400 1.1rem Georgia, serif; }
+  #dot { position: fixed; left: 50%; top: 50%; width: 5px; height: 5px; margin: -3px; border-radius: 50%;
+    background: rgba(255, 255, 255, .75); box-shadow: 0 0 2px #000; pointer-events: none; }
+  .small { font-size: .82rem; color: #b3aa9a; }
+  #notebox { position: fixed; left: 50%; bottom: 18%; transform: translateX(-50%); width: min(40rem, 86vw); }
+  #notebox[hidden] { display: none; }
+  #notebox input { width: 100%; box-sizing: border-box; font: 1.05rem Arial, sans-serif; padding: .7em .9em; border-radius: 4px;
+    border: 2px solid #9bb09f; background: rgba(20, 17, 15, .92); color: #f3efe6; }
+  @media (pointer: coarse) { .desk { display: none; } }
+  @media (pointer: fine) { .touch { display: none; } }
+</style>
+</head>
+<body>
+<canvas id="view" aria-label="Interactive 3D model of 323 Colonial Dr"></canvas>
+<div id="dot" hidden></div>
+<div id="notebox" hidden><input id="notetext" type="text" aria-label="Note about this view" maxlength="7000" autocomplete="off" placeholder="What is wrong here? Enter saves, Esc cancels"></div>
+<div class="hud" id="hud" hidden>
+  <span id="room"></span>
+  <span><a href="../">Back to the listing</a></span>
+</div>
+
+<div class="veil" id="loading">
+  <div class="card">
+    <h1>323 Colonial Dr</h1>
+    <p id="status">Loading the house…</p>
+    <div class="bar"><i id="bar"></i></div>
+  </div>
+</div>
+
+<div class="veil" id="start" hidden>
+  <div class="card">
+    <h1>Walk through the house</h1>
+    <p>An approximate 3D model built from the listing photographs and rough plans. Room sizes, finishes and furnishings are illustrative.</p>
+    <div class="keys desk">
+      <kbd>W A S D</kbd><span>Move</span>
+      <kbd>Mouse</kbd><span>Look around</span>
+      <kbd>↑ ↓ ← →</kbd><span>Walk and turn (hold <kbd>Alt</kbd> to sidestep)</span>
+      <kbd>Shift</kbd><span>Run</span>
+      <kbd>Space</kbd><span>Jump</span>
+      <kbd>C</kbd><span>Crouch</span>
+      <kbd>1 – 6</kbd><span>Jump to a room</span>
+      <kbd>P</kbd><span>Projected photographs on / off</span>
+      <kbd>K</kbd><span>Mark this view and type a note about it</span>
+      <kbd>F</kbd><span>Fly through walls (Space up, C down)</span>
+      <kbd>Esc</kbd><span>Release the mouse</span>
+    </div>
+    <p class="touch">Drag the left side of the screen to move and the right side to look.</p>
+    <button class="go" id="go" type="button">Start walking</button>
+    <p class="small"><a href="../" style="color:inherit">Back to the listing</a></p>
+  </div>
+</div>
+
+<div class="veil" id="fail" hidden>
+  <div class="card">
+    <h1>The walkthrough could not start</h1>
+    <p id="why">This browser could not open a 3D view.</p>
+    <p><a href="../gallery.html" style="color:#e9dfc8">See all 73 photographs instead</a></p>
+  </div>
+</div>
+<script type="module" src="walkthrough.js"></script>
+</body>
+</html>
