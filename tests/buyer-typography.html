@@ -24,8 +24,8 @@ try {
       check(essential.length && essential.every(element => size(element) >= 13 && size(element) <= 14), `${label}: essential text 13–14px`);
       check([...doc.querySelectorAll('.scroll-cue, .site-footer')].every(element => size(element) === 12), `${label}: counters/footer remain 12px`);
       const header = doc.querySelector('.masthead').getBoundingClientRect();
-      const showing = doc.querySelector('summary').getBoundingClientRect();
-      check(showing.left >= 0 && showing.right <= width && showing.height >= 44, `${label}: showing control fits`);
+      const showing = doc.querySelector('.contact-actions').getBoundingClientRect();
+      check(showing.left >= 0 && showing.right <= width && showing.height >= 24, `${label}: contact links fit`);
       check(Math.abs(parseFloat(doc.documentElement.style.getPropertyValue('--header-height')) - header.height) < 1, `${label}: measured header offset`);
       if (route === 'index') {
         doc.querySelector('.site-footer').scrollIntoView();
@@ -55,12 +55,10 @@ try {
         const note = doc.querySelector('#photo-31 .photo-note');
         check(note.scrollWidth <= note.clientWidth, `${label}: concept disclosure wraps`);
       }
-      doc.querySelector('.showing-contact').open = true;
-      const call = doc.querySelector('.contact-panel .button');
+      const call = doc.querySelector('.contact-actions a[href^="tel:"]');
       call.focus();
       const target = call.getBoundingClientRect();
       check(call.contains(doc.elementFromPoint(target.x + target.width / 2, target.y + target.height / 2)), `${label}: brokerage call reachable`);
-      doc.querySelector('.showing-contact').open = false;
       check(doc.documentElement.scrollWidth <= width, `${label}: no horizontal overflow`);
     }
   }

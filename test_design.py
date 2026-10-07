@@ -15,7 +15,7 @@ REQUIRED_TOKENS = (
 )
 REQUIRED_COMPONENTS = (
     ".masthead",
-    ".showing-contact",
+    ".header-contact",
     ".button",
     ".media-record",
     ".detail-grid",
@@ -36,7 +36,7 @@ def main() -> None:
 
     assert "https://fonts.googleapis.com" not in css, "remote font dependency remains"
     assert re.search(r"button, \.button, summary, \.text-link \{[^}]*min-height: 44px", css), "buyer control targets are shorter than 44px"
-    assert re.search(r"\.property-identity h1 a \{[^}]*min-height: 44px", css), "property home-link target is shorter than 44px"
+    assert re.search(r"\.property-identity h1 a \{[^}]*min-height: 32px", css), "property home-link target is shorter than 32px"
 
     design = Path("DESIGN.md").read_text()
     assert "House-color property narrative" in design, "approved design direction is undocumented"

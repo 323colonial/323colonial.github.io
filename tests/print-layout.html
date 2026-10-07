@@ -79,7 +79,7 @@ try {
       check(box(doc.querySelector('.site-footer')).bottom <= 960, 'content fits Letter printable height without clipping');
       check(parseFloat(style(paragraphs[0]).fontSize) >= 14, 'readable print prose');
     }
-    check([...doc.querySelectorAll('.skip-link, .showing-contact, .header-public, .summary-actions, .price-label')].every(el => style(el).display === 'none'), 'screen navigation hidden');
+    check([...doc.querySelectorAll('.skip-link, .header-contact, .summary-actions, .price-label')].every(el => style(el).display === 'none'), 'screen navigation hidden');
     if (route === 'gallery') check(figures.every(figure => style(figure).breakInside === 'avoid'), 'photo/caption groups protected from page breaks');
     check([...doc.querySelectorAll('dialog, .scroll-cue')].every(el => style(el).display === 'none'), 'interactive overlays/counters hidden');
     check(doc.documentElement.scrollWidth <= frame.clientWidth, 'no horizontal overflow');

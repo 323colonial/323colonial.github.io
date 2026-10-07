@@ -92,19 +92,19 @@
       },
       "header-detail": {
         "displayName": "Header Detail",
-        "purpose": "Desktop agent and public listing link."
+        "purpose": "Always-visible agent, brokerage and contact links."
       },
       "control": {
         "displayName": "Control",
-        "purpose": "Buttons, disclosure summary and action links."
+        "purpose": "Buttons and action links."
       },
-      "control-mobile": {
-        "displayName": "Control Mobile",
-        "purpose": "Showing summary and all-photos link at 800px and below."
+      "summary-link": {
+        "displayName": "Summary Link",
+        "purpose": "Property details and all-photos links at every width."
       },
       "supporting": {
         "displayName": "Supporting",
-        "purpose": "Contact panel and separate laundry link."
+        "purpose": "Separate laundry link."
       },
       "caption": {
         "displayName": "Caption",
@@ -200,20 +200,12 @@
   },
   "components": [
     {
-      "name": "Brokerage action",
-      "kind": "button",
-      "refersTo": "button-primary",
-      "description": "Mahogany action; 44px minimum target.",
-      "html": "<a class=\"ds-button\" href=\"tel:3048857645\">Call brokerage · 304-885-7645</a>",
-      "css": ".ds-button { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 10px 18px; border: 1px solid var(--mahogany, #593a32); background: var(--mahogany, #593a32); color: var(--paper, #f0ece2); font: 700 14px/1.5 Arial, sans-serif; text-decoration: none; text-align: center; cursor: pointer; } .ds-button:hover { background: var(--ink, #252d29); text-decoration: underline; } .ds-button:focus-visible { outline: 3px solid var(--mahogany, #593a32); outline-offset: 4px; }"
-    },
-    {
-      "name": "Showing disclosure",
+      "name": "Inline listing contact",
       "kind": "custom",
-      "refersTo": "showing-disclosure",
-      "description": "Native showing disclosure and paper contact-panel excerpt; no simulated modal behavior.",
-      "html": "<div class=\"ds-header\"><details class=\"ds-showing\"><summary>See in person</summary><div class=\"ds-contact\"><p>Liz McDonald · Listing agent<br>Dandridge Realty Group LLC</p></div></details></div>",
-      "css": ".ds-header { position: relative; background: var(--pewter-green, #5e6259); color: var(--paper, #f0ece2); padding: 18px 40px; } .ds-showing summary { min-height: 44px; padding: 12px 16px; border: 1px solid var(--paper, #f0ece2); font: 700 14px/1.5 Arial, sans-serif; white-space: nowrap; cursor: pointer; } .ds-contact { position: absolute; right: 40px; top: calc(100% - 1px); width: min(380px, calc(100vw - 32px)); padding: 24px; border: 1px solid var(--stone, #969187); background: var(--paper, #f0ece2); color: var(--ink, #252d29); font: 14px/1.6 Arial, sans-serif; max-height: calc(100dvh - var(--header-height, 102px) - 16px); overflow: auto; } .ds-contact p { font-weight: 700; margin: 0 0 16px; } .ds-showing summary:focus-visible { outline: 3px solid var(--paper, #f0ece2); outline-offset: 4px; } @media (max-width: 800px) { .ds-header { padding: 12px 20px; } .ds-showing summary { font-size: 12px; padding: 10px; } .ds-contact { right: 16px; } }"
+      "refersTo": "inline-contact",
+      "description": "Single-spaced agent/brokerage above one native phone | Questions & tours row; 24px minimum link targets.",
+      "html": "<div class=\"ds-header\"><div class=\"ds-contact\" role=\"group\" aria-label=\"Listing agent contact\"><p><strong>Liz McDonald</strong> \u00b7 Dandridge Realty Group LLC</p><div class=\"ds-actions\"><a href=\"tel:+13048851547\" aria-label=\"Call Dandridge office at (304) 885-1547\">(304) 885-1547</a><span aria-hidden=\"true\">|</span><a href=\"https://search.soldvawv.com/search/detail/270760671\" aria-label=\"Questions & tours through Dandridge Realty Group\">Questions &amp; tours</a></div></div></div>",
+      "css": ".ds-header { background: var(--pewter-green, #5e6259); color: var(--paper, #f0ece2); padding: 8px 40px; } .ds-contact { min-width: 0; width: fit-content; max-width: 100%; font: 13px/1.35 Arial, sans-serif; text-align: right; overflow-wrap: anywhere; } .ds-contact p { margin: 0; } .ds-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 0 8px; } .ds-actions a { display: inline-flex; align-items: center; min-height: 24px; color: inherit; text-decoration: underline; text-underline-offset: .2em; } .ds-actions a:focus-visible { outline: 3px solid var(--paper, #f0ece2); outline-offset: 0; } @media (max-width: 800px) { .ds-header { padding: 8px 20px; } .ds-contact { text-align: left; } .ds-actions { justify-content: flex-start; } }"
     },
     {
       "name": "All photos link",
@@ -221,7 +213,7 @@
       "refersTo": "gallery-link",
       "description": "Catalog trigger with direct gallery fallback.",
       "html": "<a class=\"ds-gallery-link\" href=\"gallery.html\">View all 33 photos</a>",
-      "css": ".ds-gallery-link { display: inline-flex; align-items: center; min-height: 44px; color: var(--mahogany, #593a32); font: 700 14px/1.5 Arial, sans-serif; text-underline-offset: .2em; } .ds-gallery-link:hover { text-decoration-thickness: 2px; } .ds-gallery-link:focus-visible { outline: 3px solid var(--mahogany, #593a32); outline-offset: 4px; } @media (max-width: 800px) { .ds-gallery-link { font-size: 12px; } }"
+      "css": ".ds-gallery-link { display: inline-flex; align-items: center; min-height: 24px; color: var(--mahogany, #593a32); font: 13px/1.35 Arial, sans-serif; text-underline-offset: .2em; } .ds-gallery-link:hover { text-decoration-thickness: 2px; } .ds-gallery-link:focus-visible { outline: 3px solid var(--mahogany, #593a32); outline-offset: 4px; }"
     },
     {
       "name": "Docking price and status",
@@ -229,7 +221,7 @@
       "refersTo": "docking-facts",
       "description": "Price/status excerpt from the docking facts bar; static panel preview.",
       "html": "<div class=\"ds-facts\"><p class=\"ds-price\">$499,000</p><p class=\"ds-status\">Coming Soon</p></div>",
-      "css": ".ds-facts { padding: 18px 40px; background: var(--paper, #f0ece2); color: var(--ink, #252d29); border-bottom: 1px solid var(--cedar, #8b523c); font-family: Arial, sans-serif; } .ds-price { font-size: 30px; line-height: 1.2; font-weight: 700; margin: 0 0 4px; font-variant-numeric: tabular-nums; } .ds-status { font-size: 13px; line-height: 1.65; margin: 0; color: var(--mahogany, #593a32); } @media (max-width: 800px) { .ds-facts { padding: 12px 20px; } .ds-price { font-size: 25px; } }"
+      "css": ".ds-facts { padding: 10px 40px; background: var(--paper, #f0ece2); color: var(--ink, #252d29); border-bottom: 1px solid var(--cedar, #8b523c); font-family: Arial, sans-serif; } .ds-price { font-size: 30px; line-height: 1.2; font-weight: 700; margin: 0 0 4px; font-variant-numeric: tabular-nums; } .ds-status { font-size: 13px; line-height: 1.35; margin: 0; color: var(--mahogany, #593a32); } @media (max-width: 800px) { .ds-facts { padding: 8px 20px; } .ds-price { font-size: 25px; } }"
     },
     {
       "name": "Scroll cue",
@@ -244,7 +236,7 @@
       "kind": "custom",
       "refersTo": "photo-note",
       "description": "Essential attached note for photo 31 only.",
-      "html": "<span class=\"ds-photo-note\">Conceptual basement plan — not existing finished space.</span>",
+      "html": "<span class=\"ds-photo-note\">Conceptual basement plan \u2014 not existing finished space.</span>",
       "css": ".ds-photo-note { display: block; margin-top: 6px; color: var(--muted, #50564f); font: 13px/1.5 Arial, sans-serif; }"
     }
   ],

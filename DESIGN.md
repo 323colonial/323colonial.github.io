@@ -60,17 +60,17 @@ typography:
     fontFamily: "Arial, sans-serif"
     fontSize: "13px"
     fontWeight: 400
-    lineHeight: 1.6
+    lineHeight: 1.35
   control:
     fontFamily: "Arial, sans-serif"
     fontSize: "14px"
     fontWeight: 700
     lineHeight: 1.5
-  control-mobile:
+  summary-link:
     fontFamily: "Arial, sans-serif"
-    fontSize: "12px"
-    fontWeight: 700
-    lineHeight: 1.5
+    fontSize: "13px"
+    fontWeight: 400
+    lineHeight: 1.35
   supporting:
     fontFamily: "Arial, sans-serif"
     fontSize: "14px"
@@ -100,7 +100,7 @@ typography:
     fontFamily: "Arial, sans-serif"
     fontSize: "13px"
     fontWeight: 400
-    lineHeight: 1.65
+    lineHeight: 1.35
   detail:
     fontFamily: "Arial, sans-serif"
     fontSize: "16px"
@@ -113,9 +113,9 @@ typography:
     lineHeight: 1.45
   quick-facts-mobile:
     fontFamily: "Arial, sans-serif"
-    fontSize: "12px"
+    fontSize: "13px"
     fontWeight: 400
-    lineHeight: 1.45
+    lineHeight: 1.35
   fact-value:
     fontFamily: "Arial, sans-serif"
     fontSize: "20px"
@@ -130,7 +130,7 @@ typography:
     fontFamily: "Arial, sans-serif"
     fontSize: "16px"
     fontWeight: 400
-    lineHeight: 1.45
+    lineHeight: 1.35
   price:
     fontFamily: "Arial, sans-serif"
     fontSize: "30px"
@@ -160,23 +160,16 @@ components:
   button-primary-hover:
     backgroundColor: "{colors.ink}"
     textColor: "{colors.greek-villa}"
-  showing-disclosure:
+  inline-contact:
     textColor: "{colors.greek-villa}"
-    typography: "{typography.control}"
-    padding: "12px 16px"
+    typography: "{typography.header-detail}"
   gallery-link:
     textColor: "{colors.mahogany}"
-    typography: "{typography.control}"
-  contact-panel:
-    backgroundColor: "{colors.greek-villa}"
-    textColor: "{colors.ink}"
-    typography: "{typography.supporting}"
-    padding: "24px"
-    width: "min(380px, calc(100vw - 32px))"
+    typography: "{typography.summary-link}"
   docking-facts:
     backgroundColor: "{colors.greek-villa}"
     textColor: "{colors.ink}"
-    padding: "18px 40px"
+    padding: "10px 40px"
   narrative-photo-field:
     backgroundColor: "{colors.image-field}"
   scroll-cue:
@@ -224,17 +217,17 @@ Greek Villa is the page, facts and dialog field; Accessible Beige also backs enl
 
 Georgia with Times New Roman/serif fallback carries address, section headings and prose; Arial/sans-serif carries facts, captions and controls. No font downloads. Frontmatter records literal source roles, including responsive variants, rather than inventing a new scale.
 
-Narrative is regular-weight fluid type, bounded to 65ch and reset to body size on mobile. Only Property details and the gallery introduction have section headings; the seven narrative passages have none. Price uses tabular numerals. Narrative scroll sequences use decorative position dots with numeric text retained for screen readers; the enlarged viewer shows “Photo N of 73.” Catalog thumbnails carry no visible position strip. Status, expected date, above-grade qualifier, details labels and the essential concept note use 13px at every width; captions also use 13px. Footer, mobile locality and mobile facts labels stay subordinate at 12px. The gallery introduction paragraph alone is capped at 60ch; its heading and gallery grid retain their widths. Prose size and leading remain unchanged.
+Narrative is regular-weight fluid type, bounded to 65ch and reset to body size on mobile. Only Property details and the gallery introduction have section headings; the seven narrative passages have none. Price uses tabular numerals. Narrative scroll sequences use decorative position dots with numeric text retained for screen readers; the enlarged viewer shows “Photo N of 73.” Catalog thumbnails carry no visible position strip. Status, expected date, above-grade qualifier, details labels and the essential concept note use 13px at every width; captions also use 13px. Footer and mobile locality stay subordinate at 12px; facts labels, summary links, status and date use 13px Arial. The gallery introduction paragraph alone is capped at 60ch; its heading and gallery grid retain their widths. Prose size and leading remain unchanged.
 
 ## Layout
 
-- **Persistent header:** CSS `position: sticky; top: 0`, not fixed positioning. Desktop minimum height 102px, padding 18px 40px; address/locality left, public listing/showing disclosure right. On the title page, agent details appear only inside the disclosure; the gallery retains its separate agent text. Script measures actual header and facts heights for sticky offsets and anchor clearance.
-- **Hero and facts:** full-width image-only seasonal hero at the original intrinsic aspect ratio. Twelve approved scenes form a continuous 24-second native opacity loop; additive blending avoids midpoint dimming. No hero labels or controls; its caption appears only in print. One understated, underlined footer Pause/Resume animation button retains the 44px target. Original photo 1 remains the initial/static image and gallery target; reduced motion, save-data, no JavaScript, failed decoding and print retain it. Load generated layers after the original and reveal only after every layer decodes. Pause when offscreen, hidden, printing or under a dialog. No new dependency or animation in narrative/gallery. Facts begin after it in normal flow, then dock beneath the header. At viewport heights of 500px or less, facts remain in normal flow and anchor clearance reserves only the persistent header. This preserves reading space at high zoom and in landscape, including without JavaScript. No duplicate address block. Desktop facts use a flex row; mobile uses two columns with facts spanning a second row.
+- **Persistent header:** CSS `position: sticky; top: 0`, not fixed positioning. Desktop minimum height 86px, padding 8px 40px; address/locality left, narrow vertical contact stack right on both pages. At 800px and below, contact sits below the address with 8px 20px header padding and 4px row gap; the address link uses a 32px minimum height. At both width ≤800px and height ≤500px, the header scrolls normally to preserve reading space. Script measures actual header and facts heights for sticky offsets and anchor clearance; window resize and height-observer notifications share one animation-frame layout.
+- **Hero and facts:** full-width image-only seasonal hero at the original intrinsic aspect ratio. Twelve approved scenes form a continuous 24-second native opacity loop; additive blending avoids midpoint dimming. No hero labels or controls; its caption appears only in print. One understated, underlined footer Pause/Resume animation button retains the 44px target. Original photo 1 remains the initial/static image and gallery target; reduced motion, save-data, no JavaScript, failed decoding and print retain it. Load generated layers after the original and reveal only after every layer decodes. Pause when offscreen, hidden, printing or under a dialog. No new dependency or animation in narrative/gallery. Facts retain their normal-flow slot after the hero. Native sticky top and bottom insets keep the bar visible at the viewport bottom while a tall hero fills the screen, then let it travel upward and dock beneath the header. No positioning JavaScript. At viewport heights of 500px or less, facts remain in normal flow and anchor clearance reserves only the persistent header, or 24px when the compact header also scrolls normally. This preserves reading space at high zoom and in landscape, including without JavaScript. No duplicate address block. Desktop facts use a flex row with 10px vertical padding; mobile keeps price/details, vertically stacked facts, and photos/status/date in three columns, with 8px vertical padding and 8px column gaps. The flex row can wrap at enlarged text sizes. Supporting type is unified at 13px; listing content stays unchanged.
 - **Narrative:** full-width fields with 56px 40px padding, 64px column gap, 45% text / 55% photos after gaps; even rows reverse sides. No 1200px cap here. Unenhanced photos stack with 28px gaps. At 800px and below, padding is 40px 20px and each paragraph precedes its photos.
 - **Details:** the enhanced screen journey ends with narrative/photos and the dated footer, without a repeated closing grid (colonial-pmx). Static source retains the normal-flow section for no-script/failed initialization, unsupported dialogs, print and direct `#details` navigation: 72px 40px padding; three-column definition list with 32px gaps and ruled cells. At 800px and below, padding becomes 48px 20px and the list has two columns with 20px gaps.
 - **Gallery and footer:** centered container capped at 1200px, 32px side gutters; gutters become 16px at 700px. Gallery starts at three columns with 40px row / 24px column gaps, drops to two at 1000px and one at 700px (32px gaps). Dialog width is capped at 1100px with 16px viewport margins; mobile padding is 16px.
 
-Responsive max-width boundaries: **1100px** hides the header agent and compacts facts; **1000px** changes gallery columns and limits summary action width; **800px** switches header, facts, narrative and details layouts (header minimum 88px); **700px** changes gallery, container and viewer layout; **360px** tightens header gutters and stacks the facts annotation. Hidden header information remains available through the showing disclosure.
+Responsive max-width boundaries: **1100px** compacts facts; **1000px** changes gallery columns; **800px** stacks header contact, facts, narrative and details layouts; **700px** changes gallery, container and viewer layout; **360px** tightens header/facts gutters and stacks the facts annotation. Agent and both contact links remain visible at every width.
 
 **The Native Scroll Rule.** Native scroll position directly controls reversible crossfades between captioned photographs; scrolling is never captured. On desktop the whole narrative stage sticks below header and facts plus 24px; on mobile only the photo sequence sticks, with 16px clearance after the paragraph. Steps are `max(240px, half the viewport height)`: hold for the first half, blend for the second. The final photo receives a full pinned step after its blend completes. The tallest caption reserves a stable frame; at most two photos blend. Only the images blend; the dominant photo owns the readable, unblended caption, highlighted dot, interaction and accessibility state. A focused photo stays fully visible until focus leaves, then scroll state resumes.
 
@@ -246,7 +239,7 @@ Reduced motion, less than 300px available height, or desktop copy taller than th
 
 ## Elevation & Depth
 
-No shadows or blur. Tonal fields and 1px rules provide separation. The header layers above docking facts (z-index 20 / 10); its bordered contact panel opens below it. Native dialogs use the browser top layer and the recorded translucent backdrop. The contact panel and dialogs scroll within viewport-height limits. Long text can break within words when necessary; contact labels, dates and dialog control rows wrap rather than overflowing at enlarged text sizes.
+No shadows or blur. Tonal fields and 1px rules provide separation. The header layers above docking facts (z-index 20 / 10). Native dialogs use the browser top layer and the recorded translucent backdrop, and scroll within viewport-height limits. Long text can break within words when necessary; contact labels, dates and dialog control rows wrap rather than overflowing at enlarged text sizes.
 
 ## Shapes
 
@@ -254,17 +247,17 @@ Square controls and image frames, without rounded cards or decorative clipping. 
 
 ## Components
 
-- **Address/contact header:** address is the home link; locality stays visible. Native See in person disclosure contains agent, general brokerage call, Email Liz and public listing links. Contact actions occupy separate lines; both buyer pages use the homepage-verified Charles Town office number (colonial-is7). Escape closes it and restores summary focus when no dialog is open; outside clicks close it.
-- **Actions:** mahogany buttons with paper text, 1px border and 44px minimum height. Hover switches to ink and underlines. On the title page, See in person is borderless, regular 13px Arial text with an underline and native disclosure marker; 12px vertical padding retains its 44px minimum target. The gallery retains the outlined disclosure and compact mobile control role. Text links use underlines, with mahogany assigned to the gallery action.
-- **Title-page action placement (colonial-93v):** retain side-by-side desktop actions. Placing View public listing below See in person, both right-aligned, was considered but rejected: two 44px targets plus existing vertical padding would grow the sticky header from 102px to at least 124px. Removing duplicate agent text already restores breathing room without taking space from photographs. At 800px and below, public listing remains inside the disclosure rather than adding a second header row.
-- **Focus:** 3px mahogany outline with 4px offset; paper outline in the masthead, mahogany again inside its paper contact panel. Each page starts with a focus-revealed skip link.
-- **Docking facts:** underlined Property details link in the heading with plain-text price, status, four facts, all-photos action and expected date; cedar lower rule. The Property details link opens a native details dialog populated from the closing definition grid; Close or Escape returns focus to that link. Only after dialog initialization succeeds does a readiness class hide the source section on screen; `:target` preserves direct `#details` access. Without enhancement the link reaches the visible original section, which also remains available in print. No sticky contact band at the end.
+- **Address/contact header (colonial-57q):** address is the home link; locality stays visible. Both pages show Liz McDonald and Dandridge Realty Group LLC on single-spaced lines above one row of native links: (304) 885-1547 | Questions & tours. The separator is decorative; the phone accessible name identifies the Dandridge office. Phone remains the approved general brokerage number; the second link opens the clean public Dandridge property listing URL, without query parameters, in the same tab. No popout, email action, external integration or custom contact JavaScript.
+- **Actions:** mahogany buttons with paper text, 1px border and 44px minimum height. Hover switches to ink and underlines. Header contacts use underlined 13px Arial native links with 24px minimum height (WCAG 2.2 minimum target size); name and brokerage use 13px/1.35 type. Property details and all-photos links also retain 24px minimum targets; other buttons retain 44px. Text links use underlines; both Property details and all-photos actions use mahogany. The date/action group has no arbitrary width cap. All summary links/status/date use regular 13px/1.35 Arial. Date stays together when it fits and can wrap at enlarged text sizes; narrow fact values use a shared right-aligned number width.
+- **Contact placement:** right-aligned compact identity block on desktop, with 13px/1.35 type and no extra row gaps. Phone and tours share a wrapping flex row with an 8px gap around the separator. At 800px and below, contact aligns left below the address. Both links stay in the page, wrapping as needed rather than hiding behind a disclosure.
+- **Focus:** 3px mahogany outline with 4px offset; paper outline in the masthead, with zero offset on compact contact links to avoid covering adjacent text. Each page starts with a focus-revealed skip link.
+- **Docking facts:** plain-text price above the compact underlined Property details link; at every width, the all-photos action sits above a separate Coming Soon line and the single-spaced expected-date line. Four facts stack in the mobile middle column; cedar lower rule. The Property details link opens a native details dialog populated from the closing definition grid; Close or Escape returns focus to that link. Only after dialog initialization succeeds does a readiness class hide the source section on screen; `:target` preserves direct `#details` access. Without enhancement the link reaches the visible original section, which also remains available in print. No sticky contact band at the end.
 - **Photo position indicators (colonial-19k, revising colonial-ms9):** narrative scroll sequences retain one decorative dot per local photo, left to right, over the bottom of the contained image—not its letterbox padding. Greek Villa fills the current dot; Pewter Green fills the others, with fine contrasting outlines. No backing strip, clickable dot targets or added animation; screen-reader slide counters remain. Dots do not intercept image links and do not print. Catalogs show captions without repeated 73-dot strips: a static grid has no single current photo, and those tiny marks add clutter rather than useful scroll position. Accessible photo labels and existing hidden catalog numbering remain. On both pages, the enlarged viewer instead shows its existing “Photo N of 73” heading with polite live updates, providing exact sequential position without counting dots.
 - **Narrative photo sequence:** exact caption beneath each visible image, with position dots only when enhancement fits. No scroll instructions. Contextual prose links open photos 15, 19, 24, 31 and 32; separate laundry link opens 20. Interior views 34–38 join paragraphs 1, 2 and 4; expanded views 39–73 join all seven sections, including the updated owner basement reverse view. Galleries append additions without renumbering the original 38.
 - **Photo catalog/viewer:** View all 73 photos opens a native catalog dialog. Thumbnails and contextual links open the shared enlarged viewer with caption, Previous / Next, adjacent previews, full-size link and Close. Arrows navigate with wraparound; Escape dismisses and focus returns to the opener. Concept images are omitted from tiny adjacent previews. Pending loads expose a polite loading status and hide the previous image so new captions never describe stale pixels. Failed loads expose recovery text; navigation and Close remain available. Without enhancement, `gallery.html` preserves ordered thumbnail links to full-size assets.
 - **Concept note:** only photo 31 carries “Conceptual basement plan — not existing finished space.” Its accessible links disclose that distinction while preserving visible link wording. Routine source/seasonal labels are absent; photo 6 is the actual hot tub.
 - **Property details/footer:** the full definition grid lives in the pop-out on enhanced screens; its static source remains visible only for fallback, direct-fragment and print access. One dated listing footer per page. No invented cards, inputs, tags or navigation primitives.
-- **Analytics privacy (colonial-zoc.2):** a non-sticky 13px Arial notice follows the header, linking to a native disclosure before the dated footer. Disclosure copy is 14px Arial, bounded to 75ch; existing mahogany button turns off PostHog and exposes an accessible status. No consent modal or opt-in. Notice and disclosure do not print; listing copy, photo assets, dialogs and Cloudflare remain unchanged.
+- **Analytics privacy (colonial-zoc.2):** a non-sticky 13px Arial notice with 4px vertical padding and a 24px privacy-link target follows the header, linking to a native disclosure before the dated footer. Disclosure copy is 14px Arial, bounded to 75ch; existing mahogany button turns off PostHog and exposes an accessible status. No consent modal or opt-in. Notice and disclosure do not print; listing copy, photo assets, dialogs and Cloudflare remain unchanged.
 
 ## Do's and Don'ts
 

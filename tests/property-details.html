@@ -32,7 +32,7 @@ try {
     price?.click();
     await settle();
     check(!dialog.open && frame.contentWindow.location.href === url, `${width}px: price click does not open or navigate`);
-    check(link.getBoundingClientRect().height >= 44, `${width}px: details link retains touch target`);
+    check(link.getBoundingClientRect().height >= 24, `${width}px: details link retains touch target`);
     link.focus();
     link.click();
     check(dialog.open, `${width}px: Property details opens dialog`);

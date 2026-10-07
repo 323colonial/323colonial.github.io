@@ -39,11 +39,9 @@ for (const route of ['index', 'gallery']) {
           parseFloat(css.outlineWidth) >= 2 && contrast(css.outlineColor, background(element.parentElement)) >= 3,
           `focus contrast: ${element.textContent.trim()}`);
       };
-      doc.querySelector('.showing-contact').open = true;
-      for (const link of doc.querySelectorAll('.masthead a, .masthead summary')) {
+      for (const link of doc.querySelectorAll('.masthead a, .contact-actions a')) {
         if (link.getBoundingClientRect().width) checkFocus(link);
       }
-      doc.querySelector('.showing-contact').open = false;
       win.scrollTo(0, 500);
       await new Promise(resolve => win.requestAnimationFrame(resolve));
       check(!doc.querySelector('.buyer-nav'), 'redundant navigation removed');

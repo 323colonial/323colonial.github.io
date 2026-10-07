@@ -28,6 +28,10 @@ All events carry sanitized canonical page URL/path, browser/visit IDs, current/a
 | `outbound_click` | Destination category: brokerage-phone, agent-email, Zillow, other-phone/email/external; placement: header/contact/content/footer. No full destination URL. One delegated trusted-click handler; navigation is never prevented. Capture is best-effort, especially immediate document departure. |
 | `$$heatmap` | SDK batches every 60 seconds; sanitized URL-keyed coordinates only, at most 100 valid points per batch. `/index.html` normalizes to `/`, so only two URLs enter reporting. No arbitrary text or geographic coordinates. |
 
+The slim notice retains its text and privacy/opt-out link; only vertical padding and the native link target changed, not tracking or consent behavior.
+
+The header’s Questions & tours link goes to the public Dandridge listing and uses existing `other-external` / `header` categories. This measures outbound intent, not an inquiry or confirmed tour.
+
 At most 400 accepted events per page instance; no network heartbeat. SDK fetch uses omitted credentials/no-referrer, with an abort signal that also blocks retries after opt-out. Previously delivered records are not erased by opting out.
 
 ## Coarse geography: account configuration

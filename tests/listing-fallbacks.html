@@ -24,8 +24,7 @@ for (const mode of ['no JavaScript', 'reduced motion']) {
   check([...doc.querySelectorAll('.story-photos figure')].every(f => !f.hidden && f.getBoundingClientRect().height > 0), `${mode}: every narrative image visible`);
   check(doc.querySelector('[data-all-photos]').getAttribute('href') === 'gallery.html', `${mode}: all-photo link has page fallback`);
   check(doc.querySelector('[data-photo="31"]').getAttribute('href') === 'gallery.html#photo-31', `${mode}: plan link has disclosed gallery fallback`);
-  doc.querySelector('.showing-contact').open = true;
-  check(doc.querySelector('.contact-panel .button').getBoundingClientRect().height >= 44, `${mode}: brokerage action accessible`);
+  check(doc.querySelector('.contact-actions a[href^="tel:"]').getBoundingClientRect().height >= 24, `${mode}: brokerage action accessible`);
   check(doc.documentElement.scrollWidth <= 390, `${mode}: no horizontal overflow`);
 }
 document.querySelector('#results').textContent = results.join('\n');

@@ -8,7 +8,7 @@
 <script type="module">
 const frame = document.querySelector('iframe');
 const results = [];
-for (const [width, height] of [[1440, 1000], [1376, 768], [1080, 768], [801, 844], [800, 844], [768, 1024], [700, 844], [390, 844], [320, 640]]) {
+for (const [width, height] of [[1440, 1000], [1376, 768], [1080, 768], [900, 844], [801, 844], [800, 844], [768, 1024], [700, 844], [390, 844], [320, 640]]) {
   frame.style.width = `${width}px`;
   frame.style.height = `${height}px`;
   await new Promise(resolve => { frame.onload = resolve; frame.src = `../index.html?layout-test=${width}`; });
@@ -19,6 +19,11 @@ for (const [width, height] of [[1440, 1000], [1376, 768], [1080, 768], [801, 844
   const check = (ok, text) => { if (!ok) failures.push(text); };
   const box = element => element.getBoundingClientRect();
   check(doc.documentElement.scrollWidth <= width, 'horizontal overflow');
+  const masthead = doc.querySelector('.masthead');
+  const summary = doc.querySelector('.listing-summary');
+  check(box(summary).bottom <= height + 1 && box(summary).top >= box(masthead).bottom - 1, 'facts must remain visible between header and viewport bottom');
+  check(box(doc.querySelector('.analytics-notice')).height <= (width > 700 ? 36 : 60), 'analytics notice wastes vertical space');
+  check(box(doc.querySelector('.analytics-notice a')).height >= 24, 'privacy link target too small');
   check(doc.querySelector('.hero-photo img').getAttribute('src') === 'assets/listing/01.webp', 'wrong hero');
   check(Math.abs(box(doc.querySelector('.hero-photo')).width - width) <= 1, 'hero not full width');
   check(doc.querySelectorAll('.listing-copy').length === 7, 'seven paragraphs missing');
@@ -32,32 +37,54 @@ for (const [width, height] of [[1440, 1000], [1376, 768], [1080, 768], [801, 844
       check(box(photoStage).height + parseFloat(win.getComputedStyle(photoStage).top) <= height, 'sticky content taller than viewport');
     }
   }
-  for (const link of doc.querySelectorAll('.listing-summary .text-link, .masthead summary, .property-identity a')) {
-    check(box(link).height >= 44, 'touch target shorter than 44px');
+  if (width <= 800) {
+    check(box(doc.querySelector('.masthead')).height <= 145, 'mobile masthead wastes vertical space');
+    check(box(doc.querySelector('.listing-summary')).height <= 131, 'mobile facts bar exceeds 130px budget plus rounding tolerance');
+    const facts = [...doc.querySelectorAll('.quick-facts > span')];
+    check(facts.slice(1).every((fact, i) => box(fact).top >= box(facts[i]).bottom), 'narrow facts must stack in middle column');
+    check(box(doc.querySelector('.price-block')).right <= box(doc.querySelector('.quick-facts')).left && box(doc.querySelector('.quick-facts')).right <= box(doc.querySelector('.summary-actions')).left, 'price, facts and actions must form three columns');
+  }
+  for (const link of doc.querySelectorAll('.listing-summary a, .property-identity a')) {
+    check(box(link).height >= 24, 'touch target shorter than 24px');
     check(box(link).left >= 0 && box(link).right <= width, 'link escapes viewport');
   }
-  const contact = doc.querySelector('.showing-contact');
-  const disclosure = contact.querySelector('summary');
-  const style = win.getComputedStyle(disclosure);
-  check(style.borderTopWidth === '0px' && style.fontWeight === '400' && style.fontSize === '13px', 'showing disclosure not quiet header text');
-  check(style.textDecorationLine.includes('underline') && style.display === 'list-item', 'disclosure affordance missing');
-  const publicLink = doc.querySelector('.header-public');
-  if (width > 800) {
-    check(box(publicLink).height >= 44 && box(publicLink).right < box(disclosure).left, 'desktop actions must remain side by side');
-  } else {
-    check(box(publicLink).height === 0, 'mobile public link belongs inside disclosure');
+  const detailsLink = doc.querySelector('.price a');
+  const photosLink = doc.querySelector('.summary-actions .text-link');
+  check(win.getComputedStyle(detailsLink).color === win.getComputedStyle(photosLink).color, 'peer fact actions must share link color');
+  check([detailsLink, photosLink, doc.querySelector('.listing-status'), doc.querySelector('.market-date')].every(el => win.getComputedStyle(el).fontSize === '13px'), 'summary supporting text and links must share 13px size');
+  check(box(doc.querySelector('.listing-status')).top >= box(photosLink).bottom, 'Coming Soon must stay below photos link');
+  if (width === 900) {
+    const date = doc.querySelector('.market-date');
+    check(box(date).height < 20, 'date wraps despite available width');
   }
-  contact.open = true;
-  const panel = box(contact.querySelector('.contact-panel'));
-  check(panel.left >= 0 && panel.right <= width && panel.bottom <= height, 'contact panel escapes viewport');
+  const contact = doc.querySelector('.header-contact');
+  check(!doc.querySelector('.masthead details'), 'contact must be inline, not a disclosure');
+  const panel = box(contact);
+  check(panel.left >= 0 && panel.right <= width && panel.bottom <= height, 'inline contact escapes viewport');
   for (const action of contact.querySelectorAll('a')) {
-    check(box(action).height >= 44 && action.tabIndex === 0, 'contact link inaccessible');
+    const style = win.getComputedStyle(action);
+    check(box(action).height >= 24 && action.tabIndex === 0, 'contact link inaccessible');
+    check(style.textDecorationLine.includes('underline'), 'native link affordance missing');
   }
-  const link = contact.querySelector('.button');
+  const actions = [...contact.querySelectorAll('a')];
+  check(actions.length === 2, 'phone and questions/tours only');
+  check(Math.abs(box(actions[0]).top - box(actions[1]).top) < 1, 'phone and tours must share one row');
+  check(panel.width <= 260, 'contact block must stay compact');
+  check(actions.every(action => Math.abs(box(action).height - 24) < 1), 'contact links must use even 24px rows');
+  check(parseFloat(win.getComputedStyle(contact.querySelector('p')).lineHeight) < 18, 'name and brokerage must be single-spaced');
+  const link = contact.querySelector('a[href^="tel:"]');
   link.focus();
   const target = box(link);
   check(doc.activeElement === link && win.getComputedStyle(link).outlineStyle !== 'none', 'focus invisible');
   check(link.contains(doc.elementFromPoint(target.x + target.width / 2, target.y + target.height / 2)), 'contact hit target obscured');
+  if (width >= 900) {
+    win.scrollTo({top: doc.querySelector('.hero-photo').offsetTop + box(doc.querySelector('.hero-photo')).height, behavior: 'instant'});
+    await new Promise(resolve => win.requestAnimationFrame(() => win.requestAnimationFrame(resolve)));
+    check(Math.abs(box(summary).top - box(masthead).bottom) < 1, 'facts must dock below header after hero');
+    win.scrollTo({top: 0, behavior: 'instant'});
+    await new Promise(resolve => win.requestAnimationFrame(() => win.requestAnimationFrame(resolve)));
+    check(box(summary).bottom <= height + 1, 'facts must return to visible bottom position');
+  }
   results.push(`${width}×${height}: ${failures.length ? 'FAIL — ' + failures.join('; ') : 'PASS'}`);
 }
 document.querySelector('#results').textContent = results.join('\n');

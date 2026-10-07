@@ -124,13 +124,22 @@ document.addEventListener('focusin', event => {
   }
 });
 document.addEventListener('focusout', () => requestAnimationFrame(updatePhotos));
-addEventListener('resize', layoutStories);
+let layoutPending = false;
+function scheduleLayout() {
+  if (layoutPending) return;
+  layoutPending = true;
+  requestAnimationFrame(() => {
+    layoutPending = false;
+    layoutStories();
+  });
+}
+addEventListener('resize', scheduleLayout);
 reducedMotion.addEventListener('change', layoutStories);
 const headerObserver = new ResizeObserver(entries => {
-  // Window resize already lays out stories; only new header heights need another pass.
+  // Width changes can notify both paths; share one layout per animation frame.
   if (entries.some(({target}) => target.getBoundingClientRect().height !== parseFloat(
     document.documentElement.style.getPropertyValue(target === masthead ? '--header-height' : '--summary-height')
-  ))) layoutStories();
+  ))) scheduleLayout();
 });
 headerObserver.observe(masthead);
 if (summary) headerObserver.observe(summary);
@@ -150,14 +159,3 @@ if (detailsDialog && typeof detailsDialog.showModal === 'function') {
   detailsDialog.addEventListener('close', () => detailsLink.focus({preventScroll: true}));
   document.querySelector('#details').classList.add('has-dialog');
 }
-
-const contact = document.querySelector('.showing-contact');
-document.addEventListener('keydown', event => {
-  if (event.key === 'Escape' && contact.open && !document.querySelector('dialog[open]')) {
-    contact.open = false;
-    contact.querySelector('summary').focus();
-  }
-});
-document.addEventListener('click', event => {
-  if (!contact.contains(event.target)) contact.open = false;
-});

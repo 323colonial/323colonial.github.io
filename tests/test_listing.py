@@ -233,14 +233,12 @@ class Listing(unittest.TestCase):
             self.assertIn('Liz McDonald', header.text())
             self.assertIn('Dandridge Realty Group LLC', header.text())
             self.assertIn('tel:+13048851547', [a.attrs.get('href') for a in page.all('a')])
-            listing_links = [a for a in page.all('a') if a.text().startswith('View public listing')]
-            self.assertEqual([a.text() for a in listing_links], [
-                'View public listing', 'View public listing on Zillow',
-            ])
-            for link in listing_links:
-                self.assertEqual(link.attrs['href'], 'https://www.zillow.com/homedetails/323-Colonial-Dr-Berkeley-Springs-WV-25411/22875195_zpid')
-                self.assertEqual(link.attrs.get('aria-label', link.text()), link.text())
-                self.assertNotIn('target', link.attrs, 'Keep same-tab navigation')
+            listing_links = [a for a in header.all('a') if a.text() == 'Questions & tours']
+            self.assertEqual(len(listing_links), 1)
+            link = listing_links[0]
+            self.assertEqual(link.attrs['href'], 'https://search.soldvawv.com/search/detail/270760671')
+            self.assertEqual(link.attrs['aria-label'], 'Questions & tours through Dandridge Realty Group')
+            self.assertNotIn('target', link.attrs, 'Keep same-tab navigation')
             self.assertNotIn('redfin', (ROOT / file).read_text().lower())
             self.assertIn('Liz McDonald', page.text())
             self.assertIn('Dandridge Realty Group LLC', page.text())
@@ -260,34 +258,35 @@ class Listing(unittest.TestCase):
         self.assertEqual(values['Lower level'], 'Unfinished walkout basement')
         self.assertNotRegex(page.text().lower(), r'above[\s-]+grade')
 
-    def test_title_page_realtor_details_in_disclosure_and_print_footer_only(self):
+    def test_compact_facts_grouping(self):
         page = Page('index.html').root
-        contact = next(d for d in page.all('details') if d.cls('showing-contact'))
-        printed = [p for p in page.all('p') if p.cls('print-contact')]
-        self.assertEqual(len(printed), 1)
-        self.assertEqual(printed[0].parent.tag, 'footer')
-        self.assertEqual(contact.all('summary')[0].text(), 'See in person')
-        for detail in ('Liz McDonald', 'Listing agent', 'Dandridge Realty Group LLC'):
-            self.assertEqual(contact.text().count(detail), 1)
-            self.assertEqual(printed[0].text().count(detail), 1)
-            self.assertEqual(page.text().count(detail), 2, f'{detail} repeated outside disclosure/print footer')
-        self.assertEqual([a.attrs['href'] for a in contact.all('a')], [
-            'tel:+13048851547',
-            'mailto:liz@dandridgerealtygroup.com',
-            'https://www.zillow.com/homedetails/323-Colonial-Dr-Berkeley-Springs-WV-25411/22875195_zpid',
-        ])
+        price = next(h for h in page.all('h2') if h.cls('price'))
+        self.assertLess(price.text().index('$499,000'), price.text().index('Property details'))
+        actions = next(d for d in page.all('div') if d.cls('summary-actions'))
+        self.assertLess(actions.text().index('Coming Soon'), actions.text().index('Expected on market'))
 
-    def test_website_brokerage_contacts(self):
+    def test_inline_brokerage_contacts_on_both_pages(self):
         for filename in ('index.html', 'gallery.html'):
             page = Page(filename).root
-            contact = next(d for d in page.all('details') if d.cls('showing-contact'))
+            header = page.all('header')[0]
+            self.assertFalse(header.all('details'), 'Contact must not require opening a disclosure')
+            contact = next(d for d in header.all('div') if d.cls('header-contact'))
+            self.assertEqual(contact.attrs['aria-label'], 'Listing agent contact')
+            for detail in ('Liz McDonald', 'Dandridge Realty Group LLC'):
+                self.assertEqual(header.text().count(detail), 1, 'Do not duplicate agent identity')
             links = contact.all('a')
+            self.assertEqual(len(links), 2, 'Only phone and questions/tours actions')
             self.assertEqual(links[0].attrs['href'], 'tel:+13048851547')
-            self.assertEqual(links[0].text(), 'Call brokerage · (304) 885-1547')
-            self.assertEqual(links[1].attrs['href'], 'mailto:liz@dandridgerealtygroup.com')
-            self.assertEqual(links[1].text(), 'Email Liz')
+            self.assertEqual(links[0].text(), '(304) 885-1547')
+            self.assertEqual(links[0].attrs['aria-label'], 'Call Dandridge office at (304) 885-1547')
+            self.assertEqual(links[1].text(), 'Questions & tours')
+            self.assertFalse(header.all('button'), 'Contact uses native links, no integration')
+            for removed in ('See in person', 'View public listing', 'Email Liz'):
+                self.assertNotIn(removed, header.text())
             self.assertNotRegex(page.text().lower(), r'michelle|283-8640|885-7645|fast response')
         printed = next(p for p in Page('index.html').root.all('p') if p.cls('print-contact'))
+        self.assertEqual(printed.parent.tag, 'footer')
+        self.assertIn('Liz McDonald · Listing agent', printed.text())
         self.assertIn('(304) 885-1547', printed.text())
         self.assertEqual(printed.all('a')[0].attrs['href'], 'tel:+13048851547')
 

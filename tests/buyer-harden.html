@@ -23,9 +23,8 @@ try {
       const label = `${route} ${width}×${height}`;
       const fits = element => element.scrollWidth <= element.clientWidth + 1;
       check(fits(doc.documentElement), `${label}: normal/reflow width fits`);
-      const targets = [...doc.querySelectorAll('.caption-text, .listing-copy, dd, .contact-panel p')];
+      const targets = [...doc.querySelectorAll('.caption-text, .listing-copy, dd, .header-contact p')];
       const originals = targets.map(el => el.innerHTML);
-      doc.querySelector('.showing-contact').open = true;
       for (const [name, value, dir] of [
         ['long Unicode', 'Übergrößen 東京 🏡 مرحبا ' + 'LongUnbrokenText'.repeat(12), 'ltr'],
         ['RTL expansion', 'مرحبا بكم في المنزل '.repeat(12), 'rtl'],
@@ -44,10 +43,10 @@ try {
         const sizes = nodes.map(el => parseFloat(win.getComputedStyle(el).fontSize));
         nodes.forEach((el, i) => { el.style.fontSize = `${sizes[i] * 2}px`; });
         await settle(win);
-        const controls = [...doc.querySelectorAll('.masthead summary, .masthead h1, .listing-summary')];
+        const controls = [...doc.querySelectorAll('.contact-actions a, .masthead h1, .listing-summary')];
         check(fits(doc.documentElement) && controls.every(fits), `${label}: 200% text stays within page`);
-        const panel = doc.querySelector('.contact-panel');
-        check(fits(panel) && panel.getBoundingClientRect().bottom <= height, `${label}: enlarged contact panel stays reachable`);
+        const panel = doc.querySelector('.header-contact');
+        check(fits(panel) && panel.getBoundingClientRect().bottom <= height, `${label}: enlarged contact stack stays reachable`);
         if (route === 'index') doc.querySelector('.price a').click();
         else doc.querySelector('[data-gallery-image]').click();
         const modal = doc.querySelector('dialog[open]');
