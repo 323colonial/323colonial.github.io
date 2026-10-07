@@ -1,0 +1,206 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Resize reading regression</title>
+<h1>Resize reading regression</h1>
+<pre id="results">Running…</pre>
+<iframe title="Resize listing" style="width:1440px;height:1000px;border:0"></iframe>
+<script type="module">
+const frame = document.querySelector('iframe');
+const results = [];
+const check = (ok, name) => results.push(`${ok ? 'PASS' : 'FAIL'}: ${name}`);
+await new Promise(resolve => { frame.onload = resolve; frame.src = '../index.html'; });
+const doc = frame.contentDocument, win = frame.contentWindow;
+doc.querySelector('.analytics-notice').dispatchEvent(new win.Event('pointerenter'));
+const settle = async () => {
+  for (let i = 0; i < 4; i++) await new Promise(resolve => win.requestAnimationFrame(resolve));
+};
+const resize = async (width, height) => {
+  frame.style.width = `${width}px`;
+  frame.style.height = `${height}px`;
+  await settle();
+};
+const sections = [...doc.querySelectorAll('.story')];
+const section = sections[3];
+const photos = [...section.querySelectorAll('figure')];
+function geometry(story = section) {
+  const mobile = win.innerWidth <= 800;
+  const style = win.getComputedStyle(story);
+  const sticky = story.querySelector(mobile ? '.story-photos' : '.story-stage');
+  const offset = parseFloat(style.paddingTop) + parseFloat(style.getPropertyValue('--border-lines')) * parseFloat(style.lineHeight)
+    + (mobile ? story.querySelector('.story-copy').getBoundingClientRect().height + 28 : 0);
+  return {start: story.offsetTop + offset - parseFloat(win.getComputedStyle(sticky).top), step: Math.max(240, win.innerHeight * .5)};
+}
+const position = () => { const {start, step} = geometry(); return (win.scrollY - start) / step; };
+const seek = async value => { const {start, step} = geometry(); win.scrollTo(0, start + value * step); await settle(); };
+try {
+  await doc.fonts.ready;
+  await settle();
+  for (const [from, to] of [
+    [[1440, 1000], [1200, 1000]], [[1440, 1000], [1440, 900]],
+    [[390, 844], [430, 844]], [[390, 844], [390, 760]],
+    [[1440, 1000], [390, 844]], [[390, 844], [1440, 1000]],
+  ]) {
+    await resize(...from);
+    await seek(3.75);
+    const before = position();
+    await resize(...to);
+    check(Math.abs(position() - before) < .01,
+      `${from.join('×')} → ${to.join('×')}: same narrative/photo blend (${before.toFixed(3)} → ${position().toFixed(3)})`);
+  }
+  await resize(1440, 1000);
+  await seek(3.75);
+  for (let i = 0; i < 12; i++) await resize(i % 2 ? 1440 : 390, i % 2 ? 1000 : 844);
+  check(Math.abs(position() - 3.75) < .02, `repeated breakpoint resize has no accumulating drift (${position().toFixed(3)})`);
+
+  const nativeScroll = win.scrollTo.bind(win);
+  let corrections = 0;
+  win.scrollTo = (...args) => { corrections++; nativeScroll(...args); };
+  const reset = () => { corrections = 0; };
+  reset();
+  nativeScroll(0, win.scrollY + 100);
+  await settle();
+  check(corrections === 0 && Math.abs(position() - 3.95) < .02, 'ordinary scroll advances naturally without correction');
+  reset();
+  win.dispatchEvent(new win.Event('resize'));
+  await settle();
+  check(corrections === 0, 'unchanged viewport resize event does not move reader');
+  const beforeRapid = position();
+  reset();
+  for (const [width, height] of [[1200, 900], [390, 844], [430, 760]]) {
+    frame.style.width = `${width}px`;
+    frame.style.height = `${height}px`;
+    win.dispatchEvent(new win.Event('resize'));
+  }
+  await settle();
+  check(corrections === 1 && Math.abs(position() - beforeRapid) < .01, 'rapid resize burst coalesces to one stable correction');
+  reset();
+  win.visualViewport?.dispatchEvent(new win.Event('resize'));
+  await settle();
+  check(corrections === 0, 'visual viewport-only event does not reposition page');
+
+  await seek(3.75);
+  doc.querySelector('.story-copy').dispatchEvent(new win.Event('pointerdown', {bubbles: true}));
+  await resize(1200, 900);
+  check(Math.abs(position() - 3.75) < .01, 'background click before resize does not discard settled reading point');
+
+  for (const type of ['wheel', 'touchmove', 'pointerdown', 'keydown']) {
+    await seek(3.75);
+    reset();
+    frame.style.height = `${win.innerHeight === 1000 ? 950 : 1000}px`;
+    win.dispatchEvent(new win.Event('resize'));
+    win.dispatchEvent(new win.Event(type));
+    await settle();
+    check(corrections === 0, `${type} during queued resize cancels correction`);
+  }
+  await resize(1440, 1000);
+  await seek(4.1);
+  const link = photos[4].querySelector('a');
+  link.focus({preventScroll: true});
+  await settle();
+  reset();
+  await resize(1200, 1000);
+  check(doc.activeElement === link && !photos[4].hidden && !photos[4].inert && corrections === 0,
+    'focused photo remains active; resize does not steal focus or force scroll');
+  link.click();
+  await settle();
+  const dialog = doc.querySelector('#photo-viewer'), modalFocus = doc.activeElement;
+  reset();
+  await resize(390, 844);
+  check(dialog.open && doc.activeElement === modalFocus && corrections === 0, 'modal resize leaves dialog focus and scrolling alone');
+  dialog.close();
+  await settle();
+  check(doc.activeElement === link && !photos[4].hidden && !photos[4].inert, 'modal close restores available photo opener');
+  link.blur();
+  await settle();
+
+  await seek(3.75);
+  await resize(390, 480);
+  const clearance = () => parseFloat(win.getComputedStyle(doc.documentElement).scrollPaddingTop);
+  check(!section.classList.contains('is-scrolling') && Math.abs(photos[4].getBoundingClientRect().top - clearance()) < 2,
+    'short-height fallback keeps dominant photo at reading line');
+  check(photos.every(photo => !photo.hidden && !photo.inert), 'short-height fallback exposes all photos');
+  await resize(390, 844);
+  check(Math.abs(position() - 4) < .01 && !photos[4].inert, 'return from inline fallback keeps same photo');
+
+  await seek(photos.length - .3);
+  await resize(430, 900);
+  check(Math.abs(position() - (photos.length - .3)) < .01, 'final photo retains dedicated hold progress');
+  await resize(390, 844);
+  const copy = section.querySelector('.story-copy');
+  nativeScroll(0, win.scrollY + copy.getBoundingClientRect().top + copy.offsetHeight * .3 - clearance());
+  await settle();
+  await resize(430, 844);
+  check(Math.abs((clearance() - copy.getBoundingClientRect().top) / copy.offsetHeight - .3) < .01,
+    'mobile paragraph rewrap keeps approximate text fraction');
+
+  nativeScroll(0, 0);
+  await settle();
+  await resize(1440, 1000);
+  check(win.scrollY === 0, 'page top stays at top');
+  nativeScroll(0, doc.documentElement.scrollHeight);
+  await settle();
+  await resize(390, 844);
+  check(Math.abs(doc.documentElement.scrollHeight - win.innerHeight - win.scrollY) < 2, 'page bottom stays at bottom');
+
+  // Same compensated removal used by the independent privacy-notice feature.
+  const notice = doc.querySelector('.analytics-notice');
+  notice.hidden = false;
+  win.layoutStories();
+  await seek(3.75);
+  const noticeHeight = notice.getBoundingClientRect().height;
+  notice.hidden = true;
+  nativeScroll(0, win.scrollY - noticeHeight);
+  await settle();
+  const beforeCollapseResize = position();
+  await resize(430, 844);
+  check(Math.abs(position() - beforeCollapseResize) < .01, 'notice collapse does not leave stale story coordinates for next resize');
+
+  await seek(3.75);
+  reset();
+  frame.style.width = '390px';
+  win.dispatchEvent(new win.Event('resize'));
+  win.location.hash = 'details';
+  await settle();
+  check(win.location.hash === '#details' && doc.querySelector('#details').getBoundingClientRect().height > 0 && corrections === 0,
+    'fragment navigation wins over pending resize');
+  win.history.replaceState(null, '', win.location.pathname);
+  doc.activeElement.blur();
+  await settle();
+  await seek(3.75);
+  reset();
+  frame.style.width = '430px';
+  win.dispatchEvent(new win.Event('resize'));
+  win.dispatchEvent(new win.Event('beforeprint'));
+  await settle();
+  check(corrections === 0, 'print entry cancels pending correction');
+  win.dispatchEvent(new win.Event('afterprint'));
+  win.scrollTo = nativeScroll;
+
+  // Gallery and reduced-motion use real page source; only the media preference is doubled.
+  for (const mode of ['gallery', 'reduced motion']) {
+    const extra = document.createElement('iframe');
+    extra.title = mode;
+    extra.style.cssText = 'width:1440px;height:1000px;border:0';
+    document.body.append(extra);
+    const source = await fetch(mode === 'gallery' ? '../gallery.html' : '../index.html').then(r => r.text());
+    const media = mode === 'reduced motion' ? `<script>const nativeMedia = matchMedia; window.matchMedia = q => nativeMedia(q === '(prefers-reduced-motion: reduce)' ? '(min-width: 0px)' : q);<\/script>` : '';
+    await new Promise(resolve => { extra.onload = resolve; extra.srcdoc = source.replace('<head>', `<head><base href="${new URL('../', location.href)}">${media}`); });
+    const w = extra.contentWindow, d = extra.contentDocument;
+    d.querySelector('.analytics-notice').dispatchEvent(new w.Event('pointerenter'));
+    const wait = async () => { for (let i = 0; i < 4; i++) await new Promise(r => w.requestAnimationFrame(r)); };
+    await d.fonts.ready;
+    await wait();
+    const target = mode === 'gallery' ? d.querySelector('#photo-31') : d.querySelectorAll('.story')[3].querySelectorAll('figure')[4];
+    const line = () => parseFloat(w.getComputedStyle(d.documentElement).scrollPaddingTop);
+    w.scrollTo(0, w.scrollY + target.getBoundingClientRect().top - line());
+    await wait();
+    extra.style.width = '390px';
+    extra.style.height = '844px';
+    await wait();
+    check(Math.abs(target.getBoundingClientRect().top - line()) < 2, `${mode}: same photo across grid/width reflow`);
+    if (mode === 'reduced motion') check(!d.querySelector('.is-scrolling') && [...d.querySelectorAll('.story figure')].every(p => !p.hidden && !p.inert), 'reduced motion remains inline without animated correction');
+  }
+} catch (error) { check(false, error.stack); }
+document.querySelector('#results').textContent = results.join('\n');
+document.title = results.some(row => row.startsWith('FAIL')) ? 'FAIL: resize reading' : 'PASS: resize reading';
+</script>

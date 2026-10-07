@@ -64,6 +64,63 @@ const narrow = matchMedia('(max-width: 800px)');
 let tracks = [];
 let pending = false;
 let focusedPhoto;
+let layoutWidth = innerWidth, layoutHeight = innerHeight;
+let readingPoint;
+const readingBlocks = [...document.querySelectorAll(
+  '.hero-photo, .story-copy, .story-photos figure, main .gallery-intro, main .gallery-grid figure, #details, .analytics-privacy, .site-footer'
+)];
+
+function rememberReadingPoint() {
+  // Resize has already reflowed CSS by the time its event arrives. Keep the last
+  // settled viewport's anchor, including through native scroll-anchor events.
+  if (innerWidth !== layoutWidth || innerHeight !== layoutHeight || matchMedia('print').matches) return;
+  readingPoint = null;
+  if (document.querySelector('dialog[open]') || document.activeElement !== document.body) return;
+  const hash = location.hash;
+  if (scrollY <= 1) { readingPoint = {edge: 'top', hash}; return; }
+  if (document.documentElement.scrollHeight - innerHeight - scrollY <= 1) {
+    readingPoint = {edge: 'bottom', hash}; return;
+  }
+  for (const track of tracks) {
+    const start = track.story.offsetTop + track.offset - track.stickyTop;
+    const position = (scrollY - start) / track.step;
+    if (position < 0 || position >= track.photos.length) continue;
+    const index = Math.min(track.photos.length - 1, Math.floor(position) + (position % 1 >= .75 ? 1 : 0));
+    readingPoint = {element: track.photos[index], story: track.story, position, fraction: 0, gap: 0, hash};
+    return;
+  }
+  const line = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop);
+  // ponytail: block fractions approximate rewrapped text; use Range anchors only if exact lines become required.
+  for (const element of readingBlocks) {
+    const box = element.getBoundingClientRect();
+    if (!box.height || box.bottom <= line || box.top >= innerHeight) continue;
+    readingPoint = {element, fraction: Math.max(0, (line - box.top) / box.height), gap: Math.max(0, box.top - line), hash};
+    return;
+  }
+}
+
+function restoreReadingPoint(point) {
+  if (!point || point.hash !== location.hash || matchMedia('print').matches
+    || document.querySelector('dialog[open]') || document.activeElement !== document.body) return;
+  let top = 0;
+  if (point.edge === 'bottom') top = document.documentElement.scrollHeight - innerHeight;
+  else if (point.element) {
+    const track = tracks.find(track => track.story === point.element.closest('.story'));
+    if (track && (point.story || point.element.matches('figure'))) {
+      top = track.story.offsetTop + track.offset - track.stickyTop
+        + (point.position ?? track.photos.indexOf(point.element)) * track.step;
+    } else if (track && !narrow.matches) {
+      // Mobile prose becomes the desktop pinned paragraph/photo pair.
+      top = track.story.offsetTop + track.offset - track.stickyTop;
+    } else {
+      const box = point.element.getBoundingClientRect();
+      const line = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop);
+      top = scrollY + box.top + point.fraction * box.height - line - point.gap;
+    }
+  }
+  // One instant correction; never disable native anchoring or animate a resize.
+  scrollTo({top: Math.max(0, top), behavior: 'instant'});
+}
 
 stories.forEach(story => {
   story.querySelector('.scroll-cue').append(createPhotoDots(story.querySelectorAll('.story-photos figure').length));
@@ -111,9 +168,11 @@ function updatePhotos() {
     const next = track.photos[index + 1]?.querySelector('img');
     if (next && canPreload && bounds.top < innerHeight * 2 && bounds.bottom > 0) next.loading = 'eager';
   }
+  rememberReadingPoint();
 }
 
 function layoutStories() {
+  const point = innerWidth !== layoutWidth || innerHeight !== layoutHeight ? readingPoint : null;
   const headerHeight = masthead.getBoundingClientRect().height;
   const summaryHeight = summary?.getBoundingClientRect().height || 0;
   document.documentElement.style.setProperty('--header-height', `${headerHeight}px`);
@@ -159,8 +218,20 @@ function layoutStories() {
     story.style.setProperty('--story-height', `${height}px`);
     tracks.push({story, photos, insets, stickyTop, offset, step, counter: cue.querySelector('.slide-count'), dots: cue.querySelector('.photo-dots')});
   }
+  restoreReadingPoint(point);
+  layoutWidth = innerWidth;
+  layoutHeight = innerHeight;
   updatePhotos();
 }
+
+// Navigation and input between resize and its queued layout beat an old anchor.
+['wheel', 'touchmove', 'pointerdown', 'keydown'].forEach(type =>
+  addEventListener(type, () => {
+    if (innerWidth !== layoutWidth || innerHeight !== layoutHeight) readingPoint = null;
+  }, {passive: true}));
+['hashchange', 'beforeprint'].forEach(type =>
+  addEventListener(type, () => { readingPoint = null; }));
+document.addEventListener('focusin', () => { readingPoint = null; });
 
 heroImage?.addEventListener('load', updatePhotos);
 heroImage?.addEventListener('error', updatePhotos);
