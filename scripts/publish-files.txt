@@ -165,3 +165,4 @@ assets/seasons/new-growth.webp
 assets/seasons/spring.webp
 assets/seasons/late-spring.webp
 assets/seasons/midsummer.webp
+assets/email/323-colonial-hero-small.gif

@@ -62,7 +62,8 @@ test('publish allowlist contains exactly required buyer files, never repository/
   const files = readFileSync('scripts/publish-files.txt', 'utf8').trim().split('\n');
   const modules = ['analytics-core.mjs', 'vendor/posthog-1.438.1.mjs', 'vendor/posthog-LICENSE'];
   const seasons = ['early-fall', 'turning-leaves', 'fall', 'first-frost', 'first-snow', 'winter', 'snowmelt', 'new-growth', 'spring', 'late-spring', 'midsummer'].map(name => `assets/seasons/${name}.webp`);
-  const expected = ['index.html', 'gallery.html', 'listing.css', 'gallery.js', 'listing.js', 'seasonal-hero.js', 'analytics.mjs', ...modules, ...seasons];
+  const emailAssets = ['assets/email/323-colonial-hero-small.gif'];
+  const expected = ['index.html', 'gallery.html', 'listing.css', 'gallery.js', 'listing.js', 'seasonal-hero.js', 'analytics.mjs', ...modules, ...seasons, ...emailAssets];
   const analytics = readFileSync('analytics.mjs', 'utf8');
   assert.ok(analytics.includes("from './analytics-core.mjs'"));
   assert.ok(analytics.includes("import('./vendor/posthog-1.438.1.mjs')"));
@@ -71,7 +72,7 @@ test('publish allowlist contains exactly required buyer files, never repository/
     for (const suffix of ['', '-small']) expected.push(`assets/listing/${String(n).padStart(2, '0')}${suffix}.webp`);
   }
   assert.deepEqual([...files].sort(), expected.sort());
-  const referenced = new Set(['index.html', 'gallery.html', ...modules]);
+  const referenced = new Set(['index.html', 'gallery.html', ...modules, ...emailAssets]);
   for (const [file] of pages) {
     const doc = parseDocument(readFileSync(file, 'utf8'));
     for (const node of selectAll('[href], [src], [srcset], [data-seasons], meta[property="og:image"]', doc)) {
@@ -88,6 +89,6 @@ test('publish allowlist contains exactly required buyer files, never repository/
       }
     }
   }
-  assert.deepEqual([...referenced].sort(), [...files].sort(), 'no unused assets');
+  assert.deepEqual([...referenced].sort(), [...files].sort(), 'only page assets and explicitly approved email assets');
   for (const file of files) assert.ok(existsSync(file), file);
 });
