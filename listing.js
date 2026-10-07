@@ -1,3 +1,60 @@
+// Presentation only: this flag never authorizes analytics or changes opt-out.
+(() => {
+  const notice = document.querySelector('.analytics-notice');
+  if (!notice) return;
+  const cookie = 'colonial_notice_dismissed=1';
+  const remembered = () => document.cookie.split(';').some(part => part.trim() === cookie);
+  let timer, animation, cancelled = false;
+  function restore() {
+    animation?.cancel();
+    animation = null;
+    notice.style.removeProperty('overflow');
+  }
+  function cancel() {
+    cancelled = true;
+    clearTimeout(timer);
+    restore();
+  }
+  function collapse() {
+    const height = notice.getBoundingClientRect().height, y = scrollY;
+    notice.hidden = true;
+    // Explicit position also suppresses a second native scroll-anchor adjustment.
+    if (y > 0) scrollTo({ top: Math.max(0, y - height), behavior: 'instant' });
+  }
+  try {
+    if (remembered() && !notice.contains(document.activeElement)) { collapse(); return; }
+  } catch { return; } // Denied storage leaves the static notice intact.
+  function finish() {
+    try {
+      document.cookie = `${cookie}; Max-Age=2592000; Path=/; SameSite=Lax${location.protocol === 'https:' ? '; Secure' : ''}`;
+      if (remembered()) collapse();
+    } catch { /* Failed persistence leaves the notice available. */ }
+    restore();
+  }
+  function schedule() {
+    clearTimeout(timer);
+    restore();
+    if (cancelled || notice.hidden || document.visibilityState !== 'visible') return;
+    timer = setTimeout(() => {
+      if (notice.contains(document.activeElement) || notice.matches(':hover')) { cancel(); return; }
+      if (notice.getBoundingClientRect().bottom <= 0 || matchMedia('(prefers-reduced-motion: reduce)').matches || !notice.animate) { finish(); return; }
+      notice.style.overflow = 'clip';
+      animation = notice.animate([
+        { height: `${notice.getBoundingClientRect().height}px`, paddingBlock: '4px', opacity: 1 },
+        { height: '0px', paddingBlock: '0px', opacity: 0 },
+      ], { duration: 240, easing: 'ease-out', fill: 'forwards' });
+      animation.onfinish = finish;
+    }, 10000);
+  }
+  notice.addEventListener('focusin', cancel);
+  notice.addEventListener('pointerenter', cancel);
+  // User input cancels motion; native scroll anchoring during collapse must not.
+  ['wheel', 'touchmove', 'keydown'].forEach(type =>
+    addEventListener(type, () => { if (animation) cancel(); }, { passive: true }));
+  document.addEventListener('visibilitychange', schedule);
+  schedule();
+})();
+
 const masthead = document.querySelector('.masthead');
 const summary = document.querySelector('.listing-summary');
 const heroImage = document.querySelector('.hero-photo img');

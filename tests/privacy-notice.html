@@ -1,0 +1,123 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Privacy notice regression</title>
+<style>body { font: 14px/1.5 system-ui; } iframe { height: 700px; border: 1px solid; } pre { white-space: pre-wrap; }</style>
+<h1>Privacy notice regression</h1>
+<pre id="results">Running…</pre>
+<iframe title="Buyer page"></iframe>
+<script type="module">
+const frame = document.querySelector('iframe');
+const results = [];
+const check = (ok, name) => {
+  results.push(`${ok ? 'PASS' : 'FAIL'}: ${name}`);
+  document.querySelector('#results').textContent = results.join('\n');
+};
+const tick = () => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+async function load(route, width, options = {}) {
+  frame.style.width = `${width}px`;
+  const source = await fetch(`../${route}`).then(r => r.text());
+  const setup = `<script>
+    const options = ${JSON.stringify(options)};
+    window.noticeTest = { timers: new Map(), writes: [], jar: options.remembered ? 'colonial_notice_dismissed=1' : '' };
+    const test = window.noticeTest;
+    const nativeTimeout = window.setTimeout;
+    window.setTimeout = (fn, ms, ...args) => {
+      if (ms !== 10000) return nativeTimeout(fn, ms, ...args);
+      const id = nativeTimeout(() => {}, 3600000);
+      test.timers.set(id, fn); return id;
+    };
+    const nativeClear = window.clearTimeout;
+    window.clearTimeout = id => { test.timers.delete(id); nativeClear(id); };
+    test.fire = () => { const timers = [...test.timers.values()]; test.timers.clear(); timers.forEach(fn => fn()); };
+    Object.defineProperty(document, 'cookie', {
+      get() { if (options.throwCookie) throw Error('blocked'); return test.jar; },
+      set(value) { if (options.throwCookie) throw Error('blocked'); test.writes.push(value); if (!options.blockCookie) test.jar = value.split(';')[0]; }
+    });
+    test.visible = true;
+    Object.defineProperty(document, 'visibilityState', { get: () => test.visible ? 'visible' : 'hidden' });
+    const nativeMatch = window.matchMedia;
+    window.matchMedia = query => nativeMatch.call(window, options.reduced && query === '(prefers-reduced-motion: reduce)' ? '(min-width: 0px)' : query);
+  <\/script>`;
+  if (options.noJS) frame.setAttribute('sandbox', 'allow-same-origin');
+  else frame.removeAttribute('sandbox');
+  await new Promise(resolve => {
+    frame.onload = resolve;
+    frame.srcdoc = source.replace('<head>', `<head><base href="${new URL('../', location.href)}">${options.noJS ? '' : setup}`);
+  });
+  await tick();
+  const win = frame.contentWindow, doc = frame.contentDocument;
+  return { win, doc, test: win.noticeTest, notice: doc.querySelector('.analytics-notice') };
+}
+async function finish(h) {
+  h.test.fire();
+  h.notice.getAnimations().forEach(animation => animation.finish());
+  await tick();
+}
+for (const route of ['index.html', 'gallery.html']) {
+  for (const width of [1440, 390]) {
+    let h = await load(route, width);
+    const label = `${route} ${width}px`;
+    const before = h.doc.querySelector('main').getBoundingClientRect().top;
+    const height = h.notice.getBoundingClientRect().height;
+    check(!h.notice.hidden && h.test.timers.size === 1, `${label}: first visit has one 10-second timer`);
+    check(h.doc.documentElement.scrollWidth <= width, `${label}: no horizontal overflow`);
+    await finish(h);
+    check(h.notice.hidden && h.notice.getBoundingClientRect().height === 0, `${label}: timeout removes all notice space`);
+    check(Math.abs(before - h.doc.querySelector('main').getBoundingClientRect().top - height) < 1, `${label}: content reclaims notice height (${before}, ${h.doc.querySelector('main').getBoundingClientRect().top}, ${height})`);
+    check(h.test.writes.length === 1 && /Max-Age=2592000; Path=\/; SameSite=Lax/.test(h.test.writes[0]), `${label}: 30-day host-only presentation flag`);
+    const summary = h.doc.querySelector('#analytics-privacy summary');
+    check(summary.textContent === 'Privacy and opt-out' && summary.getBoundingClientRect().height >= 44, `${label}: permanent native privacy access`);
+    summary.click();
+    h.doc.querySelector('#analytics-opt-out').click();
+    check(h.doc.querySelector('#analytics-status').textContent.includes('off'), `${label}: opt-out still works after dismissal`);
+    h = await load(route, width, { remembered: true });
+    check(h.notice.hidden && h.test.writes.length === 0, `${label}: remembered visit hides without renewing cookie`);
+  }
+}
+for (const option of ['blockCookie', 'throwCookie', 'noJS', 'reduced']) {
+  const h = await load('index.html', 390, { [option]: true });
+  if (h.test) await finish(h);
+  check(option === 'reduced' ? h.notice.hidden && h.notice.getAnimations().length === 0 : !h.notice.hidden, `${option}: safe static behavior`);
+}
+let h = await load('index.html', 1440);
+h.notice.querySelector('a').focus();
+await finish(h);
+check(!h.notice.hidden && h.doc.activeElement === h.notice.querySelector('a') && !h.test.writes.length, 'keyboard focus cancels dismissal without moving focus');
+h = await load('gallery.html', 390);
+h.notice.dispatchEvent(new h.win.Event('pointerenter'));
+await finish(h);
+check(!h.notice.hidden && !h.test.writes.length, 'hover cancels dismissal');
+h = await load('gallery.html', 390);
+h.test.visible = false;
+h.doc.dispatchEvent(new h.win.Event('visibilitychange'));
+await finish(h);
+check(!h.notice.hidden && !h.test.writes.length, 'hidden tab never dismisses');
+h.test.visible = true;
+h.doc.dispatchEvent(new h.win.Event('visibilitychange'));
+await finish(h);
+check(h.notice.hidden, 'foreground return starts fresh 10-second timeout');
+h = await load('gallery.html', 1440);
+h.test.fire();
+check(h.notice.getAnimations().some(a => a.effect.getTiming().duration === 240), 'page-top dismissal uses 240ms native animation');
+h.notice.querySelector('a').focus();
+await tick();
+check(!h.notice.hidden && !h.test.writes.length && h.notice.getAnimations().length === 0, 'focus during animation restores notice and cancels persistence');
+for (const route of ['index.html', 'gallery.html']) {
+  h = await load(route, 1440);
+  h.win.scrollTo(0, 1800);
+  await tick();
+  const before = h.doc.querySelector('main').getBoundingClientRect().top;
+  await finish(h);
+  check(h.notice.hidden && Math.abs(h.doc.querySelector('main').getBoundingClientRect().top - before) < 1, `${route}: scrolled content stays at same viewport position (${before}, ${h.doc.querySelector('main').getBoundingClientRect().top}, scroll ${h.win.scrollY})`);
+}
+h = await load('gallery.html', 390);
+check(!h.notice.hidden, 'missing/expired flag restores notice');
+h.win.scrollTo(0, 1);
+await tick();
+h.test.fire();
+check(h.notice.getAnimations().length === 1 && !h.notice.hidden, 'near-top scroll still animates visible notice rather than jumping');
+h.notice.getAnimations().forEach(animation => animation.finish());
+await tick();
+check(h.notice.hidden, 'near-top animation completes despite native scroll anchoring');
+document.title = results.some(row => row.startsWith('FAIL')) ? 'FAIL: privacy notice' : 'PASS: privacy notice';
+</script>

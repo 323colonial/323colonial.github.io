@@ -28,7 +28,13 @@ All events carry sanitized canonical page URL/path, browser/visit IDs, current/a
 | `outbound_click` | Destination category: brokerage-phone, agent-email, Zillow, other-phone/email/external; placement: header/contact/content/footer. No full destination URL. One delegated trusted-click handler; navigation is never prevented. Capture is best-effort, especially immediate document departure. |
 | `$$heatmap` | SDK batches every 60 seconds; sanitized URL-keyed coordinates only, at most 100 valid points per batch. `/index.html` normalizes to `/`, so only two URLs enter reporting. No arbitrary text or geographic coordinates. |
 
-The slim notice retains its text and privacy/opt-out link; only vertical padding and the native link target changed, not tracking or consent behavior.
+### Timed notice dismissal (colonial-6ma)
+
+The notice is informational, not a consent prompt. Shared `listing.js` dismisses it after **10 uninterrupted seconds in a visible tab**, as requested by the owner. Returning from a hidden tab starts a fresh interval. Focusing or hovering the notice cancels dismissal for that page, including during animation. The native **Privacy and opt-out** disclosure before the dated footer remains available without a timeout or JavaScript. Dismissal never enables tracking, opts in, opts out, or changes GPC/DNT handling.
+
+While the notice is onscreen, a **240ms fade-and-height collapse** reclaims the entire notice slot (32px desktop, about 53px at 390px width with default text). No blank spacer remains. Offscreen notices collapse immediately with scroll compensation to preserve reading position; reduced motion and unavailable Web Animations also skip animation. Wheel, touch-scroll or keyboard input during an active animation cancels it. No manual close button or extra dependency is needed.
+
+`colonial_notice_dismissed=1` is a separate, host-only presentation cookie: **30 days from dismissal**, `Path=/`, `SameSite=Lax`, and `Secure` on HTTPS. Root path covers both buyer pages; there is no Domain attribute, identifier or analytics payload. Repeat visits do not renew it. Missing/expired flags show the notice again. Denied cookie reads leave it visible; failed writes restore it after animation. Without JavaScript the notice and disclosure remain visible. This change preserves the existing analytics policy; it is not a legal determination that notice-only analytics is sufficient in every jurisdiction.
 
 The header’s Questions & tours link goes to the public Dandridge listing and uses existing `other-external` / `header` categories. This measures outbound intent, not an inquiry or confirmed tour.
 
@@ -83,6 +89,7 @@ Photo reports executed successfully but had no matching rows. Opens/engagement r
 ## Verification and publication
 
 - `npm test`: policy and runtime checks, including cross-page/day expiry, asynchronous Web Lock idle-click regression, hidden/idle timing, storage/SDK refusal and opt-out/GPC.
+- Serve locally and open `tests/privacy-notice.html`: both buyer pages at desktop/mobile widths, controlled 10-second timer, collapse geometry, 30-day flag/no renewal, missing/blocked storage, focus/hover, hidden tabs, animation cancellation, reduced motion, no-JS and persistent opt-out. Cookie/clock boundaries are deterministic doubles; verify native cookie expiry and real elapsed animation separately in the browser. Never publish this fixture.
 - `tests/analytics-browser.html`: real pinned SDK, local synthetic origin, intercepted fetch only. Exercises payload and heatmap sanitization plus trusted click and opt-out. **Never publish this fixture.**
 - Existing Python and all ten PRODUCT browser regressions pass locally. Desktop/mobile privacy controls fit at 1440/390px with 44px button targets.
 - Vendored SDK: `posthog-js@1.438.1`, npm `dist/module.no-external.js`, unchanged; SHA-256 `9399ae49eb33dd94d90cc71663770cae625b6aafca5b0d4491f0e70d602c8262`. MIT license retained. Upgrades require rerunning SDK payload/heatmap checks.

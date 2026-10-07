@@ -23,7 +23,9 @@ for (const [width, height] of [[1440, 1000], [1376, 768], [1080, 768], [900, 844
   const summary = doc.querySelector('.listing-summary');
   check(box(summary).bottom <= height + 1 && box(summary).top >= box(masthead).bottom - 1, 'facts must remain visible between header and viewport bottom');
   check(box(doc.querySelector('.analytics-notice')).height <= (width > 700 ? 36 : 60), 'analytics notice wastes vertical space');
-  check(box(doc.querySelector('.analytics-notice a')).height >= 24, 'privacy link target too small');
+  const notice = doc.querySelector('.analytics-notice');
+  check(notice.hidden ? box(notice).height === 0 : box(notice.querySelector('a')).height >= 24, 'notice must collapse fully or retain privacy link target');
+  check(box(doc.querySelector('#analytics-privacy summary')).height >= 44, 'persistent privacy access too small');
   check(doc.querySelector('.hero-photo img').getAttribute('src') === 'assets/listing/01.webp', 'wrong hero');
   check(Math.abs(box(doc.querySelector('.hero-photo')).width - width) <= 1, 'hero not full width');
   check(doc.querySelectorAll('.listing-copy').length === 7, 'seven paragraphs missing');
