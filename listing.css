@@ -57,7 +57,7 @@ main { padding: 0; }
 .season-stack img { grid-area: 1 / 1; width: 100%; height: 100%; min-height: 0; object-fit: contain; }
 @media screen { .hero-photo figcaption { display: none; } }
 @media (prefers-reduced-motion: reduce), print {
-  .season-stack, #season-controls { display: none !important; }
+  .season-stack, #hero-motion { display: none !important; }
 }
 .media-record > a { display: block; }
 .media-record > a:hover { outline: 2px solid var(--mahogany); outline-offset: -2px; }
@@ -122,12 +122,8 @@ dt { font: 13px/1.5 Arial, sans-serif; color: var(--muted); margin-bottom: 4px; 
 dd { font: 16px/1.5 Arial, sans-serif; margin: 0; }
 .site-footer { padding-block: 24px; font: 12px/1.6 Arial, sans-serif; color: var(--muted); }
 .site-footer p { margin: 0; }
-.season-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 0 20px; }
-.season-controls[hidden] { display: none; }
-.season-controls button { background: none; color: inherit; border: 0; padding: 10px 0; font: inherit; text-decoration: underline; text-underline-offset: .2em; }
-.season-controls button:hover, .season-controls [aria-pressed="true"] { color: var(--ink); }
-.season-controls [aria-pressed="true"] { font-weight: 700; text-decoration: none; }
-.season-controls p { flex-basis: 100%; }
+#hero-motion { background: none; color: inherit; border: 0; padding: 10px 0; font: inherit; text-decoration: underline; text-underline-offset: .2em; }
+#hero-motion:hover { color: var(--ink); }
 .analytics-notice { margin: 0; padding: 4px 20px; font: 13px/1.6 Arial, sans-serif; background: var(--paper); color: var(--ink); }
 .analytics-notice a { display: inline-flex; align-items: center; min-height: 24px; }
 .analytics-privacy { padding-block: 24px; font: 14px/1.6 Arial, sans-serif; }

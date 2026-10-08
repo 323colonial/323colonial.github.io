@@ -92,7 +92,6 @@ function agrees(position, phase, tolerance) {
 const box = element => { const b = element.getBoundingClientRect(); return [b.left, b.top, b.width, b.height]; };
 const same = (a, b) => a.every((value, i) => Math.abs(value - b[i]) < .5);
 const toggle = () => doc.querySelector('#hero-motion');
-const statusText = () => doc.querySelector('#season-status').textContent;
 function blendScroll(position = .75) {
   // .75 is half way through the scroll blend between story 1's first two photos (3 and 39).
   const story = doc.querySelector('.story'), stage = story.querySelector('.story-stage');
@@ -104,13 +103,13 @@ const seasonal = () => win.performance.getEntriesByType('resource').filter(r => 
 try {
   // --- Structure ---------------------------------------------------------------
   await load();
-  const group = doc.querySelector('#season-controls');
   check(Boolean(clock) && clock.state().joined.includes(1), 'hero joins the seasonal clock');
   if (!clock) throw new Error('Seasonal runtime did not start');
   const hero = doc.querySelector('.hero-photo'), heroLink = hero.querySelector('a'), original = heroLink.querySelector('img');
-  check(doc.querySelector('.site-footer').contains(group) && !group.hidden && group.querySelectorAll('[data-season]').length === 4
+  check(doc.querySelector('.site-footer').contains(toggle()) && !toggle().hidden && toggle().textContent === 'Pause animation'
+    && doc.querySelectorAll('.site-footer button').length === 1 && !doc.querySelector('[data-season], #season-status, #season-controls')
     && !hero.querySelector('button, input, select') && win.getComputedStyle(hero.querySelector('figcaption')).display === 'none',
-    'image only; pause and four season controls live in the footer');
+    'image only; one footer pause control, no season buttons or status line');
   const early = new Set(win.gate.requests.filter(src => src.includes('/01/')));
   check(early.size > 0 && early.size <= 6, `hero starts with a few frames, not its year (${early.size} of 17 requested at join)`);
   const stack = stackOf(1);
@@ -235,16 +234,16 @@ try {
     const state = clock.state();
     check(stalled && !state.running && state.phase === 3 && performance.now() - started < 4000, 'failed frame: bounded hold ends in a stalled pause at the boundary');
     check(tries === 3, `failed frame was tried once and retried twice (${tries} attempts)`);
-    check(toggle().textContent === 'Resume animation' && /did not load/.test(statusText()) && !group.hidden, 'stall shows the Resume control and says why');
+    check(toggle().textContent === 'Resume animation' && /did not load/.test(toggle().getAttribute('aria-description')) && !toggle().hidden, 'stall turns the same control into Resume and describes why');
     check([1, 3, 39].every(p => agrees(p, 3, .001)), 'stalled photos stay on one coherent phase');
     await ticks(30);
     check(win.gate.requests.filter(src => src.includes('/01/04.webp')).length - before === 3, 'no retry storm while stalled');
     win.gate.fail = [];
     toggle().click();
-    check(await until(() => clock.state().running) && !clock.state().stalled && statusText() === '', 'Resume retries the frame and the clock recovers');
+    check(await until(() => clock.state().running) && !clock.state().stalled && toggle().textContent === 'Pause animation' && !toggle().hasAttribute('aria-description'), 'Resume retries the frame and the clock recovers');
   }
 
-  // --- Pause mid-dissolve and season buttons -----------------------------------
+  // --- Pause mid-dissolve -----------------------------------
   {
     await until(() => { const s = clock.state(); return s.running && s.elapsed > DUR * .25 && s.elapsed < DUR * .6; });
     toggle().click();
@@ -252,29 +251,14 @@ try {
     await ticks(10);
     check(!state.running && state.paused && state.elapsed > 0 && state.elapsed < DUR && clock.state().phase === state.phase
       && JSON.stringify([1, 3, 39].map(shown)) === frozen && [1, 3, 39].every(p => agrees(p, state.phase, .001)), 'pause freezes mid-dissolve at once and stays frozen');
-    const names = ['late summer', 'fall', 'winter', 'spring'], at = Math.floor(state.phase / 3);
-    const truth = state.phase % 3 === 0 ? `Paused at ${names[at]}.` : `Paused between ${names[at]} and ${names[(at + 1) % 4]}.`;
-    check(statusText() === truth && toggle().textContent === 'Resume animation', `status is truthful mid-dissolve: "${statusText()}" at phase ${state.phase.toFixed(2)}`);
-    check(![...group.querySelectorAll('[data-season]')].some(b => b.getAttribute('aria-pressed') === 'true'), 'no season button is pressed while the state is a blend');
-    check(sessionStorage.getItem('colonial_seasons_paused') === '1', 'paused preference is remembered for the session');
-    let seasons = true;
-    for (const [name, step] of Object.entries(M.anchors)) {
-      const button = group.querySelector(`[data-season="${name}"]`);
-      button.click();
-      const landed = await until(() => button.getAttribute('aria-pressed') === 'true', 300);
-      const now = clock.state();
-      seasons &&= landed && !now.running && now.phase === step && [1, 3, 39].every(p => now.joined.includes(p) && agrees(p, step, .001))
-        && statusText() === `Paused at ${name.replace('-', ' ')}.`
-        && [...group.querySelectorAll('[aria-pressed="true"]')].length === 1;
-    }
-    check(seasons, 'each season button lands every participating photo on that anchor, paused');
-    check(sessionStorage.length === 1 || sessionStorage.getItem('colonial_seasons_phase') === null, 'phase is not persisted');
+    check(toggle().textContent === 'Resume animation', 'control names its state while paused');
+    check(sessionStorage.getItem('colonial_seasons_paused') === '1' && !Object.keys(sessionStorage).some(key => /season/.test(key) && key !== 'colonial_seasons_paused'), 'only the paused preference is remembered for the session');
     toggle().click();
     const resumed = await until(() => clock.state().running);
     await ticks(3);
     const now = clock.state();
-    check(resumed && now.phase >= 9 && now.phase < 9.5 && [1, 3, 39].every(p => agrees(p, now.phase, .02)) && sessionStorage.getItem('colonial_seasons_paused') === null,
-      'Resume continues from the chosen season and clears the preference');
+    check(resumed && now.phase >= state.phase && now.phase - state.phase < .6 && [1, 3, 39].every(p => agrees(p, now.phase, .02))
+      && sessionStorage.getItem('colonial_seasons_paused') === null, 'Resume continues from the frozen phase and clears the preference');
   }
 
   // --- Lifecycle and originals -------------------------------------------------
@@ -306,9 +290,9 @@ try {
     check(await until(() => clock.state().running) && clock.state().phase - hidden.phase < .5 && clock.state().phase >= hidden.phase, 'visible tab resumes from the same phase, no catch-up');
     win.printMedia.matches = true; win.printMedia.dispatchEvent(new Event('change'));
     await tick();
-    check(!clock.state().running && group.hidden, 'print pauses the clock and hides the controls');
+    check(!clock.state().running && toggle().hidden, 'print pauses the clock and hides the control');
     win.printMedia.matches = false; win.printMedia.dispatchEvent(new Event('change'));
-    check(await until(() => clock.state().running) && !group.hidden, 'leaving print resumes');
+    check(await until(() => clock.state().running) && !toggle().hidden, 'leaving print resumes');
     // Photo 39 becomes the current, clickable narrative photo.
     win.scrollTo(0, blendScroll(1.25));
     await until(() => !link39.parentElement.inert && clock.state().joined.includes(39));
@@ -325,7 +309,7 @@ try {
       'seasonal stacks exist only on the hero and narrative photos');
     const gallery = await fetch('../gallery.html').then(r => r.text());
     const galleryDoc = new DOMParser().parseFromString(gallery, 'text/html');
-    check(!/seasonal-hero\.js|data-manifest|season-controls|assets\/seasons|seasons-private|fixtures\/seasons/.test(gallery)
+    check(!/seasonal-hero\.js|data-manifest|assets\/seasons|seasons-private|fixtures\/seasons/.test(gallery)
       && [...galleryDoc.querySelectorAll('[data-gallery-image]')].length === 73
       && [...galleryDoc.querySelectorAll('[data-gallery-image]')].every(a => /^assets\/listing\/\d\d\.webp$/.test(a.getAttribute('href'))),
       'gallery.html loads no seasonal script or manifest and links 73 originals');
@@ -338,10 +322,10 @@ try {
     win.seasonMedia.matches = true; win.seasonMedia.dispatchEvent(new Event('change'));
     await tick();
     const requests = win.gate.requests.length;
-    check(!doc.querySelector('.season-stack') && !clock.state().running && group.hidden && original.naturalWidth > 0, 'live reduced motion removes every stack at once and shows originals');
+    check(!doc.querySelector('.season-stack') && !clock.state().running && toggle().hidden && original.naturalWidth > 0, 'live reduced motion removes every stack at once and shows originals');
     win.seasonMedia.matches = false; win.seasonMedia.dispatchEvent(new Event('change'));
     await ticks(45);
-    check(!clock.state().running && clock.state().paused && !group.hidden && toggle().textContent === 'Resume animation',
+    check(!clock.state().running && clock.state().paused && !toggle().hidden && toggle().textContent === 'Resume animation',
       'turning reduced motion off does not restart motion; control returns as Resume');
     check(sessionStorage.getItem('colonial_seasons_paused') === null, 'that pause is not stored as the visitor\'s preference');
     toggle().click();
@@ -358,8 +342,7 @@ try {
     clock = win.seasonalClock;
     const state = clock?.state();
     await ticks(40);
-    check(Boolean(state) && !clock.state().running && clock.state().paused && clock.state().phase === 0 && toggle().textContent === 'Resume animation'
-      && statusText() === 'Paused at late summer.', 'paused preference survives a reload; phase starts at late summer');
+    check(Boolean(state) && !clock.state().running && clock.state().paused && clock.state().phase === 0 && toggle().textContent === 'Resume animation', 'paused preference survives a reload; phase starts at late summer');
     sessionStorage.removeItem('colonial_seasons_paused');
   }
 
@@ -396,13 +379,13 @@ try {
   for (const mode of ['reduced', 'save data', 'no JS', 'print']) {
     await load(mode);
     await ticks(30);
-    check(doc.querySelectorAll('.hero-photo img').length === 1 && !doc.querySelector('.season-stack') && doc.querySelector('#season-controls').hidden
+    check(doc.querySelectorAll('.hero-photo img').length === 1 && !doc.querySelector('.season-stack') && doc.querySelector('#hero-motion').hidden
       && doc.querySelector('.hero-photo img').naturalWidth > 0, `${mode}: originals only; no unusable control`);
     check(!seasonal().length, `${mode}: no seasonal request, manifest included`);
   }
   await load('missing manifest', {manifest: 'tests/fixtures/seasons/absent.json'});
   await ticks(30);
-  check(!doc.querySelector('.season-stack') && doc.querySelector('#season-controls').hidden && !win.seasonalClock, 'missing manifest: originals only, controls stay hidden');
+  check(!doc.querySelector('.season-stack') && doc.querySelector('#hero-motion').hidden && !win.seasonalClock, 'missing manifest: originals only, controls stay hidden');
   doc.querySelector('.hero-photo a').click();
   check(doc.querySelector('#photo-viewer').open && doc.querySelector('#viewer-image').getAttribute('src') === 'assets/listing/01.webp', 'missing manifest: viewer still opens the original');
 } catch (error) { check(false, `${error.message}\n${error.stack}`); }

@@ -3,11 +3,8 @@
 // sit in a two-layer stack above it, so every fallback is "remove the stack".
 (() => {
   const manifestUrl = document.currentScript?.dataset.manifest;
-  const group = document.querySelector('#season-controls');
-  if (!manifestUrl || !group || !Element.prototype.animate || navigator.connection?.saveData) return;
-  const toggle = group.querySelector('#hero-motion');
-  const status = group.querySelector('#season-status');
-  const seasonButtons = [...group.querySelectorAll('[data-season]')];
+  const toggle = document.querySelector('#hero-motion');
+  if (!manifestUrl || !toggle || !Element.prototype.animate || navigator.connection?.saveData) return;
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const print = matchMedia('print');
   const narrow = matchMedia('(max-width: 800px)');
@@ -21,8 +18,7 @@
   let startedAt = null;            // document.timeline time the segment began; null while frozen
   let timer = 0, carry = null;
   let paused = false, stalled = false, shown = false, begun = false;
-  let landing = null;              // segment a season button is loading
-  let holdSince = null, holdTimer = 0, noteTimer = 0;
+  let holdSince = null, holdTimer = 0;
   let direction = 1, lastY = scrollY, rate = 0, inflight = 0;
   try { paused = sessionStorage.getItem(STORE) === '1'; } catch { /* Storage denied: start playing. */ }
 
@@ -117,15 +113,14 @@
     // Nothing new is requested while the tab is hidden, printing or under a dialog.
     if (document.hidden || dialogOpen() || still()) return;
     const live = photos.filter(participating), wanted = new Map(), order = [];
-    const frozen = paused || stalled || landing != null;
+    const frozen = paused || stalled;
     const want = (p, keys, keep) => keys.forEach(key => {
       let f = p.frames.get(key);
       if (!f) p.frames.set(key, f = {key, state: 'idle', img: null, tries: 0});
       if (!wanted.has(f)) order.push([p, f]);
       wanted.set(f, wanted.get(f) || keep);
     });
-    const at = (p, s) => landing != null ? needs(p, landing, 0, false)
-      : frozen ? needs(p, seg, offset, false)
+    const at = (p, s) => frozen ? needs(p, seg, offset, false)
       : s === 0 ? [...needs(p, (seg + 1) % S, 0, true), ...needs(p, seg, offset, true)]
       : needs(p, (seg + 1 + s) % S, 0, true);
     if (live.length) {
@@ -154,7 +149,6 @@
   // Lower layer is the next key at full opacity; the upper is the current key fading
   // out. Source-over on an opaque layer is the exact linear dissolve, with full coverage.
   function paint(p) {
-    p.settling = null;
     const {a, b, from, to} = pair(p, seg);
     const upper = p.frames.get(a).img, next = p.frames.get(b);
     const lower = a !== b && next?.state === 'ready' ? next.img : null;
@@ -190,19 +184,7 @@
   }
   function leave(p) {
     p.stack?.remove();
-    p.stack = p.settling = null;
-  }
-  // Season buttons: every photo dissolves straight to the anchor together.
-  function settle(p) {
-    const keys = needs(p, seg, 0, false), target = p.frames.get(keys[0]).img;
-    if (!p.stack || keys.length > 1) { show(p); return; }
-    const top = p.stack.lastElementChild;
-    let animation;
-    if (target === top) animation = top.animate({opacity: 1}, {duration: FADE, fill: 'forwards'});
-    else if (target.parentNode === p.stack) animation = top.animate({opacity: 0}, {duration: FADE, fill: 'forwards'});
-    else { p.stack.append(target); animation = target.animate({opacity: [0, 1]}, FADE); }
-    p.settling = animation;
-    animation.finished.then(() => { if (p.settling === animation) { paint(p); controls(); } }, () => {});
+    p.stack = null;
   }
 
   // --- Clock --------------------------------------------------------------------
@@ -222,16 +204,14 @@
     sync();
   }
   function hold(on) {
-    if (!on) { holdSince = null; clearTimeout(holdTimer); clearTimeout(noteTimer); return; }
+    if (!on) { holdSince = null; clearTimeout(holdTimer); return; }
     if (holdSince != null) return;
     holdSince = performance.now();
     holdTimer = setTimeout(giveUp, HOLD);
-    noteTimer = setTimeout(controls, Math.min(1500, HOLD / 2));
   }
   function giveUp() {
     hold(false);
-    // A season that cannot load leaves the visitor paused where they were.
-    if (landing != null) landing = null; else stalled = true;
+    stalled = true;
     sync();
   }
   const failed = (p, keys) => keys.some(key => { const f = p.frames.get(key); return f?.state === 'error' && f.tries > RETRIES; });
@@ -243,12 +223,7 @@
     photos.forEach(p => { if (p.stack && !live.includes(p)) leave(p); });
     // The stuck photo scrolling away, or its frame arriving, lifts a stall.
     if (stalled && live.every(p => have(p, needs(p, seg, offset, true)))) stalled = false;
-    if (landing != null && live.every(p => have(p, needs(p, landing, 0, false)))) {
-      hold(false);
-      seg = landing; offset = 0; landing = null;
-      live.forEach(settle);
-    }
-    const want = !paused && !stalled && landing == null && !document.hidden && !print.matches && !dialogOpen() && live.length > 0;
+    const want = !paused && !stalled && !document.hidden && !print.matches && !dialogOpen() && live.length > 0;
     const blocked = live.filter(p => !have(p, needs(p, seg, offset, true)));
     if (want && startedAt != null) {
       // Running: a late arrival joins the dissolve in progress at the shared start time.
@@ -260,13 +235,11 @@
       timer = setTimeout(boundary, DUR[seg] - offset);
     } else {
       freeze();
-      const waiting = landing != null ? live.filter(p => !have(p, needs(p, landing, 0, false))) : want ? blocked : [];
-      const keys = p => landing != null ? needs(p, landing, 0, false) : needs(p, seg, offset, true);
-      if (waiting.some(p => failed(p, keys(p)))) { carry = null; giveUp(); return; }
+      const waiting = want ? blocked : [];
+      if (waiting.some(p => failed(p, needs(p, seg, offset, true)))) { carry = null; giveUp(); return; }
       hold(waiting.length > 0);
       // Everyone holds together. A photo without the held frame shows its original.
       live.forEach(p => {
-        if (p.settling) return;
         if (have(p, needs(p, seg, offset, false))) show(p); else leave(p);
       });
     }
@@ -276,21 +249,13 @@
   }
 
   // --- Controls -----------------------------------------------------------------
+  // One understated footer control. Its name is its state; a stall turns it into Resume.
   function controls() {
-    group.hidden = !(shown || stalled) || still();
-    toggle.textContent = paused || stalled ? 'Resume animation' : 'Pause animation';
-    const settling = landing != null || photos.some(p => p.settling);
-    const anchors = Object.entries(M.anchors).map(([name, step]) => [step, name.replace(/-/g, ' ')]).sort((x, y) => x[0] - y[0]);
-    const at = phase() % N, exact = anchors.find(([step]) => step === at);
-    const before = anchors.findLast(([step]) => step <= at) || anchors.at(-1);
-    const after = anchors[(anchors.indexOf(before) + 1) % anchors.length];
-    seasonButtons.forEach(button => button.setAttribute('aria-pressed',
-      String(paused && !settling && M.anchors[button.dataset.season] === at)));
-    const text = stalled ? 'Seasonal photos did not load. Animation paused.'
-      : settling ? 'Changing season.'
-      : paused ? (exact ? `Paused at ${exact[1]}.` : `Paused between ${before[1]} and ${after[1]}.`)
-      : holdSince != null && performance.now() - holdSince >= Math.min(1400, HOLD / 2 - 5) ? 'Loading seasonal photos.' : '';
-    if (status.textContent !== text) status.textContent = text;
+    toggle.hidden = !(shown || stalled) || still();
+    const text = paused || stalled ? 'Resume animation' : 'Pause animation';
+    if (toggle.textContent !== text) toggle.textContent = text;
+    if (stalled) toggle.setAttribute('aria-description', 'Seasonal photos did not load.');
+    else toggle.removeAttribute('aria-description');
   }
   function retry() {
     stalled = false;
@@ -302,21 +267,9 @@
   }
   toggle.addEventListener('click', () => {
     if (stalled) retry();
-    else { paused = !paused; landing = null; remember(); }
+    else { paused = !paused; remember(); }
     sync();
   });
-  seasonButtons.forEach(button => button.addEventListener('click', () => {
-    if (!M) return;
-    const index = KN.indexOf(M.anchors[button.dataset.season]);
-    if (index < 0) return;
-    paused = true; stalled = false;
-    remember();
-    freeze();
-    hold(false);
-    landing = index;
-    sync();
-  }));
-
   async function begin() {
     begun = true;
     let manifest;
@@ -339,7 +292,7 @@
       // Off-table keys would break the shared boundaries; all-original photos need nothing.
       if (entry.keys.some(key => !KN.includes(key)) || entry.keys.every(key => own.has(key))) return;
       photos.push({figure, link, original, position, own, keys: entry.keys, hero: Boolean(figure.closest('.hero-photo')),
-        frames: new Map(), stack: null, settling: null, near: false});
+        frames: new Map(), stack: null, near: false});
     });
     if (!photos.length) return;
     M = manifest;
@@ -366,14 +319,14 @@
     addEventListener('pageshow', sync);
     addEventListener('online', () => { if (stalled) retry(); sync(); });
     print.addEventListener('change', sync);
-    // Read-only clock for fixtures; seek freezes the year at a point, as a season button does.
+    // Clock state for fixtures; seek freezes the year at a point.
     window.seasonalClock = {
       state: () => ({segment: seg, elapsed: elapsed(), phase: phase(), running: startedAt != null, paused, stalled,
         holding: holdSince != null, rate, reach: reach(), joined: photos.filter(p => p.stack).map(p => p.position),
         decoded: Object.fromEntries(photos.map(p => [p.position, [...p.frames.values()].filter(f => f.img && f.state === 'ready').length]))}),
       seek(segment, ms = 0) {
         freeze(); hold(false);
-        paused = true; stalled = false; landing = null; seg = segment; offset = ms;
+        paused = true; stalled = false; seg = segment; offset = ms;
         sync();
       },
     };
