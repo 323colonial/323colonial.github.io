@@ -20,7 +20,7 @@ try {
       await settle(win);
       const label = `${route} ${width}×${height}`;
       const size = element => parseFloat(win.getComputedStyle(element).fontSize);
-      const essential = [...doc.querySelectorAll('.listing-status, dt, .photo-note')];
+      const essential = [...doc.querySelectorAll('.listing-status, .open-house, dt, .photo-note')];
       check(essential.length && essential.every(element => size(element) >= 13 && size(element) <= 14), `${label}: essential text 13–14px`);
       check([...doc.querySelectorAll('.scroll-cue, .site-footer')].every(element => size(element) === 12), `${label}: counters/footer remain 12px`);
       const header = doc.querySelector('.masthead').getBoundingClientRect();

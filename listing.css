@@ -77,6 +77,8 @@ figcaption { padding-top: 10px; font: 13px/1.5 Arial, sans-serif; }
 .quick-facts strong { font-size: 20px; font-weight: 400; }
 .summary-actions { text-align: right; }
 .summary-actions .text-link { color: var(--mahogany); min-height: 24px; font: 13px/1.35 Arial, sans-serif; }
+.open-house { font: 13px/1.35 Arial, sans-serif; margin: 0; }
+.open-house time { display: inline-block; max-width: 100%; text-wrap: balance; }
 .story { --border-lines: 0; padding: 56px 40px; background: var(--sea-salt); }
 .story + .story { --border-lines: 1.25; }
 .story:nth-child(2), .story:nth-child(5) { background: var(--paper); }

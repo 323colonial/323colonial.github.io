@@ -273,6 +273,9 @@ class Listing(unittest.TestCase):
         actions = next(d for d in page.all('div') if d.cls('summary-actions'))
         status = next(p for p in actions.all('p') if p.cls('listing-status'))
         self.assertEqual(status.text(), 'Active')
+        open_house = next(p for p in actions.all('p') if p.cls('open-house'))
+        self.assertEqual(open_house.text(), 'Open house Saturday, October 10, 1–3 pm')
+        self.assertLess(actions.text().index('Active'), actions.text().index('Open house'))
         self.assertNotIn('Expected on market', page.text())
         self.assertNotIn('Coming Soon', page.text())
 
