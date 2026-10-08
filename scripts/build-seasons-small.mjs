@@ -5,7 +5,7 @@
 //
 //   node scripts/build-seasons-small.mjs [--check] [--force]
 //
-// --check writes nothing and fails if a frame is missing or off the timing table.
+// --check writes nothing and fails if a frame is missing, wrong-sized or off the timing table.
 // --force remakes small frames that already exist (after a large frame is replaced).
 import { spawnSync } from 'node:child_process';
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
@@ -24,7 +24,7 @@ function size(file) {
 }
 const name = key => String(Math.floor(key)).padStart(2, '0') + (key % 1 ? 'h' : '');
 
-const problems = [], warnings = [], expected = new Set(['frames.json']);
+const problems = [], expected = new Set(['frames.json']);
 let made = 0, kept = 0;
 for (const [position, photo] of Object.entries(manifest.photos)) {
   const id = position.padStart(2, '0'), own = photo.original || [];
@@ -36,7 +36,7 @@ for (const [position, photo] of Object.entries(manifest.photos)) {
     expected.add(`${id}/${name(key)}.webp`).add(`${id}/${name(key)}-small.webp`);
     if (!existsSync(large)) { problems.push(`${large} is missing`); continue; }
     const [w, h] = size(large);
-    if (w !== width || h !== height) warnings.push(`${large}: ${w}x${h}, original is ${width}x${height}`);
+    if (w !== width || h !== height) { problems.push(`${large}: ${w}x${h}, original is ${width}x${height}`); continue; }
     if (existsSync(small) && size(small).join() === [sw, sh].join() && !(force && !check)) { kept++; continue; }
     if (check) { problems.push(`${small} is missing or the wrong size`); continue; }
     const run = spawnSync('magick', [large, '-resize', `${sw}x${sh}!`, '-strip', '-quality', '78', small]);
@@ -52,6 +52,5 @@ for (const entry of readdirSync(root, { recursive: true, withFileTypes: true }))
 if (!manifest.tiers?.includes('small')) problems.push('frames.json must list "tiers": ["large", "small"] for the runtime to use this tier');
 
 console.log(`${Object.keys(manifest.photos).length} photos, ${(expected.size - 1) / 2} frames per tier: ${made} small frames made, ${kept} already current`);
-warnings.forEach(warning => console.warn(`warning: ${warning}`));
 problems.forEach(problem => console.error(`error: ${problem}`));
 process.exit(problems.length ? 1 : 0);

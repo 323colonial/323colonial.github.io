@@ -1,6 +1,8 @@
 # colonial-66v pilot: seasonal frames with Nano Banana 2.1
 
-Owner-requested pilot, 7 October 2026. Private. Nothing here is published or wired into the site.
+Owner-requested pilot, 7 October 2026. Historical production log; later integration was separately delivered by colonial-gz0. This log grants no publication authority.
+
+**Current QA continuation:** [8 October asset QA and repair record](2026-10-08-colonial-66v-qa.md). Contract is now the accepted sparse-key 36-second year, not the early timing below. Photo02 dimensions repaired; exhaustive QA remains open by explicit owner choice. Basement73 repair direction is a new uncluttered summer key with original paving preserved, retaining four anchors 0/3/6/9; not yet generated or applied.
 
 ## Owner facts used in prompts
 
