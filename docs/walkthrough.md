@@ -6,7 +6,7 @@ It is **not** in `scripts/publish-files.txt` and nothing links to it yet. Publis
 
 ## What the model is built from
 
-- **Shell**: `planshell.py` generates walls, floors, flat ceilings, doors and windows from `plan.json`, the measured vector floor plans of the listing's Zillow 3D tour (`plan_extract.py` converts the tour's SVGs). Every wall is a closed slab with a finish on both faces.
+- **Shell**: `planshell.py` generates walls, floors, flat ceilings, doors and windows from `plan.json`, the approximate vector floor plans of the listing's Zillow 3D tour (`plan_extract.py` converts the tour's SVGs). These are tour-derived dimensions, not independently verified measurements. Every wall is a closed slab with a finish on both faces.
 - **Hand-built, in `house.py` / `furnish.py`**: stair, roof and dormers, kitchen, bath fixtures, porch, deck, furniture. These are drawn in "drawn feet" and scaled once in y onto the measured plan (`calibrate`, a single straight scale); use `yinv()` to place something at a measured y.
 - **Photo patches**: flat things that should look like the real house (kitchen cabinet fronts, range, backsplash, island faces, bath wainscot, wall art) are squared-up crops of the listing photographs, one per surface. The recipes, with the pixel corners picked by eye, are in `prepare.sh`.
 - **Everything else**: CC0 materials and the sky from [Poly Haven](https://polyhaven.com); a generated strip-oak floor (`oakfloor.py`). The trees are cards cut from the sky photograph, so the woods are a stand-in.
@@ -52,7 +52,7 @@ blender -b --python-exit-code 1 -P tests/test_walkthrough_blender.py
 
 Bead `colonial-14d` records initial code review. Regressions cover stale bake/projection reuse, failed bundle conversion, fresh unbaked publication, local note validation/numbering, single plan calibration, texture failure, walking/teleport, frozen note entry, short-screen controls and persisted-page handling. Browser fixture simulates persisted `pagehide`; it is not real back/forward-cache certification. Note writes require same-origin localhost requests, with a 4 MiB body cap; this is a local developer server, not a public service.
 
-Current geometry remains approximate, not a validated photorealistic reconstruction. Mobile-device GPU budgets and photographic fidelity comparisons remain unverified. Keep measured shell data separate from hand-drawn geometry; improve camera/geometry alignment before expanding photo projection. Profile actual slow rooms before adding spatial indexes or a new engine. Artwork rights and owner publication approval remain release gates; buyer pages and their publication allowlist are unchanged.
+Current geometry remains approximate, not a validated photorealistic reconstruction. The [great-room pilot review](great-room-pilot.md) compares original photos, geometry/material previews and a full-sphere render; its result is no-go for photorealistic expansion until camera/geometry/material gaps are resolved. Mobile-device GPU budgets remain unverified. Keep measured shell data separate from hand-drawn geometry; improve camera/geometry alignment before expanding photo projection. Profile actual slow rooms before adding spatial indexes or a new engine. Artwork rights and owner publication approval remain release gates; buyer pages and their publication allowlist are unchanged.
 
 ### Full lighting verification · 7 October 2026
 
