@@ -1,378 +1,186 @@
 # colonial-wtm: synchronized seasonal hero and narrative architecture
 
-Evaluation only. Nothing here is implemented, prototyped, generated or published. Status: draft for owner review, 7 October 2026. Revised the same day after owner feedback: keep the hero's timing, and cut generation cost.
+## Decision and scope
 
-## Recommendation
+Evaluation reconciled with delivered implementation on 8 October 2026. This document replaces the earlier draft; Git history retains its estimates and alternatives. The owner requested completion of this evaluation. It records the architecture and already-recorded owner decisions, not a new asset-quality acceptance, performance certification or deployment approval.
 
-Run one shared annual clock for the hero and the scroll-sequenced narrative photos. Each participating photo shows a two-frame window of its annual sequence, stacked above its untouched original `<img>`. The clock advances one dissolve at a time and only crosses a frame boundary when every visible in-scope photo has the next frame decoded. Galleries, the viewer, previews and full-size links keep reading `assets/listing/NN.webp` and never see a seasonal file.
+Use one shared annual clock for the hero and scroll-sequenced narrative photographs, sparse per-photo keys, and two seasonal image layers above each untouched original. Keep the native scroll controller, static-site progressive enhancement, original-photo galleries and existing analytics semantics. No framework, backend or new dependency.
 
-Timing is the owner's choice from the pilot: a 36 second year. The year is laid out on 12 steps, with six extra half steps from 4.5 to 9.5 where snow and ground change fastest, which gives 18 positions. Each of the 18 dissolves lasts 2 seconds. Earlier drafts proposed a 60 second year and then a 24 second, 12-step year; both are superseded.
+Authoritative implementation references:
 
-Photos do not all need 12 generated frames. Each photo supplies key frames at whichever grid steps it needs, and the runtime dissolves between neighboring keys. An exterior supplies all 12. An interior with window views can supply the 4 season anchors and dissolve over 6 seconds between them. A windowless interior supplies 1. That is the main control on both generation cost and download size.
+- `seasonal-hero.js`: clock, frame scheduler, two-layer compositing, readiness and lifecycle.
+- `assets/seasons-next/frames.json`: delivered timing and per-photo keys.
+- `PRODUCT.md` and `DESIGN.md`: current buyer behavior and design constraints.
+- `colonial-gz0`, closed at `fd16042`: implementation and integration ownership.
+- `colonial-rp8`, closed at `a01f4a2`: catalog pruning, separate from this evaluation.
+- `colonial-y9y`, closed at `c4d3ee2`: outer scroll-compositing correction. The original evaluation incorrectly treated that inherited blend as exact.
+- `colonial-66v`: asset production, provenance, registration and final asset acceptance. Closing this evaluation does not close its remaining defects or QA gaps.
 
-I do not recommend extending the current hero technique. `seasonal-hero.js` stacks every frame as its own layer with its own infinite animation and loads all of them at once. That is fine for one photo. Across 67 photos it is the wrong shape, and the numbers below show why.
+`graphify-out/graph.json` is absent. References above were checked against source. This closeout changes documentation and ticket state only: no runtime, gallery, original image, analytics, allowlist, push or deployment changes.
 
-## Revision from the colonial-66v pilot, 7 October 2026
+## Settled changes from the original brief
 
-The pilot changed three things in this design. The sections below were updated on 8 October 2026 to match.
-
-1. **Timing is a table, not one number.** The owner chose 18 hero frames at 2 seconds each, a 36 second year. Six of those frames sit at half steps 4.5 to 9.5, so the delivery manifest carries the list of key positions on the 12-step year and the seconds spent between each pair. Every photo follows that one table, which keeps them in sync. A photo with fewer keys dissolves across the same stretched time.
-2. **Keys per photo.** Special house exteriors (1, 11, 26, 28, 39, 41) get 18. Other ground-level exteriors and porch views get 12. Large-window rooms get 6, at steps 0, 3, 5, 6, 8, 9. Small-window rooms get 4. Windowless rooms keep the original. Keys may sit at half steps, so `keys` holds numbers such as 4.5 and files are named `04h`.
-3. **Catalog.** The owner intends to remove photos 40, 62, 63 and 68 to 72 from the gallery (ticket colonial-rp8). Budgets and counts here assume 73 photos and will shrink.
-
-Winter is now full night and the steps either side are dusk and pre-dawn, so readiness and transfer budgets are unchanged in kind but frame bytes for dark frames should be re-measured.
-
-## What exists today
-
-Measured from the working tree on 7 October 2026.
-
-| Item | Value |
+| Earlier proposal | Owner decision / delivered contract |
 | --- | --- |
-| Catalog | 73 stable positions, `assets/listing/NN.webp` and `NN-small.webp` |
-| Hero | position 1, 1280x848, 366 KB large, 126 KB small |
-| Narrative | 66 positions in 7 stories of 7, 13, 13, 14, 7, 4 and 8 photos |
-| Gallery only | 15, 19, 20, 24, 31, 32. Position 31 is the conceptual plan, not a photograph |
-| Narrative originals, small tier | 720w, 5.2 MB total, median 71 KB, max 153 KB |
-| Narrative originals, large tier | 1146w to 1600w, 16.2 MB total, median 230 KB, max 478 KB |
-| Current seasonal hero | 11 generated 1280x848 WebPs, 3.78 MB, mean 343 KB, all fetched once the hero is visible |
-| Current hero decoded memory | 12 frames x 4.34 MB = 52 MB |
-| Current hero layers | 12 stacked images, each with an infinite opacity animation, `plus-lighter` blending |
+| Approximately 24 generated frames per changing photo | Sparse 18/12/9/6/5/4-key sequences, plus original-only photos; exact map in `frames.json` |
+| 60-second proposal, then 24-second draft | 36-second year, 18 consecutive 2-second segments |
+| Four manual season buttons and blend status | One footer Pause/Resume animation button; no manual season buttons or season label |
+| Preserve all 73 catalog entries | 65 retained stable IDs after separately approved pruning; no renumbering |
+| Producer/consumer contract still awaiting implementation | Producer `3503fd9`, small-tier export and consumer integration `fd16042` share the delivered contract below |
+| Future private integration ticket | `colonial-gz0` already delivered; do not reopen implementation here |
 
-Large-tier widths vary by photo: 32 at 1440w, 21 at 1280w, 7 at 1200w, 5 at 1600w, 1 at 1146w. The seasonal contract has to follow each photo's own dimensions, not one global size.
+The producer/consumer integration is evidence of a working contract, not retrospective proof that every original staged approval gate or visual-quality criterion was satisfied. The pilot records the actual owner reviews in `.pi/plans/2026-10-07-colonial-66v-pilot.md`.
 
-`graphify-out/graph.json` does not exist, so everything here was verified against source.
+## Shared timing
 
-Relevant behavior in `listing.js`: each sequenced story keeps at most two photos with non-zero opacity. It sets `--photo-opacity` on the photo's `<a>`, sets `hidden` on the figure at zero opacity, reads the first `<img>` in each figure for geometry and preloading, and skips sequencing under reduced motion, under 300px of available height, or when desktop copy is taller than the space.
+The coordinate grid has 12 seasonal steps. Knots are:
 
-## Alternatives considered
-
-**Extend the current all-layers hero technique.** Rejected. Each 12-key photo holds 52 MB decoded and 12 animating layers, and fetches every frame up front, about 3.8 MB for the hero. Two such photos on screen during a scroll blend double that. On a 1440px DPR 2 screen each hero layer is roughly a 22 MB texture, so 12 layers approach 260 MB of GPU memory as an upper estimate. Each image also runs its own clock, which is the drift the ticket rules out.
-
-**One video per photo.** Rejected for now. Bytes would likely be several times smaller, but frame-accurate sync across several videos is unreliable, iOS limits concurrent decoders, and "hold every visible photo at the same coherent frame until a slow one is ready" becomes guesswork. Keep it as the contingency if the transfer thresholds below cannot be met with stills.
-
-**Canvas or WebGL compositing.** Rejected. It gives exact blending in one layer per photo, but it reimplements `srcset`, `object-fit`, link semantics and print fallback that the browser already does. No demonstrated need.
-
-**Animated WebP or AVIF.** Rejected. No pause, no seek, no shared phase.
-
-**CSS-only keyframes.** Rejected. CSS cannot wait for an image to decode before advancing.
-
-**One video per photo, measured.** I encoded the 12 existing hero frames as a 24 second looping video with the same 2 second linear dissolves, using ffmpeg on the stills we already have. No AI video tool is involved and any aspect ratio works. The result is larger and softer than the stills:
-
-| Delivery of the 12-scene hero at 1280x848 | Size |
-| --- | --- |
-| 12 WebP stills, as published today | 4.1 MB |
-| H.264 video, crf 28 | 6.2 MB |
-| H.264 video, crf 24 | 10.1 MB |
-| VP9 video, crf 34 | 6.6 MB |
-| AV1 video, crf 34 | 5.4 MB |
-
-At 720px the videos are 2.0 to 3.3 MB against about 1.5 MB of stills. The reason shows up in a second test. Encoding only the 12 key frames as a 12-frame video came out larger with motion prediction on, 3.7 MB, than with every frame coded independently, 2.9 MB. The frames look alike to a person, but each was generated separately, so leaves, grass and snow texture differ in every pixel and a codec finds nothing to reuse. A dissolve also changes every pixel on every video frame, which is the worst case for video.
-
-**Animated GIF.** Rejected. The existing email GIF of this hero is 5.7 MB at only 480x318 and 128 colors.
-
-**One large sheet holding every frame.** Rejected. JPEG, PNG and WebP compress each region independently, so tiles that resemble each other save nothing. The whole sheet must download before the first frame shows, and it decodes to about 52 MB at once for 12 hero frames.
-
-Stills dissolved by the browser are the smallest delivery for this imagery. The savings have to come from fewer generated frames and fewer animated photos.
-
-## Rendering model
-
-The original `<img>` stays first inside its `<a>`, in flow, opaque and unmodified. It sizes the box. The runtime appends one `.season-stack` element after it, absolutely positioned over the same box, holding two images:
-
-- lower layer: frame k+1 at opacity 1
-- upper layer: frame k, opacity animating linearly from 1 to 0
-
-With an opaque lower layer, ordinary source-over compositing gives exactly `(1-s)·A + s·B`. No `plus-lighter` is needed, so that feature gate goes away. The stack is opaque wherever the photo is, and it sits inside the `<a>` that already carries `--photo-opacity`. The browser composites the seasonal pair first and applies scroll opacity to the result as a group. Scroll blending therefore behaves exactly as it does today.
-
-The mistake to avoid is giving both seasonal layers partial opacity, `1-s` and `s`. Coverage then drops to 75% at the midpoint and the story background shows through. On top of the existing scroll blend that reads as a pulse of lightening or darkening on every dissolve.
-
-At a frame boundary the upper layer is at opacity 0 and the lower layer shows frame k+1 alone. The runtime inserts decoded frame k+2 beneath it and removes the old upper layer. A new frame only ever enters underneath a fully opaque one, so a late paint cannot show as a blank.
-
-A photo joins by fading its stack from 0 to 1 over 600 ms above the original. It leaves by removing the stack. Because the original is never altered, no-JS, print and reduced motion need only `display: none` on `.season-stack`.
-
-Geometry holds only if every seasonal frame has exactly the pixel dimensions of the original derivative at the same tier. The layers use the same `object-fit: contain` box, so equal dimensions mean no shift and unchanged transparent letterboxing.
-
-## Shared clock
-
-One logical clock holds the grid step k from 0 to 11 and the time elapsed within that step. Phase is `(k + elapsed/2s) / 12`.
-
-- Every upper layer in a dissolve gets a finite Web Animation with the same `startTime` on `document.timeline`. Photos that join mid-dissolve use that same start time. Sync comes from sharing one number, not from correcting drift afterwards.
-- The compositor interpolates. No per-frame JavaScript runs for seasons, so scroll handling in `listing.js` is not competing with it.
-- Animations are finite and one dissolve long. This also sidesteps the screenshot tooling problem recorded in colonial-29s, where capture reset infinite animations.
-- A photo with sparse keys runs one long dissolve between its neighboring keys, with opacity derived from the same shared clock. A photo with one key has no dissolve.
-- Year order is chronological from the originals' season: late summer at phase 0, fall at 0.25, winter at 0.5, spring at 0.75. The existing twelve hero scenes are this grid.
-- Initial phase is 0. For exteriors frame 0 is the original file, so the first coherent frame costs nothing.
-- The dissolve curve is linear with no holds. A pure frame exists only for an instant.
-
-### Duration and timing table
-
-The year lasts 36 seconds. Timing is a table, not one number: the knots are the positions 0, 1, 2, 3, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 11 and back to 0, and the clock spends 2 seconds between each consecutive pair. Steps 0 to 4 and 10 to 0 therefore take 2 seconds per whole step, and steps 4 to 10 take 4 seconds per whole step. The owner chose this after seeing the half steps at 1 second each, which rushed the thaw.
-
-Every photo follows the same table. A photo with fewer keys dissolves linearly in position between its own neighboring keys, so it slows down and speeds up with the shared clock and stays in step with the 18-frame photos. The delivery manifest carries the knots and the seconds per segment, so timing can change without touching frames.
-
-## Readiness barrier
-
-Participating set: the hero while it intersects the viewport, plus sequenced narrative photos with non-zero scroll opacity. The lookahead set is the next photo in the scroll direction for a story near the viewport, the same photo `listing.js` already preloads.
-
-1. At the start of each grid step the runtime requests, for the participating and lookahead photos, any key frame needed two steps ahead, and calls `decode()` on each.
-2. At the boundary, if every participating photo has what the next step needs, the clock starts that step for all of them together.
-3. If any is missing, every photo holds at that grid step. A 12-key photo holds on a whole frame. A sparse-key photo may hold part way through its long dissolve, which is still the same shared phase.
-4. Recovery is bounded. Errored requests are retried twice with backoff, 10 seconds in total. After that the clock enters a stalled pause, the control reads "Resume animation", and nothing advances. Resume, an `online` event, or the stuck photo leaving the viewport re-checks the barrier.
-
-Newly visible photos:
-
-- If the lookahead already decoded the current pair, the photo joins at the shared phase before it gains any opacity. This is the normal case.
-- If not, the photo shows its original. It requests the frames for the next boundary and counts toward that boundary's barrier. When it is ready it joins with the 600 ms fade as the next dissolve starts.
-- A photo that scrolls away drops out of the barrier at once and its pending requests are abandoned. Fast scrolling through fourteen photos therefore shows originals and never queues fourteen sets of frames.
-
-Under this policy the page shows either the shared seasonal phase or an original photograph. It does not show a seasonal frame from a different phase or a blank box, and the page never blocks scrolling while it waits.
-
-If no seasonal frame can be loaded at all, for example the manifest fetch fails, the page stays on originals and the controls stay hidden. Galleries and the viewer do not depend on any of this.
-
-## Controls and accessibility
-
-- One footer group replaces the single button: Pause or Resume animation, then four season buttons for late summer, fall, winter and spring. No controls or labels on the hero itself, matching the approved hero.
-- Pause freezes immediately, including mid-fade. The status text tells the truth, "Paused between fall and winter", or "Paused at winter" when exactly on an anchor. No season button shows as pressed while the state is a blend.
-- A season button pauses the clock, loads that anchor for the participating photos, then dissolves them together over 600 ms straight to it. While paused on an anchor, a newly visible photo needs one frame.
-- Resume continues from the held phase.
-- Joined links get the existing hero description, "Animated seasonal concept. Opens the original property photograph." Seasonal layers are `alt=""`, not focusable, and ignore pointer events.
-- Focus handling, captions, dots, counters and `inert` state in `listing.js` are untouched. A focused photo still stays fully visible and keeps animating.
-
-Reduced motion, no-JS, print and save-data show originals and fetch nothing seasonal. If reduced motion turns on mid-session, stacks are removed at once with no animation. If it turns off again, the animation does not restart by itself. The control reappears as "Resume animation".
-
-Seasonal autoplay in the narrative is a scoped exception to the product brief's no-autoplay rule, as the hero already is. Photo identities still change only by scroll.
-
-## Lifecycle
-
-| Event | Behavior |
-| --- | --- |
-| Tab hidden | Clock pauses, no fetches. On return it resumes from the same phase with no catch-up. |
-| Any dialog open, including viewer, catalog and details | Clock pauses. The page is under a 90% backdrop. Dialogs show originals and allocate nothing seasonal. Close resumes from the same phase. |
-| Photo scrolls out | Stack removed, decoded frames released, original shows. |
-| Photo re-enters | Joins at the current shared phase as any new photo does. |
-| Story falls back to inline photos | Originals only in that story. Recommended for the first build, see open choices. |
-| `gallery.html` | Never loads the seasonal script or manifest. |
-| bfcache restore | Treated like tab return. Animations are rebuilt from the logical clock. |
-| Fresh load or ordinary back navigation | Starts at phase 0. |
-| Same-tab state | Store only a "paused" flag in `sessionStorage` so a visitor who paused is not surprised after visiting the gallery. Do not persist phase. No cross-tab or cross-visitor sync. |
-| Resize or breakpoint change | `layoutStories` rebuilds tracks. Stacks are dropped and rejoin at the current phase with the tier the new layout selects. |
-
-## Shared asset contract
-
-Owner: colonial-wtm. colonial-66v supplies sample metadata and produces conforming files. This is version 1 and needs 66v's agreement before intermediate production or final export.
-
-**Photo ID.** The catalog position, 1 to 73, as used in `data-position`, `gallery.html#photo-N` and `assets/listing/NN.webp`.
-
-**Phase grid.** `steps` is 12. Step k represents phase k/12. Anchors are late summer 0, fall 3, winter 6, spring 9. Every photo uses the same grid, so photos cannot drift apart. If the step count ever changes it stays a multiple of 4 and the anchors keep their fractions of the year.
-
-**Treatment.** Every position has exactly one:
-
-- `animated`: has `keys`, the grid steps for which this photo has its own frame. All four anchors are required. The runtime dissolves linearly between neighboring keys, wrapping from the last to the first.
-- `invariant`: one generated frame for the whole year, for example a windowless interior with rebalanced light. Written as one key.
-- `gallery-only`: no seasonal files. Originals everywhere.
-- `non-photo`: no seasonal files and never edited. Position 31.
-
-**Original reference.** `original` lists the keys served by the existing original derivative instead of a generated file. The hero uses it at step 0. Originals are never copied into the seasonal tree.
-
-**Paths.** `assets/seasons/NN/FF-small.webp` and `assets/seasons/NN/FF-large.webp`, where NN is the position and FF is the key's grid step, both zero padded.
-
-**Dimensions.** Each file has exactly the pixel width and height of that photo's original derivative at the same tier, as recorded in `assets/listing/manifest.json`. No crop, no padding, no change of aspect ratio. Small is 720w. Large is that photo's existing large width.
-
-**Format.** WebP, sRGB, metadata stripped, encoded with the existing ImageMagick pipeline. No AVIF unless the byte thresholds fail.
-
-**Eligibility.** A photo is in the delivery manifest only when the owner has approved its anchors and every frame and every transition between neighboring keys, including the wrap, has passed 66v's QA. A photo with any failed frame is left out entirely and shows its original. There is no partial year.
-
-**Private versus public.** The delivery manifest holds only what the browser needs. Provenance, prompts, source hashes, model versions, QA records and byte reports stay in a private working manifest that the publish allowlist never includes. This matches how `assets/seasons/provenance.json` is handled now.
-
-Delivery manifest example, `assets/seasons/delivery.json`:
-
-```json
-{
-  "version": 1,
-  "steps": 12,
-  "knots": [0, 1, 2, 3, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 11, 12],
-  "seconds_per_segment": 2,
-  "anchors": {"late-summer": 0, "fall": 3, "winter": 6, "spring": 9},
-  "photos": {
-    "1":  {"treatment": "animated", "keys": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], "original": [0]},
-    "2":  {"treatment": "animated", "keys": [0, 3, 6, 9]},
-    "36": {"treatment": "invariant", "keys": [0]},
-    "15": {"treatment": "gallery-only"},
-    "31": {"treatment": "non-photo"}
-  }
-}
+```text
+0, 1, 2, 3, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 11, 12
 ```
 
-Position 1 is the exterior hero with 11 generated frames. Position 2 is a great room with window views, shown here with the 4 anchors only. Position 36 is a half bath with one rebalanced frame. The treatments shown illustrate the format. 66v's inventory decides the real ones.
+The last 12 is the wrap endpoint, equivalent to 0. Every adjacent knot pair takes 2 seconds, so the year takes 36 seconds. Initial coordinate is 0. Anchors are late summer 0, fall 3, winter 6 and spring 9. Their elapsed times are 0, 6, 16 and 28 seconds: they are **not** equal quarters of elapsed time.
 
-Private working manifest, one record per unique frame, kept out of publication:
+For segment `i`, elapsed time `t` and duration `D[i]`, the grid coordinate is:
 
-```json
-{
-  "position": 2, "key": 3, "anchor": "fall", "room_class": "interior",
-  "original": {"small": "assets/listing/02-small.webp", "large": "assets/listing/02.webp"},
-  "outputs": [
-    {"path": "assets/seasons/02/03-small.webp", "width": 720, "height": 479, "bytes": 81234, "sha256": "..."},
-    {"path": "assets/seasons/02/03-large.webp", "width": 1280, "height": 852, "bytes": 246810, "sha256": "..."}
-  ],
-  "master_sha256": "...", "model": "...", "prompt_ref": "...",
-  "registration_max_px": 0.8, "anchor_approved": "owner, date", "qa": "pass"
-}
+```text
+q = knots[i] + (knots[i + 1] - knots[i]) * t / D[i]
+normalized phase = q / 12
 ```
 
-The delivery manifest for all 73 positions is a few kilobytes.
+A sparse photo dissolves between its own neighboring keys, using distance along this grid including wrap. Its fade rate therefore changes at half-step boundaries, in sync with every other photo. The previous uniform `elapsed / 2s` step formula was wrong for half steps.
 
-## Budgets
+There are no intentional holds. Readiness, user pause and lifecycle suspension can extend wall-clock time. Finite Web Animations share one `document.timeline` start time per segment. JavaScript handles boundaries, not every animation frame. Pause freezes the current blend; Resume continues from it, without claiming a single named season.
 
-Device and network assumptions: a 4 GB Android phone and a 3 GB iPhone at 390px wide, DPR 3, on slow 4G at 1.6 Mbps and fast 4G at 9 Mbps. A 1440x900 DPR 2 laptop on broadband. Per-frame bytes are assumed to match today's originals until 66v reports real exports.
+## Rendering and scroll composition
 
-**Tier selection.** Seasonal layers use the small tier whenever the viewport is 800px wide or less. Otherwise they use whichever tier the original's `currentSrc` selected. Left alone, a 390px DPR 3 phone picks the large file, and two large photos need 1.5 to 3 Mbps, which slow 4G cannot carry.
+The untouched original `<img>` stays first inside its original-photo link, in flow and opaque. It defines geometry, responsive sizing and fallback. The runtime appends an absolute `.season-stack` containing:
 
-**Layers.** Worst case on screen is two photo identities: the hero with story 1's first photo, or two photos mid scroll blend. That is 4 seasonal image layers, plus up to 2 join fades. Today's hero alone uses 12.
+1. Next seasonal key underneath at full opacity.
+2. Current key above it, fading out linearly.
 
-**Decoded memory.** Each photo holds at most 3 seasonal frames, two shown and one prefetched. With one lookahead photo that is 9 frames.
+Ordinary source-over yields `(1-s)A + sB` with full coverage. Giving both layers complementary partial opacity would expose the background and is not used. A visible new stack joins over the original with a 600 ms fade; an offscreen join needs no visible fade. Removing the stack restores the original.
 
-| Tier | Per frame | 9-frame ceiling |
-| --- | --- | --- |
-| Small, 720x479 | 1.4 MB | 12 MB |
-| Large, 1280x852 | 4.4 MB | 39 MB |
-| Large, 1600x1046 | 6.7 MB | 60 MB |
+Seasonal composition and photo-identity composition are separate. `listing.js` controls native scroll progress, figure visibility, captions and interaction. Following `colonial-y9y`, complementary link opacities use `plus-lighter` inside an isolated transparent photo group; the seasonal stack remains source-over inside each isolated link. Unequal contain-fit edges fade to the surrounding section color. Existing focus behavior, final-photo viewing step and caption ownership remain intact.
 
-The current 12-frame hero already holds 52 MB.
+Each seasonal export must match its original derivative's exact dimensions at the same tier. This is a contract, not a claim that all exports currently conform: photo 02's large keys 03, 06 and 09 remain 1280×852 against original 1280×851 at this evaluation closeout. Repair and regression belong to `colonial-66v`.
 
-**Transfer rate at 2 seconds per dissolve.** An 18-key photo needs one new frame every 2 seconds, the same rate as the first column. Photos with 12, 6 or 4 keys need fewer.
+## Readiness and bounded scheduling
 
-| Case | 12 keys, one frame per 2 s | 4 keys, one frame per 6 s |
-| --- | --- | --- |
-| Small, median 71 KB | 0.28 Mbps | 0.09 Mbps |
-| Small, max 153 KB | 0.61 Mbps | 0.20 Mbps |
-| Large, median 230 KB | 0.92 Mbps | 0.31 Mbps |
-| Large, max 478 KB | 1.91 Mbps | 0.64 Mbps |
-| Hero large, mean 343 KB | 1.37 Mbps | not applicable |
+Participants are viewport-intersecting, non-hidden photos with loaded originals, either the hero or inside an enabled `.story.is-scrolling`. Inline fallback stories and original galleries do not participate.
 
-A photo left on screen stops costing anything after one year, once its keys are in the HTTP cache. A 12-key photo tops out at 12 frames, a 4-key photo at 4.
+- At a boundary, participating photos advance together only when required frames are decoded. Existing stacks retain the held shared phase; an unready entrant shows its original, never a wrong seasonal frame or blank box.
+- A ready entrant may join an already-running segment at the shared start time. An unready entrant joins when its required pair becomes available; a boundary can hold everyone while waiting.
+- Readiness waits default to 10 seconds. Load/decode failures receive at most two automatic retries. Exhaustion or timeout stalls motion and exposes Resume with an accessible loading-failure description. Gallery access and scrolling remain usable.
+- Resume and the `online` event reset failed loads; Resume also abandons hung loading requests so they cannot occupy slots indefinitely (`194567a`). Late abandoned arrivals must not attach. A missing/invalid JSON response leaves originals and hidden controls.
+- Frame requests prioritize visible photos and upcoming time boundaries, then nearby photos in scroll direction. No whole year is fetched just because a photo exists.
+- Throughput samples use Resource Timing, excluding cache/revalidation-only and tiny-body samples. Default temporal reach is one segment; measured rates below 0.5 Mbps stop speculative reach, below 4 Mbps retain one, and faster links allow two. Spatial lookahead is one photo farther than temporal reach when prefetch is enabled. Concurrent load limit is 2 on links below 1.5 Mbps, 4 at or above 4 Mbps, otherwise 3.
+- Small tier is selected at viewport widths up to 800px, measured throughput below 1.5 Mbps, or when the original selected its small source. Selection is evaluated on loads, not a promise of immediate replacement of already-ready frames after resize.
+- The decoded window targets the current pair plus next key for visible photos and the nearest lookahead photo. Farther prefetch can retain compressed image resources. Removing references lets the browser reclaim decoded bitmaps; it does not prove actual GPU or process-memory residency.
 
-Two 12-key photos at the small tier need 0.6 to 1.2 Mbps. That fits slow 4G with little room, which is one more reason to keep 12 keys for exteriors only.
+## Lifecycle, accessibility and originals
 
-**Session cost. This is the number to look at.** At 10 seconds per photo, a 12-key photo downloads about 7 seasonal frames, a 4-key photo about 3, an invariant photo 1. If all 66 narrative photos had 12 keys, a full read would add about 36 MB at the small tier or 113 MB at the large tier, on top of 5.2 MB or 16.2 MB of originals. With most interiors on 4 keys or 1, the added transfer falls to roughly a third of that. The exact figure waits on 66v's classification.
-
-**Catalog size.** If all 67 hero and narrative photos had 12 keys, the published tree would hold about 64 MB small plus 199 MB large, 263 MB in total. Sparse keys bring it well under that. GitHub Pages allows a 1 GB site and soft-limits bandwidth at 100 GB a month. Every re-export also grows the Git history for good.
-
-**Generation cost.** Generated images needed equal the total number of keys, less the keys served by originals. All 67 photos at 12 keys is about 800 generations. As an illustration only, 10 exteriors at 12 keys, 40 windowed interiors at 4 and 17 windowless interiors at 1 comes to about 290. The split is a guess until 66v classifies the set. Going from 4 keys to 12 on an interior can happen later, photo by photo, without touching the runtime or other photos.
-
-**Working classification from captions, 7 October 2026.** Not yet checked against the pixels. 66v's inventory replaces it.
-
-| Group | Positions | Keys |
-| --- | --- | --- |
-| Hero | 1 | 12, already produced |
-| Exteriors, decks, grounds, aerials | 3, 6, 10, 16, 25 to 29, 33, 39 to 41, 43, 62 to 72 | 12 |
-| Screened porch, treated as exterior and not light-rebalanced | 4, 17, 50 to 53 | 12 |
-| Interiors with windows | about 30 | 4 |
-| Primary bath, no window per owner | 7, 55, 56 | 1 |
-| Already seasonal by caption | 8 fall color, 9 snowfall | none, see open choices |
-
-That is about 31 new photos at 12 keys, 30 at 4 and 3 at 1, roughly 465 accepted generated images and about 500 delivered frames. A full read of the page would download about 38 MB at the small tier or 120 MB at the large tier. The published tree would be about 160 MB.
-
-**Download scheduler, owner proposal.** Buffer by scroll proximity and cycle time: the visible photos first, then the next photos in the scroll direction, then the ones behind, each ordered by which key the clock reaches soonest. Fetch order blooms outward on two axes, time first: the keys the clock reaches next for the visible photos, then those same keys for the nearest photos in the scroll direction, then the following season, then photos further away. Whole years are never fetched for their own sake. A photo's year fills in only if the visitor stays near it. With five 12-key photos buffered and no scrolling, the scheduler needs 2.5 frames a second, 1.4 Mbps at the small tier, for at most 24 seconds.
-
-The scheduler fixes readiness. Photos near the viewport join on time and the barrier rarely holds. It does not reduce bytes. It spends more of them sooner, so it needs a throttle: measure throughput from frames already fetched, using Resource Timing, then shrink the window, drop to the small tier, or stop prefetching when the link is slow or `saveData` is set. Window size, tier rules and thresholds are parameters for the implementation follow-up. The barrier stays as the backstop for when the scheduler cannot keep up.
-
-**Generation cost.** Published Gemini API price for `gemini-3-pro-image-preview`, the model colonial-29s used, is $0.134 per 1K or 2K image, or $0.067 through the batch API. 4K is $0.24 and gives nothing useful at 1600px delivery.
-
-| Scenario | Accepted images | At 1 attempt each | At 4 attempts each, standard | At 4 attempts each, batch |
-| --- | --- | --- | --- | --- |
-| Working classification above | 465 | $62 | $250 | $125 |
-| Every photo at 12 keys | 726 | $97 | $390 | $195 |
-| Exteriors and porch only, interiors later | 341 | $46 | $185 | $90 |
-
-Four attempts is a ceiling for planning, not an expectation. With a settled prompt and reference images, plan on about two.
-
-Other models in the family, at Google's list price on 7 October 2026: `gemini-3.1-flash-image-preview` is $0.067 at 1K, $0.034 batch, and up to $0.151 at higher resolutions. `gemini-2.5-flash-image` was $0.039 and was scheduled to shut down on 2 October 2026. Both current models accept up to 14 reference images per request. The owner has quoted lower prices of $0.02, $0.04 and $0.08, source not yet confirmed. At either set of prices the bill stays under a few hundred dollars.
-
-Production order, following the owner's divide-and-conquer proposal and what colonial-29s did for the hero: generate the four anchors first, get them approved, then fill each gap from the fixed master with the two neighboring approved frames as appearance references. Every request edits the fixed master. No request edits a previous output, which is how geometry drifts. The approved hero frame for the same step goes in as a reference for every other photo, so "step 4" means the same foliage and light everywhere.
-
-Batch pricing suits each bulk round, because each round already waits on owner review. It does not suit sample and prompt development, where a 24 hour target turnaround per try is too slow. Filling by bisection takes two or three batch rounds, so two or three days of waiting. The `nanobanana` CLI has no batch mode, so batch needs a small script like the existing private `generate.py`.
-
-The hero's own history is not a guide to retry rates. The hero's 11 frames went through five rounds, v2 to v6, and its artifact folder holds far more than 11 raw outputs, but the exact call count was not logged. Reference images sent with each request add a cent or less per call.
-
-The API bill is the small part. The larger cost is review: each accepted frame needs registration, a full-size check and a check of both neighboring dissolves, about 465 frames and as many transitions. Three things cut that:
-
-1. For interiors, composite the generated window regions and a matched light adjustment onto one fixed rebalanced master. The room's geometry then cannot drift, registration passes by construction, and review is limited to the windows.
-2. Settle prompts and recipe on the representative samples at standard price, then run the bulk through the batch API.
-3. Stage it. Exteriors and porch first, since they carry the visible seasons. Interiors follow after the owner has seen the exteriors running.
-
-**Proposed thresholds, to confirm at review.**
-
-| Measure | Threshold |
+| State/event | Contract / implementation behavior |
 | --- | --- |
-| Small frame | 120 KB, hero 150 KB |
-| Large frame | 350 KB, hero 420 KB |
-| Published seasonal tree | 300 MB |
-| Seasonal transfer per narrative photo at 10 s dwell, small tier | 550 KB at 12 keys, 250 KB at 4 keys |
-| Live decoded seasonal frames | 9 |
-| Animating seasonal layers | 4 |
-| Boundary holds on fast 4G over three years of hero plus a two-photo scene | none over 100 ms |
-| Slow 4G | holds allowed, zero incoherent or blank states |
-| Scroll handler p95 with seasons running | within 10% of today's on the same device |
-| Boundary swap work on the phone | under 8 ms |
+| No seasonal photo visible | Logical clock rests; seasonal stacks removed from departed photos |
+| Hidden tab, print or any open dialog | Clock freezes; scheduler starts no new requests (already-started transfers may settle) |
+| Return from tab/dialog | Resume held phase when ready unless user-paused; no elapsed wall-time catch-up |
+| Reduced motion | Originals; remove stacks immediately; disabling preference later does not autoplay |
+| No JavaScript or save-data at initialization | Originals; no seasonal enhancement requests |
+| Print | Original images and exact captions; seasonal stacks hidden |
+| Ordinary fresh navigation | Start phase 0; retain only paused preference in `sessionStorage` |
+| bfcache/pageshow | Reconcile retained clock/visibility; no cross-tab or cross-visitor synchronization |
+| Resize / sequencing fallback | Re-evaluate participation; inline stories show originals; subsequent loads choose applicable tier |
+| Failed manifest fetch/JSON parse | Originals remain; controls stay hidden |
 
-If 66v's real exports exceed the frame caps or the 300 MB tree, hold the affected photos and record it. Do not lower the bar quietly.
+Pause/Resume retains the existing accessible footer control. Seasonal image layers have empty alt text, ignore pointer interaction and introduce no focus target. Animated links describe themselves as seasonal concepts opening originals. Storage failure degrades to an in-page preference, not a broken page.
 
-## Touchpoints for the later implementation
+Both catalog forms, `gallery.html`, viewer entry from any photo, adjacent previews and full-size/direct links use unchanged `assets/listing/` originals. Neither gallery loads seasonal buffers or joins the clock. No new seasonal analytics events.
 
-Not edited by this ticket.
+## Delivered asset/runtime contract
 
-- `seasonal-hero.js`: replaced by one seasonal runtime for hero and narrative. The `data-seasons` URL list on the hero link goes away in favor of the manifest.
-- `listing.js`: unchanged logic. The seasonal runtime needs to learn which photos have non-zero opacity and which is the lookahead, either from a small event dispatched at the end of `updatePhotos` or by observing `hidden` on figures. Seasonal layers must come after the original `<img>`, because `photoInset` and the preload code read the first image.
-- `listing.css`: `.season-stack` positioning under `.hero-photo a` and `.is-scrolling .media-record > a`, and its `display: none` under print and reduced motion. The `plus-lighter` rules go.
-- `index.html`: the footer control group, and removal of `data-seasons`. Listing prose, captions, alt text and figure markup stay byte-identical.
-- `gallery.html` and `gallery.js`: no change. The viewer resolves photos from `[data-gallery-image]` links to `assets/listing/`.
-- `assets/listing/manifest.json`: no change. It stays the record of originals.
-- `scripts/publish-files.txt` and `tests/seo.test.mjs`: both enumerate seasonal files by name today. A full set needs a generated allowlist section and a matching test, decided when publication is separately approved.
-- `PRODUCT.md`, `DESIGN.md`, `.impeccable/design.json`: update the autoplay exception, hero description and controls when the build is accepted.
-- Analytics: no new events. `photo_open` and the rest keep their meaning.
-- Hosting: no build step or backend is required. Repository growth from binary frames is the cost to watch.
+Owner: `colonial-wtm` records the contract; `colonial-66v` produces and checks exports; the closed `colonial-gz0` consumes them. Runtime deliberately does not carry private QA/provenance records.
 
-## Verification strategy for the follow-up
+- Stable ID: original catalog position, also used in `data-position` and `gallery.html#photo-N`.
+- Manifest: `assets/seasons-next/frames.json`, version 1, `steps: 12`, the knot array above, `seconds_per_segment: 2`, `tiers: ["large", "small"]`, and `photos` keyed by ID.
+- Photo entry: ordered `keys` on the knot grid, with `original` listing keys served from unchanged listing derivatives. Example: photo 55 is `{"keys":[0],"original":[0]}` and is skipped by enhancement. Actual animated entries, including photo 73's sparse exceptions, come from the manifest rather than a fixed count inferred from room type.
+- Generated paths: `NN/KK.webp` for large, `NN/KK-small.webp` for small, relative to the manifest. Half-step 4.5 is `04h.webp` / `04h-small.webp`. There is no `-large` suffix.
+- Originals: `assets/listing/NN.webp` / `NN-small.webp`; not copied into the seasonal tree. Do not rebalance gallery originals.
+- Dimensions/crop: exact corresponding original derivative dimensions, no invented field of view. Small tier is 720w; large tier retains per-photo original size. WebP exports use existing ImageMagick tooling; no new format or dependency.
+- Byte counts, source hashes, model/prompts, registration and review dispositions belong to asset QA records and private working files, not the delivery manifest. Scripts reside in `scripts/seasons/`; small export builder is `scripts/build-seasons-small.mjs`. Private working masters remain under `.pi/artifacts/seasons-pilot/`.
+- Manifest membership and successful decoding do not certify property fidelity. Unapproved/failed assets require explicit repair, hold or owner disposition under `colonial-66v`; this evaluation does not silently waive them.
 
-Browser fixtures under `tests/`, following the existing iframe pattern, each reporting PASS. The clock takes its year length from one constant that fixtures can shorten. Phase is proven by reading the clock's frame and elapsed time and each upper layer's computed opacity. A screenshot alone is not evidence.
+Treatments for all historical 73 IDs are explicit below. Runtime encodes animated/original-only keys and omits other treatments instead of adding unused metadata fields.
 
-1. Shared phase. With hero and two narrative photos participating, computed opacities agree within 0.02 at 25%, 50% and 75% of every one of the 18 segments, including the wrap from step 11 to 0. Include one 18-key, one 12-key and one 4-key photo.
-2. Exact blend. Over a known background, the midpoint pixel of a dissolve equals the mean of the two frames within rounding, and coverage is full. Repeat with the photo at 50% scroll opacity and compare with the same check on originals.
-3. Scroll plus season. Scroll forward and backward through a blend while a dissolve runs. No geometry change in the photo box, caption, dots or story height. At most 4 seasonal layers exist.
-4. Fast scroll. Fling through a 14-photo story. No more than the participating and lookahead photos have seasonal requests in flight, abandoned requests do not attach late, and no photo shows a frame from a phase other than the shared one.
-5. Unready entry. Delay one photo's frames. It shows its original, the others hold on a whole frame at the next boundary, and it joins when ready.
-6. Failure. Return 404, a corrupt body, and a stalled response for a required frame. The clock holds, retries twice, then stalls with the Resume control. Gallery, viewer and links keep working throughout.
-7. Hidden tab and dialogs. Phase after return equals phase before. No seasonal requests while hidden or under a dialog.
-8. Pause and seasons. Pause mid-fade freezes within one frame and the status names both neighboring anchors. Each season button lands every participating photo on the same anchor. Resume continues from there.
-9. Originals stay originals. With seasons running, the viewer image, both previews, the full-size link, every catalog thumbnail and every `gallery.html` link resolve to `assets/listing/` and their bytes match the manifest hashes. No element in either gallery references `assets/seasons/`.
-10. Fallbacks. With scripts disabled, in print media, under reduced motion and with save-data, no seasonal request is made and the rendered photos are the originals. Toggling reduced motion on and off mid-run does not restart motion.
-11. Navigation. Open `gallery.html` and return by link, by back, and from bfcache. The paused preference survives. Nothing seasonal loads on the gallery page.
-12. Regression. The existing Node, Python and browser fixtures still pass, including narrative scroll, resize reading position, focus, print layout and analytics events.
-13. Budgets. On the phone profile under slow 4G and fast 4G throttling, record transfer per photo, live decoded frames, layer count and scroll handler timing against the thresholds above.
+| Treatment | IDs |
+| --- | --- |
+| Animated hero/narrative (53) | 1, 2, 3, 4, 5, 6, 10, 11, 12, 13, 14, 16, 17, 18, 21, 22, 23, 25, 26, 27, 28, 29, 30, 34, 35, 36, 37, 38, 39, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 57, 58, 59, 60, 61, 64, 65, 66, 67, 73 |
+| Original-only / seasonally invariant (3) | 7, 55, 56; only 55 needs an explicit one-key manifest entry |
+| Gallery/context-link-only photographs (8) | 8, 9, 15, 19, 20, 24, 32, 33 |
+| Non-photo (1) | 31, conceptual basement plan; unchanged factual disclosure |
+| Pruned from buyer catalog (8) | 40, 62, 63, 68, 69, 70, 71, 72; owned by `colonial-rp8` |
 
-## Open choices with recommendations
+## Budgets, measured exports and limits
 
-1. **Keys per photo.** Settled in the pilot. Year length is 36 seconds. Special house exteriors and the hot tub have 18 keys, other ground-level exteriors and porch views 12, large-window rooms 6 (steps 0, 3, 5, 6, 8, 9), small-window rooms 4, and windowless rooms keep the original. The real set is listed in `assets/seasons-next/frames.json`.
-2. **Unready photos and the barrier.** Recommend that a visible unready photo holds the clock at the next boundary for up to 10 seconds. The looser option lets the others keep going while it shows its original. That is smoother on bad networks but leaves one still photo beside moving ones.
-3. **Inline fallback stories.** Recommend originals only when a story is not sequenced. Those layouts can show three or four photos at once on the smallest screens, which breaks the two-photo ceiling.
-4. **Manual season buttons under reduced motion.** Recommend none in the first build. A static season switch is possible later without animation.
-5. **Large tier on wide desktops.** Recommend allowing it. If the session cost above is too high, restricting the narrative to the small tier everywhere cuts transfer by about two thirds at some loss of sharpness on large retina screens.
-6. **Where the frame map lives.** Recommend a separate `delivery.json`. Inlining it in `index.html` saves one request but ties generated data to hand-maintained markup.
-7. **Interior phase 0.** Interiors start on a rebalanced frame, not the original, so the first join is a visible lighting change over 600 ms. If that reads badly at review, the alternative is to join interiors only while they are off screen.
+Measured at evaluation closeout, before photo-02 repair:
 
-8. **Photos 8 and 9.** Their captions already name fall color and snowfall. Recommend moving both to gallery-only so they leave the narrative but keep their IDs, captions and deep links. Deleting either one changes the 73-photo catalog, the "View all 73 photos" label, frozen captions and tests, and needs its own ticket. Story 6 would drop to three photos, so the aerial choice there is worth a second look at the same time.
+| Measure | Value |
+| --- | --- |
+| Manifest entries | 54: 53 changing + original-only 55 |
+| Key-count distribution | 7×18, 14×12, 1×9, 10×6, 2×5, 19×4, 1×1 |
+| Generated exports | 405 large + 405 small |
+| Large bytes / largest frame | 104,536,390 / 530,288 |
+| Small bytes / largest frame | 30,121,046 / 138,142 |
+| Combined generated bytes | 134,657,436 (134.66 MB decimal); excludes originals and manifest |
 
-## Separately approved follow-up, not part of this ticket
+These are asset totals, not bytes transferred in a normal visit. A full read's transfer depends on dwell, direction, cache, tier and readiness. One worst-size small frame every 2 seconds costs about 0.55 Mbps; large about 2.12 Mbps. Two simultaneously changing photos can double those rates. Sparse keys lower demand, not necessarily enough to avoid slow-network holds.
 
-Scope: build the private hero and narrative integration against the accepted contract and the accepted assets from colonial-66v.
+The original **proposed, unaccepted performance targets** were: 120 KB small (150 KB hero), 350 KB large (420 KB hero), 300 MB seasonal tree, 9 live decoded frames and 4 seasonal image layers under a two-photo viewport assumption; fast-4G holds ≤100 ms, boundary work <8 ms and scroll p95 within 10% of baseline. Actual exports fit the tree target but exceed some per-frame proposals. No claim that every cap passed or that this closeout approves deviations. Asset byte/quality trade-offs belong to `colonial-66v`; runtime performance certification requires measured target-device evidence before relying on these goals as release gates.
 
-Gates, in order:
+For planning, 9 RGBA frames at 720×479 consume about 12.4 MB; at 1280×852, 39.3 MB; at 1600×1046, 60.3 MB, before surfaces and browser overhead. At two simultaneous photos, two seasonal layers each gives four layers, plus possible stack join animations. These are scenario estimates, not universal limits for unusually tall viewports or proof of hardware memory use.
 
-1. Owner accepts this architecture and the contract. 66v agrees the contract before intermediate production.
-2. Owner accepts 66v's representative samples, then the scoped anchors.
-3. 66v delivers frames that pass its asset QA and reports real byte totals against the thresholds.
-4. Implementation runs the verification list above end to end, including registration as seen through real scroll and season compositing, and the performance budgets on real devices.
-5. Owner accepts the private result.
-6. Publication, public disclosure wording, allowlist changes and deployment are a further separate decision.
+Verification profiles proposed: 390px DPR-3 phones with 3–4 GB RAM on 1.6/9 Mbps links, and 1440×900 DPR-2 desktop. Real-device memory, GPU, transfer-per-dwell and p95 timings have not been rerun/certified by this evaluation.
 
-colonial-66v owns asset QA and its local transition preview. The follow-up owns runtime and end-to-end QA. Neither current ticket delivers integrated website behavior.
+## Alternatives retained
+
+- **All-frame CSS animation stacks:** rejected; original 12-frame hero held roughly 52 MB of decoded pixels before surfaces, multiplied across narrative photos. Separate independent clocks and unbounded eager fetching are wrong here.
+- **Video:** shared exact boundary readiness and multiple mobile decoders complicate synchronization. Earlier local ffmpeg comparison of the old 12-frame/24-second hero found 4.1 MB WebP stills versus 5.4–10.1 MB video at 1280px. This is historical evidence for that sequence, not a fresh benchmark of the new set.
+- **Canvas/WebGL:** no demonstrated gain worth reimplementing responsive image layout, links and print/fallback behavior.
+- **Animated image / CSS-only loop:** lacks the shared decode barrier and controllable phase required here.
+- **Contact-sheet sprite:** decodes/loads the whole year before use; does not solve mobile memory.
+
+Sparse stills with browser dissolves remain the smallest complete design for the accepted requirements. The discarded batch-price and generation-count estimates are in Git history; they are not current billing authority.
+
+## Touchpoints and ownership
+
+`seasonal-hero.js`, `index.html`, `.season-stack` rules in `listing.css`, `scripts/build-seasons-small.mjs`, `scripts/publish-files.txt` and `tests/seo.test.mjs` were integrated by `colonial-gz0`. `listing.js` remains the identity/geometry controller; `gallery.js` remains the original viewer. `colonial-y9y` later corrected the identity blend. Current product/design docs record these outcomes.
+
+The allowlist now includes the manifest and 810 seasonal derivatives. That describes a local staged artifact, not authorization to publish it. This evaluation does not deploy, push, change public disclosure, certify asset suitability or treat existing allowlist membership as approval. No circular dependency: evaluation can close with an explicit asset contract while `colonial-66v` resolves asset QA.
+
+## Runnable verification and closeout evidence
+
+Static/application regression baseline and final gate for this documentation-only closeout:
+
+```sh
+npm test
+python3 tests/test_listing.py
+python3 test_design.py
+python3 test_marketing_plans.py
+git diff --check
+```
+
+Baseline: Node 34/34, listing Python 16/16, design and marketing checks passed. Final results are recorded in the Bead closeout. Independently checked manifest inventory, file sizes, treatment coverage and exact photo-02 mismatch. No new executable logic is introduced by this document.
+
+For runtime acceptance, use the existing local fixtures rather than creating another harness:
+
+```sh
+python3 -m http.server 8765 --bind 127.0.0.1
+```
+
+Open `http://127.0.0.1:8765/tests/seasonal-runtime.html` and require its reported PASS (about two minutes). Its shortened-year fixtures cover shared phase across every segment/wrap, pause, failure/recovery, viewport-only stacks, source request reuse, original galleries and motion/print/save-data fallbacks. Read phase and computed opacities; screenshots can finish/reset animations and cannot establish temporal correctness alone.
+
+`tests/crossfade-pixels.html` with `tests/check_crossfade_pixels.py` independently checks compositing pixels, both scroll directions, unequal aspect ratios and nested seasonal blends. Exact capture/probe commands are in `PRODUCT.md`. Other runnable fixtures there cover narrative geometry, original viewer links/previews, focus, print, responsive layouts and fallback behavior.
+
+Remaining empirical matrix for runtime/device certification: delayed/corrupt/hung frame entry, rapid scroll both directions, live reduced-motion toggles, tab/dialog suspension, fresh/back/bfcache navigation, all adjacent key blends including wrap, transfer/memory/layer counts, scroll p95 and boundary work on the device/network profiles above. Existing implementation tests and closed follow-ups supply prior evidence, not a fresh rerun of every case in this documentation ticket.
+
+**Closeout boundary:** architecture evaluation delivered and reconciled; no claim that asset QA, all device budgets, publication or every superseded original requirement passed unchanged. `colonial-66v` retains asset defects/acceptance; any future deployment remains a separate approved action.
