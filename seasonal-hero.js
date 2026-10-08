@@ -94,6 +94,13 @@
       sync();
     });
   }
+  // A request nobody waits for any longer gives its slot back.
+  function abandon(f) {
+    inflight--;
+    f.img.onload = f.img.onerror = null;
+    f.img.src = '';
+    f.img = null; f.state = 'idle';
+  }
   // One request per frame. A prefetched frame is held undecoded and decoded in place
   // when a photo's three-frame window reaches it; it is never fetched a second time.
   function load(p, f, keep) {
@@ -156,8 +163,8 @@
       if (wanted.get(f) || f.img?.isConnected) continue;
       // Still in the fetch window but outside the decoded one: the browser may drop its bitmap.
       if (wanted.has(f)) { if (f.state === 'ready') f.state = 'cached'; continue; }
-      if (f.state === 'loading') { inflight--; f.img.onload = f.img.onerror = null; f.img.src = ''; }
-      if (f.state !== 'error') { f.img = null; f.state = 'idle'; }
+      if (f.state === 'loading') abandon(f);
+      else if (f.state !== 'error') { f.img = null; f.state = 'idle'; }
     }
     order.forEach(([p, f]) => load(p, f, wanted.get(f)));
   }
@@ -277,7 +284,11 @@
   }
   function retry() {
     stalled = false;
-    photos.forEach(p => p.frames.forEach(f => { if (f.state === 'error') { f.state = 'idle'; f.tries = 0; } }));
+    photos.forEach(p => p.frames.forEach(f => {
+      // A request that never settles would keep its load slot through every retry.
+      if (f.state === 'loading') abandon(f);
+      else if (f.state === 'error') { f.state = 'idle'; f.tries = 0; }
+    }));
   }
   function remember() {
     // Only the paused preference survives a visit to the gallery; phase never does.

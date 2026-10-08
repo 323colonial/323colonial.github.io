@@ -114,6 +114,8 @@ class Listing(unittest.TestCase):
         page = Page('gallery.html').root
         figures = [f for f in page.all('figure') if 'data-position' in f.attrs]
         self.assertEqual(len(figures), 65)
+        intro = next(d for d in page.all('div') if d.cls('gallery-intro'))
+        self.assertIn(f'{len(figures)} views,', intro.text())
         for figure, expected in zip(figures, [p for p in APPROVED['photos'] if p['position'] not in PRUNED]):
             n = expected['position']
             self.assertEqual(int(figure.attrs['data-position']), n)
@@ -150,6 +152,7 @@ class Listing(unittest.TestCase):
         stories = [s for s in home.all('section') if s.cls('story')]
         self.assertIn('View all 65 photos', home.text())
         self.assertIn('All 65 photos', home.text())
+        self.assertIn('Full listing and all 65 photos', home.text())
         photos = json.loads((ROOT / 'assets/listing/manifest.json').read_text())['photos']
         for file in ('index.html', 'gallery.html'):
             grid = next(d for d in Page(file).root.all('div') if d.cls('gallery-grid'))

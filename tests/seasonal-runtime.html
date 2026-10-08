@@ -31,8 +31,8 @@ async function load(mode = '', {keepSession = false, hold = [], fail = [], slow 
     window.printMedia = new EventTarget(); printMedia.matches = ${mode === 'print'};
     window.matchMedia = query => query === '(prefers-reduced-motion: reduce)' ? seasonMedia : query === 'print' ? printMedia : nativeMedia(query);
     if (${mode === 'save data'}) Object.defineProperty(navigator, 'connection', {value: {saveData: true}});
-    // Frames can be held back or failed by URL fragment; every seasonal decode is logged.
-    window.gate = {hold: ${JSON.stringify(hold)}, fail: ${JSON.stringify(fail)}, waiting: [], requests: [],
+    // Frames can be held back, failed or hung by URL fragment; every seasonal decode is logged.
+    window.gate = {hold: ${JSON.stringify(hold)}, fail: ${JSON.stringify(fail)}, hang: [], hung: [], waiting: [], requests: [],
       release() { this.hold = []; this.waiting.splice(0).forEach(go => go()); }};
     const decode = HTMLImageElement.prototype.decode;
     HTMLImageElement.prototype.decode = function() {
@@ -43,6 +43,12 @@ async function load(mode = '', {keepSession = false, hold = [], fail = [], slow 
       if (gate.hold.some(part => src.includes(part))) return new Promise((resolve, reject) => gate.waiting.push(() => decode.call(this).then(resolve, reject)));
       return decode.call(this);
     };
+    // A hung request never loads and never errors.
+    const src = Object.getOwnPropertyDescriptor(HTMLImageElement.prototype, 'src');
+    Object.defineProperty(HTMLImageElement.prototype, 'src', {...src, set(value) {
+      if (gate.hang.some(part => String(value).includes(part))) gate.hung.push(String(value));
+      else src.set.call(this, value);
+    }});
     if (${slow}) {
       const entries = performance.getEntriesByName.bind(performance);
       performance.getEntriesByName = name => name.includes('/fixtures/seasons/')
@@ -225,6 +231,26 @@ try {
     await ticks(3);
     const after = clock.state();
     check(resumed && !after.holding && after.segment === 1 && B.every(p => agrees(p, after.phase, .02)), 'frame arrives: every photo crosses together');
+  }
+
+  // --- Barrier: hung request ---------------------------------------------------
+  {
+    win.scrollTo(0, blendScroll());
+    clock.seek(0, 0);
+    await until(() => B.every(p => clock.state().joined.includes(p)));
+    await ticks(3);
+    win.gate.hang = ['/34/06.webp']; // sparse photo 34 dissolves from step 3 to 6
+    // Frozen part way through that dissolve, the hung frame stays wanted and keeps its slot.
+    clock.seek(3, DUR / 2);
+    toggle().click();
+    const stalled = await until(() => clock.state().stalled, 1200);
+    const state = clock.state();
+    check(stalled && !state.running && state.phase === 3.5 && win.gate.hung.length === 1, 'hung request: bounded hold ends in a stalled pause mid-dissolve');
+    check(toggle().textContent === 'Resume animation', 'a hung request is reported like any other stall');
+    win.gate.hang = [];
+    toggle().click();
+    check(await until(() => clock.state().running && clock.state().joined.includes(34)) && !clock.state().stalled && toggle().textContent === 'Pause animation',
+      'Resume abandons the hung request, asks again and the clock recovers');
   }
 
   // --- Barrier: failed frame ---------------------------------------------------
