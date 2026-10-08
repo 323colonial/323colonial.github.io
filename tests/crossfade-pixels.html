@@ -9,6 +9,8 @@
 // Capture the viewport PNG after paint(), save its returned JSON, then run:
 // python3 tests/check_crossfade_pixels.py SCREENSHOT.png PROBES.json
 // The screenshot, not a canvas recreation of CSS, is the rendering under test.
+// For hover: paint({progress: 0, season: true, seasonProgress: 0.5, hover: true}),
+// move the pointer to returned hoverPoint, then capture; repeat at seasonProgress 0 and 1.
 const frame = document.querySelector('iframe');
 frame.style.width = '1440px';
 frame.style.height = '1000px';
@@ -38,7 +40,7 @@ const mix = (a, b, t) => a.map((value, i) => value * (1 - t) + b[i] * t);
 let previousScroll = null;
 window.crossfade = {
   // Progress uses the actual listing.js scroll mapping: .5=start, .75=midpoint, 1=end.
-  async paint({width = 1440, shape = 'same', progress = .75, season = false} = {}) {
+  async paint({width = 1440, shape = 'same', progress = .75, season = false, seasonProgress = .5, hover = false} = {}) {
     const height = width > 800 ? 1000 : 844;
     frame.style.width = `${width}px`;
     frame.style.height = `${height}px`;
@@ -63,7 +65,7 @@ window.crossfade = {
           stack.append(layer);
         }
         photos[i].querySelector('a').append(stack);
-        stack.lastElementChild.style.opacity = '.5';
+        stack.lastElementChild.style.opacity = 1 - seasonProgress;
       }
     }
     doc.activeElement.blur();
@@ -90,7 +92,7 @@ window.crossfade = {
     const box = visible.querySelector('a').getBoundingClientRect();
     const outer = frame.getBoundingClientRect();
     const background = win.getComputedStyle(story).backgroundColor.match(/[\d.]+/g).slice(0, 3).map(Number);
-    const effective = colors.map((color, i) => season ? mix(color, nextColors[i], .5) : color);
+    const effective = colors.map((color, i) => season ? mix(color, nextColors[i], seasonProgress) : color);
     const probes = [];
     const references = document.querySelector('#references');
     references.replaceChildren();
@@ -112,9 +114,19 @@ window.crossfade = {
       references.append(swatch);
       probes.push({name, x, y, rgb: rgb.map(Math.round), reference: {x: probes.length * 20 + 10, y: 30}});
     }
-    const label = `${width}px ${shape} progress=${progress} ${direction}${season ? ' + seasonal midpoint' : ''}`;
+    if (hover) {
+      if (t !== 0 && t !== 1) throw Error('Hover probes need one fully visible photo');
+      const rgb = win.getComputedStyle(doc.documentElement).getPropertyValue('--mahogany').trim();
+      for (const [name, x, y] of [['hover-left', box.left + 1, box.top + box.height / 2], ['hover-top', box.left + box.width / 2, box.top + 1]]) {
+        const swatch = document.createElement('span');
+        swatch.style.cssText = `width:20px;height:20px;background:${rgb}`;
+        references.append(swatch);
+        probes.push({name, x: Math.floor(outer.left + x), y: Math.floor(outer.top + y), rgb, reference: {x: (probes.length * 20) + 10, y: 30}});
+      }
+    }
+    const label = `${width}px ${shape} progress=${progress} ${direction}${season ? ` + seasonal ${seasonProgress}` : ''}${hover ? ' + hover' : ''}`;
     document.querySelector('#status').textContent = `Ready: ${label}`;
-    return {label, viewport: [innerWidth, innerHeight], probes};
+    return {label, viewport: [innerWidth, innerHeight], probes, hoverPoint: {x: outer.left + box.left + box.width / 2, y: outer.top + box.top + box.height / 2}};
   },
 };
 document.querySelector('#status').textContent = 'Ready. Call await crossfade.paint({width, shape, progress, season}), then capture PNG and check pixels.';

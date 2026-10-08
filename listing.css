@@ -59,10 +59,9 @@ main { padding: 0; }
 @media (prefers-reduced-motion: reduce), print {
   .season-stack, #hero-motion { display: none !important; }
 }
-.media-record > a { display: block; }
-.media-record > a:hover { outline: 2px solid var(--mahogany); outline-offset: -2px; }
-/* The stack covers the link's inset hover outline, so it repeats it. */
-.media-record > a:hover .season-stack { outline: 2px solid var(--mahogany); outline-offset: -2px; }
+.media-record > a { display: block; position: relative; }
+/* Keep hover feedback above every fading image, outside the seasonal animation. */
+.media-record > a:hover::after { content: ''; position: absolute; inset: 0; z-index: 1; border: 2px solid var(--mahogany); pointer-events: none; }
 figcaption { padding-top: 10px; font: 13px/1.5 Arial, sans-serif; }
 .caption-text, .photo-note { display: block; }
 .photo-note { color: var(--muted); font-size: 13px; margin-top: 6px; }
