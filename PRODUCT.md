@@ -31,7 +31,7 @@ Present a photo-led narrative for weekend and second-home buyers: understand the
 
 ## Listing snapshot and contact
 
-Verified against Redfin / Bright MLS on **October 3, 2026**, not a live feed:
+Verified against Redfin / Bright MLS on **October 3, 2026**, and re-checked against the public Dandridge listing's embedded feed data on **October 8, 2026** (price, beds, baths, area, acreage, year built, garage spaces, MLS number, status, agent and office all matched; HOA, attached garage and unfinished basement are not stated in that feed). Not a live feed:
 
 | Fact | Value |
 | --- | --- |
@@ -40,7 +40,7 @@ Verified against Redfin / Bright MLS on **October 3, 2026**, not a live feed:
 | Finished area | 2,081 sq ft above grade; 0 finished sq ft below grade |
 | Land | 2.90 estimated acres, including additional parcels |
 | Built / HOA | 2008 / none |
-| Status | Active as of October 8, 2026 (owner-stated; was Coming Soon at the October 3 check) |
+| Status | Active; on market October 8, 2026 (was Coming Soon at the October 3 check) |
 | MLS | WVMO2008198 |
 
 Header actions: **(304) 885-1547**, `tel:+13048851547`, and **Questions & tours** through the public Dandridge property listing. Listing agent: **Liz McDonald**, **Dandridge Realty Group LLC**. Both buyer headers and the print phone use the general brokerage contact, not a direct Liz line or portal tour-agent number.
