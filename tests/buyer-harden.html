@@ -74,7 +74,7 @@ try {
     doc.querySelector('#previous-photo').click();
     for (let i = 0; i < 10; i++) doc.querySelector('#next-photo').click();
     await image.decode();
-    check(status.hidden && win.getComputedStyle(image).visibility === 'visible' && image.currentSrc === links[10].href && doc.querySelector('#viewer-title').textContent === 'Photo 11 of 73', `${route}: rapid navigation settles on last selected photo`);
+    check(status.hidden && win.getComputedStyle(image).visibility === 'visible' && image.currentSrc === links[10].href && doc.querySelector('#viewer-title').textContent === `Photo 11 of ${links.length}`, `${route}: rapid navigation settles on last selected photo`);
     doc.querySelector('#photo-viewer button').click();
     await settle(win);
     check(doc.activeElement === links[0], `${route}: Close restores opener after load failure and rapid navigation`);

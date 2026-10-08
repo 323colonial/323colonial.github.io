@@ -51,18 +51,18 @@ img { display: block; width: 100%; height: auto; }
 main { padding: 0; }
 .hero-photo { width: 100%; }
 .hero-photo img { width: 100%; }
-.hero-photo a { position: relative; isolation: isolate; }
-.hero-season { position: absolute; inset: 0; height: 100%; opacity: 0; pointer-events: none; }
-.seasonal-ready img { mix-blend-mode: plus-lighter; }
-.seasonal-static img:first-child { opacity: 1 !important; }
-.seasonal-static .hero-season { display: none; }
+.hero-photo a, .is-scrolling .media-record > a { position: relative; isolation: isolate; }
+/* Seasonal frames sit over the untouched original, inside the link's scroll opacity. */
+.season-stack { position: absolute; inset: 0; display: grid; grid-template: 100% / 100%; pointer-events: none; }
+.season-stack img { grid-area: 1 / 1; width: 100%; height: 100%; min-height: 0; object-fit: contain; }
 @media screen { .hero-photo figcaption { display: none; } }
 @media (prefers-reduced-motion: reduce), print {
-  .hero-photo img:first-child { opacity: 1 !important; }
-  .hero-season, #hero-motion { display: none !important; }
+  .season-stack, #hero-motion { display: none !important; }
 }
 .media-record > a { display: block; }
 .media-record > a:hover { outline: 2px solid var(--mahogany); outline-offset: -2px; }
+/* The stack covers the link's inset hover outline, so it repeats it. */
+.media-record > a:hover .season-stack { outline: 2px solid var(--mahogany); outline-offset: -2px; }
 figcaption { padding-top: 10px; font: 13px/1.5 Arial, sans-serif; }
 .caption-text, .photo-note { display: block; }
 .photo-note { color: var(--muted); font-size: 13px; margin-top: 6px; }

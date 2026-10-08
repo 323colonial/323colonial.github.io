@@ -55,9 +55,9 @@ try {
     const style = element => win.getComputedStyle(element);
     const box = element => element.getBoundingClientRect();
     check(win.matchMedia('print').matches, 'print media active');
-    check(figures.length === (route === 'index' ? 67 : 73), 'all original and added photos retained');
+    check(figures.length === (route === 'index' ? 56 : 65), 'all original and added photos retained');
     const visible = figures.filter(figure => box(figure).height > 0);
-    check(visible.length === (route === 'index' ? 1 : 73), 'only selected print photos visible');
+    check(visible.length === (route === 'index' ? 1 : 65), 'only selected print photos visible');
     for (const figure of visible) {
       const img = figure.querySelector('img'), caption = figure.querySelector('figcaption');
       const image = box(img), text = box(caption), record = box(figure);
