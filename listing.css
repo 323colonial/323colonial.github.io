@@ -51,18 +51,18 @@ img { display: block; width: 100%; height: auto; }
 main { padding: 0; }
 .hero-photo { width: 100%; }
 .hero-photo img { width: 100%; }
-.hero-photo a { position: relative; isolation: isolate; }
-.hero-season { position: absolute; inset: 0; height: 100%; opacity: 0; pointer-events: none; }
-.seasonal-ready img { mix-blend-mode: plus-lighter; }
-.seasonal-static img:first-child { opacity: 1 !important; }
-.seasonal-static .hero-season { display: none; }
+.hero-photo a, .is-scrolling .media-record > a { position: relative; isolation: isolate; }
+/* Seasonal frames sit over the untouched original, inside the link's scroll opacity. */
+.season-stack { position: absolute; inset: 0; display: grid; grid-template: 100% / 100%; pointer-events: none; }
+.season-stack img { grid-area: 1 / 1; width: 100%; height: 100%; min-height: 0; object-fit: contain; }
 @media screen { .hero-photo figcaption { display: none; } }
 @media (prefers-reduced-motion: reduce), print {
-  .hero-photo img:first-child { opacity: 1 !important; }
-  .hero-season, #hero-motion { display: none !important; }
+  .season-stack, #season-controls { display: none !important; }
 }
 .media-record > a { display: block; }
 .media-record > a:hover { outline: 2px solid var(--mahogany); outline-offset: -2px; }
+/* The stack covers the link's inset hover outline, so it repeats it. */
+.media-record > a:hover .season-stack { outline: 2px solid var(--mahogany); outline-offset: -2px; }
 figcaption { padding-top: 10px; font: 13px/1.5 Arial, sans-serif; }
 .caption-text, .photo-note { display: block; }
 .photo-note { color: var(--muted); font-size: 13px; margin-top: 6px; }
@@ -122,8 +122,12 @@ dt { font: 13px/1.5 Arial, sans-serif; color: var(--muted); margin-bottom: 4px; 
 dd { font: 16px/1.5 Arial, sans-serif; margin: 0; }
 .site-footer { padding-block: 24px; font: 12px/1.6 Arial, sans-serif; color: var(--muted); }
 .site-footer p { margin: 0; }
-#hero-motion { background: none; color: inherit; border: 0; padding: 10px 0; font: inherit; text-decoration: underline; text-underline-offset: .2em; }
-#hero-motion:hover { color: var(--ink); }
+.season-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 0 20px; }
+.season-controls[hidden] { display: none; }
+.season-controls button { background: none; color: inherit; border: 0; padding: 10px 0; font: inherit; text-decoration: underline; text-underline-offset: .2em; }
+.season-controls button:hover, .season-controls [aria-pressed="true"] { color: var(--ink); }
+.season-controls [aria-pressed="true"] { font-weight: 700; text-decoration: none; }
+.season-controls p { flex-basis: 100%; }
 .analytics-notice { margin: 0; padding: 4px 20px; font: 13px/1.6 Arial, sans-serif; background: var(--paper); color: var(--ink); }
 .analytics-notice a { display: inline-flex; align-items: center; min-height: 24px; }
 .analytics-privacy { padding-block: 24px; font: 14px/1.6 Arial, sans-serif; }

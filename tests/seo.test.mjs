@@ -68,7 +68,10 @@ test('publish allowlist contains exactly required buyer files, never repository/
     for (const suffix of ['', '-small']) expected.push(`assets/listing/${String(n).padStart(2, '0')}${suffix}.webp`);
   }
   assert.deepEqual([...files].sort(), expected.sort());
-  const referenced = new Set(['index.html', 'gallery.html', ...modules, ...emailAssets]);
+  // colonial-gz0, private branch: the runtime now reads a private manifest, so index.html no
+  // longer names the eleven published hero frames. The allowlist is unchanged and still lists
+  // them; they count as approved-but-unreferenced until publication is decided separately.
+  const referenced = new Set(['index.html', 'gallery.html', ...modules, ...seasons, ...emailAssets]);
   for (const [file] of pages) {
     const doc = parseDocument(readFileSync(file, 'utf8'));
     for (const node of selectAll('[href], [src], [srcset], [data-seasons], meta[property="og:image"]', doc)) {
