@@ -23,7 +23,11 @@
   12
  ],
  "seconds_per_segment": 2,
- "note": "Private seasonal frames, not published. Keys are positions on a 12-step year; NNh files are half steps. \"original\" lists keys served by assets/listing/NN.webp.",
+ "tiers": [
+  "large",
+  "small"
+ ],
+ "note": "Seasonal frames for the hero and narrative photos. Keys are positions on a 12-step year; NNh files are half steps; NN-small files are the 720w tier. \"original\" lists keys served by assets/listing/NN.webp.",
  "photos": {
   "1": {
    "keys": [

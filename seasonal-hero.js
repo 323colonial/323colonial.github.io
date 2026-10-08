@@ -54,7 +54,7 @@
   // --- Frames -------------------------------------------------------------------
   // Slow links get the small tier and a smaller window; see reach().
   function small(p) {
-    return M.tiers.includes('small') && (narrow.matches || (rate > 0 && rate < 1.5) || /-small\.webp$/.test(p.original.currentSrc));
+    return M.tiers?.includes('small') && (narrow.matches || (rate > 0 && rate < 1.5) || /-small\.webp$/.test(p.original.currentSrc));
   }
   function source(p, key) {
     if (p.own.has(key)) {
@@ -77,9 +77,26 @@
   const reach = () => !rate ? 1 : rate < .5 ? 0 : rate < 4 ? 1 : 2;
   const limit = () => rate && rate < 1.5 ? 2 : rate >= 4 ? 4 : 3;
 
+  function fail(f) {
+    const wait = HOLD * (f.tries ? .3 : .1);
+    f.state = 'error'; f.img = null; f.tries++;
+    f.retryAt = performance.now() + wait;
+    setTimeout(sync, wait + 10);
+  }
+  function decode(f, img) {
+    f.state = 'decoding';
+    img.decode().then(() => true, () => false).then(ok => {
+      if (f.img !== img) return; // Abandoned: a late arrival must not attach.
+      if (ok) { f.tries = 0; f.state = f.keep ? 'ready' : 'cached'; } else fail(f);
+      sync();
+    });
+  }
+  // One request per frame. A prefetched frame is held undecoded and decoded in place
+  // when a photo's three-frame window reaches it; it is never fetched a second time.
   function load(p, f, keep) {
     f.keep = keep;
-    if (f.state === 'ready' || f.state === 'loading' || (f.state === 'cached' && !keep)) return;
+    if (f.state === 'ready' || f.state === 'loading' || f.state === 'decoding') return;
+    if (f.state === 'cached') { if (keep) decode(f, f.img); return; }
     if (f.state === 'error' && (f.tries > RETRIES || performance.now() < f.retryAt)) return;
     if (inflight >= limit()) return;
     const img = new Image(), url = source(p, f.key);
@@ -87,23 +104,18 @@
     img.decoding = 'async';
     f.state = 'loading'; f.img = img;
     inflight++;
-    img.src = url;
-    img.decode().then(() => true, () => false).then(ok => {
-      if (f.img !== img) return; // Abandoned: a late arrival must not attach.
+    const done = ok => {
+      if (f.img !== img) return;
       inflight--;
       measure(url);
-      if (ok) {
-        f.tries = 0;
-        // Frames outside a photo's three-frame window only warm the HTTP cache.
-        if (f.keep) f.state = 'ready'; else { f.state = 'cached'; f.img = null; }
-      } else {
-        const wait = HOLD * (f.tries ? .3 : .1);
-        f.state = 'error'; f.img = null; f.tries++;
-        f.retryAt = performance.now() + wait;
-        setTimeout(sync, wait + 10);
-      }
+      if (!ok) fail(f);
+      else if (f.keep) { decode(f, img); return; }
+      else f.state = 'cached';
       sync();
-    });
+    };
+    img.onload = () => done(true);
+    img.onerror = () => done(false);
+    img.src = url;
   }
 
   // Priority blooms outward on two axes, time first: what the clock reaches next for
@@ -139,8 +151,10 @@
     }
     for (const p of photos) for (const f of p.frames.values()) {
       if (wanted.get(f) || f.img?.isConnected) continue;
-      if (f.state === 'loading' && !wanted.has(f)) { inflight--; f.img.src = ''; f.img = null; f.state = 'idle'; }
-      else if (f.state === 'ready') { f.img = null; f.state = 'cached'; }
+      // Still in the fetch window but outside the decoded one: the browser may drop its bitmap.
+      if (wanted.has(f)) { if (f.state === 'ready') f.state = 'cached'; continue; }
+      if (f.state === 'loading') { inflight--; f.img.onload = f.img.onerror = null; f.img.src = ''; }
+      if (f.state !== 'error') { f.img = null; f.state = 'idle'; }
     }
     order.forEach(([p, f]) => load(p, f, wanted.get(f)));
   }
@@ -154,13 +168,14 @@
     const lower = a !== b && next?.state === 'ready' ? next.img : null;
     // A new frame only ever enters beneath an opaque one, so a late paint cannot blank.
     // The spent upper layer goes first so the frame on screen is never moved.
-    [...p.stack.children].forEach(layer => {
-      layer.getAnimations().forEach(animation => animation.cancel());
-      layer.style.removeProperty('opacity');
-      if (layer !== lower && layer !== upper) layer.remove();
-    });
+    [...p.stack.children].forEach(layer => { if (layer !== lower && layer !== upper) layer.remove(); });
     if (lower && lower.parentNode !== p.stack) p.stack.prepend(lower);
     if (p.stack.lastElementChild !== upper) p.stack.append(upper);
+    // A frame keeps its last fade while detached; it must re-enter opaque.
+    for (const layer of p.stack.children) {
+      layer.getAnimations().forEach(animation => animation.cancel());
+      layer.style.removeProperty('opacity');
+    }
     if (a === b) return;
     if (startedAt == null) { upper.style.opacity = from + (to - from) * offset / DUR[seg]; return; }
     // Sync comes from every photo sharing this one start time, not from correcting drift.
@@ -279,7 +294,7 @@
       manifest = await response.json();
     } catch { return; } // No manifest: originals remain and the controls stay hidden.
     ({knots: KN, steps: N} = manifest);
-    DUR = manifest.durations.map(seconds => seconds * 1000);
+    DUR = (manifest.durations || KN.slice(1).map(() => manifest.seconds_per_segment)).map(seconds => seconds * 1000);
     S = DUR.length;
     HOLD = (manifest.hold_seconds ?? 10) * 1000;
     FADE = manifest.fade_ms ?? 600;
@@ -298,11 +313,11 @@
     M = manifest;
     // The page already holds about 150 image entries; throughput needs the seasonal ones too.
     performance.setResourceTimingBufferSize?.(600);
-    // Join a little before a photo reaches the viewport so it arrives at the shared phase.
+    // Only photos inside the viewport carry seasonal layers and animations.
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => { photos.find(p => p.link === entry.target).near = entry.isIntersecting; });
       sync();
-    }, {root: document, rootMargin: '25% 0px'});
+    }, {root: document});
     photos.forEach(p => {
       observer.observe(p.link);
       if (!p.original.complete) p.original.addEventListener('load', sync, {once: true});

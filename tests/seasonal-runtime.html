@@ -2,7 +2,7 @@
 <meta charset="utf-8">
 <title>Seasonal runtime regression</title>
 <h1>Seasonal runtime regression</h1>
-<p>Runs the real homepage against tiny solid-color frames in <code>tests/fixtures/seasons/</code> on a 7.2 second year. Phase is read from the clock and from computed opacity, never from pixels.</p>
+<p>Runs the real homepage against tiny solid-color frames in <code>tests/fixtures/seasons/</code> on a 7.2 second year, then scrolls it once with the real frames. Phase is read from the clock and from computed opacity, never from pixels.</p>
 <pre id="results">Running…</pre>
 <iframe title="Seasonal homepage" style="width:1440px;height:1000px;border:0"></iframe>
 <script type="module">
@@ -51,7 +51,7 @@ async function load(mode = '', {keepSession = false, hold = [], fail = [], slow 
   <\/script>`;
   await new Promise(resolve => {
     frame.onload = resolve;
-    frame.srcdoc = source.replace('.pi/artifacts/seasons-private/delivery.json', manifest)
+    frame.srcdoc = source.replace('data-manifest="assets/seasons-next/frames.json"', `data-manifest="${manifest}"`)
       .replace('<head>', `<head><base href="${new URL('../', location.href)}">${setup}`);
   });
   await tick();
@@ -93,12 +93,15 @@ const box = element => { const b = element.getBoundingClientRect(); return [b.le
 const same = (a, b) => a.every((value, i) => Math.abs(value - b[i]) < .5);
 const toggle = () => doc.querySelector('#hero-motion');
 function blendScroll(position = .75) {
-  // .75 is half way through the scroll blend between story 1's first two photos (3 and 39).
+  // .75 is half way through the scroll blend between story 1's first two photos (39 and 34).
   const story = doc.querySelector('.story'), stage = story.querySelector('.story-stage');
   const start = story.offsetTop + parseFloat(win.getComputedStyle(story).paddingTop) - parseFloat(win.getComputedStyle(stage).top);
   return start + Math.max(240, win.innerHeight * .5) * position;
 }
 const seasonal = () => win.performance.getEntriesByType('resource').filter(r => r.name.includes('/fixtures/seasons/'));
+const frameRequests = () => seasonal().filter(r => r.name.endsWith('.webp')).map(r => r.name);
+// Hero with the first narrative photo, then two narrative photos half way through a scroll blend.
+const A = [1, 39], B = [39, 34];
 
 try {
   // --- Structure ---------------------------------------------------------------
@@ -110,7 +113,7 @@ try {
     && doc.querySelectorAll('.site-footer button').length === 1 && !doc.querySelector('[data-season], #season-status, #season-controls')
     && !hero.querySelector('button, input, select') && win.getComputedStyle(hero.querySelector('figcaption')).display === 'none',
     'image only; one footer pause control, no season buttons or status line');
-  const early = new Set(win.gate.requests.filter(src => src.includes('/01/')));
+  const early = new Set(frameRequests().filter(src => src.includes('/01/')));
   check(early.size > 0 && early.size <= 6, `hero starts with a few frames, not its year (${early.size} of 17 requested at join)`);
   const stack = stackOf(1);
   check(heroLink.firstElementChild === original && original.getAttribute('src') === 'assets/listing/01.webp'
@@ -122,10 +125,11 @@ try {
   check(heroLink.getAttribute('aria-description') === 'Animated seasonal concept. Opens the original property photograph.', 'animated link says it opens the original');
 
   // --- Shared phase, running ---------------------------------------------------
-  // Early in the blend the hero is still within the join margin above the viewport.
-  win.scrollTo(0, blendScroll(.6));
-  const trio = await until(() => [1, 3, 39].every(p => clock.state().joined.includes(p)));
-  check(trio, 'hero (18 keys), photo 3 (4 keys) and photo 39 (12 keys) participate together');
+  for (const [set, at, label] of [[A, .1, 'hero (18 keys) with photo 39 (12 keys)'], [B, .75, 'photo 39 (12 keys) with photo 34 (4 keys) mid scroll blend']]) {
+  win.scrollTo(0, blendScroll(at));
+  toggle().textContent === 'Resume animation' && toggle().click();
+  const together = await until(() => set.every(p => clock.state().joined.includes(p)) && clock.state().running);
+  check(together, `${label}: both participate`);
   await ticks(8); // join fades are 60 ms in this fixture
   {
     let samples = 0, bad = 0, worst = '', wrapped = false, last = -1, maxDecoded = 0, maxLayers = 0, stopped = 0;
@@ -144,11 +148,11 @@ try {
         if (!agrees(position, state.phase, .02)) { bad++; worst ||= `photo ${position} at phase ${state.phase.toFixed(3)}: ${JSON.stringify(shown(position))}`; }
       }
     }
-    check(samples > 100 && bad === 0, `every frame of a running year: all photos show the clock's phase within 0.02 (${samples} samples${worst ? `; ${worst}` : ''})`);
-    check(segments.size === 18 && wrapped, 'all 18 timing segments and the wrap to late summer were sampled');
-    check(stopped <= samples * .05, `clock ran without holds on a local link (${stopped} stopped samples)`);
-    check(maxDecoded <= 3, `at most three decoded frames per photo (saw ${maxDecoded})`);
-    check(maxLayers <= 6, `two layers per participating photo (saw ${maxLayers} for three photos)`);
+    check(samples > 100 && bad === 0, `${label}: every frame of a running year: both photos show the clock's phase within 0.02 (${samples} samples${worst ? `; ${worst}` : ''})`);
+    check(segments.size === 18 && wrapped, `${label}: all 18 timing segments and the wrap to late summer were sampled`);
+    check(stopped <= samples * .05, `${label}: clock ran without holds on a local link (${stopped} stopped samples)`);
+    check(maxDecoded <= 3, `${label}: at most three decoded frames per photo (saw ${maxDecoded})`);
+    check(maxLayers <= 4, `${label}: two layers per participating photo (saw ${maxLayers} for two photos)`);
   }
 
   // --- Shared phase, every segment at quarter points ---------------------------
@@ -156,36 +160,37 @@ try {
     let exact = true, detail = '';
     for (let segment = 0; segment < 18; segment++) for (const fraction of [.25, .5, .75]) {
       clock.seek(segment, DUR * fraction);
-      const ready = await until(() => [1, 3, 39].every(p => clock.state().joined.includes(p)), 300);
+      const ready = await until(() => set.every(p => clock.state().joined.includes(p)), 300);
       await ticks(5);
       const state = clock.state();
       const phase = M.knots[segment] + (M.knots[segment + 1] - M.knots[segment]) * fraction;
-      const ok = ready && !state.running && Math.abs(state.phase - phase) < 1e-9 && [1, 3, 39].every(p => agrees(p, phase, .001)
+      const ok = ready && !state.running && Math.abs(state.phase - phase) < 1e-9 && set.every(p => agrees(p, phase, .001)
         && Number(win.getComputedStyle(stackOf(p)).opacity) === 1 && Number(win.getComputedStyle(stackOf(p).firstElementChild).opacity) === 1);
       if (!ok) { exact = false; detail ||= ` first miss: segment ${segment} at ${fraction}`; }
     }
-    check(exact, `25%, 50% and 75% of all 18 segments incl. half steps and wrap: three photos agree within 0.001${detail}`);
+    check(exact, `${label}: 25%, 50% and 75% of all 18 segments incl. half steps and wrap agree within 0.001${detail}`);
+  }
   }
 
   // --- Exact blend inside a scroll blend ---------------------------------------
   {
     win.scrollTo(0, blendScroll());
     clock.seek(4, DUR * .5);
-    await until(() => !clock.state().joined.includes(1) && [3, 39].every(p => clock.state().joined.includes(p)));
+    await until(() => !clock.state().joined.includes(1) && B.every(p => clock.state().joined.includes(p)));
     await ticks(5);
-    const figures = [3, 39].map(p => doc.querySelector(`.story-photos figure[data-position="${p}"]`));
+    const figures = B.map(p => doc.querySelector(`.story-photos figure[data-position="${p}"]`));
     const links = figures.map(figure => figure.querySelector('a'));
     const scrollOpacity = links.map(link => Number(win.getComputedStyle(link).opacity));
     check(Math.abs(scrollOpacity[0] - .5) < .05 && Math.abs(scrollOpacity[0] + scrollOpacity[1] - 1) < .001
       && figures.every((figure, i) => Math.abs(Number(figure.style.getPropertyValue('--photo-opacity')) - scrollOpacity[i]) < .001),
       'two photos mid scroll blend keep exactly the scroll opacity listing.js set');
-    check([3, 39].every(p => {
+    check(B.every(p => {
       const s = stackOf(p), layers = [...s.children], style = win.getComputedStyle(s);
       return style.opacity === '1' && style.mixBlendMode === 'normal' && win.getComputedStyle(layers[0]).opacity === '1'
         && layers.every(layer => win.getComputedStyle(layer).mixBlendMode === 'normal' && layer.complete && layer.naturalWidth > 0)
         && Math.abs(Object.values(shown(p)).reduce((a, b) => a + b, 0) - 1) < 1e-9;
     }), 'seasonal pair is one opaque group: opaque lower layer, source-over, weights sum to one (no darkening)');
-    check([3, 39].every((p, i) => {
+    check(B.every((p, i) => {
       const o = box(links[i].querySelector('img'));
       return same(box(stackOf(p)), o) && [...stackOf(p).children].every(layer => same(box(layer), o)
         && win.getComputedStyle(layer).objectFit === win.getComputedStyle(links[i].querySelector('img')).objectFit);
@@ -194,36 +199,37 @@ try {
     const geometry = () => JSON.stringify([...figures.map(box), ...figures.map(f => box(f.querySelector('figcaption'))), box(story), box(story.querySelector('.photo-dots'))]);
     const before = geometry();
     clock.seek(9, DUR * .25);
-    await until(() => [3, 39].every(p => clock.state().joined.includes(p)));
+    await until(() => B.every(p => clock.state().joined.includes(p)));
     await ticks(3);
     check(geometry() === before, 'a season change moves no figure, caption, dots or story geometry');
   }
 
   // --- Barrier: delayed frame --------------------------------------------------
   {
-    win.scrollTo(0, blendScroll(.6));
+    win.scrollTo(0, blendScroll());
     clock.seek(0, 0);
-    await until(() => [1, 3, 39].every(p => clock.state().joined.includes(p)));
+    await until(() => B.every(p => clock.state().joined.includes(p)));
     await ticks(3);
     win.gate.hold = ['/39/02.webp']; // needed to enter the segment from step 1 to 2
     toggle().click();
     const held = await until(() => clock.state().holding && clock.state().segment === 1);
     const state = clock.state();
     check(held && !state.running && state.phase === 1 && state.elapsed === 0, 'delayed frame: the clock holds at the boundary instead of crossing it');
-    check([1, 3, 39].every(p => state.joined.includes(p) && agrees(p, 1, .001)), 'all photos hold together on the same phase (sparse photo part way through its dissolve)');
+    check(B.every(p => state.joined.includes(p) && agrees(p, 1, .001)), 'all photos hold together on the same phase (sparse photo part way through its dissolve)');
     await ticks(10);
     check(clock.state().phase === 1 && toggle().textContent === 'Pause animation', 'hold is steady and is not reported as a pause');
     win.gate.release();
     const resumed = await until(() => clock.state().running);
     await ticks(3);
     const after = clock.state();
-    check(resumed && !after.holding && after.segment === 1 && [1, 3, 39].every(p => agrees(p, after.phase, .02)), 'frame arrives: every photo crosses together');
+    check(resumed && !after.holding && after.segment === 1 && B.every(p => agrees(p, after.phase, .02)), 'frame arrives: every photo crosses together');
   }
 
   // --- Barrier: failed frame ---------------------------------------------------
   {
+    win.scrollTo(0, blendScroll(.1));
     clock.seek(2, 0);
-    await until(() => [1, 3, 39].every(p => clock.state().joined.includes(p)));
+    await until(() => A.every(p => clock.state().joined.includes(p)));
     await ticks(3);
     win.gate.fail = ['/01/04.webp']; // hero frame needed from step 3 to 4
     const before = win.gate.requests.filter(src => src.includes('/01/04.webp')).length;
@@ -235,7 +241,7 @@ try {
     check(stalled && !state.running && state.phase === 3 && performance.now() - started < 4000, 'failed frame: bounded hold ends in a stalled pause at the boundary');
     check(tries === 3, `failed frame was tried once and retried twice (${tries} attempts)`);
     check(toggle().textContent === 'Resume animation' && /did not load/.test(toggle().getAttribute('aria-description')) && !toggle().hidden, 'stall turns the same control into Resume and describes why');
-    check([1, 3, 39].every(p => agrees(p, 3, .001)), 'stalled photos stay on one coherent phase');
+    check(A.every(p => agrees(p, 3, .001)), 'stalled photos stay on one coherent phase');
     await ticks(30);
     check(win.gate.requests.filter(src => src.includes('/01/04.webp')).length - before === 3, 'no retry storm while stalled');
     win.gate.fail = [];
@@ -247,17 +253,17 @@ try {
   {
     await until(() => { const s = clock.state(); return s.running && s.elapsed > DUR * .25 && s.elapsed < DUR * .6; });
     toggle().click();
-    const state = clock.state(), frozen = JSON.stringify([1, 3, 39].map(shown));
+    const state = clock.state(), frozen = JSON.stringify(A.map(shown));
     await ticks(10);
     check(!state.running && state.paused && state.elapsed > 0 && state.elapsed < DUR && clock.state().phase === state.phase
-      && JSON.stringify([1, 3, 39].map(shown)) === frozen && [1, 3, 39].every(p => agrees(p, state.phase, .001)), 'pause freezes mid-dissolve at once and stays frozen');
+      && JSON.stringify(A.map(shown)) === frozen && A.every(p => agrees(p, state.phase, .001)), 'pause freezes mid-dissolve at once and stays frozen');
     check(toggle().textContent === 'Resume animation', 'control names its state while paused');
     check(sessionStorage.getItem('colonial_seasons_paused') === '1' && !Object.keys(sessionStorage).some(key => /season/.test(key) && key !== 'colonial_seasons_paused'), 'only the paused preference is remembered for the session');
     toggle().click();
     const resumed = await until(() => clock.state().running);
     await ticks(3);
     const now = clock.state();
-    check(resumed && now.phase >= state.phase && now.phase - state.phase < .6 && [1, 3, 39].every(p => agrees(p, now.phase, .02))
+    check(resumed && now.phase >= state.phase && now.phase - state.phase < .6 && A.every(p => agrees(p, now.phase, .02))
       && sessionStorage.getItem('colonial_seasons_paused') === null, 'Resume continues from the frozen phase and clears the preference');
   }
 
@@ -271,9 +277,9 @@ try {
     check(viewer.open && doc.querySelector('#viewer-image').getAttribute('src') === 'assets/listing/01.webp'
       && doc.querySelector('#full-size').getAttribute('href') === 'assets/listing/01.webp', 'animated hero still opens its original in the viewer');
     await until(() => !clock.state().running);
-    const held = clock.state(), requests = win.gate.requests.length;
+    const held = clock.state(), requests = frameRequests().length;
     await ticks(40); // longer than a 0.4 s segment
-    check(!clock.state().running && clock.state().phase === held.phase && win.gate.requests.length === requests
+    check(!clock.state().running && clock.state().phase === held.phase && frameRequests().length === requests
       && held.phase - beforeOpen.phase < .2, 'open dialog pauses the clock and fetches nothing seasonal');
     check([...doc.querySelectorAll('.viewer-preview')].every(preview => preview.hidden || preview.getAttribute('src').startsWith('assets/listing/'))
       && !viewer.querySelector('.season-stack'), 'viewer previews are originals; the dialog holds no seasonal layer');
@@ -282,9 +288,9 @@ try {
     Object.defineProperty(doc, 'hidden', {configurable: true, value: true});
     doc.dispatchEvent(new Event('visibilitychange'));
     await tick();
-    const hidden = clock.state(), hiddenRequests = win.gate.requests.length;
+    const hidden = clock.state(), hiddenRequests = frameRequests().length;
     await ticks(40);
-    check(!hidden.running && clock.state().phase === hidden.phase && win.gate.requests.length === hiddenRequests, 'hidden tab pauses the clock and fetches nothing');
+    check(!hidden.running && clock.state().phase === hidden.phase && frameRequests().length === hiddenRequests, 'hidden tab pauses the clock and fetches nothing');
     delete doc.hidden;
     doc.dispatchEvent(new Event('visibilitychange'));
     check(await until(() => clock.state().running) && clock.state().phase - hidden.phase < .5 && clock.state().phase >= hidden.phase, 'visible tab resumes from the same phase, no catch-up');
@@ -294,7 +300,7 @@ try {
     win.printMedia.matches = false; win.printMedia.dispatchEvent(new Event('change'));
     check(await until(() => clock.state().running) && !toggle().hidden, 'leaving print resumes');
     // Photo 39 becomes the current, clickable narrative photo.
-    win.scrollTo(0, blendScroll(1.25));
+    win.scrollTo(0, blendScroll(.25));
     await until(() => !link39.parentElement.inert && clock.state().joined.includes(39));
     link39.click();
     await tick();
@@ -310,9 +316,9 @@ try {
     const gallery = await fetch('../gallery.html').then(r => r.text());
     const galleryDoc = new DOMParser().parseFromString(gallery, 'text/html');
     check(!/seasonal-hero\.js|data-manifest|assets\/seasons|seasons-private|fixtures\/seasons/.test(gallery)
-      && [...galleryDoc.querySelectorAll('[data-gallery-image]')].length === 73
+      && [...galleryDoc.querySelectorAll('[data-gallery-image]')].length === doc.querySelectorAll('#all-photos [data-gallery-image]').length
       && [...galleryDoc.querySelectorAll('[data-gallery-image]')].every(a => /^assets\/listing\/\d\d\.webp$/.test(a.getAttribute('href'))),
-      'gallery.html loads no seasonal script or manifest and links 73 originals');
+      `gallery.html loads no seasonal script or manifest and links ${doc.querySelectorAll('#all-photos [data-gallery-image]').length} originals`);
   }
 
   // --- Live reduced motion -----------------------------------------------------
@@ -321,7 +327,6 @@ try {
     await until(() => clock.state().joined.includes(1) && clock.state().running);
     win.seasonMedia.matches = true; win.seasonMedia.dispatchEvent(new Event('change'));
     await tick();
-    const requests = win.gate.requests.length;
     check(!doc.querySelector('.season-stack') && !clock.state().running && toggle().hidden && original.naturalWidth > 0, 'live reduced motion removes every stack at once and shows originals');
     win.seasonMedia.matches = false; win.seasonMedia.dispatchEvent(new Event('change'));
     await ticks(45);
@@ -330,7 +335,6 @@ try {
     check(sessionStorage.getItem('colonial_seasons_paused') === null, 'that pause is not stored as the visitor\'s preference');
     toggle().click();
     check(await until(() => clock.state().running), 'visitor can resume after the preference change');
-    void requests;
   }
 
   // --- Paused preference across a reload ---------------------------------------
@@ -348,31 +352,108 @@ try {
 
   // --- Unready newly visible photo ---------------------------------------------
   {
-    await load('', {hold: ['/39/']});
+    await load('', {hold: ['/34/']});
     win.scrollTo(0, blendScroll());
-    const link39 = doc.querySelector('.story-photos figure[data-position="39"] a');
-    const waiting = await until(() => clock.state().joined.includes(3) && !link39.parentElement.hidden && clock.state().holding);
+    const link34 = doc.querySelector('.story-photos figure[data-position="34"] a');
+    const waiting = await until(() => clock.state().joined.includes(39) && !link34.parentElement.hidden && clock.state().holding);
     const state = clock.state();
-    check(waiting && !stackOf(39) && link39.querySelectorAll('img').length === 1 && Number(win.getComputedStyle(link39).opacity) > .3,
+    check(waiting && !stackOf(34) && link34.querySelectorAll('img').length === 1 && Number(win.getComputedStyle(link34).opacity) > .3,
       'unready visible photo shows only its original: no blank, no wrong-phase frame');
-    check(!state.running && [1, 3].filter(p => state.joined.includes(p)).every(p => agrees(p, state.phase, .001)), 'the others hold on one phase while it loads');
+    check(!state.running && agrees(39, state.phase, .001), 'the other photo holds on one phase while it loads');
     win.gate.release();
-    const joined = await until(() => clock.state().joined.includes(39) && clock.state().running);
+    const joined = await until(() => clock.state().joined.includes(34) && clock.state().running);
     await ticks(6);
     const now = clock.state();
-    check(joined && [3, 39].every(p => agrees(p, now.phase, .02)), 'it joins at the shared phase once its frames decode');
+    check(joined && B.every(p => agrees(p, now.phase, .02)), 'it joins at the shared phase once its frames decode');
+  }
+
+  // --- One request per frame ---------------------------------------------------
+  {
+    await load();
+    await until(() => clock.state().segment >= 6);
+    const names = frameRequests(), repeats = names.length - new Set(names).size;
+    check(names.length >= 6 && repeats === 0, `prefetched frames are decoded in place, never requested twice (${names.length} requests, ${repeats} repeats)`);
+  }
+
+  // --- Nothing seasonal in view: the clock rests ---------------------------------
+  {
+    // Only photos 1, 39 and 34 have fixture frames; the third story shows none of them.
+    const third = doc.querySelectorAll('.story')[2];
+    win.scrollTo(0, third.offsetTop + win.innerHeight);
+    const rested = await until(() => !clock.state().running && !doc.querySelector('.season-stack'));
+    const state = clock.state(), requests = frameRequests().length;
+    await ticks(60); // longer than two 0.4 s segments
+    const animations = doc.getAnimations().filter(animation => animation.effect?.target?.closest?.('.season-stack'));
+    check(rested && !doc.querySelector('.season-stack') && !animations.length && clock.state().phase === state.phase && !clock.state().holding
+      && frameRequests().length === requests && toggle().textContent === 'Pause animation',
+      'no seasonal photo in view: no layers, no animations, no fetches, and the clock rests without calling it a pause');
+    win.scrollTo(0, 0);
+    check(await until(() => clock.state().running && clock.state().joined.includes(1)) && clock.state().phase >= state.phase && clock.state().phase - state.phase < 1,
+      'scrolling back resumes from the phase where the clock rested');
   }
 
   // --- Slow link ---------------------------------------------------------------
   {
     await load('', {slow: true});
     await until(() => clock.state().rate > 0);
-    const state = clock.state(), mark = win.gate.requests.length;
+    const state = clock.state(), mark = frameRequests().length;
     await ticks(90);
     const live = clock.state().joined;
-    const later = win.gate.requests.slice(mark).map(src => Number(/seasons\/(\d\d)\//.exec(src)[1]));
+    const later = frameRequests().slice(mark).map(src => Number(/seasons\/(\d\d)\//.exec(src)[1]));
     check(state.rate < .5 && state.reach === 0, `measured ${state.rate.toFixed(2)} Mbps from Resource Timing closes the prefetch window`);
     check(later.length > 0 && later.every(position => live.includes(position)), `slow link fetches only what visible photos need next (${later.length} requests)`);
+  }
+
+  // --- Real frames: layers and animations only inside the viewport -------------
+  {
+    await load('', {manifest: 'assets/seasons-next/frames.json'});
+    const real = await fetch('../assets/seasons-next/frames.json').then(r => r.json());
+    const seasonalFigures = [...doc.querySelectorAll('.hero-photo figure, .story-photos figure')].filter(figure => {
+      const entry = real.photos[Number(figure.dataset.position)];
+      return entry && entry.keys.some(key => !(entry.original || []).includes(key));
+    });
+    const inView = element => { const b = element.getBoundingClientRect(); return b.height > 0 && b.bottom > 0 && b.top < win.innerHeight; };
+    const visible = figure => !figure.hidden && inView(figure.querySelector('a'))
+      && Number(win.getComputedStyle(figure.querySelector('a')).opacity) > 0
+      && Boolean(figure.closest('.hero-photo, .story.is-scrolling'));
+    const seasonalAnimations = () => doc.getAnimations().filter(animation => animation.effect?.target?.closest?.('.season-stack'));
+    let steps = 0, withPhotos = 0, without = 0, stray = '', idle = '', maxStacks = 0, maxAnimations = 0, maxDecoded = 0;
+    const joinedEver = new Set();
+    const end = doc.documentElement.scrollHeight - win.innerHeight;
+    const stops = [];
+    for (let y = 0; y <= end; y += Math.round(win.innerHeight * .45)) stops.push(y);
+    // Photo 55 keeps its original all year (no window); held alone it leaves nothing seasonal in view.
+    const still = doc.querySelector('.story-photos figure[data-position="55"]'), stillStory = still.closest('.story');
+    const stillStart = stillStory.offsetTop + parseFloat(win.getComputedStyle(stillStory).paddingTop) - parseFloat(win.getComputedStyle(stillStory.querySelector('.story-stage')).top);
+    stops.push(Math.round(stillStart + Math.max(240, win.innerHeight * .5) * ([...stillStory.querySelectorAll('.story-photos figure')].indexOf(still) + .25)), end);
+    for (const y of stops) {
+      win.scrollTo(0, y);
+      await ticks(3);
+      const expected = seasonalFigures.filter(visible);
+      // Bounded wait for the visible photos' frames; never required for the check below.
+      await until(() => expected.every(figure => figure.querySelector('.season-stack')), 40);
+      await ticks(2);
+      steps++;
+      const now = seasonalFigures.filter(visible), stacks = [...doc.querySelectorAll('.season-stack')], animations = seasonalAnimations();
+      maxStacks = Math.max(maxStacks, stacks.length);
+      maxAnimations = Math.max(maxAnimations, animations.length);
+      maxDecoded = Math.max(maxDecoded, Object.values(clock.state().decoded).reduce((a, b) => a + b, 0));
+      stacks.forEach(stack => joinedEver.add(stack.closest('figure').dataset.position));
+      const offenders = stacks.filter(stack => !now.includes(stack.closest('figure')));
+      const loose = animations.filter(animation => !now.includes(animation.effect.target.closest('figure')));
+      if (offenders.length || loose.length) stray ||= `y=${y}: photo ${(offenders[0] || loose[0].effect.target).closest('figure').dataset.position}`;
+      if (now.length) withPhotos++;
+      else {
+        without++;
+        if (stacks.length || animations.length || clock.state().running) idle ||= `y=${y}: ${stacks.length} stacks, ${animations.length} animations, running ${clock.state().running}`;
+      }
+    }
+    check(steps > 40 && withPhotos > 20 && joinedEver.size >= 40, `scrolled the real page with the real frames: ${steps} stops, ${joinedEver.size} of ${seasonalFigures.length} seasonal photos animated`);
+    check(!stray, `no seasonal layer or animation on an offscreen, hidden or zero-opacity photo${stray ? ` (${stray})` : ''}`);
+    // Nearly every stop on the real page has a seasonal photo in view; the rest case is proven above with fixture frames.
+    check(!idle, `real page: any stop with no seasonal photo in view had no layers, no animations and a resting clock (${without} such stops${idle ? `; ${idle}` : ''})`);
+    check(maxStacks <= 3 && maxAnimations <= 6, `at most ${maxStacks} stacks and ${maxAnimations} running seasonal animations at any stop`);
+    check(maxDecoded <= 12, `decoded seasonal frames stayed bounded (${maxDecoded} at most across the page)`);
   }
 
   // --- Fallbacks ---------------------------------------------------------------
