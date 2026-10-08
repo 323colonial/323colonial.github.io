@@ -26,6 +26,7 @@ class Builder:
         self.floors = []   # walkable: dict(poly=[(x, y)...], z=float) or ramp
         self.doors = []    # swinging doors: dict(name, hinge, open, seg, z0, z1)
         self.lights = []   # (x, y, z, relative power)
+        self.downlights = {}  # recessed light index -> aperture radius in feet
         self.mats = {}
         self.grp = "in"
         self.dens = 20.0   # lightmap texels per foot

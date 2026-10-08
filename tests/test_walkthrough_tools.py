@@ -34,7 +34,7 @@ class PipelineTests(unittest.TestCase):
                          verts=[(0, 0, 0), (1, 0, 0), (0, 0, 1)], tris=[(0, 1, 2)],
                          uv0=[(0, 0), (1, 0), (0, 1)], nrm=[(0, 1, 0)] * 3,
                          lm=[(0, 0), (1, 0), (0, 1)], dens=1)
-            model = NS(surfs=[surface], lights=[(0, 0, 7, 1)])
+            model = NS(surfs=[surface], lights=[(0, 0, 7, 1)], downlights={})
             signature = ctx['layout_signature']
             base = signature(model)
             moved = copy.deepcopy(model)
@@ -43,6 +43,9 @@ class PipelineTests(unittest.TestCase):
             moved = copy.deepcopy(model)
             moved.lights[0] = (0, 0, 8, 1)
             self.assertNotEqual(base, signature(moved), 'light movement must invalidate bake')
+            moved = copy.deepcopy(model)
+            moved.downlights[0] = .25
+            self.assertNotEqual(base, signature(moved), 'light direction/size must invalidate bake')
             ctx['SUN_ROT'] = 2
             self.assertNotEqual(base, signature(model), 'sky rotation must invalidate bake')
             ctx['SUN_ROT'] = 1

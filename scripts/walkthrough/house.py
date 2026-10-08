@@ -394,7 +394,8 @@ def prism(B, mat, poly, z0, z1, caps=False, **kw):
 def can_light(B, x, y, z, r=0.25, grp=None):
     B.poly("lampglow", [(x + r * math.cos(a), y + r * math.sin(a), z - 0.01) for a in [i * math.pi / 6 for i in range(12)]],
            flip=True, grp="fx")
-    B.lights.append((x, y, z - 1.1, 1.0))          # below the ceiling, so it does not burn a hot spot into it
+    B.downlights[len(B.lights)] = r
+    B.lights.append((x, y, z - 0.03, 1.0))     # below the visible aperture, emitting down only
 
 
 def fireplace(B):
@@ -569,7 +570,8 @@ def legacy_upper(B):
     gn_, gs_ = GPK - EAVE, D - (GPK - EAVE)
     # the two slopes run a hair past the ridge so no crack can open between them
     slope(B, "ceiling", 0.5, SX0, 0.5, gn_ + 0.06, nz, holes=[(DORMERS[0][0], DORMERS[0][1], DORMER_Y[0] + 0.25, YD)], dens=14)
-    slope(B, "ceiling", 0.5, SX0, gs_ - 0.06, D - 0.5, sz, dens=14, up=False)
+    # Overlap the measured south wall; the drawn half-foot inset left a visible slot.
+    slope(B, "ceiling", 0.5, SX0, gs_ - 0.06, D - 0.25, sz, dens=14, up=False)
     # owner: the only lights in the cathedral ceiling are the two fans and one track on the
     # south slope, four heads aimed into the kitchen
     # Fixture per the product listing: 24 in. matte-white bar on a round canopy, four

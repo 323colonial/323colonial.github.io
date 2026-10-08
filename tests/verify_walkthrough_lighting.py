@@ -33,6 +33,13 @@ sys.argv = [str(builder), '--', '--work', str(work), '--size', str(args.size),
             '--samples', str(args.samples), '--sunrot', str(args.sunrot)]
 ns = runpy.run_path(str(builder))
 B = ns['B']
+from mathutils import Vector
+assert B.downlights, 'missing recessed lights'
+for i, radius in B.downlights.items():
+    light = bpy.data.objects['L%d' % i]
+    assert light.data.type == 'AREA' and light.data.shape == 'DISK'
+    assert abs(light.data.size - 2 * radius * ns['FT']) < 1e-6
+    assert (light.rotation_euler.to_matrix() @ Vector((0, 0, -1))).z < -.999
 signature = ns['layout_signature']
 base = signature(B)
 assert base == manifest['signature'] == (work / 'lm_sig.txt').read_text(), 'stale bake inputs'

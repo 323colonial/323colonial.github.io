@@ -199,14 +199,19 @@ def build_scene(sc):
     nt.links.new(bg.outputs[0], out.inputs[0])
     # warm interior fixtures
     for i, (x, y, z, p) in enumerate(B.lights):
-        ld = bpy.data.lights.new("L%d" % i, "POINT")
+        ld = bpy.data.lights.new("L%d" % i, "AREA" if i in B.downlights else "POINT")
         ld.energy = 22.0 * p
+        if i in B.downlights:
+            # Blender area lights face local -Z: recessed cans cannot shine up onto the ceiling.
+            ld.shape = "DISK"
+            ld.size = 2 * B.downlights[i] * FT
         # daylight bulbs in the main-floor baths and the kitchen track; soft white elsewhere (owner)
         yd = y                                        # already in measured space
         cool = (z < 8.5 and ((33.3 < x < 46 and 14.4 < yd < 22.9) or (24.1 < x < 29.7 and yd > 21.1) or (11 < x < 24.1 and yd > 16))) \
             or (12 < x < 18 and 18 < yd < 21 and z > 14)        # the kitchen track
         ld.color = (0.95, 0.97, 1.0) if cool else (1.0, 0.86, 0.7)
-        ld.shadow_soft_size = 0.08
+        if i not in B.downlights:
+            ld.shadow_soft_size = 0.08
         lo = bpy.data.objects.new("L%d" % i, ld)
         lo.location = (x * FT, y * FT, z * FT)
         sc.collection.objects.link(lo)
@@ -404,15 +409,6 @@ def encode(page_imgs, B):
         for pg in data:
             if pg.startswith(prefix):
                 gains[pg] = g
-        if prefix == "in":
-            # pull most of the warm cast out of the lamp-lit interior so white walls read white
-            sel = np.concatenate([d[(d @ lumw) > 1e-4] for pg, d in data.items() if pg.startswith("in")])
-            mean = sel.mean(axis=0)
-            wb = (mean.mean() / mean) ** 0.75
-            log("interior white balance", wb)
-            for pg in data:
-                if pg.startswith("in"):
-                    data[pg] = data[pg] * wb.astype(np.float32)
     for page, a in data.items():
         h, w = a.shape[:2]
         enc = np.clip(a * gains[page] / LM_RANGE, 0, 1) ** (1 / 2.2)
@@ -434,7 +430,7 @@ def layout_signature(B):
     h = hashlib.sha256()
     def add(value):
         h.update(json.dumps(value, sort_keys=True, separators=(",", ":")).encode())
-    add([SIZE, SAMPLES, SUN_ROT, LM_RANGE, house.MATS, B.lights])
+    add([SIZE, SAMPLES, SUN_ROT, LM_RANGE, house.MATS, B.lights, B.downlights])
     for s in B.surfs:
         add([s.mat, s.page, s.ox, s.oy, s.dens, s.lm, s.tris, s.uv0,
              [tuple(v) for v in s.verts], [tuple(n) for n in s.nrm]])
