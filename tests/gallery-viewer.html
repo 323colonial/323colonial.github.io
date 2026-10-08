@@ -63,8 +63,8 @@ try {
   open(0);
   doc.querySelector('#previous-photo').click();
   check(image.getAttribute('src') === 'assets/listing/73.webp', 'Previous wraps first to last');
-  checkPosition(72, 'Previous wraps visible position to last photo');
-  check(previewMatches(previousPreview(), 71) && previewMatches(nextPreview(), 0), 'previews wrap with gallery order');
+  checkPosition(64, 'Previous wraps visible position to last photo');
+  check(previewMatches(previousPreview(), 63) && previewMatches(nextPreview(), 0), 'previews wrap with gallery order');
   doc.querySelector('#next-photo').click();
   check(image.getAttribute('src') === 'assets/listing/01.webp', 'Next wraps last to first');
   checkPosition(0, 'Next wraps visible position to first photo');
@@ -128,9 +128,9 @@ try {
         await new Promise(resolve => gridWin.requestAnimationFrame(() => gridWin.requestAnimationFrame(resolve)));
         const columns = width <= 700 ? 1 : width <= 1000 ? 2 : 3;
         if (variant === 'original') {
-          check(figures.length === 73 && figures.every((figure, index) =>
-            figure.querySelector('.photo-number').textContent === `${index + 1} / 73` &&
-            figure.querySelector('a').getAttribute('aria-label').startsWith(`Enlarge photo ${index + 1}:`) &&
+          check(figures.length === 65 && figures.every((figure, index) =>
+            figure.querySelector('.photo-number').textContent === `${index + 1} / 65` &&
+            figure.querySelector('a').getAttribute('aria-label').startsWith(`Enlarge photo ${figure.dataset.position}:`) &&
             (route === 'index'
               ? gridWin.getComputedStyle(figure.querySelector('.photo-number')).clipPath === 'inset(50%)'
               : gridWin.getComputedStyle(figure.querySelector('.photo-number')).display === 'none')) &&
@@ -144,7 +144,7 @@ try {
             const title = gridDoc.querySelector('#viewer-title');
             const titleBox = title.getBoundingClientRect();
             const closeBox = viewer.querySelector('button').getBoundingClientRect();
-            const matches = title.textContent === `Photo ${index + 1} of 73`
+            const matches = title.textContent === `Photo ${index + 1} of 65`
               && gridWin.getComputedStyle(title).clipPath === 'none' && titleBox.width > 1
               && (titleBox.right <= closeBox.left || titleBox.bottom <= closeBox.top)
               && title.getAttribute('aria-live') === 'polite' && viewer.getAttribute('aria-labelledby') === title.id
@@ -154,7 +154,7 @@ try {
               && !gridDoc.querySelector('#viewer-caption .photo-number');
             gridDoc.querySelector('#next-photo').click();
             return matches;
-          }), `${route} ${width}px: all 73 visible live positions match photos and exact captions without dots`);
+          }), `${route} ${width}px: all 65 visible live positions match photos and exact captions without dots`);
           viewer.querySelector('button').click();
           await new Promise(resolve => gridWin.requestAnimationFrame(() => gridWin.requestAnimationFrame(resolve)));
           check(!viewer.open && gridDoc.activeElement === opener, `${route} ${width}px: viewer Close restores catalog focus`);

@@ -25,13 +25,13 @@ try {
   await settle();
   check(Math.abs(header.getBoundingClientRect().top) < 1, 'address remains fixed');
   check(Math.abs(facts.getBoundingClientRect().top - header.getBoundingClientRect().bottom) < 2, 'facts dock under header');
-  check(story.querySelector('.story-photos figure:not([hidden])')?.dataset.position === '3', 'first relevant photo');
+  check(story.querySelector('.story-photos figure:not([hidden])')?.dataset.position === '39', 'first relevant photo');
   win.scrollTo(0, start + story.offsetHeight - stage.offsetHeight - 2);
   await settle();
   check(story.querySelector('.story-photos figure:not([hidden])')?.dataset.position === '54', 'vertical scroll advances photo');
   win.scrollTo(0, start + 2);
   await settle();
-  check(story.querySelector('.story-photos figure:not([hidden])')?.dataset.position === '3', 'reverse scroll restores photo');
+  check(story.querySelector('.story-photos figure:not([hidden])')?.dataset.position === '39', 'reverse scroll restores photo');
   const second = doc.querySelectorAll('.story')[1];
   check(story.querySelector('.story-copy').getBoundingClientRect().left < story.querySelector('.story-photos').getBoundingClientRect().left && second.querySelector('.story-copy').getBoundingClientRect().left > second.querySelector('.story-photos').getBoundingClientRect().left, 'paragraph sides alternate');
   const plan = doc.querySelector('[data-photo="31"]');
@@ -42,7 +42,7 @@ try {
   await settle();
   check(doc.activeElement === plan, 'popup restores contextual opener focus');
   doc.querySelector('[data-all-photos]').click();
-  check(doc.querySelector('#all-photos').open && doc.querySelectorAll('#all-photos [data-gallery-image]').length === 73, 'all 73 photos in popup');
+  check(doc.querySelector('#all-photos').open && doc.querySelectorAll('#all-photos [data-gallery-image]').length === 65, 'all 65 photos in popup');
   doc.querySelector('#all-photos [data-gallery-image]').click();
   check(viewer.open, 'catalog opens enlarged viewer');
   viewer.close();
@@ -141,6 +141,7 @@ try {
         }
       }
       const opacity = photo => photo.hidden ? 0 : Number(win.getComputedStyle(photo.querySelector('a')).opacity);
+      if (photos.length > 1) {
       await seek(.625);
       const early = opacity(photos[1]);
       await seek(.875);
@@ -150,7 +151,9 @@ try {
       const image = photos[1].querySelector('img');
       const imageBoxDuringBlend = image.getBoundingClientRect();
       check(win.getComputedStyle(image).objectFit === 'contain'
-        && Math.abs(imageBoxDuringBlend.width / imageBoxDuringBlend.height - Number(image.getAttribute('width')) / Number(image.getAttribute('height'))) > .01,
+        // A 4:3 photo fills the 4:3 frame exactly; every other shape must show letterbox space.
+        && (Math.abs(Number(image.getAttribute('width')) / Number(image.getAttribute('height')) - 4 / 3) < .02
+          || Math.abs(imageBoxDuringBlend.width / imageBoxDuringBlend.height - Number(image.getAttribute('width')) / Number(image.getAttribute('height'))) > .01),
         `${label}: contain-fit photo exposes letterbox space`);
       const photoLayers = section.querySelectorAll('.story-stage, .story-photos, .media-record, .media-record > a, .media-record img');
       check([...photoLayers].every(layer => {
@@ -208,6 +211,7 @@ try {
       link.blur();
       await settle();
       check(opacity(photos[0]) === 1, `${label}: leaving focus resumes scroll state without another scroll`);
+      } // single-photo stories have no blend to check
       const nextSection = section.nextElementSibling;
       if (nextSection) {
         const gap = () => nextSection.getBoundingClientRect().top - sticky.getBoundingClientRect().bottom;

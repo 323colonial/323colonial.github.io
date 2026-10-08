@@ -48,7 +48,7 @@ for (const route of ['index', 'gallery']) {
       check(doc.querySelector('.masthead').getBoundingClientRect().top === 0, 'fixed header');
       const preserved = route === 'index' ? [...doc.querySelectorAll('.listing-copy')].map(p => p.textContent) :
         [...doc.querySelectorAll('.gallery-grid .caption-text')].slice(0, approved.photos.length).map(caption => caption.textContent);
-      check(doc.querySelectorAll('.gallery-grid .caption-text').length === 73, 'original and additional photos retained');
+      check(doc.querySelectorAll('.gallery-grid .caption-text').length === 65, 'original and additional photos retained');
       check(JSON.stringify(preserved) === JSON.stringify(route === 'index' ? approved.paragraphs :
         approved.photos.map(photo => photo.caption)), 'frozen listing copy/captions');
       // Resolve the site's optional leading media condition and let CSS evaluate the slot length.

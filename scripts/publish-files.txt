@@ -85,8 +85,6 @@ assets/listing/38.webp
 assets/listing/38-small.webp
 assets/listing/39.webp
 assets/listing/39-small.webp
-assets/listing/40.webp
-assets/listing/40-small.webp
 assets/listing/41.webp
 assets/listing/41-small.webp
 assets/listing/42.webp
@@ -129,10 +127,6 @@ assets/listing/60.webp
 assets/listing/60-small.webp
 assets/listing/61.webp
 assets/listing/61-small.webp
-assets/listing/62.webp
-assets/listing/62-small.webp
-assets/listing/63.webp
-assets/listing/63-small.webp
 assets/listing/64.webp
 assets/listing/64-small.webp
 assets/listing/65.webp
@@ -141,16 +135,6 @@ assets/listing/66.webp
 assets/listing/66-small.webp
 assets/listing/67.webp
 assets/listing/67-small.webp
-assets/listing/68.webp
-assets/listing/68-small.webp
-assets/listing/69.webp
-assets/listing/69-small.webp
-assets/listing/70.webp
-assets/listing/70-small.webp
-assets/listing/71.webp
-assets/listing/71-small.webp
-assets/listing/72.webp
-assets/listing/72-small.webp
 assets/listing/73.webp
 assets/listing/73-small.webp
 seasonal-hero.js
