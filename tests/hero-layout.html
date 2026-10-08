@@ -53,12 +53,8 @@ for (const [width, height] of [[1440, 1000], [1376, 768], [1080, 768], [900, 844
   const detailsLink = doc.querySelector('.price a');
   const photosLink = doc.querySelector('.summary-actions .text-link');
   check(win.getComputedStyle(detailsLink).color === win.getComputedStyle(photosLink).color, 'peer fact actions must share link color');
-  check([detailsLink, photosLink, doc.querySelector('.listing-status'), doc.querySelector('.market-date')].every(el => win.getComputedStyle(el).fontSize === '13px'), 'summary supporting text and links must share 13px size');
-  check(box(doc.querySelector('.listing-status')).top >= box(photosLink).bottom, 'Coming Soon must stay below photos link');
-  if (width === 900) {
-    const date = doc.querySelector('.market-date');
-    check(box(date).height < 20, 'date wraps despite available width');
-  }
+  check([detailsLink, photosLink, doc.querySelector('.listing-status')].every(el => win.getComputedStyle(el).fontSize === '13px'), 'summary supporting text and links must share 13px size');
+  check(box(doc.querySelector('.listing-status')).top >= box(photosLink).bottom, 'listing status must stay below photos link');
   const contact = doc.querySelector('.header-contact');
   check(!doc.querySelector('.masthead details'), 'contact must be inline, not a disclosure');
   const panel = box(contact);

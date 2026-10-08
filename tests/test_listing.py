@@ -252,7 +252,7 @@ class Listing(unittest.TestCase):
             self.assertIn('Dandridge Realty Group LLC', page.text())
             self.assertNotRegex((ROOT / file).read_text(), r'floorplans\.html|brochure\.html|sale-prep\.html|brightmls\.com|plan-main|plan-second|paint-colors')
         text = Page('index.html').root.text()
-        for fact in ['$499,000', '2,081', '2.90', '2008', 'Coming Soon', 'October 3, 2026', 'October 8, 2026', 'WVMO2008198', '2 full', '1 half']:
+        for fact in ['$499,000', '2,081', '2.90', '2008', 'October 8, 2026','WVMO2008198', '2 full', '1 half']:
             self.assertIn(fact, text)
 
     def test_square_footage_without_grade_qualifier(self):
@@ -271,7 +271,10 @@ class Listing(unittest.TestCase):
         price = next(h for h in page.all('h2') if h.cls('price'))
         self.assertLess(price.text().index('$499,000'), price.text().index('Property details'))
         actions = next(d for d in page.all('div') if d.cls('summary-actions'))
-        self.assertLess(actions.text().index('Coming Soon'), actions.text().index('Expected on market'))
+        status = next(p for p in actions.all('p') if p.cls('listing-status'))
+        self.assertEqual(status.text(), 'Active')
+        self.assertNotIn('Expected on market', page.text())
+        self.assertNotIn('Coming Soon', page.text())
 
     def test_inline_brokerage_contacts_on_both_pages(self):
         for filename in ('index.html', 'gallery.html'):
@@ -307,8 +310,8 @@ class Listing(unittest.TestCase):
                             'confirm availability', 'may differ', 'not a live feed',
                             'not a direct agent line', 'Not field-measured']:
                 self.assertNotIn(removed, text, filename)
-            self.assertEqual(text.count('October 3, 2026'), 1, 'Only footer carries listing date')
-            self.assertIn('Listing information as of October 3, 2026.', text)
+            self.assertEqual(text.count('October 8, 2026'), 1, 'Only footer carries listing date')
+            self.assertIn('Listing information as of October 8, 2026.', text)
             notes = [s.text() for s in page.all('span') if s.cls('photo-note')]
             expected = ['Conceptual basement plan — not existing finished space.']
             self.assertEqual(notes, expected)
