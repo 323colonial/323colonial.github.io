@@ -164,9 +164,10 @@ function updatePhotos() {
       track.dots.style.setProperty('--photo-inset', `${track.insets[index]}px`);
       track.progress = progress;
     }
-    // Preload only nearby sequences, not the next frame of every distant story.
-    const next = track.photos[index + 1]?.querySelector('img');
-    if (next && canPreload && bounds.top < innerHeight * 2 && bounds.bottom > 0) next.loading = 'eager';
+    // Preload only nearby sequences, not the next frames of every distant story.
+    if (canPreload && bounds.top < innerHeight * 2 && bounds.bottom > 0) {
+      for (const photo of track.photos.slice(index + 1, index + 3)) photo.querySelector('img').loading = 'eager';
+    }
   }
   rememberReadingPoint();
 }

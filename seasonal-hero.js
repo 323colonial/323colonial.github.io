@@ -67,14 +67,17 @@
   }
   function measure(url) {
     const t = performance.getEntriesByName(url).pop();
-    // Cache hits report no transfer and say nothing about the link.
-    // Small bodies arrive in one burst and measure latency, not throughput.
-    if (!t?.transferSize || t.encodedBodySize < 10000) return;
+    // Cache hits report no transfer, and revalidated ones only their headers; neither
+    // says anything about the link. Small bodies arrive in one burst and measure
+    // latency, not throughput.
+    if (!t || t.transferSize < t.encodedBodySize || t.encodedBodySize < 10000) return;
     const sample = t.encodedBodySize * 8 / Math.max(1, t.responseEnd - t.responseStart) / 1000; // Mbps
     rate = rate ? rate * .7 + sample * .3 : sample;
   }
   // How far the fetch window blooms past what the barrier needs: 0 stops prefetching.
   const reach = () => !rate ? 1 : rate < .5 ? 0 : rate < 4 ? 1 : 2;
+  // Scroll outruns the clock: an open window looks one photo further than it looks in time.
+  const ahead = () => reach() && reach() + 1;
   const limit = () => rate && rate < 1.5 ? 2 : rate >= 4 ? 4 : 3;
 
   function fail(f) {
@@ -139,9 +142,9 @@
       const index = live.map(p => photos.indexOf(p));
       const edge = direction > 0 ? Math.max(...index) : Math.min(...index);
       const eligible = p => p && (p.hero || p.figure.closest('.story.is-scrolling'));
-      const far = reach();
-      for (let ring = 0; ring <= far; ring++) {
-        for (let s = 0; s <= (frozen ? 0 : ring); s++) for (let d = 0; d <= ring; d++) {
+      const far = frozen ? 0 : reach(), wide = ahead();
+      for (let ring = 0; ring <= Math.max(far, wide); ring++) {
+        for (let s = 0; s <= Math.min(ring, far); s++) for (let d = 0; d <= Math.min(ring, wide); d++) {
           if (Math.max(s, d) !== ring) continue;
           const targets = d === 0 ? live : [photos[edge + direction * d]].filter(eligible);
           // Decoded frames stay bounded: the current pair plus the next key, per photo.
@@ -337,7 +340,7 @@
     // Clock state for fixtures; seek freezes the year at a point.
     window.seasonalClock = {
       state: () => ({segment: seg, elapsed: elapsed(), phase: phase(), running: startedAt != null, paused, stalled,
-        holding: holdSince != null, rate, reach: reach(), joined: photos.filter(p => p.stack).map(p => p.position),
+        holding: holdSince != null, rate, reach: reach(), ahead: ahead(), joined: photos.filter(p => p.stack).map(p => p.position),
         decoded: Object.fromEntries(photos.map(p => [p.position, [...p.frames.values()].filter(f => f.img && f.state === 'ready').length]))}),
       seek(segment, ms = 0) {
         freeze(); hold(false);

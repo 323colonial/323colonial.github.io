@@ -46,7 +46,9 @@ async function load(mode = '', {keepSession = false, hold = [], fail = [], slow 
     if (${slow}) {
       const entries = performance.getEntriesByName.bind(performance);
       performance.getEntriesByName = name => name.includes('/fixtures/seasons/')
-        ? [{transferSize: 20000, encodedBodySize: 20000, responseStart: 0, responseEnd: 1000}] : entries(name);
+        ? [{transferSize: 20000, encodedBodySize: 20000, responseStart: 0, responseEnd: 1000}]
+        // A revalidated original (304) reports headers only, with the cached body size.
+        : name.includes('/assets/listing/') ? [{transferSize: 300, encodedBodySize: 366264, responseStart: 0, responseEnd: .3}] : entries(name);
     }
   <\/script>`;
   await new Promise(resolve => {
