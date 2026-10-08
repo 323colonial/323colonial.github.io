@@ -6,7 +6,7 @@ Evaluation only. Nothing here is implemented, prototyped, generated or published
 
 Run one shared annual clock for the hero and the scroll-sequenced narrative photos. Each participating photo shows a two-frame window of its annual sequence, stacked above its untouched original `<img>`. The clock advances one dissolve at a time and only crosses a frame boundary when every visible in-scope photo has the next frame decoded. Galleries, the viewer, previews and full-size links keep reading `assets/listing/NN.webp` and never see a seasonal file.
 
-Timing matches the approved hero, at the owner's direction: a 24 second year on a 12-step grid, 2 seconds per step. This supersedes the ticket's working figure of about 24 frames. An earlier draft of this document proposed a 60 second year, and that is withdrawn.
+Timing is the owner's choice from the pilot: a 36 second year. The year is laid out on 12 steps, with six extra half steps from 4.5 to 9.5 where snow and ground change fastest, which gives 18 positions. Each of the 18 dissolves lasts 2 seconds. Earlier drafts proposed a 60 second year and then a 24 second, 12-step year; both are superseded.
 
 Photos do not all need 12 generated frames. Each photo supplies key frames at whichever grid steps it needs, and the runtime dissolves between neighboring keys. An exterior supplies all 12. An interior with window views can supply the 4 season anchors and dissolve over 6 seconds between them. A windowless interior supplies 1. That is the main control on both generation cost and download size.
 
@@ -14,7 +14,7 @@ I do not recommend extending the current hero technique. `seasonal-hero.js` stac
 
 ## Revision from the colonial-66v pilot, 7 October 2026
 
-The pilot changed three things in this design. The sections below still describe the 12-step, 24 second version and need a full pass before this ticket closes.
+The pilot changed three things in this design. The sections below were updated on 8 October 2026 to match.
 
 1. **Timing is a table, not one number.** The owner chose 18 hero frames at 2 seconds each, a 36 second year. Six of those frames sit at half steps 4.5 to 9.5, so the delivery manifest carries the list of key positions on the 12-step year and the seconds spent between each pair. Every photo follows that one table, which keeps them in sync. A photo with fewer keys dissolves across the same stretched time.
 2. **Keys per photo.** Special house exteriors (1, 11, 26, 28, 39, 41) get 18. Other ground-level exteriors and porch views get 12. Large-window rooms get 6, at steps 0, 3, 5, 6, 8, 9. Small-window rooms get 4. Windowless rooms keep the original. Keys may sit at half steps, so `keys` holds numbers such as 4.5 and files are named `04h`.
@@ -103,9 +103,11 @@ One logical clock holds the grid step k from 0 to 11 and the time elapsed within
 - Initial phase is 0. For exteriors frame 0 is the original file, so the first coherent frame costs nothing.
 - The dissolve curve is linear with no holds. A pure frame exists only for an instant.
 
-### Duration
+### Duration and timing table
 
-24 seconds per year, 2 seconds per grid step, as the approved hero runs today. The cost of that choice is download rate, covered under budgets. Sparse keys are how interiors stay cheap at this speed.
+The year lasts 36 seconds. Timing is a table, not one number: the knots are the positions 0, 1, 2, 3, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 11 and back to 0, and the clock spends 2 seconds between each consecutive pair. Steps 0 to 4 and 10 to 0 therefore take 2 seconds per whole step, and steps 4 to 10 take 4 seconds per whole step. The owner chose this after seeing the half steps at 1 second each, which rushed the thaw.
+
+Every photo follows the same table. A photo with fewer keys dissolves linearly in position between its own neighboring keys, so it slows down and speeds up with the shared clock and stays in step with the 18-frame photos. The delivery manifest carries the knots and the seconds per segment, so timing can change without touching frames.
 
 ## Readiness barrier
 
@@ -187,7 +189,8 @@ Delivery manifest example, `assets/seasons/delivery.json`:
 {
   "version": 1,
   "steps": 12,
-  "year_seconds": 24,
+  "knots": [0, 1, 2, 3, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 11, 12],
+  "seconds_per_segment": 2,
   "anchors": {"late-summer": 0, "fall": 3, "winter": 6, "spring": 9},
   "photos": {
     "1":  {"treatment": "animated", "keys": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], "original": [0]},
@@ -236,7 +239,7 @@ Device and network assumptions: a 4 GB Android phone and a 3 GB iPhone at 390px 
 
 The current 12-frame hero already holds 52 MB.
 
-**Transfer rate at a 24 second year.**
+**Transfer rate at 2 seconds per dissolve.** An 18-key photo needs one new frame every 2 seconds, the same rate as the first column. Photos with 12, 6 or 4 keys need fewer.
 
 | Case | 12 keys, one frame per 2 s | 4 keys, one frame per 6 s |
 | --- | --- | --- |
@@ -333,7 +336,7 @@ Not edited by this ticket.
 
 Browser fixtures under `tests/`, following the existing iframe pattern, each reporting PASS. The clock takes its year length from one constant that fixtures can shorten. Phase is proven by reading the clock's frame and elapsed time and each upper layer's computed opacity. A screenshot alone is not evidence.
 
-1. Shared phase. With hero and two narrative photos participating, computed opacities agree within 0.02 at 25%, 50% and 75% of every one of the 12 steps, including the wrap from step 11 to 0. Include one 12-key and one 4-key photo.
+1. Shared phase. With hero and two narrative photos participating, computed opacities agree within 0.02 at 25%, 50% and 75% of every one of the 18 segments, including the wrap from step 11 to 0. Include one 18-key, one 12-key and one 4-key photo.
 2. Exact blend. Over a known background, the midpoint pixel of a dissolve equals the mean of the two frames within rounding, and coverage is full. Repeat with the photo at 50% scroll opacity and compare with the same check on originals.
 3. Scroll plus season. Scroll forward and backward through a blend while a dissolve runs. No geometry change in the photo box, caption, dots or story height. At most 4 seasonal layers exist.
 4. Fast scroll. Fling through a 14-photo story. No more than the participating and lookahead photos have seasonal requests in flight, abandoned requests do not attach late, and no photo shows a frame from a phase other than the shared one.
@@ -349,7 +352,7 @@ Browser fixtures under `tests/`, following the existing iframe pattern, each rep
 
 ## Open choices with recommendations
 
-1. **Keys per photo.** Year length is settled at 24 seconds. Recommend 12 keys for exteriors, 4 for interiors with window views, 1 for windowless interiors, confirmed photo by photo at anchor review. A 6 second dissolve between anchors through a window may look too coarse on large windows, and those photos can be raised to 12.
+1. **Keys per photo.** Settled in the pilot. Year length is 36 seconds. Special house exteriors and the hot tub have 18 keys, other ground-level exteriors and porch views 12, large-window rooms 6 (steps 0, 3, 5, 6, 8, 9), small-window rooms 4, and windowless rooms keep the original. The real set is listed in `assets/seasons-next/frames.json`.
 2. **Unready photos and the barrier.** Recommend that a visible unready photo holds the clock at the next boundary for up to 10 seconds. The looser option lets the others keep going while it shows its original. That is smoother on bad networks but leaves one still photo beside moving ones.
 3. **Inline fallback stories.** Recommend originals only when a story is not sequenced. Those layouts can show three or four photos at once on the smallest screens, which breaks the two-photo ceiling.
 4. **Manual season buttons under reduced motion.** Recommend none in the first build. A static season switch is possible later without animation.
