@@ -72,10 +72,9 @@
   function measure(url) {
     const t = performance.getEntriesByName(url).pop();
     // Cache hits report no transfer and say nothing about the link.
-    if (!t?.transferSize || !t.encodedBodySize) return;
-    const ms = t.responseEnd - (t.requestStart || t.fetchStart);
-    if (ms <= 0) return;
-    const sample = t.encodedBodySize * 8 / ms / 1000; // Mbps
+    // Small bodies arrive in one burst and measure latency, not throughput.
+    if (!t?.transferSize || t.encodedBodySize < 10000) return;
+    const sample = t.encodedBodySize * 8 / Math.max(1, t.responseEnd - t.responseStart) / 1000; // Mbps
     rate = rate ? rate * .7 + sample * .3 : sample;
   }
   // How far the fetch window blooms past what the barrier needs: 0 stops prefetching.
@@ -350,7 +349,7 @@
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => { photos.find(p => p.link === entry.target).near = entry.isIntersecting; });
       sync();
-    }, {rootMargin: '25% 0px'});
+    }, {root: document, rootMargin: '25% 0px'});
     photos.forEach(p => {
       observer.observe(p.link);
       if (!p.original.complete) p.original.addEventListener('load', sync, {once: true});
