@@ -10,7 +10,7 @@ const pages = [
   ['index.html', '', '323 Colonial Dr · Berkeley Springs, WV · $499,000',
     'Explore 323 Colonial Dr in Berkeley Springs, WV: a 2-bedroom mountain home with 2 full baths, 1 half bath, a screened porch and an open deck.'],
   ['gallery.html', 'gallery.html', 'Photos · 323 Colonial Dr · Berkeley Springs, WV',
-    'Explore 73 views of 323 Colonial Dr in Berkeley Springs, WV, including one labeled conceptual basement plan — not existing finished space.'],
+    'Explore 65 views of 323 Colonial Dr in Berkeley Springs, WV, including one labeled conceptual basement plan — not existing finished space.'],
 ];
 
 for (const [file, route, title, description] of pages) {
@@ -65,6 +65,7 @@ test('publish allowlist contains exactly required buyer files, never repository/
   assert.ok(analytics.includes("import('./vendor/posthog-1.438.1.mjs')"));
   assert.match(readFileSync('vendor/posthog-LICENSE', 'utf8'), /MIT License/);
   for (let n = 1; n <= 73; n++) {
+    if ([40, 62, 63, 68, 69, 70, 71, 72].includes(n)) continue; // colonial-rp8: pruned from the site
     for (const suffix of ['', '-small']) expected.push(`assets/listing/${String(n).padStart(2, '0')}${suffix}.webp`);
   }
   assert.deepEqual([...files].sort(), expected.sort());

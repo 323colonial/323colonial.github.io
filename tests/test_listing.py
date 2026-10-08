@@ -9,6 +9,11 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 APPROVED = json.loads((ROOT / 'tests/fixtures/approved-listing.json').read_text())
 COVERAGE = json.loads((ROOT / 'tests/fixtures/photo-coverage.json').read_text())
+# colonial-rp8: eight photos leave the site; three more leave the narrative but stay in both galleries.
+# Positions are stable ids, so the remaining photos keep their numbers and files.
+PRUNED = {40, 62, 63, 68, 69, 70, 71, 72}
+GALLERY_ONLY = {8, 9, 33}
+REMAINING = [n for n in range(1, 74) if n not in PRUNED]
 REDFIN = json.loads((ROOT / 'tests/fixtures/redfin-refresh.json').read_text())
 
 
@@ -84,7 +89,7 @@ class Listing(unittest.TestCase):
         covered = {1}
         for story in stories:
             covered.update(int(a.attrs['data-photo']) for a in story.all('a') if 'data-photo' in a.attrs)
-        self.assertEqual(covered, set(range(1, 74)), 'Every photo has a narrative home')
+        self.assertEqual(covered, set(REMAINING) - GALLERY_ONLY, 'Every remaining photo has a narrative home, except the gallery-only three')
         plan = next(a for a in page.all('a') if a.attrs.get('data-photo') == '31')
         self.assertIn('additional finished living space', plan.text())
         self.assertIn('conceptual', plan.attrs['aria-label'].lower())
@@ -108,8 +113,8 @@ class Listing(unittest.TestCase):
     def test_gallery_order_captions_and_disclosures(self):
         page = Page('gallery.html').root
         figures = [f for f in page.all('figure') if 'data-position' in f.attrs]
-        self.assertEqual(len(figures), 73)
-        for figure, expected in zip(figures, APPROVED['photos']):
+        self.assertEqual(len(figures), 65)
+        for figure, expected in zip(figures, [p for p in APPROVED['photos'] if p['position'] not in PRUNED]):
             n = expected['position']
             self.assertEqual(int(figure.attrs['data-position']), n)
             caption = next(s for s in figure.all('span') if s.cls('caption-text'))
@@ -143,15 +148,15 @@ class Listing(unittest.TestCase):
         ]
         home = Page('index.html').root
         stories = [s for s in home.all('section') if s.cls('story')]
-        self.assertIn('View all 73 photos', home.text())
-        self.assertIn('All 73 photos', home.text())
+        self.assertIn('View all 65 photos', home.text())
+        self.assertIn('All 65 photos', home.text())
         photos = json.loads((ROOT / 'assets/listing/manifest.json').read_text())['photos']
         for file in ('index.html', 'gallery.html'):
             grid = next(d for d in Page(file).root.all('div') if d.cls('gallery-grid'))
-            self.assertEqual([int(f.attrs['data-position']) for f in grid.all('figure')], list(range(1, 74)))
-            for figure in grid.all('figure'):
+            self.assertEqual([int(f.attrs['data-position']) for f in grid.all('figure')], REMAINING)
+            for ordinal, figure in enumerate(grid.all('figure'), 1):
                 number = next(s for s in figure.all('span') if s.cls('photo-number'))
-                self.assertEqual(number.text(), f"{figure.attrs['data-position']} / 73")
+                self.assertEqual(number.text(), f"{ordinal} / 65")
             for n, source, section, caption in additions:
                 figure = next(f for f in grid.all('figure') if f.attrs['data-position'] == str(n))
                 inline = [f for f in stories[section].all('figure') if f.attrs['data-position'] == str(n)]
@@ -197,9 +202,11 @@ class Listing(unittest.TestCase):
         for file in ('index.html', 'gallery.html'):
             grid = next(d for d in Page(file).root.all('div') if d.cls('gallery-grid'))
             figures = grid.all('figure')
-            self.assertEqual([int(f.attrs['data-position']) for f in figures], list(range(1, 74)))
+            self.assertEqual([int(f.attrs['data-position']) for f in figures], REMAINING)
             for row in additions:
                 n, caption = row['position'], row['caption']
+                if n in PRUNED:
+                    continue
                 photo = photos[n - 1]
                 self.assertEqual(photo['source'], row['source'])
                 self.assertEqual(photo['source_sha256'], row['sha256'])
@@ -212,8 +219,9 @@ class Listing(unittest.TestCase):
                 inline = stories[row['section'] - 1].all('figure')
                 positions = [int(f.attrs['data-position']) for f in inline]
                 self.assertIn(n, positions)
-                self.assertGreater(positions.index(n), positions.index(row['after']))
-                for figure in (figures[n - 1], inline[positions.index(n)]):
+                if row['after'] in positions:  # the photo it used to follow may have been pruned or moved
+                    self.assertGreater(positions.index(n), positions.index(row['after']))
+                for figure in (figures[REMAINING.index(n)], inline[positions.index(n)]):
                     img = figure.all('img')[0]
                     self.assertEqual(img.attrs['alt'], caption)
                     self.assertEqual(img.attrs['loading'], 'lazy')

@@ -62,7 +62,10 @@ if (typeof viewer.showModal === 'function') {
   });
   const triggers = [...links, ...document.querySelectorAll('[data-photo]')];
   triggers.forEach(link => {
-    const index = link.hasAttribute('data-photo') ? Number(link.dataset.photo) - 1 : links.indexOf(link);
+    // Photo numbers are stable ids, not positions: pruned photos leave gaps.
+    const index = link.hasAttribute('data-photo')
+      ? links.findIndex(item => item.closest('figure')?.id === `photo-${link.dataset.photo}`) : links.indexOf(link);
+    if (index < 0) return;
     link.addEventListener('click', event => {
       if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
       event.preventDefault();
