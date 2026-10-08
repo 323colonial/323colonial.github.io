@@ -98,11 +98,12 @@ figcaption { padding-top: 10px; font: 13px/1.5 Arial, sans-serif; }
 .story.is-scrolling + .story { translate: 0 var(--story-shift, 0px); }
 .story + .story.is-scrolling::before { content: ''; display: block; position: sticky; top: calc(var(--header-height) + var(--summary-height)); height: calc(var(--border-lines) * 1lh); margin: -56px -40px 56px; background: var(--previous-story-color); z-index: 2; pointer-events: none; }
 .is-scrolling .story-stage { position: sticky; top: calc(var(--header-height) + var(--summary-height) + var(--border-lines) * 1lh + 24px); }
-.is-scrolling .story-photos { position: relative; grid-template-rows: var(--frame-height, auto); gap: 0; }
+/* Add complementary photo weights on transparency, not on the section background. */
+.is-scrolling .story-photos { position: relative; isolation: isolate; grid-template-rows: var(--frame-height, auto); gap: 0; }
 .is-scrolling .story-photos figure { grid-area: 1 / 1; align-self: start; }
 .is-scrolling .scroll-cue { position: absolute; top: calc(var(--photo-height) - 10px); left: 50%; transform: translate(-50%, -100%); z-index: 1; }
 .is-scrolling .media-record[inert] { pointer-events: none; }
-.is-scrolling .media-record > a { height: var(--photo-height); display: flex; align-items: center; opacity: var(--photo-opacity, 1); }
+.is-scrolling .media-record > a { height: var(--photo-height); display: flex; align-items: center; opacity: var(--photo-opacity, 1); mix-blend-mode: plus-lighter; }
 .is-scrolling .media-record[inert] figcaption { visibility: hidden; }
 .is-scrolling .media-record img { height: 100%; object-fit: contain; }
 .is-scrolling figcaption { min-height: 49px; }

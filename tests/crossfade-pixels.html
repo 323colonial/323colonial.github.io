@@ -1,0 +1,121 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Crossfade pixel regression</title>
+<style>body { margin: 0; } iframe { display: block; border: 0; } #status { margin: 0; height: 40px; font: 14px/20px monospace; }</style>
+<p id="status">Loading pixel fixture…</p>
+<div id="references" style="position:absolute;top:20px;left:0;display:flex" aria-hidden="true"></div>
+<iframe title="Crossfade homepage"></iframe>
+<script type="module">
+// Capture the viewport PNG after paint(), save its returned JSON, then run:
+// python3 tests/check_crossfade_pixels.py SCREENSHOT.png PROBES.json
+// The screenshot, not a canvas recreation of CSS, is the rendering under test.
+const frame = document.querySelector('iframe');
+frame.style.width = '1440px';
+frame.style.height = '1000px';
+const source = new DOMParser().parseFromString(await fetch('../index.html').then(r => r.text()), 'text/html');
+const base = source.createElement('base');
+base.href = new URL('../', location.href);
+source.head.prepend(base);
+source.querySelectorAll('script[src="seasonal-hero.js"], script[src="analytics.mjs"], .analytics-notice').forEach(el => el.remove());
+const colors = [[220, 40, 40], [40, 60, 220]];
+const nextColors = [[40, 180, 60], [200, 180, 60]];
+function image(color, width, height) {
+  return `data:image/svg+xml,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}"><path fill="rgb(${color})" d="M0 0H${width}V${height}H0Z"/></svg>`)}`;
+}
+// Keep source geometry while avoiding unrelated photo/analytics requests.
+source.querySelectorAll('img').forEach(img => {
+  img.removeAttribute('srcset');
+  img.src = image(colors[0], img.width || 1200, img.height || 800);
+  img.loading = 'eager';
+});
+await new Promise(resolve => { frame.onload = resolve; frame.srcdoc = '<!doctype html>' + source.documentElement.outerHTML; });
+const win = frame.contentWindow, doc = frame.contentDocument;
+const story = doc.querySelector('.story');
+const photos = [...story.querySelectorAll('.story-photos figure')].slice(0, 2);
+const tick = () => new Promise(resolve => win.requestAnimationFrame(resolve));
+const settle = async () => { await tick(); await tick(); };
+const mix = (a, b, t) => a.map((value, i) => value * (1 - t) + b[i] * t);
+let previousScroll = null;
+window.crossfade = {
+  // Progress uses the actual listing.js scroll mapping: .5=start, .75=midpoint, 1=end.
+  async paint({width = 1440, shape = 'same', progress = .75, season = false} = {}) {
+    const height = width > 800 ? 1000 : 844;
+    frame.style.width = `${width}px`;
+    frame.style.height = `${height}px`;
+    const sizes = shape === 'wide-to-tall' ? [[1200, 600], [600, 1200]]
+      : shape === 'tall-to-wide' ? [[600, 1200], [1200, 600]] : [[1200, 800], [1200, 800]];
+    for (let i = 0; i < 2; i++) {
+      const img = photos[i].querySelector('img');
+      photos[i].querySelector('.season-stack')?.remove();
+      [img.width, img.height] = sizes[i];
+      img.src = image(colors[i], ...sizes[i]);
+      await img.decode();
+      if (season) {
+        // Same DOM and frozen opacity as runtime paint(); screenshot tools may finish
+        // paused Web Animations. Live clock/load behavior has its own runtime fixture.
+        const stack = doc.createElement('span');
+        stack.className = 'season-stack';
+        for (const color of [nextColors[i], colors[i]]) {
+          const layer = new win.Image();
+          layer.alt = '';
+          layer.src = image(color, ...sizes[i]);
+          await layer.decode();
+          stack.append(layer);
+        }
+        photos[i].querySelector('a').append(stack);
+        stack.lastElementChild.style.opacity = '.5';
+      }
+    }
+    doc.activeElement.blur();
+    win.layoutStories();
+    await settle();
+    if (!story.classList.contains('is-scrolling')) throw Error('Fixture needs an enhanced story');
+    const stage = story.querySelector(width > 800 ? '.story-stage' : '.story-photos');
+    const start = story.offsetTop + parseFloat(win.getComputedStyle(story).paddingTop)
+      + (width > 800 ? 0 : story.querySelector('.story-copy').getBoundingClientRect().height + 28)
+      - parseFloat(win.getComputedStyle(stage).top);
+    const step = Math.max(240, height * .5);
+    win.scrollTo(0, start + step * progress);
+    await settle();
+    const y = win.scrollY, direction = previousScroll == null ? 'initial' : y < previousScroll ? 'reverse' : 'forward';
+    previousScroll = y;
+    const position = Math.max(0, Math.min(1, (y - start) / step));
+    const t = Math.max(0, (position - .5) * 2);
+    const expectedOpacities = [1 - t, t];
+    photos.forEach((photo, i) => {
+      const actual = photo.hidden ? 0 : Number(win.getComputedStyle(photo.querySelector('a')).opacity);
+      if (Math.abs(actual - expectedOpacities[i]) > .001) throw Error(`Scroll opacity ${actual} != ${expectedOpacities[i]}`);
+    });
+    const visible = photos.find(photo => !photo.hidden);
+    const box = visible.querySelector('a').getBoundingClientRect();
+    const outer = frame.getBoundingClientRect();
+    const background = win.getComputedStyle(story).backgroundColor.match(/[\d.]+/g).slice(0, 3).map(Number);
+    const effective = colors.map((color, i) => season ? mix(color, nextColors[i], .5) : color);
+    const probes = [];
+    const references = document.querySelector('#references');
+    references.replaceChildren();
+    // Cross-shaped samples exercise overlap, each image-only region, and letterboxing.
+    for (const [name, fx, fy] of [['center', .5, .5], ['left', .1, .5], ['right', .9, .5], ['top', .5, .1], ['bottom', .6, .9], ['corner', .05, .05]]) {
+      const coverage = sizes.map(([w, h]) => {
+        const scale = Math.min(box.width / w, box.height / h);
+        return Math.abs(fx - .5) * box.width < w * scale / 2 && Math.abs(fy - .5) * box.height < h * scale / 2;
+      });
+      const weights = coverage.map((covered, i) => covered ? expectedOpacities[i] : 0);
+      const rgb = background.map((channel, i) => channel * (1 - weights[0] - weights[1])
+        + effective[0][i] * weights[0] + effective[1][i] * weights[1]);
+      const x = Math.round(outer.left + box.left + fx * box.width);
+      const y = Math.round(outer.top + box.top + fy * box.height);
+      if (x < 0 || y < 0 || x >= innerWidth || y >= innerHeight) throw Error('Capture viewport must contain every pixel probe');
+      // Opaque reference swatches travel through the same screenshot color profile.
+      const swatch = document.createElement('span');
+      swatch.style.cssText = `width:20px;height:20px;background:rgb(${rgb.map(Math.round)})`;
+      references.append(swatch);
+      probes.push({name, x, y, rgb: rgb.map(Math.round), reference: {x: probes.length * 20 + 10, y: 30}});
+    }
+    const label = `${width}px ${shape} progress=${progress} ${direction}${season ? ' + seasonal midpoint' : ''}`;
+    document.querySelector('#status').textContent = `Ready: ${label}`;
+    return {label, viewport: [innerWidth, innerHeight], probes};
+  },
+};
+document.querySelector('#status').textContent = 'Ready. Call await crossfade.paint({width, shape, progress, season}), then capture PNG and check pixels.';
+</script>
