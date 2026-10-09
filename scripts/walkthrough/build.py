@@ -146,9 +146,11 @@ def build_scene(sc):
     objs = []
     for (page, node), mats in sorted(by_obj.items(), key=lambda kv: (kv[0][0], kv[0][1] or "")):
         if page != "fx" and page not in page_imgs:
-            im = bpy.data.images.new("lm_" + page, SIZE, SIZE, alpha=False, float_buffer=True)
-            im.colorspace_settings.name = "Non-Color"
-            page_imgs[page] = im
+            page_imgs[page] = None  # Export/encode need page identity, not empty pixel buffers.
+            if opt("--bake"):
+                im = bpy.data.images.new("lm_" + page, SIZE, SIZE, alpha=False, float_buffer=True)
+                im.colorspace_settings.name = "Non-Color"
+                page_imgs[page] = im
         hx, hy = hinges.get(node, (0.0, 0.0))
         verts, faces, uv0, uv1, nrm, midx = [], [], [], [], [], []
         me = bpy.data.meshes.new(("%s__%s" % (node, page)) if node else "page_" + page)

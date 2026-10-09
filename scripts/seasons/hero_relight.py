@@ -11,6 +11,7 @@ def part(p, fit=None):
     d = subprocess.run(['magick', p] + (['-filter', 'Lanczos', '-resize', fit + '!'] if fit else []) + ['png:-'], check=True, capture_output=True).stdout
     return {'inlineData': {'mimeType': 'image/png', 'data': base64.b64encode(d).decode()}}
 def one(k):
+    os.makedirs(f'{D}/hero', exist_ok=True)
     base = f'{D}/win/hero/{k:02d}-after.png'; ref = f'{D}/review/img/39n/{k:02d}.webp'; name, desc = pilot.STEPS[k][2], pilot.STEPS[k][4]
     P = (f'Perform a meticulous LIGHTING-ONLY re-light of IMAGE 1, an approved photograph. It is frame {k} of a 12-frame annual timelapse, "{name}". '
          'Treat IMAGE 1 as a locked pixel canvas. Every physical edge stays at its input coordinate: roof, chimney, dormers, every window frame and muntin, siding, stone, porch, deck, lattice, path, birdbath, feeder pole, grill, every trunk and branch. '
@@ -28,7 +29,7 @@ def one(k):
     if not raw: return k, 'no image ' + json.dumps(r)[:200]
     s = f'{D}/hero/{k:02d}'; open(s + '-raw.png', 'wb').write(raw)
     run('magick', s + '-raw.png', '-filter', 'Lanczos', '-resize', '1280x848!', s + '-full.png')
-    a1 = run(sys.executable, f'{D}/align.py', base, s + '-full.png', s + '-a.png').stdout.strip(); a2 = run(sys.executable, f'{D}/align.py', base, s + '-a.png', s + '.png').stdout.strip(); os.remove(s + '-a.png')
+    a1 = run(sys.executable, f'{pilot.HERE}/align.py', base, s + '-full.png', s + '-a.png').stdout.strip(); a2 = run(sys.executable, f'{pilot.HERE}/align.py', base, s + '-a.png', s + '.png').stdout.strip(); os.remove(s + '-a.png')
     mean = run('magick', s + '.png', '-colorspace', 'Gray', '-format', '%[fx:int(mean*100)]', 'info:').stdout
     json.dump({'step': k, 'model': MODEL, 'prompt': P, 'base': os.path.relpath(base, D), 'ref': os.path.relpath(ref, D), 'usage': r.get('usageMetadata'), 'align_first': a1, 'align_second': a2, 'mean': mean}, open(s + '.json', 'w'), indent=1)
     j = json.loads(a2) if a2 else {}

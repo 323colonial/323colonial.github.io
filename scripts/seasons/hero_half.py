@@ -17,9 +17,10 @@ def one(h):
          + pilot.WINDOWS[int(h)] + ' The window glow matches IMAGE 2 and IMAGE 3. Keep the cedar siding, stone and roof the same hue as in those frames.'
          '\n\nCHANGE ONLY: foliage, ground cover, frost and snow, sky, and the light, as described.')
     s = f'{D}/hero/{pilot.lab(h)}'
+    os.makedirs(os.path.dirname(s), exist_ok=True)
     raw, usage = pilot.call([{'text': P}, pilot.img_part(MASTER, '2528x1696')] + [pilot.img_part(r) for r in refs], '3:2')
     open(s + '-raw.jpg', 'wb').write(raw); run('magick', s + '-raw.jpg', '-resize', '1280x848!', s + '-full.png')
-    run(sys.executable, f'{D}/align.py', MASTER, s + '-full.png', s + '-a.png'); al = run(sys.executable, f'{D}/align.py', MASTER, s + '-a.png', s + '.png').strip(); os.remove(s + '-a.png')
+    run(sys.executable, f'{pilot.HERE}/align.py', MASTER, s + '-full.png', s + '-a.png'); al = run(sys.executable, f'{pilot.HERE}/align.py', MASTER, s + '-a.png', s + '.png').strip(); os.remove(s + '-a.png')
     target = (mean(refs[0]) + mean(refs[1])) / 2; got = mean(s + '.png'); g = max(0.7, min(1.4, math.log(got) / math.log(target)))
     run('magick', s + '.png', '-gamma', f'{g:.3f}', s + '.png')
     j = json.loads(al) if al else {}

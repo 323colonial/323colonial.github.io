@@ -5,7 +5,7 @@
     "test": "npm run test:buyer",
     "test:buyer": "npm run test:buyer:node && npm run test:buyer:python && npm run test:browser",
     "test:buyer:node": "node --test tests/analytics.test.mjs tests/analytics-runtime.test.mjs tests/buyer-gate.test.mjs tests/publishing.test.mjs tests/seasonal-assets.test.mjs tests/seasonal-runtime.test.mjs tests/seo.test.mjs tests/site-structure.test.mjs",
-    "test:buyer:python": "PYTHONDONTWRITEBYTECODE=1 python3 tests/test_listing.py && PYTHONDONTWRITEBYTECODE=1 python3 test_design.py",
+    "test:buyer:python": "PYTHONDONTWRITEBYTECODE=1 python3 tests/test_listing.py && PYTHONDONTWRITEBYTECODE=1 python3 test_design.py && PYTHONDONTWRITEBYTECODE=1 python3 tests/test_build_listing.py",
     "test:browser": "playwright test",
     "test:tooling": ".pi/skills/impeccable/scripts/impeccable engine-probe && node --test tests/*.test.mjs"
   },

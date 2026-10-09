@@ -3,9 +3,13 @@
 import base64, datetime as dt, hashlib, json, math, os, subprocess, sys, time, urllib.request, urllib.error
 from concurrent.futures import ThreadPoolExecutor
 from zoneinfo import ZoneInfo
+from pathlib import Path
 
-ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..'))
-OUT = os.path.dirname(os.path.abspath(__file__))
+HERE = os.path.dirname(os.path.abspath(__file__))
+ROOT = str(Path(HERE).parents[1])
+OUT = str(Path(os.environ.get('COLONIAL_SEASONS_WORK', f'{ROOT}/.pi/artifacts/seasons')).resolve())
+if Path(OUT).is_relative_to(ROOT) and not Path(OUT).is_relative_to(Path(ROOT) / '.pi/artifacts'):
+    raise ValueError('Season scratch must be outside the repository or under .pi/artifacts')
 MODEL = 'gemini-nano-banana-2.1'
 LAT, LON = 39.6265, -78.2272          # Berkeley Springs, WV
 TZ = ZoneInfo('America/New_York')
@@ -219,6 +223,10 @@ def img_part(path, fit=None):
 MOSS = ' The LAST image is a real photograph of this property\'s own ground in late fall. It shows the bright green moss that grows here in broad soft carpets between the patches of grass and across the forest floor. Reproduce that moss, with that color and coverage, on the open ground of IMAGE 1 wherever grass is thin or soil is bare. Take nothing else from it: not its trees, buildings, sky or composition.'
 
 def generate(pos, step, tag, extra_refs=()):
+    if not tag or any(c not in 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-' for c in tag):
+        raise ValueError('Tag must contain only letters, digits, hyphens or underscores')
+    if not Path(OUT, tag, f'{pos:02d}').resolve().is_relative_to(OUT):
+        raise ValueError('Generation output escapes scratch directory')
     master = f'{ROOT}/assets/listing/{pos:02d}.webp'
     p = PHOTOS[pos]
     refs = [] if (p.get('nowindow') or os.environ.get('NOSEASONREF')) else [hero_ref(step)] + list(extra_refs)

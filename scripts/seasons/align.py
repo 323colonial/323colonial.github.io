@@ -2,7 +2,6 @@
 """Fit one affine correction per generated frame from fixed-structure edge patches, ImageMagick only.
 usage: align.py MASTER GENERATED OUT.png  -> prints fit summary as JSON"""
 import json, os, re, subprocess, sys, tempfile
-from concurrent.futures import ThreadPoolExecutor
 P, R = 112, 14          # patch size, search radius (px at master scale)
 EDGE = ['-colorspace', 'Gray', '-canny', '0x1+8%+22%', '-blur', '0x1.2']
 
@@ -23,7 +22,8 @@ def measure(master, gen, tmp):
         g = re.search(r'([\d.eE+-]+)\s*(?:\(([\d.]+)\))?\s*@\s*(-?\d+),(-?\d+)', r)
         if not g: return None
         return (x + P / 2, y + P / 2, int(g.group(3)) - R, int(g.group(4)) - R, float(g.group(2) or g.group(1)))
-    with ThreadPoolExecutor(8) as ex: res = [r for r in ex.map(one, range(len(pts))) if r]
+    # Frame-level callers own parallelism; nested patch pools multiply ImageMagick processes.
+    res = [r for r in map(one, range(len(pts))) if r]
     return w, h, res
 
 def solve3(A, b):
