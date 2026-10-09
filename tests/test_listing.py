@@ -297,7 +297,7 @@ class Listing(unittest.TestCase):
             self.assertEqual(links[0].text(), '(304) 885-1547')
             self.assertEqual(links[0].attrs['aria-label'], 'Call Dandridge office at (304) 885-1547')
             self.assertEqual(links[1].text(), 'Questions & tours')
-            self.assertFalse(header.all('button'), 'Contact uses native links, no integration')
+            self.assertFalse(contact.all('button'), 'Contact uses native links, no integration')
             for removed in ('See in person', 'View public listing', 'Email Liz'):
                 self.assertNotIn(removed, header.text())
             self.assertNotRegex(page.text().lower(), r'michelle|283-8640|885-7645|fast response')

@@ -274,13 +274,28 @@
   }
 
   // --- Controls -----------------------------------------------------------------
-  // One understated footer control. Its name is its state; a stall turns it into Resume.
+  // The dial shares the photos' finite segment animation, never an independent year.
   function controls() {
-    toggle.hidden = !(shown || stalled) || still();
-    const text = paused || stalled ? 'Resume animation' : 'Pause animation';
-    if (toggle.textContent !== text) toggle.textContent = text;
-    if (stalled) toggle.setAttribute('aria-description', 'Seasonal photos did not load.');
-    else toggle.removeAttribute('aria-description');
+    toggle.hidden = !(shown || stalled) || still() || dialogOpen();
+    const action = toggle.querySelector('.motion-action');
+    const text = paused || stalled ? 'Resume' : 'Pause';
+    if (action.textContent !== text) action.textContent = text;
+    const q = phase(), seasons = ['Summer', 'Fall', 'Winter', 'Spring'];
+    const quarter = Math.floor((q % N) / (N / 4));
+    const description = `${seasons[quarter]} toward ${seasons[(quarter + 1) % 4].toLowerCase()}.`
+      + (stalled ? ' Seasonal photos did not load. Resume to retry.' : '');
+    if (toggle.getAttribute('aria-description') !== description) {
+      toggle.setAttribute('aria-description', description);
+      toggle.title = description;
+    }
+    const hand = toggle.querySelector('.season-hand');
+    hand.getAnimations().forEach(animation => animation.cancel());
+    const rotation = phase => `rotate(${phase / N * 360}deg)`;
+    hand.style.transform = rotation(q);
+    if (startedAt != null && !toggle.hidden) {
+      hand.animate({transform: [rotation(KN[seg]), rotation(KN[seg + 1])]},
+        {duration: DUR[seg], fill: 'both'}).startTime = startedAt;
+    }
   }
   function retry() {
     stalled = false;

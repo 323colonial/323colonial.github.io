@@ -100,6 +100,14 @@ function agrees(position, phase, tolerance) {
 const box = element => { const b = element.getBoundingClientRect(); return [b.left, b.top, b.width, b.height]; };
 const same = (a, b) => a.every((value, i) => Math.abs(value - b[i]) < .5);
 const toggle = () => doc.querySelector('#hero-motion');
+const hand = () => toggle().querySelector('.season-hand');
+function dialAgrees(phase, tolerance = .02) {
+  if (!hand()) return false;
+  const matrix = new DOMMatrix(win.getComputedStyle(hand()).transform);
+  const got = (Math.atan2(matrix.b, matrix.a) * 180 / Math.PI + 360) % 360;
+  const want = phase / 12 * 360;
+  return Math.abs(((got - want + 540) % 360) - 180) <= tolerance * 30;
+}
 function blendScroll(position = .75) {
   // .75 is half way through the scroll blend between story 1's first two photos (39 and 34).
   const story = doc.querySelector('.story'), stage = story.querySelector('.story-stage');
@@ -117,10 +125,13 @@ try {
   check(Boolean(clock) && clock.state().joined.includes(1), 'hero joins the seasonal clock');
   if (!clock) throw new Error('Seasonal runtime did not start');
   const hero = doc.querySelector('.hero-photo'), heroLink = hero.querySelector('a'), original = heroLink.querySelector('img');
-  check(doc.querySelector('.site-footer').contains(toggle()) && !toggle().hidden && toggle().textContent === 'Pause animation'
-    && doc.querySelectorAll('.site-footer button').length === 1 && !doc.querySelector('[data-season], #season-status, #season-controls')
+  check(doc.querySelector('.masthead').contains(toggle()) && !toggle().hidden && toggle().textContent.trim() === 'Pause animation'
+    && doc.querySelectorAll('#hero-motion').length === 1 && Boolean(hand()) && !doc.querySelector('[data-season], #season-status, #season-controls')
     && !hero.querySelector('button, input, select') && win.getComputedStyle(hero.querySelector('figcaption')).display === 'none',
-    'image only; one footer pause control, no season buttons or status line');
+    'image only; one masthead seasonal dial and pause control, no competing season controls');
+  check(doc.querySelector('.masthead').getBoundingClientRect().height === 86, 'desktop device fits original masthead height without changing sticky geometry');
+  check(dialAgrees(clock.state().phase) && !toggle().hasAttribute('aria-live')
+    && toggle().querySelector('svg')?.getAttribute('aria-hidden') === 'true', 'dial follows shared phase without a live announcement');
   const early = new Set(frameRequests().filter(src => src.includes('/01/')));
   check(early.size > 0 && early.size <= 6, `hero starts with a few frames, not its year (${early.size} of 17 requested at join)`);
   const stack = stackOf(1);
@@ -135,17 +146,18 @@ try {
   // --- Shared phase, running ---------------------------------------------------
   for (const [set, at, label] of [[A, .1, 'hero (18 keys) with photo 39 (12 keys)'], [B, .75, 'photo 39 (12 keys) with photo 34 (4 keys) mid scroll blend']]) {
   win.scrollTo(0, blendScroll(at));
-  toggle().textContent === 'Resume animation' && toggle().click();
+  toggle().textContent.trim() === 'Resume animation' && toggle().click();
   const together = await until(() => set.every(p => clock.state().joined.includes(p)) && clock.state().running);
   check(together, `${label}: both participate`);
   await ticks(8); // join fades are 60 ms in this fixture
   {
-    let samples = 0, bad = 0, worst = '', wrapped = false, last = -1, maxDecoded = 0, maxLayers = 0, stopped = 0;
+    let samples = 0, bad = 0, badDial = 0, worst = '', wrapped = false, last = -1, maxDecoded = 0, maxLayers = 0, stopped = 0;
     const segments = new Set(), begin = performance.now();
     while (performance.now() - begin < DUR * 18 * 1.25) {
       await new Promise(resolve => win.requestAnimationFrame(resolve));
       const state = clock.state();
       samples++;
+      if (!dialAgrees(state.phase)) badDial++;
       if (!state.running) stopped++;
       segments.add(state.segment);
       if (state.segment < last) wrapped = true;
@@ -157,6 +169,7 @@ try {
       }
     }
     check(samples > 100 && bad === 0, `${label}: every frame of a running year: both photos show the clock's phase within 0.02 (${samples} samples${worst ? `; ${worst}` : ''})`);
+    check(badDial === 0, `${label}: dial tracks all running samples including wrap (${badDial} misses)`);
     check(segments.size === 18 && wrapped, `${label}: all 18 timing segments and the wrap to late summer were sampled`);
     check(stopped <= samples * .05, `${label}: clock ran without holds on a local link (${stopped} stopped samples)`);
     check(maxDecoded <= 3, `${label}: at most three decoded frames per photo (saw ${maxDecoded})`);
@@ -172,7 +185,8 @@ try {
       await ticks(5);
       const state = clock.state();
       const phase = M.knots[segment] + (M.knots[segment + 1] - M.knots[segment]) * fraction;
-      const ok = ready && !state.running && Math.abs(state.phase - phase) < 1e-9 && set.every(p => agrees(p, phase, .001)
+      const description = ['Summer toward fall.', 'Fall toward winter.', 'Winter toward spring.', 'Spring toward summer.'][Math.floor(phase / 3)];
+      const ok = ready && dialAgrees(phase, .001) && toggle().getAttribute('aria-description') === description && !state.running && Math.abs(state.phase - phase) < 1e-9 && set.every(p => agrees(p, phase, .001)
         && Number(win.getComputedStyle(stackOf(p)).opacity) === 1 && Number(win.getComputedStyle(stackOf(p).firstElementChild).opacity) === 1);
       if (!ok) { exact = false; detail ||= ` first miss: segment ${segment} at ${fraction}`; }
     }
@@ -225,7 +239,7 @@ try {
     check(held && !state.running && state.phase === 1 && state.elapsed === 0, 'delayed frame: the clock holds at the boundary instead of crossing it');
     check(B.every(p => state.joined.includes(p) && agrees(p, 1, .001)), 'all photos hold together on the same phase (sparse photo part way through its dissolve)');
     await ticks(10);
-    check(clock.state().phase === 1 && toggle().textContent === 'Pause animation', 'hold is steady and is not reported as a pause');
+    check(dialAgrees(1, .001) && !hand()?.getAnimations().length && clock.state().phase === 1 && toggle().textContent.trim() === 'Pause animation', 'hold is steady and is not reported as a pause');
     win.gate.release();
     const resumed = await until(() => clock.state().running);
     await ticks(3);
@@ -246,10 +260,10 @@ try {
     const stalled = await until(() => clock.state().stalled, 1200);
     const state = clock.state();
     check(stalled && !state.running && state.phase === 3.5 && win.gate.hung.length === 1, 'hung request: bounded hold ends in a stalled pause mid-dissolve');
-    check(toggle().textContent === 'Resume animation', 'a hung request is reported like any other stall');
+    check(toggle().textContent.trim() === 'Resume animation', 'a hung request is reported like any other stall');
     win.gate.hang = [];
     toggle().click();
-    check(await until(() => clock.state().running && clock.state().joined.includes(34)) && !clock.state().stalled && toggle().textContent === 'Pause animation',
+    check(await until(() => clock.state().running && clock.state().joined.includes(34)) && !clock.state().stalled && toggle().textContent.trim() === 'Pause animation',
       'Resume abandons the hung request, asks again and the clock recovers');
   }
 
@@ -268,13 +282,13 @@ try {
     const state = clock.state();
     check(stalled && !state.running && state.phase === 3 && performance.now() - started < 4000, 'failed frame: bounded hold ends in a stalled pause at the boundary');
     check(tries === 3, `failed frame was tried once and retried twice (${tries} attempts)`);
-    check(toggle().textContent === 'Resume animation' && /did not load/.test(toggle().getAttribute('aria-description')) && !toggle().hidden, 'stall turns the same control into Resume and describes why');
-    check(A.every(p => agrees(p, 3, .001)), 'stalled photos stay on one coherent phase');
+    check(toggle().textContent.trim() === 'Resume animation' && /did not load/.test(toggle().getAttribute('aria-description')) && !toggle().hidden, 'stall turns the same control into Resume and describes why');
+    check(dialAgrees(3, .001) && A.every(p => agrees(p, 3, .001)), 'stalled photos stay on one coherent phase');
     await ticks(30);
     check(win.gate.requests.filter(src => src.includes('/01/04.webp')).length - before === 3, 'no retry storm while stalled');
     win.gate.fail = [];
     toggle().click();
-    check(await until(() => clock.state().running) && !clock.state().stalled && toggle().textContent === 'Pause animation' && !toggle().hasAttribute('aria-description'), 'Resume retries the frame and the clock recovers');
+    check(await until(() => clock.state().running) && !clock.state().stalled && toggle().textContent.trim() === 'Pause animation' && !/did not load/.test(toggle().getAttribute('aria-description')), 'Resume retries the frame and the clock recovers');
   }
 
   // --- Pause mid-dissolve -----------------------------------
@@ -285,7 +299,7 @@ try {
     await ticks(10);
     check(!state.running && state.paused && state.elapsed > 0 && state.elapsed < DUR && clock.state().phase === state.phase
       && JSON.stringify(A.map(shown)) === frozen && A.every(p => agrees(p, state.phase, .001)), 'pause freezes mid-dissolve at once and stays frozen');
-    check(toggle().textContent === 'Resume animation', 'control names its state while paused');
+    check(dialAgrees(state.phase, .001) && !hand()?.getAnimations().length && toggle().textContent.trim() === 'Resume animation', 'control names its state and dial freezes exactly while paused');
     check(sessionStorage.getItem('colonial_seasons_paused') === '1' && !Object.keys(sessionStorage).some(key => /season/.test(key) && key !== 'colonial_seasons_paused'), 'only the paused preference is remembered for the session');
     toggle().click();
     const resumed = await until(() => clock.state().running);
@@ -307,7 +321,7 @@ try {
     await until(() => !clock.state().running);
     const held = clock.state(), requests = frameRequests().length;
     await ticks(40); // longer than a 0.4 s segment
-    check(!clock.state().running && clock.state().phase === held.phase && frameRequests().length === requests
+    check(toggle().hidden && !hand().getAnimations().length && !clock.state().running && clock.state().phase === held.phase && frameRequests().length === requests
       && held.phase - beforeOpen.phase < .2, 'open dialog pauses the clock and fetches nothing seasonal');
     check([...doc.querySelectorAll('.viewer-preview')].every(preview => preview.hidden || preview.getAttribute('src').startsWith('assets/listing/'))
       && !viewer.querySelector('.season-stack'), 'viewer previews are originals; the dialog holds no seasonal layer');
@@ -318,7 +332,7 @@ try {
     await tick();
     const hidden = clock.state(), hiddenRequests = frameRequests().length;
     await ticks(40);
-    check(!hidden.running && clock.state().phase === hidden.phase && frameRequests().length === hiddenRequests, 'hidden tab pauses the clock and fetches nothing');
+    check(dialAgrees(hidden.phase, .001) && !hand()?.getAnimations().length && !hidden.running && clock.state().phase === hidden.phase && frameRequests().length === hiddenRequests, 'hidden tab pauses the clock and fetches nothing');
     delete doc.hidden;
     doc.dispatchEvent(new Event('visibilitychange'));
     check(await until(() => clock.state().running) && clock.state().phase - hidden.phase < .5 && clock.state().phase >= hidden.phase, 'visible tab resumes from the same phase, no catch-up');
@@ -355,10 +369,10 @@ try {
     await until(() => clock.state().joined.includes(1) && clock.state().running);
     win.seasonMedia.matches = true; win.seasonMedia.dispatchEvent(new Event('change'));
     await tick();
-    check(!doc.querySelector('.season-stack') && !clock.state().running && toggle().hidden && original.naturalWidth > 0, 'live reduced motion removes every stack at once and shows originals');
+    check(!doc.querySelector('.season-stack') && !hand()?.getAnimations().length && !clock.state().running && toggle().hidden && original.naturalWidth > 0, 'live reduced motion removes every stack at once and shows originals');
     win.seasonMedia.matches = false; win.seasonMedia.dispatchEvent(new Event('change'));
     await ticks(45);
-    check(!clock.state().running && clock.state().paused && !toggle().hidden && toggle().textContent === 'Resume animation',
+    check(!clock.state().running && clock.state().paused && !toggle().hidden && toggle().textContent.trim() === 'Resume animation',
       'turning reduced motion off does not restart motion; control returns as Resume');
     check(sessionStorage.getItem('colonial_seasons_paused') === null, 'that pause is not stored as the visitor\'s preference');
     toggle().click();
@@ -374,7 +388,7 @@ try {
     clock = win.seasonalClock;
     const state = clock?.state();
     await ticks(40);
-    check(Boolean(state) && !clock.state().running && clock.state().paused && clock.state().phase === 0 && toggle().textContent === 'Resume animation', 'paused preference survives a reload; phase starts at late summer');
+    check(Boolean(state) && !clock.state().running && clock.state().paused && clock.state().phase === 0 && toggle().textContent.trim() === 'Resume animation', 'paused preference survives a reload; phase starts at late summer');
     sessionStorage.removeItem('colonial_seasons_paused');
   }
 
@@ -412,8 +426,8 @@ try {
     const state = clock.state(), requests = frameRequests().length;
     await ticks(60); // longer than two 0.4 s segments
     const animations = doc.getAnimations().filter(animation => animation.effect?.target?.closest?.('.season-stack'));
-    check(rested && !doc.querySelector('.season-stack') && !animations.length && clock.state().phase === state.phase && !clock.state().holding
-      && frameRequests().length === requests && toggle().textContent === 'Pause animation',
+    check(rested && dialAgrees(state.phase, .001) && !hand().getAnimations().length && !doc.querySelector('.season-stack') && !animations.length && clock.state().phase === state.phase && !clock.state().holding
+      && frameRequests().length === requests && toggle().textContent.trim() === 'Pause animation',
       'no seasonal photo in view: no layers, no animations, no fetches, and the clock rests without calling it a pause');
     win.scrollTo(0, 0);
     check(await until(() => clock.state().running && clock.state().joined.includes(1)) && clock.state().phase >= state.phase && clock.state().phase - state.phase < 1,
@@ -482,6 +496,23 @@ try {
     check(!idle, `real page: any stop with no seasonal photo in view had no layers, no animations and a resting clock (${without} such stops${idle ? `; ${idle}` : ''})`);
     check(maxStacks <= 3 && maxAnimations <= 6, `at most ${maxStacks} stacks and ${maxAnimations} running seasonal animations at any stop`);
     check(maxDecoded <= 12, `decoded seasonal frames stayed bounded (${maxDecoded} at most across the page)`);
+  }
+
+  // --- Short-screen dock stays above photos, clear of final content ------------
+  {
+    frame.style.width = '740px'; frame.style.height = '390px';
+    await load();
+    clock.seek(0);
+    await tick();
+    const button = toggle(), rect = button.getBoundingClientRect();
+    check(rect.height >= 44 && rect.bottom <= win.innerHeight && button.contains(doc.elementFromPoint(rect.x + rect.width / 2, rect.y + rect.height / 2)),
+      'short screen: dock remains visible and receives taps over positioned photos');
+    doc.querySelector('.site-footer').scrollIntoView({block: 'end'});
+    await ticks(3);
+    check(doc.querySelector('.site-footer').getBoundingClientRect().bottom <= button.getBoundingClientRect().top + 1
+      && parseFloat(win.getComputedStyle(doc.documentElement).scrollPaddingBottom) >= 44,
+      'short screen: footer and keyboard scroll clearance remain above dock');
+    frame.style.width = '1440px'; frame.style.height = '1000px';
   }
 
   // --- Fallbacks ---------------------------------------------------------------
