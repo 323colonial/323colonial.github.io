@@ -75,6 +75,13 @@ PATCHES = {
 }
 
 
+def photo_reference(view, phase, area):
+    """Match bathroom winter through its visible loft wall, not modeled bathroom warmth."""
+    if (view, phase, area) == ('38', 6, 'upper-bath'):
+        return 'loft', ((1090, 450, 40, 35), (1170, 450, 40, 35), (1140, 500, 40, 30))
+    return area, PATCHES[view]
+
+
 def reference_rgb(patches):
     """Equal-weight per-channel median of three separately sampled paint patches."""
     if len(patches) != 3 or not all(len(p) == 3 and all(math.isfinite(v) and v >= 0 for v in p) for p in patches):
@@ -308,12 +315,13 @@ def run(look='C', kitchen=False, interiors=False):
             porch_anchor_holds = []
             for view in groups[group]:
                 target_area = KITCHEN_TARGETS[view] if kitchen else group
-                shift = shifts[target_area]
+                reference_area, rectangles = photo_reference(view, key, target_area)
+                shift = shifts[reference_area]
                 original_path = ROOT/f'assets/listing/{view}.webp'
                 current_path = ROOT/f'assets/seasons-next/{view}/{key:02d}.webp'
                 original, current = load(original_path), load(current_path)
                 assert original.shape == current.shape, view
-                def sample(image, rectangles=PATCHES[view]):
+                def sample(image, rectangles=rectangles):
                     patches = []
                     for x, y, w, h in rectangles:
                         assert x+w <= image.shape[1] and y+h <= image.shape[0]
@@ -346,14 +354,15 @@ def run(look='C', kitchen=False, interiors=False):
                                input=np.round(encoded*65535).astype('<u2').tobytes(), check=True)
                 if interiors and clipping > .02:
                     holds.append('More than2% newly clipped pixels; highlight review required')
-                if interiors and view == '38' and key == 6:
-                    holds.append('Visual review: modeled winter target looks excessively warm; owner adjustment needed')
                 tint_delta = (math.log(src_mean[1]/math.sqrt(src_mean[0]*src_mean[2]))-math.log(orig_mean[1]/math.sqrt(orig_mean[0]*orig_mean[2]))) if min(*src_mean, *orig_mean) > 0 else None
                 report['photos'][f'{view}-{key:02d}'] = dict(target_area=target_area, original_patches=original_patches, current_patches=current_patches, achieved_patches=achieved_patches,
                     original_rgb=orig_mean.tolist(), current_rgb=src_mean.tolist(), target_log_rb=target,
                     achieved_rgb=achieved.tolist(), gains=gains, clipped_pixel_fraction=clipping, tint_axis_change_from_original=tint_delta)
                 report['photos'][f'{view}-{key:02d}'].update(reference_kind='daybed-anchored wood transfer' if transferred else 'white paint/daybed',
                     status='HOLD' if holds else 'owner-review-pending', hold_reasons=holds, unchanged_source=unchanged)
+                if reference_area != target_area:
+                    report['photos'][f'{view}-{key:02d}'].update(reference_kind='loft wall through doorway',
+                        reference_area=reference_area, reference_patches=rectangles, reference_shift=room_shift)
                 if group == 'back-porch' and view in PORCH_WHITE_ANCHORS:
                     before_wood, _ = sample(original, PORCH_WOOD_PATCHES[view])
                     after_wood, _ = sample(adjusted, PORCH_WOOD_PATCHES[view])
@@ -390,6 +399,7 @@ def run(look='C', kitchen=False, interiors=False):
             '<p>B is warmer than C. Columns: original / saved C / new B. B adds the model B-minus-C warmth difference to existing photo-led targets; no new physical simulation or independent tint correction. C copies remain unchanged.</p>' if compare_saved_c else '')+(
             '<p>Columns: original / current seasonal / B trial. Kitchen05/47/48 use new kitchen lighting references with the same saved global C scale plus B-minus-C warmth. Photo35 faces great room and uses its accepted B target. Prior accepted previews unchanged.</p>' if kitchen else '')+
             ('<p>Porch method:04/50 use three white daybed-frame patches. Other views use three shaded cedar patches matched to original wood color, only if both daybed anchors agree. Disagreement over0.2 log R/B or opposite directions holds transfer and leaves source unchanged. Wood is not made white. Porch model uses neutral virtual cards, approximate warm lamps, roof/screen shade and wood bounce. Probe brightness is normalized before fixed AgX color measurement to avoid daytime clipping and unreadable night values; B/C share each gain. This color-only estimate is not a photo exposure adjustment or calibrated photometry.</p>' if group == 'back-porch' else '')+
+            ('<p>Photo38 winter uses three loft-wall patches through the doorway and the accepted loft B relative warmth target, instead of the over-warm bathroom-model target. Bathroom lamps remain2700K; fall/spring and other photos unchanged. This is a global warmth correction, not a wall mask or neutralization.</p>' if group == 'upper-bath' else '')+
             '<p>'+('<a href="index.html">All interiors</a> · ' if interiors else '' if kitchen else '<a href="loft.html">Loft</a> · <a href="great-room.html">Great room</a> · ')+'<a href="#phase3">Fall</a> · <a href="#phase6">Winter</a> · <a href="#phase9">Spring</a> · <a href="recipe.json">Recipe</a></p>'
             '<p>C baseline maximum night target is10% higher linear red/blue ratio than original, not a Kelvin setting. B adds warmth beyond that baseline. C-model guides relative room/season variation only; literal model strength was rejected as too orange. Originals unchanged. Shared shift within each area; corrections differ for existing casts. Three reference patches per photo, pixel median within each then median across three; white paint/daybed except explicitly labeled porch wood transfer. No independent tint correction; median reference luminance held. Global trial also changes windows: masking may be needed. Current delivered WebPs are before inputs; all trials private, not approved exports.</p>'
             '<p>Click image for full size. Model reference sampling uses one fixed exposure two stops below earlier previews to avoid blown-out paint; photo exposure is not lowered. Model geometry, weather and tone mapping limit precision. No new generated scenery.</p>'+''.join(rows)+'</html>')

@@ -67,6 +67,15 @@ class PhotoWarmthTests(unittest.TestCase):
         self.assertEqual(self.wb.HELD_INTERIORS, ('30', '73'))
         self.assertEqual(self.wb.ORIGINAL_INTERIORS, ('07', '15', '19', '20', '24', '55', '56'))
 
+    def test_only_upper_bath_winter_uses_visible_loft_wall_reference(self):
+        self.assertTrue(hasattr(self.wb, 'photo_reference'), 'doorway loft reference missing')
+        patches = ((1090, 450, 40, 35), (1170, 450, 40, 35), (1140, 500, 40, 30))
+        for area, views in self.wb.INTERIOR_GROUPS.items():
+            for view in views:
+                for phase in (3, 6, 9):
+                    expected = ('loft', patches) if (view, phase) == ('38', 6) else (area, self.wb.PATCHES[view])
+                    self.assertEqual(self.wb.photo_reference(view, phase, area), expected)
+
     def test_probe_sampling_normalizes_brightness_not_chromaticity(self):
         self.assertTrue(hasattr(self.wb, 'probe_gain'), 'HDR probe normalization missing')
         for rgb in ((100., 80., 60.), (.001, .0003, .0001)):
