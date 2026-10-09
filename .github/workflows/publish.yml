@@ -3,19 +3,20 @@ name: Publish website
 on:
   push:
     branches: [main]
+  pull_request:
   workflow_dispatch:
 
 permissions:
   contents: read
 
 concurrency:
-  group: github-pages
+  group: github-pages-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: false
 
 jobs:
   build:
-    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
@@ -25,14 +26,18 @@ jobs:
           node-version: '24'
           cache: npm
       - run: npm ci
-      - run: npm test
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:buyer
       - name: Stage buyer-only website
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         run: node scripts/build-pages.mjs "$RUNNER_TEMP/site"
       - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         with:
           path: ${{ runner.temp }}/site
 
   deploy:
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     needs: build
     runs-on: ubuntu-latest
     permissions:

@@ -7,25 +7,8 @@ const fullSize = document.querySelector('#full-size');
 const error = document.querySelector('#viewer-error');
 const previews = [];
 
-// Narrative scroll position marks; existing text retains the accessible position.
-function createPhotoDots(count, current = 0) {
-  const dots = document.createElement('span');
-  dots.className = 'photo-dots';
-  dots.setAttribute('aria-hidden', 'true');
-  for (let i = 0; i < count; i++) {
-    const dot = document.createElement('span');
-    dot.classList.toggle('is-current', i === current);
-    dots.append(dot);
-  }
-  return dots;
-}
 let current = 0;
 let opener;
-
-function photoInset(source, width, height) {
-  const photoHeight = width * Number(source.getAttribute('height')) / Number(source.getAttribute('width'));
-  return Math.max(0, (height - photoHeight) / 2);
-}
 
 function showPhoto(index) {
   current = (index + links.length) % links.length;

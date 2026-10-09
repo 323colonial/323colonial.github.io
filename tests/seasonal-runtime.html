@@ -267,6 +267,31 @@ try {
       'Resume abandons the hung request, asks again and the clock recovers');
   }
 
+  // --- Barrier: unresolved decode ----------------------------------------------
+  {
+    win.scrollTo(0, blendScroll());
+    clock.seek(0, 0);
+    await until(() => B.every(p => clock.state().joined.includes(p)));
+    await ticks(3);
+    win.gate.hold = ['/34/06.webp'];
+    clock.seek(3, DUR / 2);
+    toggle().click();
+    check(await until(() => clock.state().stalled) && win.gate.waiting.length === 1,
+      'unresolved decode reaches bounded stall');
+    const before = win.gate.requests.filter(src => src.includes('/34/06.webp')).length;
+    win.gate.hold = []; // Future decodes work; the old promise remains unresolved.
+    toggle().click();
+    const recovered = await until(() => clock.state().running && clock.state().joined.includes(34), 90);
+    check(recovered && win.gate.requests.filter(src => src.includes('/34/06.webp')).length === before + 1,
+      'Resume starts a fresh decode before old promise resolves');
+    if (recovered) toggle().click();
+    const layers = [...(stackOf(34)?.children || [])];
+    win.gate.release();
+    await ticks(3);
+    check(recovered && layers.length === 2 && layers.every(layer => layer.parentNode === stackOf(34)),
+      'late abandoned decode cannot replace recovered layers');
+  }
+
   // --- Barrier: failed frame ---------------------------------------------------
   {
     win.scrollTo(0, blendScroll(.1));

@@ -5,13 +5,13 @@
 //
 //   node scripts/build-seasons-small.mjs [--check] [--force]
 //
-// --check writes nothing and fails if a frame is missing, wrong-sized or off the timing table.
-// --force remakes small frames that already exist (after a large frame is replaced).
+// --check is structural only: missing, wrong-sized or off-table frames fail; pixels are not compared.
+// Default builds regenerate every small frame, including same-sized replacements. --force remains accepted.
 import { spawnSync } from 'node:child_process';
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 
 const root = 'assets/seasons-next';
-const check = process.argv.includes('--check'), force = process.argv.includes('--force');
+const check = process.argv.includes('--check');
 const manifest = JSON.parse(readFileSync(`${root}/frames.json`, 'utf8'));
 
 // WebP header only; enough to compare a frame with its original derivative.
@@ -37,7 +37,7 @@ for (const [position, photo] of Object.entries(manifest.photos)) {
     if (!existsSync(large)) { problems.push(`${large} is missing`); continue; }
     const [w, h] = size(large);
     if (w !== width || h !== height) { problems.push(`${large}: ${w}x${h}, original is ${width}x${height}`); continue; }
-    if (existsSync(small) && size(small).join() === [sw, sh].join() && !(force && !check)) { kept++; continue; }
+    if (check && existsSync(small) && size(small).join() === [sw, sh].join()) { kept++; continue; }
     if (check) { problems.push(`${small} is missing or the wrong size`); continue; }
     const run = spawnSync('magick', [large, '-resize', `${sw}x${sh}!`, '-strip', '-quality', '78', small]);
     if (run.status !== 0) { console.error(String(run.stderr || run.error)); process.exit(1); }
@@ -51,6 +51,6 @@ for (const entry of readdirSync(root, { recursive: true, withFileTypes: true }))
 }
 if (!manifest.tiers?.includes('small')) problems.push('frames.json must list "tiers": ["large", "small"] for the runtime to use this tier');
 
-console.log(`${Object.keys(manifest.photos).length} photos, ${(expected.size - 1) / 2} frames per tier: ${made} small frames made, ${kept} already current`);
+console.log(`${Object.keys(manifest.photos).length} photos, ${(expected.size - 1) / 2} frames per tier: ${made} small frames made, ${kept} structurally valid`);
 problems.forEach(problem => console.error(`error: ${problem}`));
 process.exit(problems.length ? 1 : 0);

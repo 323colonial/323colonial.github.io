@@ -62,7 +62,7 @@ The owner-selected origin is `https://323colonial.github.io/`, hosted on GitHub 
 
 `scripts/publish-files.txt` defines the exact 952-file buyer-only publication allowlist: the two pages, their scripts and styles, 130 listing derivatives, the seasonal manifest and 810 seasonal frames (405 per tier). `tests/seo.test.mjs` derives the seasonal inventory from `frames.json` and requires the allowlist to match it exactly. The seasonal set in this allowlist has not been published. Bead colonial-euk published the earlier allowlist, with the eleven-frame hero, as release `f28077320e024564d1d18fcca2d22c464b75ef33` to GitHub Pages `gh-pages:/`. Earlier analytics release/account evidence remains in `docs/analytics.md` and Bead colonial-zoc.2.
 
-Colonial-5gq adds `.github/workflows/publish.yml`: after one-time activation of Pages' GitHub Actions source, every push to `main` runs Node tests and publishes an isolated allowlist-only artifact. Failed checks do not deploy; active deployments are serialized, and rapid pushes may coalesce pending runs. Never publish repository root. See `docs/publishing.md` for activation, permissions, verification and rollback. Implementation does not itself authorize a production push or settings change. No redirects are added; general live headers, crawler access and retired-route behavior remain outside this workflow change.
+Colonial-5gq adds `.github/workflows/publish.yml`: after one-time activation of Pages' GitHub Actions source, every push to `main` validates and publishes an isolated allowlist-only artifact. Colonial-u8z adds PR validation and requires buyer Node/Python checks plus four Chromium fixtures; only main non-PR runs stage/deploy. Unpublished walkthrough/detector checks remain in a separate tooling suite. Failed checks do not deploy; active deployments are serialized, and rapid pushes may coalesce pending runs. Never publish repository root. See `docs/publishing.md` for activation, permissions, verification and rollback. Implementation does not itself authorize a production push or settings change. No redirects are added; general live headers, crawler access and retired-route behavior remain outside this workflow change.
 
 The site serves only `index.html` and `gallery.html` as product pages. Colonial-yec removes legacy `floorplans.html`, `brochure.html`, `sale-prep.html` and their unused `styles.css`; no equivalent replacement warrants redirects. Route decisions and Git recovery source are recorded in `.pi/plans/2026-10-05-colonial-yec-route-pruning-plan.md`. All prior images/assets remain byte-identical. Old main/upstairs drawings and finish simulations are not linked buyer content. Developer tests and historical design artifacts remain repository tooling, not product pages.
 
@@ -106,9 +106,9 @@ Sherwin-Williams · 814 S Loudoun St, Winchester, VA 22601-4597.
 Run from repository root:
 
 ```sh
-node --test tests/*.test.mjs
-python3 tests/test_listing.py
-python3 test_design.py
+npx playwright install chromium
+npm run test:buyer
+npm run test:tooling
 python3 test_marketing_plans.py
 python3 -m http.server 8765 --bind 127.0.0.1
 ```

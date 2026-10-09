@@ -24,6 +24,7 @@ __pycache__/
 .posthog.*
 
 # Browser-test scratch output
+/test-results/
 /.playwright-mcp/
 /.walkthrough-notes/
 /assets/.walkthrough-stage.*/

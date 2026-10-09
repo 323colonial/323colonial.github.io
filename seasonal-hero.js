@@ -128,9 +128,9 @@
     img.src = url;
   }
 
-  // Priority blooms outward on two axes, time first: what the clock reaches next for
-  // visible photos, then for the nearest photo in the scroll direction, then the
-  // following segment, then photos further away. Never a whole year for its own sake.
+  // All visible current pairs go first. Then priority blooms outward on two axes:
+  // next boundary, nearest photo in the scroll direction, following segment, then
+  // photos further away. Never a whole year for its own sake.
   function schedule() {
     // Nothing new is requested while the tab is hidden, printing or under a dialog.
     if (document.hidden || dialogOpen() || still()) return;
@@ -146,6 +146,7 @@
       : s === 0 ? [...needs(p, (seg + 1) % S, 0, true), ...needs(p, seg, offset, true)]
       : needs(p, (seg + 1 + s) % S, 0, true);
     if (live.length) {
+      live.forEach(p => want(p, needs(p, seg, offset, !frozen), true));
       const index = live.map(p => photos.indexOf(p));
       const edge = direction > 0 ? Math.max(...index) : Math.min(...index);
       const eligible = p => p && (p.hero || p.figure.closest('.story.is-scrolling'));
@@ -275,6 +276,7 @@
 
   // --- Controls -----------------------------------------------------------------
   // The dial shares the photos' finite segment animation, never an independent year.
+  let dial = null, dialSegment = -1;
   function controls() {
     toggle.hidden = !(shown || stalled) || still() || dialogOpen();
     const action = toggle.querySelector('.motion-action');
@@ -288,13 +290,17 @@
       toggle.setAttribute('aria-description', description);
       toggle.title = description;
     }
+    if (startedAt != null && !toggle.hidden && dial?.startTime === startedAt && dialSegment === seg) return;
     const hand = toggle.querySelector('.season-hand');
     hand.getAnimations().forEach(animation => animation.cancel());
+    dial = null;
     const rotation = phase => `rotate(${phase / N * 360}deg)`;
     hand.style.transform = rotation(q);
     if (startedAt != null && !toggle.hidden) {
-      hand.animate({transform: [rotation(KN[seg]), rotation(KN[seg + 1])]},
-        {duration: DUR[seg], fill: 'both'}).startTime = startedAt;
+      dial = hand.animate({transform: [rotation(KN[seg]), rotation(KN[seg + 1])]},
+        {duration: DUR[seg], fill: 'both'});
+      dial.startTime = startedAt;
+      dialSegment = seg;
     }
   }
   function retry() {
@@ -302,7 +308,8 @@
     photos.forEach(p => p.frames.forEach(f => {
       // A request that never settles would keep its load slot through every retry.
       if (f.state === 'loading') abandon(f);
-      else if (f.state === 'error') { f.state = 'idle'; f.tries = 0; }
+      // Decode already released its network slot; detach identity without decrementing again.
+      else if (f.state === 'decoding' || f.state === 'error') { f.img = null; f.state = 'idle'; f.tries = 0; }
     }));
   }
   function remember() {

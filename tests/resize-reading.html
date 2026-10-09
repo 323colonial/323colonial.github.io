@@ -113,7 +113,8 @@ try {
   link.blur();
   await settle();
 
-  await seek(3.75);
+  // Stay beyond the .75 dominance boundary despite integer scroll rounding.
+  await seek(3.8);
   await resize(390, 480);
   const clearance = () => parseFloat(win.getComputedStyle(doc.documentElement).scrollPaddingTop);
   check(!section.classList.contains('is-scrolling') && Math.abs(photos[4].getBoundingClientRect().top - clearance()) < 2,
