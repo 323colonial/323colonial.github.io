@@ -5,6 +5,7 @@ blender -b --python-exit-code 1 -P scripts/seasons/lighting_reference.py -- --ch
 blender -b --python-exit-code 1 -P scripts/seasons/lighting_reference.py -- --render
 blender -b --python-exit-code 1 -P scripts/seasons/lighting_reference.py -- --timeline
 blender -b --python-exit-code 1 -P scripts/seasons/lighting_reference.py -- --areas
+blender -b --python-exit-code 1 -P scripts/seasons/lighting_reference.py -- --kitchen
 Uses retained local walkthrough inputs; no network, generation or publication.
 """
 import datetime as dt
@@ -92,13 +93,13 @@ def season(key):
                 sun_kelvin=interpolate(el, ((0, 3000), (5, 3500), (12, 4300), (30, 5200), (60, 6000))))
 
 
-def run(check_only=False, timeline=False, areas=False):
+def run(check_only=False, timeline=False, areas=False, kitchen=False):
     import bpy
     import numpy as np
     import runpy
     from mathutils import Vector
 
-    out = OUT/'areas' if areas else OUT/'timeline' if timeline else OUT
+    out = OUT/'kitchen' if kitchen else OUT/'areas' if areas else OUT/'timeline' if timeline else OUT
     keys = TIMELINE if timeline else (0, 3, 6, 9)
     out.mkdir(parents=True, exist_ok=True)
     work = ROOT / '.pi/artifacts/colonial-vby/work'
@@ -347,6 +348,9 @@ def run(check_only=False, timeline=False, areas=False):
                   '59': ((24, 13.8, 14), (0, 13.5, 14), 28)})
     if areas:
         views.update({k: ns['VIEWS'][n] for k, n in (('02', 'p02_great'), ('45', 'p45_north'))})
+    if kitchen:
+        views = {'kitchen-west': ns['VIEWS']['p15_kitchen'],
+                 'kitchen-south': ((19, 20, 4.8), (18.1, 26, 6.2), 18)}
     provenance = {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest()
                   for p in [Path(__file__), ROOT/'scripts/walkthrough/plan.json',
                             ROOT/'scripts/seasons/pilot.py', ROOT/'scripts/seasons/light.py',
@@ -452,6 +456,6 @@ def run(check_only=False, timeline=False, areas=False):
 
 if __name__ == '__main__':
     args = sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else []
-    if args not in (['--check'], ['--render'], ['--timeline'], ['--areas']):
-        raise SystemExit('Use Blender with -- --check, --render, --timeline or --areas')
-    run(check_only=args == ['--check'], timeline=args == ['--timeline'], areas=args == ['--areas'])
+    if args not in (['--check'], ['--render'], ['--timeline'], ['--areas'], ['--kitchen']):
+        raise SystemExit('Use Blender with -- --check, --render, --timeline, --areas or --kitchen')
+    run(check_only=args == ['--check'], timeline=args == ['--timeline'], areas=args == ['--areas'], kitchen=args == ['--kitchen'])

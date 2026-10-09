@@ -40,6 +40,18 @@ class PhotoWarmthTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.wb.photo_shifts({'room': [0, 0, 0, 0]})
 
+    def test_new_room_reuses_saved_global_scale(self):
+        shifts = self.wb.photo_shifts({'kitchen': [0, .1, .4, .02]}, peak=2.)
+        self.assertAlmostEqual(shifts['kitchen'][2], math.log(1.10)*.2)
+        self.assertAlmostEqual(shifts['kitchen'][1], math.log(1.10)*.05)
+        for peak in (0, -1, float('nan')):
+            with self.assertRaises(ValueError):
+                self.wb.photo_shifts({'kitchen': [0, .1, .4, .02]}, peak=peak)
+
+    def test_kitchen_batch_routes_visible_great_room_separately(self):
+        self.assertEqual(getattr(self.wb, 'KITCHEN_TARGETS', None),
+                         {'05': 'kitchen', '35': 'great-room', '47': 'kitchen', '48': 'kitchen'})
+
     def test_b_keeps_photo_led_base_and_adds_relative_look_difference(self):
         base = [0., .04, .095, .016]
         result = self.wb.look_shifts(base, [.001, .01, .06, .002])

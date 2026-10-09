@@ -3,6 +3,7 @@
 
 blender -b --python-exit-code 1 -P scripts/seasons/photo_wb.py
 blender -b --python-exit-code 1 -P scripts/seasons/photo_wb.py -- --look B
+blender -b --python-exit-code 1 -P scripts/seasons/photo_wb.py -- --kitchen
 No originals, seasonal exports or physical model inputs are modified.
 """
 import json
@@ -18,6 +19,7 @@ from night_looks import digest
 OUT = ROOT/'.pi/artifacts/colonial-66v-photo-wb'
 GROUPS = {'loft': ('21', '22', '57', '59'), 'great-room': ('02', '12', '13', '14')}
 MODEL_VIEWS = {'loft': ('21', '22', '57', '59'), 'great-room': ('02', '45')}
+KITCHEN_TARGETS = {'05': 'kitchen', '35': 'great-room', '47': 'kitchen', '48': 'kitchen'}
 # Fixed diffuse paint references, x/y/width/height in original delivered dimensions.
 PATCHES = {
     '21': ((800, 25, 160, 70), (670, 300, 100, 60), (1050, 50, 140, 70)),
@@ -28,6 +30,10 @@ PATCHES = {
     '12': ((1100, 110, 100, 70), (150, 80, 90, 60), (560, 190, 140, 45)),
     '13': ((735, 70, 70, 110), (430, 90, 70, 70), (550, 170, 150, 50)),
     '14': ((1130, 420, 100, 110), (1140, 250, 100, 90), (570, 420, 50, 70)),
+    '05': ((180, 100, 140, 70), (460, 160, 120, 70), (1070, 45, 130, 60)),
+    '35': ((200, 260, 100, 70), (810, 190, 90, 75), (1210, 130, 110, 80)),
+    '47': ((90, 320, 110, 100), (460, 180, 120, 65), (930, 190, 110, 50)),
+    '48': ((380, 80, 130, 70), (450, 210, 130, 50), (220, 370, 70, 110)),
 }
 
 
@@ -48,9 +54,10 @@ def warmth_gains(rgb, target):
     return tuple(v*scale for v in gains)
 
 
-def photo_shifts(model_shifts):
-    """Photographic preview strength; model controls relative room/season variation."""
-    peak = max(v[2] for v in model_shifts.values())
+def photo_shifts(model_shifts, peak=None):
+    """Use saved global peak for new rooms; never normalize each room separately."""
+    if peak is None:
+        peak = max(v[2] for v in model_shifts.values())
     if not math.isfinite(peak) or peak <= 0:
         raise ValueError('Positive modeled night warmth required')
     return {room: [v*math.log(1.10)/peak for v in values] for room, values in model_shifts.items()}
@@ -63,16 +70,20 @@ def look_shifts(base, difference):
     return [b+d-difference[0] for b, d in zip(base, difference)]
 
 
-def run(look='C'):
+def run(look='C', kitchen=False):
     import bpy
     import numpy as np
     import subprocess
 
     assert look in ('B', 'C')
-    out = OUT/'B' if look == 'B' else OUT
+    assert not kitchen or look == 'B'
+    out = OUT/'kitchen-B' if kitchen else OUT/'B' if look == 'B' else OUT
+    groups = {'kitchen': tuple(KITCHEN_TARGETS)} if kitchen else GROUPS
+    model_views = {'kitchen': ('kitchen-west', 'kitchen-south')} if kitchen else MODEL_VIEWS
     out.mkdir(parents=True, exist_ok=True)
     baseline = json.loads((OUT/'recipe.json').read_text()) if look == 'B' else None
-    source = MODEL/'areas'
+    compare_saved_c = baseline is not None and not kitchen
+    source = MODEL/('kitchen' if kitchen else 'areas')
     physical = json.loads((source/'results.json').read_text())
     look_path = MODEL/'timeline/looks/recipe.json'
     looks = json.loads(look_path.read_text())
@@ -83,13 +94,24 @@ def run(look='C'):
             path = OUT/name
             assert digest(path) == expected, f'C baseline changed: {path}'
             inputs[str(path.relative_to(ROOT))] = expected
-        assert digest(source/'results.json') == baseline['inputs'][str((source/'results.json').relative_to(ROOT))]
+        prior_physical = MODEL/'areas/results.json'
+        inputs[str(prior_physical.relative_to(ROOT))] = digest(prior_physical)
+        assert digest(prior_physical) == baseline['inputs'][str(prior_physical.relative_to(ROOT))]
         assert digest(look_path) == baseline['inputs'][str(look_path.relative_to(ROOT))]
+    if kitchen:
+        approved_path = OUT/'B-reviewed/recipe.json'
+        approved = json.loads(approved_path.read_text())
+        inputs[str(approved_path.relative_to(ROOT))] = digest(approved_path)
+        assert approved['inputs'][str((OUT/'recipe.json').relative_to(ROOT))] == digest(OUT/'recipe.json')
+        for name, expected in approved['outputs'].items():
+            path = approved_path.parent/name
+            assert digest(path) == expected, f'Accepted B changed: {path}'
+            inputs[str(path.relative_to(ROOT))] = expected
     for p, expected in physical['source_hashes'].items():
         assert digest(ROOT/p) == expected, f'Stale area reference: {p}'
         inputs[p] = expected
     assert [s['key'] for s in physical['seasons']] == [0, 3, 6, 9]
-    assert len(physical['results']) == 24
+    assert len(physical['results']) == 4*sum(map(len, model_views.values()))
     report = dict(look=look, method='Photo-led C baseline; B adds matched model B-minus-C warmth without renormalizing the night cap' if baseline else
                   'Photo-led subtle warmth: C-model relative variation scaled to10% maximum night R/B increase over original patch',
                   limits=['not measured CCT or raw-camera white balance', 'global trial also changes exterior colors; masks not yet applied',
@@ -129,8 +151,9 @@ def run(look='C'):
         bpy.data.images.remove(im)
         return a
 
-    for group, views in MODEL_VIEWS.items():
+    for group, views in model_views.items():
         deltas = []
+        c_deltas = []
         look_deltas = []
         for view in views:
             coord_path = source/f'{view}-sample-pixels.json'
@@ -142,7 +165,8 @@ def run(look='C'):
             c_samples = []
             lamps = component(f'{view}-lamps-2700')
             for key in (0, 3, 6, 9):
-                a = lamps+component(f'{view}-{key:02d}-daylight')
+                total = lamps+component(f'{view}-{key:02d}-daylight')
+                a = total.copy()
                 a[:, :, :3] = a[:, :, :3] @ np.array(looks['treatments'][look]['knot_matrices'][TIMELINE.index(key)]).T
                 a[:, :, 3] = 1
                 h, w, _ = a.shape
@@ -153,7 +177,16 @@ def run(look='C'):
                 bpy.data.images.remove(im)
                 # Ray coordinates use Blender's bottom-origin; decoded images use top-origin.
                 samples.append(load(path)[h-1-yy, xx])
-                if baseline:
+                if kitchen:
+                    total[:, :, :3] = total[:, :, :3] @ np.array(looks['treatments']['C']['knot_matrices'][TIMELINE.index(key)]).T
+                    total[:, :, 3] = 1
+                    im = bpy.data.images.new('C_kitchen_display', w, h, alpha=True, float_buffer=True)
+                    im.pixels.foreach_set(total.ravel())
+                    c_path = out/f'model-{view}-{key:02d}-C.png'
+                    im.save_render(str(c_path), scene=sc)
+                    bpy.data.images.remove(im)
+                    c_samples.append(load(c_path)[h-1-yy, xx])
+                elif baseline:
                     c_samples.append(load(OUT/f'model-{view}-{key:02d}-C.png')[h-1-yy, xx])
             stack = np.array(samples)
             valid = ((stack > .025) & (stack < .95)).all(axis=(0, 2))
@@ -168,24 +201,35 @@ def run(look='C'):
             deltas.append(warmth-warmth[0])
             if baseline:
                 c_means = c_stack[:, valid].mean(axis=1)
-                look_deltas.append(warmth-np.log(c_means[:, 0]/c_means[:, 2]))
+                c_warmth = np.log(c_means[:, 0]/c_means[:, 2])
+                look_deltas.append(warmth-c_warmth)
+                c_deltas.append(c_warmth-c_warmth[0])
             report['model'][view] = dict(common_samples=int(valid.sum()), display_linear_rgb=means.tolist(), relative_warmth=(warmth-warmth[0]).tolist())
         assert len(deltas) >= 2, f'Insufficient usable reference views: {group}'
         shift = np.mean(deltas, axis=0)
         report['model'][group] = dict(views=views, relative_warmth=shift.tolist())
         if baseline:
             report['model'][group]['look_difference'] = np.mean(look_deltas, axis=0).tolist()
-    shifts = {group: look_shifts(baseline['photo_shifts'][group], report['model'][group]['look_difference']) for group in GROUPS} if baseline else photo_shifts(
-        {group: report['model'][group]['relative_warmth'] for group in GROUPS})
+            report['model'][group]['c_relative_warmth'] = np.mean(c_deltas, axis=0).tolist()
+    if kitchen:
+        peak = max(baseline['model'][g]['relative_warmth'][2] for g in GROUPS)
+        c_shift = photo_shifts({'kitchen': report['model']['kitchen']['c_relative_warmth']}, peak=peak)['kitchen']
+        shifts = {'kitchen': look_shifts(c_shift, report['model']['kitchen']['look_difference']),
+                  'great-room': approved['photo_shifts']['great-room']}
+        report.update(global_c_peak=peak, c_photo_shifts={'kitchen': c_shift}, photo_targets=KITCHEN_TARGETS)
+    else:
+        shifts = {group: look_shifts(baseline['photo_shifts'][group], report['model'][group]['look_difference']) for group in groups} if baseline else photo_shifts(
+            {group: report['model'][group]['relative_warmth'] for group in groups})
     report['photo_shifts'] = shifts
-    for group in GROUPS:
-        shift = shifts[group]
+    for group in groups:
         rows = []
         for phase_index, key in enumerate((3, 6, 9), 1):
             rows.append(f'<h2 id="phase{key}">{ {3:"Fall",6:"Winter",9:"Spring"}[key]} · phase {key}</h2>')
-            rows.append('<table><tr><th>Original · unchanged</th><th>'+('C trial' if baseline else 'Current seasonal')+f'</th><th>{look} warmth-only trial</th></tr>')
+            rows.append('<table><tr><th>Original · unchanged</th><th>'+('C trial' if compare_saved_c else 'Current seasonal')+f'</th><th>{look} warmth-only trial</th></tr>')
             sheet = ['magick']
-            for view in GROUPS[group]:
+            for view in groups[group]:
+                target_area = KITCHEN_TARGETS[view] if kitchen else group
+                shift = shifts[target_area]
                 original_path = ROOT/f'assets/listing/{view}.webp'
                 current_path = ROOT/f'assets/seasons-next/{view}/{key:02d}.webp'
                 original, current = load(original_path), load(current_path)
@@ -210,16 +254,16 @@ def run(look='C'):
                 subprocess.run(['magick', '-size', f'{current.shape[1]}x{current.shape[0]}', '-depth', '16', '-endian', 'LSB', 'rgb:-', '-set', 'colorspace', 'sRGB', str(out/filename)],
                                input=np.round(encoded*65535).astype('<u2').tobytes(), check=True)
                 tint_delta = math.log(src_mean[1]/math.sqrt(src_mean[0]*src_mean[2]))-math.log(orig_mean[1]/math.sqrt(orig_mean[0]*orig_mean[2]))
-                report['photos'][f'{view}-{key:02d}'] = dict(original_patches=original_patches, current_patches=current_patches, achieved_patches=achieved_patches,
+                report['photos'][f'{view}-{key:02d}'] = dict(target_area=target_area, original_patches=original_patches, current_patches=current_patches, achieved_patches=achieved_patches,
                     original_rgb=orig_mean.tolist(), current_rgb=src_mean.tolist(), target_log_rb=target,
                     achieved_rgb=achieved.tolist(), gains=gains, clipped_pixel_fraction=clipping, tint_axis_change_from_original=tint_delta)
                 report['outputs'][filename] = digest(out/filename)
                 originals_url = f'/assets/listing/{view}.webp'
-                current_url = f'../{filename}' if baseline else f'/assets/seasons-next/{view}/{key:02d}.webp'
+                current_url = f'../{filename}' if compare_saved_c else f'/assets/seasons-next/{view}/{key:02d}.webp'
                 rows.append(f'<tr><th colspan="3">Photo {view} · target R/B {math.exp(target):.2f} (linear RGB) · clipping {clipping:.1%} · tint untouched</th></tr><tr>'+''.join(
                     f'<td><a href="{url}"><img src="{url}" alt="Photo {view}, phase {key}, {label}"></a></td>' for url, label in
-                    ((originals_url, 'original'), (current_url, 'saved C' if baseline else 'current'), (filename, f'{look} trial')))+'</tr>')
-                sheet += ['(', str(original_path), str(OUT/filename if baseline else current_path), str(out/filename), '-resize', '440x293!', '+append', ')']
+                    ((originals_url, 'original'), (current_url, 'saved C' if compare_saved_c else 'current'), (filename, f'{look} trial')))+'</tr>')
+                sheet += ['(', str(original_path), str(OUT/filename if compare_saved_c else current_path), str(out/filename), '-resize', '440x293!', '+append', ')']
             rows.append('</table>')
             sheet_name = f'{group}-{key:02d}-sheet.jpg'
             subprocess.run([*sheet, '-append', str(out/sheet_name)], check=True)
@@ -228,20 +272,21 @@ def run(look='C'):
         (out/filename).write_text('<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Private warmth trial</title>'
             '<style>body{font:16px system-ui;margin:24px;background:#fafafa;color:#222}table{width:100%;table-layout:fixed}img{display:block;width:100%;height:auto}th{text-align:left;padding:8px}p{max-width:1000px;line-height:1.5}</style>'
             f'<h1>{group.replace("-", " ").title()} · {look}-guided warmth trial</h1>'+(
-            '<p>B is warmer than C. Columns: original / saved C / new B. B adds the model B-minus-C warmth difference to existing photo-led targets; no new physical simulation or independent tint correction. C copies remain unchanged.</p>' if baseline else '')+
-            '<p><a href="loft.html">Loft</a> · <a href="great-room.html">Great room</a> · <a href="#phase3">Fall</a> · <a href="#phase6">Winter</a> · <a href="#phase9">Spring</a> · <a href="recipe.json">Recipe</a></p>'
+            '<p>B is warmer than C. Columns: original / saved C / new B. B adds the model B-minus-C warmth difference to existing photo-led targets; no new physical simulation or independent tint correction. C copies remain unchanged.</p>' if compare_saved_c else '')+(
+            '<p>Columns: original / current seasonal / B trial. Kitchen05/47/48 use new kitchen lighting references with the same saved global C scale plus B-minus-C warmth. Photo35 faces great room and uses its accepted B target. Prior accepted previews unchanged.</p>' if kitchen else '')+
+            '<p>'+('' if kitchen else '<a href="loft.html">Loft</a> · <a href="great-room.html">Great room</a> · ')+'<a href="#phase3">Fall</a> · <a href="#phase6">Winter</a> · <a href="#phase9">Spring</a> · <a href="recipe.json">Recipe</a></p>'
             '<p>C baseline maximum night target is10% higher linear red/blue ratio than original, not a Kelvin setting. B adds warmth beyond that baseline. C-model guides relative room/season variation only; literal model strength was rejected as too orange. Originals unchanged. Shared shift within each area; corrections differ for existing casts. Three white-painted patches per photo, pixel median within each then median across three. No independent tint correction; median reference luminance held. Global trial also changes windows: masking may be needed. Current delivered WebPs are before inputs; all trials private, not approved exports.</p>'
             '<p>Click image for full size. Model reference sampling uses one fixed exposure two stops below earlier previews to avoid blown-out paint; photo exposure is not lowered. Model geometry, weather and tone mapping limit precision. No new generated scenery.</p>'+''.join(rows)+'</html>')
         report['outputs'][filename] = digest(out/filename)
-    assert len(report['photos']) == 24
+    assert len(report['photos']) == 3*sum(map(len, groups.values()))
     for path, expected in inputs.items():
         assert digest(ROOT/path) == expected, f'Input changed: {path}'
     (out/'recipe.json').write_text(json.dumps(report, indent=2)+'\n')
-    print('PASS 24 private warmth-only candidates; source hashes unchanged')
+    print(f'PASS {len(report["photos"])} private warmth-only candidates; source hashes unchanged')
 
 
 if __name__ == '__main__':
     args = sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else []
-    if args not in ([], ['--look', 'B']):
-        raise SystemExit('Use Blender with no arguments for C or -- --look B')
-    run('B' if args else 'C')
+    if args not in ([], ['--look', 'B'], ['--kitchen']):
+        raise SystemExit('Use Blender with no arguments for C, -- --look B or -- --kitchen')
+    run('B' if args else 'C', kitchen=args == ['--kitchen'])
