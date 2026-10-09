@@ -27,6 +27,20 @@ class LightingReferenceTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             ref.spot_fraction(0)
 
+    def test_full_timeline_matches_manifest_and_keeps_anchor_sources(self):
+        import json
+        manifest = json.loads((ref.ROOT / 'assets/seasons-next/frames.json').read_text())
+        self.assertEqual(list(ref.TIMELINE), manifest['knots'][:-1])
+        seasons = [ref.season(k) for k in ref.TIMELINE]
+        self.assertEqual(len({s['label'] for s in seasons}), 18)
+        for s in seasons:
+            if s['elevation'] <= 0:
+                self.assertEqual(s['sun_lux_normal'], 0)
+        for key, canopy, kelvin in ((0, .3, 5200), (3, .5, 3500), (9, .6, 4300)):
+            s = ref.season(key)
+            self.assertAlmostEqual(s['direct_canopy_factor'], canopy)
+            self.assertAlmostEqual(s['sun_kelvin'], kelvin)
+
     def test_compass_matches_model_axes(self):
         for azimuth, expected in ((0, (0, -1, 0)), (90, (-1, 0, 0)),
                                   (180, (0, 1, 0)), (270, (1, 0, 0))):

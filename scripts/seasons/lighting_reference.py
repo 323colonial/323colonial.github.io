@@ -3,6 +3,7 @@
 
 blender -b --python-exit-code 1 -P scripts/seasons/lighting_reference.py -- --check
 blender -b --python-exit-code 1 -P scripts/seasons/lighting_reference.py -- --render
+blender -b --python-exit-code 1 -P scripts/seasons/lighting_reference.py -- --timeline
 Uses retained local walkthrough inputs; no network, generation or publication.
 """
 import datetime as dt
@@ -15,6 +16,7 @@ import sys
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / '.pi/artifacts/colonial-66v-lighting'
 Y = (.2126, .7152, .0722)
+TIMELINE = (0, 1, 2, 3, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 11)
 
 
 def luminance(rgb):
@@ -56,6 +58,15 @@ def sun_direction(azimuth, elevation):
     return (-math.sin(az)*math.cos(el), -math.cos(az)*math.cos(el), math.sin(el))
 
 
+def interpolate(value, anchors):
+    if value <= anchors[0][0]:
+        return anchors[0][1]
+    for (a, x), (b, y) in zip(anchors, anchors[1:]):
+        if value <= b:
+            return x + (y-x)*(value-a)/(b-a)
+    return anchors[-1][1]
+
+
 def season(key):
     sys.path.insert(0, str(ROOT / 'scripts/seasons'))
     import pilot
@@ -73,20 +84,22 @@ def season(key):
     sky = total if el <= 0 else total * diffuse_fraction
     normal = 0 if el <= 0 else (total-sky)/math.sin(math.radians(el))
     # ponytail: no surveyed tree horizon; replace these scalar canopy guesses if calibrated data arrives.
-    canopy = {0: .3, 3: .5, 6: 1, 9: .6}[key]
-    return dict(key=key, local=local.isoformat(), azimuth=az, elevation=el,
+    canopy = interpolate(key, ((0, .3), (3, .5), (6, 1), (9, .6), (12, .3)))
+    return dict(key=key, label=pilot.lab(key), local=local.isoformat(), azimuth=az, elevation=el,
                 sky_lux_horizontal=sky, sun_lux_normal=normal*canopy,
                 direct_canopy_factor=canopy, sky_kelvin=7500 if el > 0 else 9000,
-                sun_kelvin={0: 5200, 3: 3500, 6: 5000, 9: 4300}[key])
+                sun_kelvin=interpolate(el, ((0, 3000), (5, 3500), (12, 4300), (30, 5200), (60, 6000))))
 
 
-def run(check_only=False):
+def run(check_only=False, timeline=False):
     import bpy
     import numpy as np
     import runpy
     from mathutils import Vector
 
-    OUT.mkdir(parents=True, exist_ok=True)
+    out = OUT/'timeline' if timeline else OUT
+    keys = TIMELINE if timeline else (0, 3, 6, 9)
+    out.mkdir(parents=True, exist_ok=True)
     work = ROOT / '.pi/artifacts/colonial-vby/work'
     assert (work / 'sky.hdr').is_file() and (work / 'textures').is_dir(), 'retained inputs missing'
     old_argv = sys.argv
@@ -117,11 +130,15 @@ def run(check_only=False):
     camera.data.clip_start = .02
     camera.data.clip_end = 2000
 
+    component_hashes = {}
+
     def render_array(name):
         sc.render.image_settings.file_format = 'OPEN_EXR'
         sc.render.image_settings.color_depth = '32'
-        sc.render.filepath = str(OUT / (name + '.exr'))
+        sc.render.filepath = str(out / (name + '.exr'))
         bpy.ops.render.render(write_still=True)
+        rendered = Path(sc.render.filepath)
+        component_hashes[rendered.name] = hashlib.sha256(rendered.read_bytes()).hexdigest()
         image = bpy.data.images.load(sc.render.filepath, check_existing=False)
         pixels = np.array(image.pixels[:], dtype=np.float32).reshape(
             sc.render.resolution_y, sc.render.resolution_x, 4)
@@ -134,7 +151,7 @@ def run(check_only=False):
         im = bpy.data.images.new(name, w, h, alpha=True, float_buffer=True)
         im.pixels.foreach_set(pixels.ravel())
         sc.render.image_settings.file_format = 'PNG'
-        im.save_render(str(OUT / (name + '.png')), scene=sc)
+        im.save_render(str(out / (name + '.png')), scene=sc)
         bpy.data.images.remove(im)
 
     def set_source(data, flux, kelvin):
@@ -274,9 +291,9 @@ def run(check_only=False):
     for mat in bpy.data.materials:
         if mat.name.split('__')[0] in ('lampglow', 'fire', 'water'):
             nodes = mat.node_tree.nodes
-            out = next(n for n in nodes if n.type == 'OUTPUT_MATERIAL')
+            surface_output = next(n for n in nodes if n.type == 'OUTPUT_MATERIAL')
             tr = nodes.new('ShaderNodeBsdfTransparent')
-            mat.node_tree.links.new(tr.outputs[0], out.inputs[0])
+            mat.node_tree.links.new(tr.outputs[0], surface_output.inputs[0])
 
     inventory = []
     artificial = []
@@ -334,9 +351,10 @@ def run(check_only=False):
     lattice = next(im for im in bpy.data.images if Path(im.filepath).stem == 'lattice')
     lattice_path = Path(bpy.path.abspath(lattice.filepath))
     report = dict(calibration=calibration, fixtures=inventory, cameras=views,
+                  component_sha256=component_hashes,
                   lattice_alpha=dict(path=str(lattice_path), sha256=hashlib.sha256(lattice_path.read_bytes()).hexdigest()),
                   source_hashes=provenance, blender=bpy.app.version_string,
-                  seasons=[season(k) for k in (0, 3, 6, 9)], reflectance=reflectance,
+                  seasons=[season(k) for k in keys], reflectance=reflectance,
                   exposure=4, view_transform='AgX - Medium High Contrast', white_balance='fixed linear sRGB / D65; no adaptive WB',
                   limitations=['approximate poses, not photo registration', 'uniform sky; no surveyed trees or weather',
                                'Planckian RGB, not measured LED spectra',
@@ -344,7 +362,7 @@ def run(check_only=False):
                                'lamp/daylight multipliers are sensitivity examples, not full count/glazing uncertainty coverage',
                                'components independently denoised; linear sums are approximate',
                                'peripheral fixtures/texture reflectances approximate; not full-house photometry'], results={})
-    (OUT/'inputs.json').write_text(json.dumps(report, indent=2)+'\n')
+    (out/'inputs.json').write_text(json.dumps(report, indent=2)+'\n')
     assert len([i for i in inventory if i['label'] == 'recessed' and i['position_m'][2] > 5]) >= 6
     if check_only:
         print('PASS physical math/renderer calibration and source setup', flush=True)
@@ -393,7 +411,7 @@ def run(check_only=False):
     for view in views:
         pose(view)
         coords = samples_on_paint()
-        (OUT/f'{view}-sample-pixels.json').write_text(json.dumps(coords))
+        (out/f'{view}-sample-pixels.json').write_text(json.dumps(coords))
         lamps = {}
         bg.inputs['Strength'].default_value = 0
         sun.energy = 0
@@ -403,17 +421,18 @@ def run(check_only=False):
             lamps[kelvin] = render_array(f'{view}-lamps-{kelvin}')
         for ob, flux, k in artificial:
             ob.data.energy = 0
-        for key in (0, 3, 6, 9):
+        for key in keys:
             s = season(key)
+            label = s['label']
             rgb = cct_rgb(s['sky_kelvin'])
             bg.inputs['Color'].default_value = (*rgb, 1)
             bg.inputs['Strength'].default_value = s['sky_lux_horizontal']/(683*math.pi)
             set_source(sun, s['sun_lux_normal'], s['sun_kelvin'])
             sun_ob.rotation_euler = (-Vector(sun_direction(s['azimuth'], s['elevation']))).to_track_quat('-Z', 'Y').to_euler()
-            daylight = render_array(f'{view}-{key:02d}-daylight')
+            daylight = render_array(f'{view}-{label}-daylight')
             total = lamps[2700]+daylight
             total[:, :, 3] = 1
-            save_display(f'{view}-{key:02d}-physical', total)
+            save_display(f'{view}-{label}-physical', total)
             # Sensitivity corners, not confidence intervals or Kelvin averages.
             cooler = .8*lamps[3000]+1.5*daylight
             warmer = 1.2*lamps[2700]+.35*daylight
@@ -422,13 +441,13 @@ def run(check_only=False):
                        warmer_bound=metrics(warmer, coords))
             for material in row['physical']:
                 row['physical'][material]['lamp_fraction_Y'] = row['lamps'][material]['luminance']/row['physical'][material]['luminance']
-            report['results'][f'{view}-{key:02d}'] = row
-            (OUT/'results.json').write_text(json.dumps(report, indent=2)+'\n')
+            report['results'][f'{view}-{label}'] = row
+            (out/'results.json').write_text(json.dumps(report, indent=2)+'\n')
     print('PASS private reference rendered; no delivered assets changed by script', flush=True)
 
 
 if __name__ == '__main__':
     args = sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else []
-    if args not in (['--check'], ['--render']):
-        raise SystemExit('Use Blender with -- --check or -- --render')
-    run(check_only=args == ['--check'])
+    if args not in (['--check'], ['--render'], ['--timeline']):
+        raise SystemExit('Use Blender with -- --check, --render or --timeline')
+    run(check_only=args == ['--check'], timeline=args == ['--timeline'])
