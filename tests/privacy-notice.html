@@ -15,7 +15,9 @@ const check = (ok, name) => {
 const tick = () => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
 async function load(route, width, options = {}) {
   frame.style.width = `${width}px`;
-  const source = await fetch(`../${route}`).then(r => r.text());
+  // Isolate notice timers from the seasonal runtime's separate 10-second loading hold.
+  const source = (await fetch(`../${route}`).then(r => r.text()))
+    .replace(/<script\b[^>]*src="seasonal-hero\.js"[^>]*><\/script>/, '');
   const setup = `<script>
     const options = ${JSON.stringify(options)};
     window.noticeTest = { timers: new Map(), writes: [], jar: options.remembered ? 'colonial_notice_dismissed=1' : '' };

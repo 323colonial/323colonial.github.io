@@ -335,7 +335,10 @@ try {
     check(dialAgrees(hidden.phase, .001) && !hand()?.getAnimations().length && !hidden.running && clock.state().phase === hidden.phase && frameRequests().length === hiddenRequests, 'hidden tab pauses the clock and fetches nothing');
     delete doc.hidden;
     doc.dispatchEvent(new Event('visibilitychange'));
-    check(await until(() => clock.state().running) && clock.state().phase - hidden.phase < .5 && clock.state().phase >= hidden.phase, 'visible tab resumes from the same phase, no catch-up');
+    const visibleAgain = await until(() => clock.state().running);
+    const resumedPhase = clock.state().phase;
+    check(visibleAgain && resumedPhase - hidden.phase < .5 && resumedPhase >= hidden.phase,
+      `visible tab resumes from the same phase, no catch-up (${hidden.phase.toFixed(6)} → ${resumedPhase.toFixed(6)})`);
     win.printMedia.matches = true; win.printMedia.dispatchEvent(new Event('change'));
     await tick();
     check(!clock.state().running && toggle().hidden, 'print pauses the clock and hides the control');

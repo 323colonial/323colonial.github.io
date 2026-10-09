@@ -10,7 +10,10 @@ REQUIRED_TOKENS = (
     "--paper-strong",
     "--rule",
     "--muted",
-    "--pewter-green",
+    "--debonair",
+    "--sea-salt",
+    "--accessible-beige",
+    "--greek-villa",
     "--mahogany",
 )
 REQUIRED_COMPONENTS = (
@@ -40,7 +43,9 @@ def main() -> None:
 
     design = Path("DESIGN.md").read_text()
     assert "House-color property narrative" in design, "approved design direction is undocumented"
-    assert "#5e6259" in design, "shipped Pewter Green token is undocumented"
+    assert "#593a32" in design, "shipped dark mahogany approximation is undocumented"
+    assert re.search(r"\.masthead \{[^}]*background: var\(--mahogany\)", css), "masthead must use house dark mahogany"
+    assert "--pewter-green" not in css, "historical door paint must not anchor current buyer palette"
     assert "The Woodland Survey" not in design, "superseded design direction remains"
 
     for page in PAGES:

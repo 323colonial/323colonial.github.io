@@ -1,0 +1,52 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Rendering layout regression</title>
+<h1>Rendering layout regression</h1>
+<p>Serve repository root. Rebuild timing is advisory; write-to-geometry barriers must stay bounded regardless of story count.</p>
+<pre id="results">Running…</pre>
+<iframe title="Buyer rendering under test" style="border:0"></iframe>
+<script type="module">
+const frame = document.querySelector('iframe');
+const results = [];
+for (const [width, height] of [[1440, 1000], [390, 844]]) {
+  frame.style.width = `${width}px`;
+  frame.style.height = `${height}px`;
+  await new Promise(resolve => { frame.onload = resolve; frame.src = `../index.html?render-test=${width}`; });
+  const win = frame.contentWindow, doc = frame.contentDocument;
+  await doc.fonts.ready;
+  await new Promise(resolve => win.requestAnimationFrame(() => win.requestAnimationFrame(resolve)));
+  const observer = new win.MutationObserver(() => {});
+  const rect = win.Element.prototype.getBoundingClientRect;
+  const update = win.updatePhotos;
+  let barriers = 0, measuring = false;
+  // Counts read-after-write opportunities, not a claim about actual browser reflows.
+  win.Element.prototype.getBoundingClientRect = function (...args) {
+    if (measuring && observer.takeRecords().length) barriers++;
+    return rect.apply(this, args);
+  };
+  win.updatePhotos = () => { measuring = false; update(); };
+  const samples = [];
+  try {
+    for (let i = 0; i < 11; i++) {
+      observer.disconnect();
+      observer.observe(doc.documentElement, {subtree: true, attributes: true, attributeFilter: ['class', 'style', 'hidden'], childList: true});
+      barriers = 0;
+      measuring = true;
+      const start = performance.now();
+      win.layoutStories();
+      const ms = performance.now() - start;
+      if (i) samples.push({barriers, ms});
+    }
+  } finally {
+    observer.disconnect();
+    win.Element.prototype.getBoundingClientRect = rect;
+    win.updatePhotos = update;
+  }
+  const max = Math.max(...samples.map(s => s.barriers));
+  const times = samples.map(s => s.ms).sort((a, b) => a - b);
+  const active = doc.querySelectorAll('.story.is-scrolling').length;
+  results.push(`${width}×${height}: ${max <= 3 && active === 7 ? 'PASS' : 'FAIL'} — ${max} rebuild write/read barriers (limit 3), ${active} active stories; median ${times[5].toFixed(2)}ms / 10 warm rebuilds`);
+}
+document.querySelector('#results').textContent = results.join('\n');
+document.title = results.some(r => r.includes('FAIL')) ? 'FAIL: rendering layout' : 'PASS: rendering layout';
+</script>

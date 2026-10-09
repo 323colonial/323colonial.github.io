@@ -1,16 +1,12 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-04T23:38:58.862767+00:00",
+  "generatedAt": "2026-10-09T19:50:00Z",
   "title": "Design System: 323 Colonial",
   "extensions": {
     "colorMeta": {
       "greek-villa": {
         "role": "neutral",
         "displayName": "Greek Villa"
-      },
-      "pewter-green": {
-        "role": "primary",
-        "displayName": "Pewter Green"
       },
       "debonair": {
         "role": "secondary",
@@ -26,11 +22,11 @@
       },
       "mahogany": {
         "role": "primary",
-        "displayName": "Mahogany"
+        "displayName": "Dark mahogany · screen approximation"
       },
       "cedar": {
         "role": "secondary",
-        "displayName": "Cedar"
+        "displayName": "Red stain · provisional Cabot-family accent"
       },
       "stone": {
         "role": "neutral",
@@ -124,7 +120,7 @@
       },
       "status": {
         "displayName": "Status",
-        "purpose": "Coming Soon status in docking facts."
+        "purpose": "Active status in docking facts; listing state is manually maintained."
       },
       "detail": {
         "displayName": "Detail",
@@ -172,7 +168,17 @@
       {
         "name": "native-scroll-photo-step",
         "value": "Math.max(240, innerHeight * .5)",
-        "purpose": "Discrete forward/reverse photo selection from passive scroll updates; no timed animation. Disabled for reduced motion or insufficient fit; focused photos remain visible."
+        "purpose": "Hold half a step, then reversible linear crossfade for the second half; final photo has a full pinned step. Focus, reduced motion and insufficient fit retain accessible fallbacks."
+      },
+      {
+        "name": "shared-seasonal-year",
+        "value": "36000ms; 18 timing knots, 2000ms apart",
+        "purpose": "Hero and visible sequenced narrative photos share one clock; exact nested source-over dissolve inside scroll blend. Masthead dial pauses/resumes; ≤500px height uses bottom dock. Hidden, print, dialog, reduced-motion and save-data states preserve originals."
+      },
+      {
+        "name": "privacy-notice-collapse",
+        "value": "240ms ease-out after 10000ms visible-tab time",
+        "purpose": "Focus/hover cancels dismissal; reduced motion skips animation. Presentation only, never tracking authorization."
       }
     ],
     "breakpoints": [
@@ -195,6 +201,10 @@
       {
         "name": "narrow-header",
         "value": "360px"
+      },
+      {
+        "name": "short-screen-dock",
+        "value": "max-height: 500px"
       }
     ]
   },
@@ -204,15 +214,15 @@
       "kind": "custom",
       "refersTo": "inline-contact",
       "description": "Single-spaced agent/brokerage above one native phone | Questions & tours row; 24px minimum link targets.",
-      "html": "<div class=\"ds-header\"><div class=\"ds-contact\" role=\"group\" aria-label=\"Listing agent contact\"><p><strong>Liz McDonald</strong> \u00b7 Dandridge Realty Group LLC</p><div class=\"ds-actions\"><a href=\"tel:+13048851547\" aria-label=\"Call Dandridge office at (304) 885-1547\">(304) 885-1547</a><span aria-hidden=\"true\">|</span><a href=\"https://search.soldvawv.com/search/detail/270760671\" aria-label=\"Questions & tours through Dandridge Realty Group\">Questions &amp; tours</a></div></div></div>",
-      "css": ".ds-header { background: var(--pewter-green, #5e6259); color: var(--paper, #f0ece2); padding: 8px 40px; } .ds-contact { min-width: 0; width: fit-content; max-width: 100%; font: 13px/1.35 Arial, sans-serif; text-align: right; overflow-wrap: anywhere; } .ds-contact p { margin: 0; } .ds-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 0 8px; } .ds-actions a { display: inline-flex; align-items: center; min-height: 24px; color: inherit; text-decoration: underline; text-underline-offset: .2em; } .ds-actions a:focus-visible { outline: 3px solid var(--paper, #f0ece2); outline-offset: 0; } @media (max-width: 800px) { .ds-header { padding: 8px 20px; } .ds-contact { text-align: left; } .ds-actions { justify-content: flex-start; } }"
+      "html": "<div class=\"ds-header\"><div class=\"ds-contact\" role=\"group\" aria-label=\"Listing agent contact\"><p><strong>Liz McDonald</strong></p><p>Dandridge Realty Group LLC</p><div class=\"ds-actions\"><a href=\"tel:+13048851547\" aria-label=\"Call Dandridge office at (304) 885-1547\">(304) 885-1547</a><span aria-hidden=\"true\">|</span><a href=\"https://search.soldvawv.com/search/detail/270760671\" aria-label=\"Questions & tours through Dandridge Realty Group\">Questions &amp; tours</a></div></div></div>",
+      "css": ".ds-header { background: var(--mahogany, #593a32); color: var(--paper, #f0ece2); padding: 8px 40px; } .ds-contact { min-width: 0; width: fit-content; max-width: 100%; font: 13px/1.35 Arial, sans-serif; text-align: right; overflow-wrap: anywhere; } .ds-contact p { margin: 0; } .ds-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 0 8px; } .ds-actions a { display: inline-flex; align-items: center; min-height: 24px; color: inherit; text-decoration: underline; text-underline-offset: .2em; } .ds-actions a:focus-visible { outline: 3px solid var(--paper, #f0ece2); outline-offset: 0; } @media (max-width: 800px) { .ds-header { padding: 8px 20px; } .ds-contact { text-align: left; } .ds-actions { justify-content: flex-start; } }"
     },
     {
       "name": "All photos link",
       "kind": "button",
       "refersTo": "gallery-link",
       "description": "Catalog trigger with direct gallery fallback.",
-      "html": "<a class=\"ds-gallery-link\" href=\"gallery.html\">View all 33 photos</a>",
+      "html": "<a class=\"ds-gallery-link\" href=\"gallery.html\">View all 65 photos</a>",
       "css": ".ds-gallery-link { display: inline-flex; align-items: center; min-height: 24px; color: var(--mahogany, #593a32); font: 13px/1.35 Arial, sans-serif; text-underline-offset: .2em; } .ds-gallery-link:hover { text-decoration-thickness: 2px; } .ds-gallery-link:focus-visible { outline: 3px solid var(--mahogany, #593a32); outline-offset: 4px; }"
     },
     {
@@ -220,24 +230,32 @@
       "kind": "custom",
       "refersTo": "docking-facts",
       "description": "Price/status excerpt from the docking facts bar; static panel preview.",
-      "html": "<div class=\"ds-facts\"><p class=\"ds-price\">$499,000</p><p class=\"ds-status\">Coming Soon</p></div>",
+      "html": "<div class=\"ds-facts\"><p class=\"ds-price\">$499,000</p><p class=\"ds-status\">Active</p></div>",
       "css": ".ds-facts { padding: 10px 40px; background: var(--paper, #f0ece2); color: var(--ink, #252d29); border-bottom: 1px solid var(--cedar, #8b523c); font-family: Arial, sans-serif; } .ds-price { font-size: 30px; line-height: 1.2; font-weight: 700; margin: 0 0 4px; font-variant-numeric: tabular-nums; } .ds-status { font-size: 13px; line-height: 1.35; margin: 0; color: var(--mahogany, #593a32); } @media (max-width: 800px) { .ds-facts { padding: 8px 20px; } .ds-price { font-size: 25px; } }"
     },
     {
-      "name": "Scroll cue",
+      "name": "Narrative photo position",
       "kind": "custom",
       "refersTo": "scroll-cue",
-      "description": "Visible only when native-scroll sequencing fits; counter excerpt.",
-      "html": "<p class=\"ds-cue\">Scroll to explore <span>1 / 5</span></p>",
-      "css": ".ds-cue { display: flex; justify-content: space-between; gap: 12px; border-top: 1px solid var(--stone, #969187); margin: 16px 0 0; padding-top: 10px; color: var(--ink, #252d29); font: 12px/1.5 Arial, sans-serif; } .ds-cue span { font-variant-numeric: tabular-nums; }"
+      "description": "Decorative per-sequence dots; numeric count remains screen-reader-only. No visible scroll instruction or catalog dot strip.",
+      "html": "<p class=\"ds-cue\"><span class=\"ds-count\">1 / 5</span><span class=\"ds-dots\" aria-hidden=\"true\"><span class=\"ds-current\"></span><span></span><span></span><span></span><span></span></span></p>",
+      "css": ".ds-cue { margin: 0; font: 12px/1.5 Arial, sans-serif; pointer-events: none; } .ds-count { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); } .ds-dots { display: flex; gap: 4px; width: max-content; color: var(--paper, #f0ece2); } .ds-dots > span { box-sizing: border-box; width: 7px; height: 7px; border: 1px solid currentColor; border-radius: 50%; background: var(--mahogany, #593a32); outline: 1px solid var(--mahogany, #593a32); } .ds-dots > .ds-current { background: currentColor; }"
     },
     {
       "name": "Concept disclosure",
       "kind": "custom",
       "refersTo": "photo-note",
       "description": "Essential attached note for photo 31 only.",
-      "html": "<span class=\"ds-photo-note\">Conceptual basement plan \u2014 not existing finished space.</span>",
+      "html": "<span class=\"ds-photo-note\">Conceptual basement plan — not existing finished space.</span>",
       "css": ".ds-photo-note { display: block; margin-top: 6px; color: var(--muted, #50564f); font: 13px/1.5 Arial, sans-serif; }"
+    },
+    {
+      "name": "Primary button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Square dialog action; 44px minimum target.",
+      "html": "<button class=\"ds-button\">Close</button>",
+      "css": ".ds-button { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 10px 18px; background: var(--mahogany, #593a32); color: var(--paper, #f0ece2); border: 1px solid var(--mahogany, #593a32); font: 700 14px/1.5 Arial, sans-serif; cursor: pointer; } .ds-button:hover { background: var(--ink, #252d29); text-decoration: underline; } .ds-button:focus-visible { outline: 3px solid var(--mahogany, #593a32); outline-offset: 4px; }"
     }
   ],
   "narrative": {
@@ -251,12 +269,12 @@
     "rules": [
       {
         "name": "The House Palette Rule",
-        "body": "These are screen approximations of the owner's colors, not physical paint-match specifications. CSS aliases resolve forest to Pewter Green, paper to Greek Villa, paper-strong to Accessible Beige and rule to stone.",
+        "body": "These are screen approximations of the owner's Debonair, Accessible Beige, Sea Salt, Greek Villa, dark mahogany solid stain and Cabot red-tinted semi-solid stain, not physical paint-match specifications. The cedar token approximates the red-stain accent; no exact Cabot product/shade is established. Current dark mahogany wording is not a claim of identity with the dated Traditional Mahogany purchase record. Pewter Green remains historical door paint, not a required website anchor; Greek Villa is a named house color, not a generic cream mandate. CSS aliases resolve forest to dark mahogany, paper to Greek Villa, paper-strong to Accessible Beige and rule to stone.",
         "section": "colors"
       },
       {
         "name": "The Native Scroll Rule",
-        "body": "Scroll position selects discrete captioned photographs; it does not animate or capture scrolling. On desktop the whole narrative stage sticks below header and facts plus 24px; on mobile only the photo sequence sticks, with 16px clearance after the paragraph. Steps are `max(240px, half the viewport height)`. Forward and reverse scrolling update the count, and a focused photo stays visible until focus leaves it.",
+        "body": "Native scroll position directly controls reversible crossfades between captioned photographs; scrolling is never captured. On desktop the whole narrative stage sticks below header and facts plus 24px; on mobile only the photo sequence sticks, with 16px clearance after the paragraph. Steps are `max(240px, half the viewport height)`: hold for the first half, blend for the second. The final photo receives a full pinned step after its blend completes. The tallest caption reserves a stable frame; at most two photos blend. Only the images blend: complementary link opacities use `plus-lighter` inside an isolated, transparent photo group, so overlap stays fully covered and unequal contain-fit edges fade to the section color without a background pulse (colonial-y9y). Seasonal layers remain source-over inside each isolated link. Scroll timing stays directly linear; no timed catch-up or easing was added. The dominant photo owns the readable, unblended caption, highlighted dot, interaction and accessibility state. A focused photo stays fully visible until focus leaves, then scroll state resumes.",
         "section": "layout"
       }
     ],
@@ -264,12 +282,12 @@
       "Do preserve the seven approved paragraphs, exact captions, watermarks and conceptual-plan disclosure.",
       "Do keep contact access, visible keyboard focus and ordinary links available.",
       "Do use the existing system fonts, static assets and dependency-free enhancement.",
-      "Do keep buyer styling isolated from unchanged legacy pages and assets."
+      "Do keep buyer styling and retained historical image assets intact when pruning unrelated routes."
     ],
     "donts": [
       "Don't replace the approved composition with a mosaic, story headings, Home / Photos navbar or closing contact band.",
       "Don't crop property evidence with cover-fit or present the conceptual plan as existing finished space.",
-      "Don't intercept scrolling, add timed autoplay, fades or parallax, or remove reduced-motion and short-screen fallbacks."
+      "Don't intercept scrolling, add timed autoplay outside the seasonal dissolves or parallax, or remove reduced-motion and short-screen fallbacks."
     ]
   }
 }

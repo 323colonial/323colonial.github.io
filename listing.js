@@ -178,8 +178,8 @@ function layoutStories() {
   const summaryHeight = summary?.getBoundingClientRect().height || 0;
   document.documentElement.style.setProperty('--header-height', `${headerHeight}px`);
   document.documentElement.style.setProperty('--summary-height', `${summaryHeight}px`);
-  tracks = [];
-  for (const story of stories) {
+  // Batch each geometry phase across stories instead of forcing layout per story.
+  const sections = stories.map(story => {
     story.classList.remove('is-scrolling');
     story.style.removeProperty('--story-shift');
     const photos = [...story.querySelectorAll('.story-photos figure')];
@@ -192,33 +192,44 @@ function layoutStories() {
     });
     const cue = story.querySelector('.scroll-cue');
     cue.hidden = true;
+    return {story, photos, cue};
+  });
+  const measured = sections.map(({story, photos, cue}) => {
     const style = getComputedStyle(story);
     const borderHeight = parseFloat(style.getPropertyValue('--border-lines')) * parseFloat(style.lineHeight);
-    if (story.previousElementSibling) {
-      story.style.setProperty('--previous-story-color', getComputedStyle(story.previousElementSibling).backgroundColor);
-    }
+    const previousColor = story.previousElementSibling && getComputedStyle(story.previousElementSibling).backgroundColor;
     const stickyTop = headerHeight + summaryHeight + borderHeight + (narrow.matches ? 16 : 24);
     const available = innerHeight - stickyTop - 32;
     const copyHeight = story.querySelector('.story-copy').getBoundingClientRect().height;
-    // Short windows and reduced motion use ordinary, fully visible photographs.
-    if (reducedMotion.matches || available < 300 || (!narrow.matches && copyHeight > available)) continue;
     const photoWidth = story.querySelector('.story-photos').getBoundingClientRect().width;
     const photoHeight = Math.min(available - 110, photoWidth * .75);
-    story.style.setProperty('--photo-height', `${photoHeight}px`);
-    const insets = photos.map(photo => photoInset(photo.querySelector('img'), photoWidth, photoHeight));
-    cue.hidden = false;
-    story.classList.add('is-scrolling');
-    // Reserve the tallest caption as well as the image, so blending never shifts the stage.
-    story.style.setProperty('--frame-height', `${Math.max(...photos.map(photo => photo.getBoundingClientRect().height))}px`);
-    const stage = story.querySelector(narrow.matches ? '.story-photos' : '.story-stage');
-    const padding = parseFloat(getComputedStyle(story).paddingTop);
+    const padding = parseFloat(style.paddingTop);
     const offset = padding + borderHeight + (narrow.matches ? copyHeight + 28 : 0);
     const step = Math.max(240, innerHeight * .5);
-    // The final photo gets a full viewing step after its blend has finished.
-    const height = offset + stage.getBoundingClientRect().height + padding + photos.length * step;
-    story.style.setProperty('--story-height', `${height}px`);
-    tracks.push({story, photos, insets, stickyTop, offset, step, counter: cue.querySelector('.slide-count'), dots: cue.querySelector('.photo-dots')});
+    const insets = photos.map(photo => photoInset(photo.querySelector('img'), photoWidth, photoHeight));
+    return {story, photos, cue, previousColor, stickyTop, available, copyHeight, photoHeight, padding, offset, step, insets,
+      counter: cue.querySelector('.slide-count'), dots: cue.querySelector('.photo-dots')};
+  });
+  for (const {story, previousColor} of measured) {
+    if (previousColor) story.style.setProperty('--previous-story-color', previousColor);
   }
+  // Short windows and reduced motion use ordinary, fully visible photographs.
+  tracks = measured.filter(({available, copyHeight}) =>
+    !reducedMotion.matches && available >= 300 && (narrow.matches || copyHeight <= available));
+  for (const {story, cue, photoHeight} of tracks) {
+    story.style.setProperty('--photo-height', `${photoHeight}px`);
+    cue.hidden = false;
+    story.classList.add('is-scrolling');
+  }
+  // Reserve the tallest caption as well as the image, so blending never shifts the stage.
+  const frameHeights = tracks.map(({photos}) => Math.max(...photos.map(photo => photo.getBoundingClientRect().height)));
+  tracks.forEach(({story}, i) => story.style.setProperty('--frame-height', `${frameHeights[i]}px`));
+  const heights = tracks.map(({story, offset, padding, photos, step}) => {
+    const stage = story.querySelector(narrow.matches ? '.story-photos' : '.story-stage');
+    // The final photo gets a full viewing step after its blend has finished.
+    return offset + stage.getBoundingClientRect().height + padding + photos.length * step;
+  });
+  tracks.forEach(({story}, i) => story.style.setProperty('--story-height', `${heights[i]}px`));
   restoreReadingPoint(point);
   layoutWidth = innerWidth;
   layoutHeight = innerHeight;
