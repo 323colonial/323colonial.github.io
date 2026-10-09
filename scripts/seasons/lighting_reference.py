@@ -4,6 +4,7 @@
 blender -b --python-exit-code 1 -P scripts/seasons/lighting_reference.py -- --check
 blender -b --python-exit-code 1 -P scripts/seasons/lighting_reference.py -- --render
 blender -b --python-exit-code 1 -P scripts/seasons/lighting_reference.py -- --timeline
+blender -b --python-exit-code 1 -P scripts/seasons/lighting_reference.py -- --areas
 Uses retained local walkthrough inputs; no network, generation or publication.
 """
 import datetime as dt
@@ -91,13 +92,13 @@ def season(key):
                 sun_kelvin=interpolate(el, ((0, 3000), (5, 3500), (12, 4300), (30, 5200), (60, 6000))))
 
 
-def run(check_only=False, timeline=False):
+def run(check_only=False, timeline=False, areas=False):
     import bpy
     import numpy as np
     import runpy
     from mathutils import Vector
 
-    out = OUT/'timeline' if timeline else OUT
+    out = OUT/'areas' if areas else OUT/'timeline' if timeline else OUT
     keys = TIMELINE if timeline else (0, 3, 6, 9)
     out.mkdir(parents=True, exist_ok=True)
     work = ROOT / '.pi/artifacts/colonial-vby/work'
@@ -344,6 +345,8 @@ def run(check_only=False, timeline=False):
     views = {k: ns['VIEWS'][n] for k, n in (('21', 'p21_loft'), ('22', 'p22_loft_w'))}
     views.update({'57': ((32, 15.5, 13.9), (7, 14, 13.5), 18),
                   '59': ((24, 13.8, 14), (0, 13.5, 14), 28)})
+    if areas:
+        views.update({k: ns['VIEWS'][n] for k, n in (('02', 'p02_great'), ('45', 'p45_north'))})
     provenance = {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest()
                   for p in [Path(__file__), ROOT/'scripts/walkthrough/plan.json',
                             ROOT/'scripts/seasons/pilot.py', ROOT/'scripts/seasons/light.py',
@@ -439,6 +442,7 @@ def run(check_only=False, timeline=False):
             row = dict(physical=metrics(total, coords), lamps=metrics(lamps[2700], coords),
                        daylight=metrics(daylight, coords), cooler_bound=metrics(cooler, coords),
                        warmer_bound=metrics(warmer, coords))
+            assert max(m['luminance'] for m in row['physical'].values()) > 1e-6, f'Unlit/occluded reference camera: {view}'
             for material in row['physical']:
                 row['physical'][material]['lamp_fraction_Y'] = row['lamps'][material]['luminance']/row['physical'][material]['luminance']
             report['results'][f'{view}-{label}'] = row
@@ -448,6 +452,6 @@ def run(check_only=False, timeline=False):
 
 if __name__ == '__main__':
     args = sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else []
-    if args not in (['--check'], ['--render'], ['--timeline']):
-        raise SystemExit('Use Blender with -- --check, --render or --timeline')
-    run(check_only=args == ['--check'], timeline=args == ['--timeline'])
+    if args not in (['--check'], ['--render'], ['--timeline'], ['--areas']):
+        raise SystemExit('Use Blender with -- --check, --render, --timeline or --areas')
+    run(check_only=args == ['--check'], timeline=args == ['--timeline'], areas=args == ['--areas'])
