@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { copyFileSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import test from 'node:test';
@@ -11,6 +11,23 @@ test('every seasonal export matches its original tier dimensions', () => {
   const result = spawnSync(process.execPath, [script, '--check'], { encoding: 'utf8' });
   assert.equal(result.status, 0, result.stderr);
   assert.equal(result.stderr, '', 'dimension mismatches must not be warnings');
+});
+
+test('photo73 uses four cleaned seasonal anchors without replacing its gallery original', () => {
+  const manifest = JSON.parse(readFileSync('assets/seasons-next/frames.json', 'utf8'));
+  assert.deepEqual(manifest.photos['73'], { keys: [0, 3, 6, 9], original: [] });
+  const published = readFileSync('scripts/publish-files.txt', 'utf8').trim().split('\n');
+  for (const suffix of ['', '-small']) {
+    const original = `assets/listing/73${suffix}.webp`;
+    assert.ok(published.includes(original));
+    for (const key of ['00', '03', '06', '09']) {
+      const frame = `assets/seasons-next/73/${key}${suffix}.webp`;
+      assert.ok(published.includes(frame), frame);
+      assert.ok(existsSync(frame), frame);
+    }
+    assert.notDeepEqual(readFileSync(`assets/seasons-next/73/00${suffix}.webp`), readFileSync(original));
+    assert.ok(!published.includes(`assets/seasons-next/73/08${suffix}.webp`));
+  }
 });
 
 test('seasonal checker rejects a wrong-size large frame even with a valid small tier', t => {

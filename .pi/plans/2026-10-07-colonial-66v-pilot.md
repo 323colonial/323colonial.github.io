@@ -2,7 +2,7 @@
 
 Owner-requested pilot, 7 October 2026. Historical production log; later integration was separately delivered by colonial-gz0. This log grants no publication authority.
 
-**Current QA continuation:** [8 October asset QA and repair record](2026-10-08-colonial-66v-qa.md). Contract is now the accepted sparse-key 36-second year, not the early timing below. Photo02 dimensions repaired; exhaustive QA remains open by explicit owner choice. Basement73 repair direction is a new uncluttered summer key with original paving preserved, retaining four anchors 0/3/6/9; not yet generated or applied.
+**Current closeout record:** [asset QA and repair dispositions](2026-10-08-colonial-66v-qa.md), updated9 October. Contract is the accepted sparse-key36-second year, not early timing below. Photo02 dimensions and approved room/porch warmth repaired. Owner approved photo73 doorway cleanup/paving restoration at four generated anchors0/3/6/9 and explicitly skipped exhaustive frame/transition review for these repairs. See [photo73 closeout plan](2026-10-09-colonial-66v-photo73-closeout-plan.md) and Bead for final gates/commit; no claim of exhaustive registration or generation-lineage certification. Earlier entries below remain historical.
 
 ## Owner facts used in prompts
 

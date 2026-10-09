@@ -941,12 +941,12 @@ assets/seasons-next/67/10.webp
 assets/seasons-next/67/10-small.webp
 assets/seasons-next/67/11.webp
 assets/seasons-next/67/11-small.webp
+assets/seasons-next/73/00.webp
+assets/seasons-next/73/00-small.webp
 assets/seasons-next/73/03.webp
 assets/seasons-next/73/03-small.webp
 assets/seasons-next/73/06.webp
 assets/seasons-next/73/06-small.webp
-assets/seasons-next/73/08.webp
-assets/seasons-next/73/08-small.webp
 assets/seasons-next/73/09.webp
 assets/seasons-next/73/09-small.webp
 assets/email/323-colonial-hero-small.gif

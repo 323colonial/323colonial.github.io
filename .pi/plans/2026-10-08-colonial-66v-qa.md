@@ -2,7 +2,15 @@
 
 ## Current status
 
-**Open: exhaustive asset QA remains a completion gate.** On 8 October 2026 the owner explicitly chose to go through the photos, recording exceptions, clarifications or repairs. Broad prior grid acceptance is not a waiver of unreviewed defects. No new generation, publication, push or deployment is authorized by this record.
+**9 October closeout scope:** owner accepted the final photo73 clutter-removal/paving previews and explicitly directed skipping exhaustive frame/transition review for these repairs, then closing colonial-66v. This supersedes the earlier exhaustive-review closure gate; it does not certify unperformed checks. Final local export/check/commit evidence is recorded in the Bead and [photo73 closeout plan](2026-10-09-colonial-66v-photo73-closeout-plan.md).
+
+Photo73 now uses generated anchors **0/3/6/9**, with its untouched catalog original retained for galleries/viewers/fallbacks. Both tiers have matching original dimensions. Retired key8 exports remain privately backed up and recoverable from `e046fb0`. Private approved masters, masks, generation provenance, before hashes and export report: `.pi/artifacts/colonial-66v-photo73-repair/`. Repairs change only doorway clutter/paving; all source pixels outside masks remain identical before WebP encoding. Ground formerly hidden by clutter is reconstructed, not surveyed geometry.
+
+Kitchen reflection and room-group appearance were subsequently accepted; final B warmth, upstairs bathroom doorway-wall reference, clipping exceptions and all six porch views were approved and deployed under separate exact approvals. Basement30 remains unchanged. Complete numerical registration/per-frame generative-lineage coverage and exhaustive full-size/repeated-cycle QA are **not certified**. Existing provenance and historical coverage ledger remain preserved, not retroactively marked passed. New photo73 exports are local only; previous deployment approvals are consumed.
+
+## Historical record — 8 October
+
+At that checkpoint the owner retained exhaustive QA as a completion gate. The remaining sections describe evidence and pending items **as of that date**; later dispositions above and Bead comments supersede them. No new publication authority is granted by this record.
 
 Recovery sources: `bd show colonial-wtm`, `bd show colonial-66v`, their referenced pilot and architecture artifacts. No earlier transcript or unrelated memory was recovered. Existing untracked `.beads.gate.lock`, `.claude/` and `MEMORY.md` remain untouched.
 
