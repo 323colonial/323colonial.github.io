@@ -1,7 +1,7 @@
 {
   description = "323 Colonial website development tools";
 
-  # Enter with nix develop; run npm test or node .pi/skills/impeccable/scripts/detect.mjs.
+  # Enter with nix develop; run npm test or .pi/skills/impeccable/scripts/impeccable detect.
   # Update dependencies with npm install --package-lock-only --ignore-scripts,
   # then re-enter nix develop to refresh the Nix-managed node_modules links.
 

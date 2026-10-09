@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "reviewId": "colonial-bjr-tooling-reconciliation",
+  "scope": "boundary",
+  "reviewer": { "target": "Pi read-only reviewer", "family": "OpenAI" },
+  "findings": [
+    {
+      "id": "ci-engine-provisioning",
+      "severity": "minor",
+      "category": "CI reproducibility",
+      "location": "tests/impeccable-tooling.test.mjs:8",
+      "claim": "npm test now implicitly downloads an engine on Linux CI. Provision the pinned Linux engine explicitly, or bundle it, instead of hiding installation inside the test.",
+      "failureScenario": "On a fresh ubuntu-latest runner, unavailable release assets or blocked GitHub release downloads make the launcher exit 127, failing npm test and blocking website publication.",
+      "evidence": "scripts/bin contains only darwin-arm64/impeccable. The launcher falls back to downloading engine-v0.1.14 and its checksum. .github/workflows/publish.yml runs npm ci then npm test without engine provisioning; npm dependencies do not supply that binary.",
+      "status": "confirmed",
+      "verification": {
+        "verifierFamily": "OpenAI",
+        "method": "inspection",
+        "evidence": "Parent confirmed VERSION, bundled inventory, checksum validation and fail-closed exit 127. This is the vendor's intended first-run provisioning, not a test bypass. Documented network/cache requirements and explicit engine-probe/preinstalled-engine options in docs/publishing.md. Separate CI installation would move, not remove, the same network dependency. No Linux execution claimed."
+      }
+    }
+  ]
+}

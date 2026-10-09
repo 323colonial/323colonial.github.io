@@ -33,6 +33,8 @@ node scripts/build-pages.mjs /tmp/colonial-site-candidate
 nix shell nixpkgs#actionlint --command actionlint .github/workflows/publish.yml
 ```
 
+The Impeccable test uses `.pi/skills/impeccable/scripts/impeccable detect`, not the retired Node scripts. The upgrade bundles a macOS ARM64 engine; other platforms, including Linux CI, download the engine pinned in `scripts/VERSION` from GitHub Releases on first use and verify its SHA-256 sidecar. They need network access and a writable cache. Run `.pi/skills/impeccable/scripts/impeccable engine-probe` to provision/check it before tests, or supply a trusted preinstalled engine through `IMPECCABLE_BIN`. A failed download or checksum blocks tests and publication; it is not skipped.
+
 The publishing test checks exact inventory and byte identity against the allowlist, stale-output rejection, traversal, duplicates, missing files, directories and symlinks. Existing SEO tests check the list against all buyer-page assets. Adding a public asset requires updating both the allowlist and its expected inventory test. Browser fixtures remain separate manual checks, not CI browser certification.
 
 After deployment, verify the workflow SHA and live file bytes; spot-check excluded paths return 404. If CI fails, inspect the failing step, fix it and push to `main`, or rerun after resolving a transient failure. Do not bypass a failed check by uploading the checkout.
