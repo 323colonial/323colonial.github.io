@@ -52,6 +52,62 @@ class PhotoWarmthTests(unittest.TestCase):
         self.assertEqual(getattr(self.wb, 'KITCHEN_TARGETS', None),
                          {'05': 'kitchen', '35': 'great-room', '47': 'kitchen', '48': 'kitchen'})
 
+    def test_remaining_interiors_have_complete_disjoint_room_coverage(self):
+        expected = {'primary-bedroom': ('18', '37'), 'guest-bedroom': ('23', '60'),
+                    'powder-room': ('36',), 'upper-bath': ('38',), 'hall': ('49',), 'mudroom': ('54',),
+                    'great-room': ('34', '42', '44', '45', '46'), 'loft': ('58', '61'),
+                    'back-porch': ('04', '50', '17', '51', '52', '53')}
+        self.assertEqual(getattr(self.wb, 'INTERIOR_GROUPS', None), expected)
+        self.assertEqual(set(self.wb.INTERIOR_MODEL_VIEWS), set(expected)-{'great-room', 'loft'})
+        self.assertTrue(all(len(v)==2 for v in self.wb.INTERIOR_MODEL_VIEWS.values()))
+        new_ids = [v for group in expected.values() for v in group]
+        self.assertEqual(len(new_ids), len(set(new_ids)))
+        for view in new_ids:
+            self.assertEqual(len(self.wb.PATCHES[view]), 3)
+        self.assertEqual(self.wb.HELD_INTERIORS, ('30', '73'))
+        self.assertEqual(self.wb.ORIGINAL_INTERIORS, ('07', '15', '19', '20', '24', '55', '56'))
+
+    def test_probe_sampling_normalizes_brightness_not_chromaticity(self):
+        self.assertTrue(hasattr(self.wb, 'probe_gain'), 'HDR probe normalization missing')
+        for rgb in ((100., 80., 60.), (.001, .0003, .0001)):
+            gain = self.wb.probe_gain(rgb)
+            result = tuple(v*gain for v in rgb)
+            self.assertAlmostEqual(self.wb.luminance(result), .1)
+            self.assertAlmostEqual(result[0]/result[2], rgb[0]/rgb[2])
+        with self.assertRaises(ValueError):
+            self.wb.probe_gain((0, 0, 0))
+
+    def test_daybed_anchors_transfer_relative_wood_warmth_not_wood_color(self):
+        self.assertTrue(hasattr(self.wb, 'wood_transfer'), 'daybed-to-wood transfer missing')
+        anchors = [((.6, .3, .1), (.72, .3, .1)), ((.4, .2, .2), (.48, .2, .2))]
+        self.assertAlmostEqual(self.wb.wood_transfer(anchors), math.log(1.2))
+        self.assertEqual(self.wb.INTERIOR_GROUPS['back-porch'][:2], self.wb.PORCH_WHITE_ANCHORS)
+        self.assertEqual(set(self.wb.PORCH_WOOD_PATCHES), set(self.wb.INTERIOR_GROUPS['back-porch']))
+        for invalid in ([], anchors[:1], [((0, .2, .1), (.4, .2, .1))]*2):
+            with self.assertRaises(ValueError):
+                self.wb.wood_transfer(invalid)
+
+    def test_conflicting_wood_anchors_are_held_not_averaged(self):
+        for ratios in ((1., 2.), (.95, 1.05)):
+            with self.assertRaisesRegex(ValueError, 'disagree'):
+                self.wb.wood_transfer([((.4, .3, .2), (.4*r, .3, .2)) for r in ratios])
+
+    def test_held_daybed_anchor_cannot_drive_transfer(self):
+        pairs = [((.4, .3, .2), (.44, .3, .2))]*2
+        with self.assertRaisesRegex(ValueError, 'anchor held'):
+            self.wb.wood_transfer(pairs, anchor_holds=['04 reference invalid'])
+
+    def test_zero_photo_channel_can_be_sampled_then_held(self):
+        rgb = self.wb.reference_rgb([(.08, .015, 0)]*3)
+        self.assertEqual(rgb, (.08, .015, 0))
+        self.assertFalse(self.wb.reference_usable(rgb))
+
+    def test_near_black_photo_reference_is_not_usable(self):
+        self.assertTrue(hasattr(self.wb, 'reference_usable'), 'photo signal guard missing')
+        self.assertFalse(self.wb.reference_usable((.08, .015, .00061)))
+        self.assertFalse(self.wb.reference_usable((1., .99, .98)))
+        self.assertTrue(self.wb.reference_usable((.6, .5, .4)))
+
     def test_b_keeps_photo_led_base_and_adds_relative_look_difference(self):
         base = [0., .04, .095, .016]
         result = self.wb.look_shifts(base, [.001, .01, .06, .002])

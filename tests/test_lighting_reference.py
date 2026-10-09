@@ -21,6 +21,11 @@ class LightingReferenceTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             ref.cct_rgb(1000)
 
+    def test_absent_daylight_has_no_color_ratio(self):
+        self.assertTrue(hasattr(ref, 'color_ratios'), 'zero-light metric handling missing')
+        self.assertEqual(ref.color_ratios((0, 0, 0)), (None, None))
+        self.assertEqual(ref.color_ratios((.6, .3, .15)), (2., .5))
+
     def test_hard_spot_preserves_total_flux(self):
         self.assertAlmostEqual(ref.spot_fraction(math.pi), .5)
         self.assertAlmostEqual(ref.spot_fraction(math.radians(45)), .03806023374435663)

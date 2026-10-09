@@ -6,6 +6,7 @@ blender -b --python-exit-code 1 -P scripts/seasons/lighting_reference.py -- --re
 blender -b --python-exit-code 1 -P scripts/seasons/lighting_reference.py -- --timeline
 blender -b --python-exit-code 1 -P scripts/seasons/lighting_reference.py -- --areas
 blender -b --python-exit-code 1 -P scripts/seasons/lighting_reference.py -- --kitchen
+blender -b --python-exit-code 1 -P scripts/seasons/lighting_reference.py -- --interiors
 Uses retained local walkthrough inputs; no network, generation or publication.
 """
 import datetime as dt
@@ -23,6 +24,11 @@ TIMELINE = (0, 1, 2, 3, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 11)
 
 def luminance(rgb):
     return sum(a * b for a, b in zip(Y, rgb))
+
+
+def color_ratios(rgb):
+    """No chromaticity is defined for a component with no green-channel light."""
+    return (float(rgb[0]/rgb[1]), float(rgb[2]/rgb[1])) if rgb[1] > 0 else (None, None)
 
 
 def cct_rgb(k):
@@ -93,13 +99,13 @@ def season(key):
                 sun_kelvin=interpolate(el, ((0, 3000), (5, 3500), (12, 4300), (30, 5200), (60, 6000))))
 
 
-def run(check_only=False, timeline=False, areas=False, kitchen=False):
+def run(check_only=False, timeline=False, areas=False, kitchen=False, interiors=False):
     import bpy
     import numpy as np
     import runpy
     from mathutils import Vector
 
-    out = OUT/'kitchen' if kitchen else OUT/'areas' if areas else OUT/'timeline' if timeline else OUT
+    out = OUT/'interiors' if interiors else OUT/'kitchen' if kitchen else OUT/'areas' if areas else OUT/'timeline' if timeline else OUT
     keys = TIMELINE if timeline else (0, 3, 6, 9)
     out.mkdir(parents=True, exist_ok=True)
     work = ROOT / '.pi/artifacts/colonial-vby/work'
@@ -316,6 +322,8 @@ def run(check_only=False, timeline=False, areas=False, kitchen=False):
             flux, label = 2400, 'bedroom fan four bulbs'
         if i == 37:
             flux, label = 4800, 'chandelier eight-bulb assumption; six-ten count range not tested'
+        if interiors and i in (34, 35, 36):
+            flux, label = 1050, 'porch approximate 4.5 recessed equivalents across three model positions'
         if i in (16, 17, 18, 19):
             flux, kelvin, label = 600, 5000, 'kitchen directional track; 45-degree assumed beam'
             ob.data.type = 'SPOT'
@@ -351,6 +359,40 @@ def run(check_only=False, timeline=False, areas=False, kitchen=False):
     if kitchen:
         views = {'kitchen-west': ns['VIEWS']['p15_kitchen'],
                  'kitchen-south': ((19, 20, 4.8), (18.1, 26, 6.2), 18)}
+    if interiors:
+        views = {k: ns['VIEWS'][n] for k, n in (('18', 'p18_bed'), ('37', 'p37_bed'), ('23', 'p23_bedroom'))}
+        views.update({
+            '60': ((66, 18, 13.9), (50, 18, 15), 18),
+            'powder-a': ((28, 22, 5), (26, 25, 7), 18),
+            'powder-b': ((28, 25, 5), (25, 22, 7), 18),
+            'bath-a': ((24, 22, 14), (24, 26, 16), 18),
+            'bath-b': ((24, 23.4, 14), (24, 18, 16), 18),
+            'hall-a': ns['VIEWS']['p49_hall'],
+            'hall-b': ((31, 21, 5), (30, 15.5, 7), 18),
+            'mud-a': ((44.5, 25.2, 5), (30, 25, 6), 18),
+            'mud-b': ((31, 25, 5), (44, 25, 6), 18),
+            'porch-a': ((38, 31, 5), (26, 31, 3.5), 28),
+            'porch-b': ((10, 31, 5), (22, 31, 3.5), 28),
+        })
+        # Virtual diffuse cards receive light without altering wood bounce or shadows.
+        reflectance['probe'] = (.8, .8, .8)
+        probe = bpy.data.materials.new('probe')
+        probe.use_nodes = True
+        pn = probe.node_tree.nodes
+        pn.clear()
+        pd = pn.new('ShaderNodeBsdfDiffuse')
+        pd.inputs['Color'].default_value = (.8, .8, .8, 1)
+        po = pn.new('ShaderNodeOutputMaterial')
+        probe.node_tree.links.new(pd.outputs[0], po.inputs[0])
+        for x, facing in ((26, 1), (22, -1)):
+            for y in (29.8, 31, 32.2):
+                bpy.ops.mesh.primitive_plane_add(size=1.2*FT, location=Vector((x, y, 3.5))*FT,
+                                                rotation=(0, facing*math.pi/2, 0))
+                card = bpy.context.object
+                card.data.materials.append(probe)
+                card.visible_shadow = False
+                card.visible_diffuse = False
+                card.visible_glossy = False
     provenance = {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest()
                   for p in [Path(__file__), ROOT/'scripts/walkthrough/plan.json',
                             ROOT/'scripts/seasons/pilot.py', ROOT/'scripts/seasons/light.py',
@@ -391,7 +433,7 @@ def run(check_only=False, timeline=False, areas=False, kitchen=False):
         w, h = sc.render.resolution_x, sc.render.resolution_y
         rotation = camera.matrix_world.to_3x3()
         deps = bpy.context.evaluated_depsgraph_get()
-        coords = {'ceiling': [], 'paint': []}
+        coords = {'ceiling': [], 'paint': [], 'probe': []}
         for y in range(4, h, 8):
             for x in range(4, w, 8):
                 ray = rotation @ Vector((xmin+(x+.5)/w*(xmax-xmin), ymin+(y+.5)/h*(ymax-ymin), depth))
@@ -410,8 +452,9 @@ def run(check_only=False, timeline=False, areas=False, kitchen=False):
                 continue
             a = np.array([pixels[y, x, :3] for y, x in points])
             mean = a.mean(axis=0)
+            red_green, blue_green = color_ratios(mean)
             result[material] = dict(samples=len(points), linear_rgb=mean.tolist(),
-                                    red_green=float(mean[0]/mean[1]), blue_green=float(mean[2]/mean[1]),
+                                    red_green=red_green, blue_green=blue_green,
                                     luminance=float(mean @ np.array(Y)))
         return result
 
@@ -447,6 +490,8 @@ def run(check_only=False, timeline=False, areas=False, kitchen=False):
                        daylight=metrics(daylight, coords), cooler_bound=metrics(cooler, coords),
                        warmer_bound=metrics(warmer, coords))
             assert max(m['luminance'] for m in row['physical'].values()) > 1e-6, f'Unlit/occluded reference camera: {view}'
+            if view.startswith('porch-'):
+                assert len(coords['probe']) > 50 and row['physical']['probe']['luminance'] > 1e-6, f'Unusable porch probes: {view}'
             for material in row['physical']:
                 row['physical'][material]['lamp_fraction_Y'] = row['lamps'][material]['luminance']/row['physical'][material]['luminance']
             report['results'][f'{view}-{label}'] = row
@@ -456,6 +501,6 @@ def run(check_only=False, timeline=False, areas=False, kitchen=False):
 
 if __name__ == '__main__':
     args = sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else []
-    if args not in (['--check'], ['--render'], ['--timeline'], ['--areas'], ['--kitchen']):
-        raise SystemExit('Use Blender with -- --check, --render, --timeline, --areas or --kitchen')
-    run(check_only=args == ['--check'], timeline=args == ['--timeline'], areas=args == ['--areas'], kitchen=args == ['--kitchen'])
+    if args not in (['--check'], ['--render'], ['--timeline'], ['--areas'], ['--kitchen'], ['--interiors']):
+        raise SystemExit('Use Blender with -- --check, --render, --timeline, --areas, --kitchen or --interiors')
+    run(check_only=args == ['--check'], timeline=args == ['--timeline'], areas=args == ['--areas'], kitchen=args == ['--kitchen'], interiors=args == ['--interiors'])
