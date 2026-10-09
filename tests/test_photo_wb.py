@@ -40,6 +40,15 @@ class PhotoWarmthTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.wb.photo_shifts({'room': [0, 0, 0, 0]})
 
+    def test_b_keeps_photo_led_base_and_adds_relative_look_difference(self):
+        base = [0., .04, .095, .016]
+        result = self.wb.look_shifts(base, [.001, .01, .06, .002])
+        for actual, expected in zip(result, [0., .049, .154, .017]):
+            self.assertAlmostEqual(actual, expected)
+        self.assertEqual(self.wb.look_shifts(base, [0.]*4), base)
+        with self.assertRaises(ValueError):
+            self.wb.look_shifts(base, [0., float('nan'), 0., 0.])
+
     def test_identity_and_invalid_inputs(self):
         source = (.6, .5, .4)
         self.assertEqual(self.wb.warmth_gains(source, math.log(.6/.4)), (1., 1., 1.))

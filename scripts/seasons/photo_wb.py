@@ -2,6 +2,7 @@
 """Private warmth-only photo trials. Run with Blender for its installed NumPy.
 
 blender -b --python-exit-code 1 -P scripts/seasons/photo_wb.py
+blender -b --python-exit-code 1 -P scripts/seasons/photo_wb.py -- --look B
 No originals, seasonal exports or physical model inputs are modified.
 """
 import json
@@ -55,23 +56,42 @@ def photo_shifts(model_shifts):
     return {room: [v*math.log(1.10)/peak for v in values] for room, values in model_shifts.items()}
 
 
-def run():
+def look_shifts(base, difference):
+    """Keep original anchor and photo-led strength; add only the look difference."""
+    if len(base) != 4 or len(difference) != 4 or not all(math.isfinite(v) for v in [*base, *difference]):
+        raise ValueError('Four finite base shifts and look differences required')
+    return [b+d-difference[0] for b, d in zip(base, difference)]
+
+
+def run(look='C'):
     import bpy
     import numpy as np
     import subprocess
 
-    OUT.mkdir(parents=True, exist_ok=True)
+    assert look in ('B', 'C')
+    out = OUT/'B' if look == 'B' else OUT
+    out.mkdir(parents=True, exist_ok=True)
+    baseline = json.loads((OUT/'recipe.json').read_text()) if look == 'B' else None
     source = MODEL/'areas'
     physical = json.loads((source/'results.json').read_text())
     look_path = MODEL/'timeline/looks/recipe.json'
     looks = json.loads(look_path.read_text())
     inputs = {str(p.relative_to(ROOT)): digest(p) for p in (source/'results.json', look_path, Path(__file__), ROOT/'scripts/seasons/night_looks.py')}
+    if baseline:
+        inputs[str((OUT/'recipe.json').relative_to(ROOT))] = digest(OUT/'recipe.json')
+        for name, expected in baseline['outputs'].items():
+            path = OUT/name
+            assert digest(path) == expected, f'C baseline changed: {path}'
+            inputs[str(path.relative_to(ROOT))] = expected
+        assert digest(source/'results.json') == baseline['inputs'][str((source/'results.json').relative_to(ROOT))]
+        assert digest(look_path) == baseline['inputs'][str(look_path.relative_to(ROOT))]
     for p, expected in physical['source_hashes'].items():
         assert digest(ROOT/p) == expected, f'Stale area reference: {p}'
         inputs[p] = expected
     assert [s['key'] for s in physical['seasons']] == [0, 3, 6, 9]
     assert len(physical['results']) == 24
-    report = dict(method='Photo-led subtle warmth: C-model relative variation scaled to10% maximum night R/B increase over original patch',
+    report = dict(look=look, method='Photo-led C baseline; B adds matched model B-minus-C warmth without renormalizing the night cap' if baseline else
+                  'Photo-led subtle warmth: C-model relative variation scaled to10% maximum night R/B increase over original patch',
                   limits=['not measured CCT or raw-camera white balance', 'global trial also changes exterior colors; masks not yet applied',
                           'no independent tint correction; clipping can alter tint', 'current WebP is trial input, not final lossless export',
                           'approximate modeled material/weather/exposure affects relative target'],
@@ -79,7 +99,10 @@ def run():
                   magick=subprocess.check_output(['magick', '-version'], text=True).splitlines()[0])
 
     def load(path):
-        inputs[str(path.relative_to(ROOT))] = digest(path)
+        key = str(path.relative_to(ROOT))
+        inputs[key] = digest(path)
+        if baseline and key in baseline['inputs']:
+            assert inputs[key] == baseline['inputs'][key], f'C reference input changed: {path}'
         w, h = map(int, subprocess.check_output(['magick', 'identify', '-format', '%w %h', str(path)]).split())
         raw = subprocess.check_output(['magick', str(path), '-alpha', 'off', '-colorspace', 'RGB', '-depth', '16', '-endian', 'LSB', 'rgb:-'])
         return np.frombuffer(raw, dtype='<u2').reshape(h, w, 3).astype(float)/65535
@@ -108,6 +131,7 @@ def run():
 
     for group, views in MODEL_VIEWS.items():
         deltas = []
+        look_deltas = []
         for view in views:
             coord_path = source/f'{view}-sample-pixels.json'
             inputs[str(coord_path.relative_to(ROOT))] = digest(coord_path)
@@ -115,39 +139,51 @@ def run():
             points = coords['ceiling'] + coords['paint']
             yy, xx = np.array(points).T
             samples = []
+            c_samples = []
             lamps = component(f'{view}-lamps-2700')
             for key in (0, 3, 6, 9):
                 a = lamps+component(f'{view}-{key:02d}-daylight')
-                a[:, :, :3] = a[:, :, :3] @ np.array(looks['treatments']['C']['knot_matrices'][TIMELINE.index(key)]).T
+                a[:, :, :3] = a[:, :, :3] @ np.array(looks['treatments'][look]['knot_matrices'][TIMELINE.index(key)]).T
                 a[:, :, 3] = 1
                 h, w, _ = a.shape
                 im = bpy.data.images.new('C_area_display', w, h, alpha=True, float_buffer=True)
                 im.pixels.foreach_set(a.ravel())
-                path = OUT/f'model-{view}-{key:02d}-C.png'
+                path = out/f'model-{view}-{key:02d}-{look}.png'
                 im.save_render(str(path), scene=sc)
                 bpy.data.images.remove(im)
                 # Ray coordinates use Blender's bottom-origin; decoded images use top-origin.
                 samples.append(load(path)[h-1-yy, xx])
+                if baseline:
+                    c_samples.append(load(OUT/f'model-{view}-{key:02d}-C.png')[h-1-yy, xx])
             stack = np.array(samples)
             valid = ((stack > .025) & (stack < .95)).all(axis=(0, 2))
+            if baseline:
+                c_stack = np.array(c_samples)
+                valid &= ((c_stack > .025) & (c_stack < .95)).all(axis=(0, 2))
             if valid.sum() < 20:
                 report['model'][view] = dict(excluded='fewer than20 common unclipped paint samples', common_samples=int(valid.sum()))
                 continue
             means = stack[:, valid].mean(axis=1)
             warmth = np.log(means[:, 0]/means[:, 2])
             deltas.append(warmth-warmth[0])
+            if baseline:
+                c_means = c_stack[:, valid].mean(axis=1)
+                look_deltas.append(warmth-np.log(c_means[:, 0]/c_means[:, 2]))
             report['model'][view] = dict(common_samples=int(valid.sum()), display_linear_rgb=means.tolist(), relative_warmth=(warmth-warmth[0]).tolist())
         assert len(deltas) >= 2, f'Insufficient usable reference views: {group}'
         shift = np.mean(deltas, axis=0)
         report['model'][group] = dict(views=views, relative_warmth=shift.tolist())
-    shifts = photo_shifts({group: report['model'][group]['relative_warmth'] for group in GROUPS})
+        if baseline:
+            report['model'][group]['look_difference'] = np.mean(look_deltas, axis=0).tolist()
+    shifts = {group: look_shifts(baseline['photo_shifts'][group], report['model'][group]['look_difference']) for group in GROUPS} if baseline else photo_shifts(
+        {group: report['model'][group]['relative_warmth'] for group in GROUPS})
     report['photo_shifts'] = shifts
     for group in GROUPS:
         shift = shifts[group]
         rows = []
         for phase_index, key in enumerate((3, 6, 9), 1):
             rows.append(f'<h2 id="phase{key}">{ {3:"Fall",6:"Winter",9:"Spring"}[key]} · phase {key}</h2>')
-            rows.append('<table><tr><th>Original · unchanged</th><th>Current seasonal</th><th>Warmth-only trial</th></tr>')
+            rows.append('<table><tr><th>Original · unchanged</th><th>'+('C trial' if baseline else 'Current seasonal')+f'</th><th>{look} warmth-only trial</th></tr>')
             sheet = ['magick']
             for view in GROUPS[group]:
                 original_path = ROOT/f'assets/listing/{view}.webp'
@@ -171,37 +207,41 @@ def run():
                 assert abs(math.log(achieved[0]/achieved[2])-target) < .02, f'Clipped reference: {view}-{key}'
                 encoded = np.where(adjusted <= .0031308, 12.92*adjusted, 1.055*adjusted**(1/2.4)-.055)
                 filename = f'{view}-{key:02d}-trial.png'
-                subprocess.run(['magick', '-size', f'{current.shape[1]}x{current.shape[0]}', '-depth', '16', '-endian', 'LSB', 'rgb:-', '-set', 'colorspace', 'sRGB', str(OUT/filename)],
+                subprocess.run(['magick', '-size', f'{current.shape[1]}x{current.shape[0]}', '-depth', '16', '-endian', 'LSB', 'rgb:-', '-set', 'colorspace', 'sRGB', str(out/filename)],
                                input=np.round(encoded*65535).astype('<u2').tobytes(), check=True)
                 tint_delta = math.log(src_mean[1]/math.sqrt(src_mean[0]*src_mean[2]))-math.log(orig_mean[1]/math.sqrt(orig_mean[0]*orig_mean[2]))
                 report['photos'][f'{view}-{key:02d}'] = dict(original_patches=original_patches, current_patches=current_patches, achieved_patches=achieved_patches,
                     original_rgb=orig_mean.tolist(), current_rgb=src_mean.tolist(), target_log_rb=target,
                     achieved_rgb=achieved.tolist(), gains=gains, clipped_pixel_fraction=clipping, tint_axis_change_from_original=tint_delta)
-                report['outputs'][filename] = digest(OUT/filename)
+                report['outputs'][filename] = digest(out/filename)
                 originals_url = f'/assets/listing/{view}.webp'
-                current_url = f'/assets/seasons-next/{view}/{key:02d}.webp'
+                current_url = f'../{filename}' if baseline else f'/assets/seasons-next/{view}/{key:02d}.webp'
                 rows.append(f'<tr><th colspan="3">Photo {view} · target R/B {math.exp(target):.2f} (linear RGB) · clipping {clipping:.1%} · tint untouched</th></tr><tr>'+''.join(
                     f'<td><a href="{url}"><img src="{url}" alt="Photo {view}, phase {key}, {label}"></a></td>' for url, label in
-                    ((originals_url, 'original'), (current_url, 'current'), (filename, 'trial')))+'</tr>')
-                sheet += ['(', str(original_path), str(current_path), str(OUT/filename), '-resize', '440x293!', '+append', ')']
+                    ((originals_url, 'original'), (current_url, 'saved C' if baseline else 'current'), (filename, f'{look} trial')))+'</tr>')
+                sheet += ['(', str(original_path), str(OUT/filename if baseline else current_path), str(out/filename), '-resize', '440x293!', '+append', ')']
             rows.append('</table>')
             sheet_name = f'{group}-{key:02d}-sheet.jpg'
-            subprocess.run([*sheet, '-append', str(OUT/sheet_name)], check=True)
-            report['outputs'][sheet_name] = digest(OUT/sheet_name)
+            subprocess.run([*sheet, '-append', str(out/sheet_name)], check=True)
+            report['outputs'][sheet_name] = digest(out/sheet_name)
         filename = f'{group}.html'
-        (OUT/filename).write_text('<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Private warmth trial</title>'
+        (out/filename).write_text('<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Private warmth trial</title>'
             '<style>body{font:16px system-ui;margin:24px;background:#fafafa;color:#222}table{width:100%;table-layout:fixed}img{display:block;width:100%;height:auto}th{text-align:left;padding:8px}p{max-width:1000px;line-height:1.5}</style>'
-            f'<h1>{group.replace("-", " ").title()} · C-guided warmth trial</h1>'
+            f'<h1>{group.replace("-", " ").title()} · {look}-guided warmth trial</h1>'+(
+            '<p>B is warmer than C. Columns: original / saved C / new B. B adds the model B-minus-C warmth difference to existing photo-led targets; no new physical simulation or independent tint correction. C copies remain unchanged.</p>' if baseline else '')+
             '<p><a href="loft.html">Loft</a> · <a href="great-room.html">Great room</a> · <a href="#phase3">Fall</a> · <a href="#phase6">Winter</a> · <a href="#phase9">Spring</a> · <a href="recipe.json">Recipe</a></p>'
-            '<p>Photo-led subtle warmth: maximum night target is10% higher linear red/blue ratio than original, not a Kelvin setting. C-model guides relative room/season variation only; literal model strength was rejected as too orange. Originals unchanged. Shared shift within each area; corrections differ for existing casts. Three white-painted patches per photo, pixel median within each then median across three. No independent tint correction; median reference luminance held. Global trial also changes windows: masking may be needed. Current delivered WebPs are before inputs; all trials private, not approved exports.</p>'
-            '<p>Columns: original / current seasonal / proposed warmth. Click image for full size. Model reference sampling uses one fixed exposure two stops below earlier previews to avoid blown-out paint; photo exposure is not lowered. Model geometry, weather and tone mapping limit precision. No new generated scenery.</p>'+''.join(rows)+'</html>')
-        report['outputs'][filename] = digest(OUT/filename)
+            '<p>C baseline maximum night target is10% higher linear red/blue ratio than original, not a Kelvin setting. B adds warmth beyond that baseline. C-model guides relative room/season variation only; literal model strength was rejected as too orange. Originals unchanged. Shared shift within each area; corrections differ for existing casts. Three white-painted patches per photo, pixel median within each then median across three. No independent tint correction; median reference luminance held. Global trial also changes windows: masking may be needed. Current delivered WebPs are before inputs; all trials private, not approved exports.</p>'
+            '<p>Click image for full size. Model reference sampling uses one fixed exposure two stops below earlier previews to avoid blown-out paint; photo exposure is not lowered. Model geometry, weather and tone mapping limit precision. No new generated scenery.</p>'+''.join(rows)+'</html>')
+        report['outputs'][filename] = digest(out/filename)
     assert len(report['photos']) == 24
     for path, expected in inputs.items():
         assert digest(ROOT/path) == expected, f'Input changed: {path}'
-    (OUT/'recipe.json').write_text(json.dumps(report, indent=2)+'\n')
+    (out/'recipe.json').write_text(json.dumps(report, indent=2)+'\n')
     print('PASS 24 private warmth-only candidates; source hashes unchanged')
 
 
 if __name__ == '__main__':
-    run()
+    args = sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else []
+    if args not in ([], ['--look', 'B']):
+        raise SystemExit('Use Blender with no arguments for C or -- --look B')
+    run('B' if args else 'C')
