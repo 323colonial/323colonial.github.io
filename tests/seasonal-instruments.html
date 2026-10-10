@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Seasonal instruments — 323 Colonial design study</title>
+<style>
+:root { color-scheme: dark; --paper: #f0ece2; --metal: #d1c7b8; --field: #593a32; --line: #95796d; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--field); color: var(--paper); font: 15px/1.5 Arial, sans-serif; }
+::selection { color: var(--field); background: var(--paper); }
+main { max-width: 1440px; margin: auto; padding: 38px 48px 26px; }
+header { display: flex; justify-content: space-between; align-items: baseline; gap: 24px; padding-bottom: 25px; border-bottom: 1px solid var(--line); }
+h1 { margin: 0; font: 400 clamp(30px, 3.5vw, 48px)/1.1 Georgia, serif; letter-spacing: -.025em; }
+header p { margin: 0; max-width: 38ch; color: var(--metal); font-size: 14px; }
+.comparison { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; padding-top: 30px; }
+article { min-width: 0; }
+h2 { margin: 0; font: 400 25px/1.2 Georgia, serif; }
+.character { margin: 6px 0 0; color: var(--metal); font-size: 13px; }
+.enlarged { width: 100%; max-width: 390px; aspect-ratio: 1; margin: 6px auto 0; }
+.instrument { display: block; width: 100%; height: 100%; overflow: visible; }
+.caption { min-height: 66px; margin: 6px 0 22px; max-width: 38ch; color: var(--paper); font-size: 14px; line-height: 1.55; }
+.actual { display: flex; align-items: center; gap: 22px; min-height: 84px; padding: 12px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.actual .instrument { width: 52px; height: 52px; flex-shrink: 0; }
+.actual p { font-size: 12px; color: var(--metal); margin: 0; }
+.actual span { display: block; font-size: 13px; color: var(--paper); }
+.controls { display: grid; grid-template-columns: auto minmax(130px, 1fr) 78px auto; align-items: center; gap: 24px; margin: 32px 0 20px; }
+label { font-size: 13px; }
+input { width: 100%; min-width: 0; height: 44px; accent-color: var(--paper); cursor: pointer; }
+output { font: 19px Georgia, serif; }
+button { min-height: 44px; border: 1px solid var(--metal); background: transparent; color: var(--paper); padding: 8px 18px; font: 14px Arial, sans-serif; cursor: pointer; }
+button:hover { background: var(--paper); color: var(--field); }
+:focus-visible { outline: 3px solid var(--paper); outline-offset: 5px; }
+footer { display: flex; justify-content: space-between; gap: 24px; color: var(--metal); font-size: 12px; }
+footer p { margin: 0; max-width: 65ch; }
+@media (max-width: 760px) {
+  main { padding: 24px; }
+  header { display: block; }
+  header p { margin-top: 14px; }
+  .comparison { grid-template-columns: 1fr; gap: 42px; }
+  .enlarged { max-width: 340px; }
+  .caption { min-height: 0; max-width: 50ch; }
+  .controls { grid-template-columns: 1fr auto; gap: 8px 20px; }
+  .controls input { grid-column: 1; grid-row: 2; }
+  .controls button { grid-column: 2; grid-row: 2; }
+  footer { display: block; }
+  footer p + p { margin-top: 12px; }
+}
+</style>
+</head>
+<body>
+<main>
+<header>
+  <h1>Seasonal instruments</h1>
+  <p>Three studies for 323 Colonial.<br>Astronomical mechanics, drawn in warm monochrome.</p>
+</header>
+<div class="comparison">
+  <article>
+    <h2>Armillary cage</h2>
+    <p class="character">Suspended sphere · intersecting meridians</p>
+    <div class="enlarged" data-model="armillary"></div>
+    <p class="caption">A small world held inside open, inclined rings. A travelling pearl passes behind the sphere, then emerges into view.</p>
+    <div class="actual"><div data-model="armillary"></div><p><span>At header size · 52px</span>Most celestial. Strongest starting point.</p></div>
+  </article>
+  <article>
+    <h2>Skeleton orrery</h2>
+    <p class="character">Eccentric orbit · pierced mechanical bridges</p>
+    <div class="enlarged" data-model="orrery"></div>
+    <p class="caption">An off-centre sun, an orbiting satellite and a visible gear train. Open space replaces the face of a watch.</p>
+    <div class="actual"><div data-model="orrery"></div><p><span>At header size · 52px</span>Most horological. Finest details recede.</p></div>
+  </article>
+  <article>
+    <h2>Seasonal carousel</h2>
+    <p class="character">Rotating crown · four engraved seasonal plates</p>
+    <div class="enlarged" data-model="carousel"></div>
+    <p class="caption">Bud, sun, leaf and crystal turn around a tilted spindle. Each seasonal plate comes forward, then slips behind.</p>
+    <div class="actual"><div data-model="carousel"></div><p><span>At header size · 52px</span>Most sculptural. Clearest seasonal motif.</p></div>
+  </article>
+</div>
+<div class="controls">
+  <label for="phase">Seasonal progression</label>
+  <input id="phase" type="range" min="0" max="100" value="8" step="0.1">
+  <output for="phase">Spring</output>
+  <button type="button" id="motion">Play motion</button>
+</div>
+<noscript><p>Enable JavaScript to view these interactive vector studies.</p></noscript>
+<footer>
+  <p>Drag to inspect the mechanism. Motion study only: not an astronomical model.<br>Production version would follow the existing photo cycle and Pause/Resume control.</p>
+  <p>Local design preview only.<br>Current website unchanged.</p>
+</footer>
+</main>
+<script>
+const TAU = Math.PI * 2;
+const field = '#593a32', paper = '#f0ece2', metal = '#d1c7b8', dim = '#a68b7f';
+const hosts = [...document.querySelectorAll('[data-model]')];
+const slider = document.querySelector('input');
+const output = document.querySelector('output');
+const button = document.querySelector('button');
+const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+let playing = false, frame = 0, lastTime = 0, position = 8;
+
+function path(d, stroke = metal, width = 1, extra = '') {
+  return `<path d="${d}" fill="none" stroke="${stroke}" stroke-width="${width}" stroke-linecap="round" stroke-linejoin="round" ${extra}/>`;
+}
+function circle(x, y, r, fill = field, stroke = metal, width = 1) {
+  return `<circle cx="${x}" cy="${y}" r="${r}" fill="${fill}" stroke="${stroke}" stroke-width="${width}"/>`;
+}
+function screw(x, y, r = 3.5) {
+  return circle(x, y, r, field, paper, .8) + path(`M${x-r*.48} ${y+r*.48}l${r*.96} ${-r*.96}`, paper, .8);
+}
+function glyph(season, x, y, size = 1) {
+  const shapes = [
+    'M0 10V-2M0 3C-9 3-10-3-9-8-3-8 0-4 0 3M0-1C0-7 4-10 9-10 10-4 6 0 0-1',
+    'M0-13v3M0 10v3M-13 0h3M10 0h3M-9-9l2 2M7 7l2 2M-9 9l2-2M7-7l2-2',
+    'M-8 10 6-6M-5 6C-13-5-4-11 10-11 11 2 5 10-5 6M-3 4V-3M0 1h6',
+    'M0-12v24M-10.4-6 10.4 6M-10.4 6 10.4-6M-3-9l3 3 3-3M-3 9l3-3 3 3M-9-2l4-1-1-4M9 2l-4 1 1 4M-6 7l1-4-4-1M6-7 5-3l4 1'
+  ];
+  return `<g transform="translate(${x} ${y}) scale(${size})">${path(shapes[season], paper, 1.5)}${season === 1 ? circle(0, 0, 5.5, 'none', paper, 1.5) : ''}</g>`;
+}
+function defs(id) {
+  return `<defs>
+  <radialGradient id="pearl-${id}" cx="30%" cy="25%" r="78%"><stop stop-color="#f0ece2"/><stop offset=".46" stop-color="#d1c7b8"/><stop offset=".82" stop-color="#a68b7f"/><stop offset="1" stop-color="#68483e"/></radialGradient>
+  <linearGradient id="steel-${id}" x1="0" y1="0" x2="1" y2=".8"><stop stop-color="#f0ece2"/><stop offset=".4" stop-color="#d1c7b8"/><stop offset="1" stop-color="#95796d"/></linearGradient>
+  </defs>`;
+}
+function pearl(x, y, r, id) {
+  return circle(x, y, r, `url(#pearl-${id})`, paper, .7);
+}
+function gear(x, y, radius, teeth, turn) {
+  let points = '';
+  for (let i = 0; i < teeth * 4; i++) {
+    const a = turn + i * TAU / (teeth * 4);
+    const r = radius - (i % 4 < 2 ? 0 : 2.7);
+    points += `${i ? 'L' : 'M'}${x + Math.cos(a)*r} ${y + Math.sin(a)*r}`;
+  }
+  let result = path(points + 'Z', dim, .9, `style="fill:${field}"`);
+  result += circle(x, y, radius - 6, field, metal, .9);
+  for (let i = 0; i < 5; i++) {
+    const a = turn + i * TAU / 5;
+    result += path(`M${x+Math.cos(a)*5} ${y+Math.sin(a)*5}L${x+Math.cos(a)*(radius-7)} ${y+Math.sin(a)*(radius-7)}`, metal, 2);
+  }
+  return result + screw(x, y, 4);
+}
+// Orthographic projection supplies real front/back order without a WebGL dependency.
+function project(x, y, z) {
+  const yaw = .38, tilt = .58, roll = -.27;
+  const xx = x*Math.cos(yaw)+z*Math.sin(yaw);
+  const zz = -x*Math.sin(yaw)+z*Math.cos(yaw);
+  const yy = y*Math.cos(tilt)-zz*Math.sin(tilt);
+  return [160+xx*Math.cos(roll)-yy*Math.sin(roll), 149+xx*Math.sin(roll)+yy*Math.cos(roll), y*Math.sin(tilt)+zz*Math.cos(tilt)];
+}
+function ringPoint(radius, angle, inclination) {
+  return project(radius*Math.cos(angle), radius*Math.sin(angle)*Math.cos(inclination), radius*Math.sin(angle)*Math.sin(inclination));
+}
+function ring(radius, inclination, front, width = 1, color = metal) {
+  let d = '', connected = false;
+  for (let i = 0; i <= 160; i++) {
+    const p = ringPoint(radius, i*TAU/160, inclination);
+    if ((p[2] >= 0) === front) {
+      d += `${connected ? 'L' : 'M'}${p[0]} ${p[1]}`;
+      connected = true;
+    } else connected = false;
+  }
+  return path(d, color, width);
+}
+function armillary(t, id) {
+  let back = '', front = '';
+  for (const [radius, inclination] of [[94, 0], [91, 1.5], [85, -.9]]) {
+    back += ring(radius, inclination, false, 1, dim) + ring(radius-4, inclination, false, .6, dim);
+    front += ring(radius, inclination, true, 1.4, paper) + ring(radius-4, inclination, true, .65, metal);
+  }
+  const axisA = project(0, -112, 0), axisB = project(0, 112, 0);
+  let body = path(`M${axisA[0]} ${axisA[1]}L${axisB[0]} ${axisB[1]}`, dim, 2);
+  body += screw(axisA[0], axisA[1], 4) + screw(axisB[0], axisB[1], 4);
+  body += back;
+  const p = ringPoint(91, t*TAU-Math.PI/2, 1.5);
+  if (p[2] < 0) body += pearl(p[0], p[1], 7, id);
+  body += pearl(160, 149, 25, id);
+  body += path('M139 139Q160 155 181 145M144 168Q155 147 153 125', field, .7);
+  body += front;
+  if (p[2] >= 0) body += pearl(p[0], p[1], 7, id);
+  for (let i = 0; i < 4; i++) {
+    const q = ringPoint(116, i*TAU/4-Math.PI/2, 1.5);
+    body += glyph(i, q[0], q[1], .68);
+  }
+  body += path('M128 259h64M138 254h44M150 239l-7 15m27-15 7 15', metal, 1.2);
+  return body;
+}
+function orbitPoint(angle, radius = 109) {
+  const x = Math.cos(angle)*radius, y = Math.sin(angle)*radius*.59;
+  return [155+x*.93+y*.36, 139-x*.36+y*.93];
+}
+function orrery(t, id) {
+  let body = `<path d="M68 98C32 139 48 200 104 220L118 202C77 188 64 148 84 111Z" fill="${field}" stroke="${metal}" stroke-width="1.2"/>`;
+  body += path('M70 113C47 157 68 194 102 209', dim, .6);
+  for (let i=0;i<13;i++) {
+    const a = 1.8+i*.1;
+    body += path(`M${125+66*Math.cos(a)} ${153+58*Math.sin(a)}l-5 4`, dim, .65);
+  }
+  body += gear(100, 204, 27, 22, -t*TAU);
+  body += gear(140, 208, 15, 14, t*TAU*1.8);
+  body += gear(156, 174, 22, 19, -t*TAU*1.15);
+  let orbit = '';
+  for (let i=0;i<=120;i++) {
+    const p = orbitPoint(i*TAU/120);
+    orbit += `${i ? 'L' : 'M'}${p[0]} ${p[1]}`;
+  }
+  body += path(orbit+'Z', metal, .9);
+  const p = orbitPoint(t*TAU-Math.PI/2);
+  body += path(`M155 139L${p[0]} ${p[1]}`, paper, 2.2);
+  body += circle(155, 139, 22, field, dim, .7);
+  for (let i=0;i<16;i++) {
+    const a=i*TAU/16;
+    body += path(`M${155+Math.cos(a)*25} ${139+Math.sin(a)*25}l${Math.cos(a)*4} ${Math.sin(a)*4}`, metal, .8);
+  }
+  body += pearl(155, 139, 15, id) + pearl(p[0], p[1], 9, id);
+  body += `<path d="M90 207 147 161Q155 155 163 162L183 191 176 198 155 180 99 216Z" fill="${field}" stroke="${paper}" stroke-width="1.2"/>`;
+  body += path('M104 204 151 168M160 170l14 19', metal, .7);
+  body += screw(97, 209, 4) + screw(156, 167, 4) + screw(178, 192, 3);
+  for (let i=0;i<4;i++) {
+    const q = orbitPoint(i*TAU/4-Math.PI/2, 136);
+    body += glyph(i, q[0], q[1], .7);
+  }
+  return body;
+}
+function carousel(t, id) {
+  let body = '';
+  const top = project(0, -109, 0), bottom = project(0, 105, 0);
+  body += path(`M${top[0]} ${top[1]}L${bottom[0]} ${bottom[1]}`, metal, 2);
+  body += pearl(top[0], top[1], 5, id);
+  const plates = [];
+  for (let i=0;i<4;i++) {
+    const a = (i/4-t)*TAU+Math.PI/2;
+    const p = project(80*Math.cos(a), 0, 80*Math.sin(a));
+    const upper = project(80*Math.cos(a), -33, 80*Math.sin(a));
+    const lower = project(80*Math.cos(a), 33, 80*Math.sin(a));
+    const halfWidth = 10+14*Math.abs(Math.sin(a+.38));
+    const dx = halfWidth, dy = -halfWidth*.277;
+    let plate = path(`M160 149L${p[0]} ${p[1]}`, dim, 2);
+    plate += `<path d="M${upper[0]-dx} ${upper[1]-dy}Q${upper[0]} ${upper[1]-8} ${upper[0]+dx} ${upper[1]+dy}L${lower[0]+dx} ${lower[1]+dy}Q${lower[0]} ${lower[1]+8} ${lower[0]-dx} ${lower[1]-dy}Z" fill="${field}" stroke="${p[2]>0 ? paper : dim}" stroke-width="1.2"/>`;
+    plate += path(`M${upper[0]-dx+3} ${upper[1]-dy+6}L${lower[0]-dx+3} ${lower[1]-dy-5}`, metal, .7);
+    plate += `<g transform="translate(${p[0]} ${p[1]}) rotate(-15) scale(${halfWidth/24} 1)">${glyph(i,0,0,.9)}</g>`;
+    plate += screw(upper[0], upper[1]+5, 2) + screw(lower[0], lower[1]-5, 2);
+    plates.push({ z:p[2], markup:plate });
+  }
+  let crownBack = '', crownFront = '';
+  for (const y of [-45,45]) {
+    let back = '', front = '', prev = null;
+    for (let i=0;i<=120;i++) {
+      const a=i*TAU/120, p=project(81*Math.cos(a),y,81*Math.sin(a));
+      const side=p[2]>y*Math.sin(.58);
+      const segment=`${side===prev ? 'L' : 'M'}${p[0]} ${p[1]}`;
+      if(side) front+=segment; else back+=segment;
+      prev=side;
+    }
+    crownBack += path(back,dim,1);
+    crownFront += path(front,paper,1.5);
+  }
+  plates.sort((a,b)=>a.z-b.z);
+  body += crownBack;
+  body += plates.filter(p=>p.z<0).map(p=>p.markup).join('');
+  body += pearl(160,149,15,id);
+  body += plates.filter(p=>p.z>=0).map(p=>p.markup).join('');
+  body += crownFront;
+  body += screw(bottom[0],bottom[1],5);
+  body += path(`M${bottom[0]-22} ${bottom[1]+13}h44M${bottom[0]-13} ${bottom[1]+8}h26`,metal,1.2);
+  return body;
+}
+const renderers = { armillary, orrery, carousel };
+function render(phase = Number(slider.value)/100) {
+  output.textContent = ['Spring', 'Summer', 'Autumn', 'Winter'][Math.floor(phase*4)%4];
+  slider.setAttribute('aria-valuetext', `${output.textContent}, ${Math.round(phase*100)} percent through cycle`);
+  hosts.forEach((host, i) => {
+    host.innerHTML = `<svg class="instrument" viewBox="0 0 320 290" aria-hidden="true" focusable="false">${defs(i)}${renderers[host.dataset.model](phase,i)}</svg>`;
+  });
+}
+function stop() {
+  playing = false;
+  cancelAnimationFrame(frame);
+  button.textContent = 'Play motion';
+}
+function tick(time) {
+  if (!playing) return;
+  position = (position+(time-lastTime)/360)%100;
+  slider.value = position;
+  lastTime=time;
+  render(position/100);
+  frame=requestAnimationFrame(tick);
+}
+button.addEventListener('click', () => {
+  if (playing) return stop();
+  playing=true;
+  position=Number(slider.value);
+  button.textContent='Pause motion';
+  lastTime=performance.now();
+  frame=requestAnimationFrame(tick);
+});
+slider.addEventListener('input', () => { stop(); render(); });
+document.addEventListener('visibilitychange', () => { if(document.hidden) stop(); });
+reduced.addEventListener('change', stop);
+render();
+</script>
+</body>
+</html>
