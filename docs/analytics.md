@@ -54,9 +54,9 @@ Mechanism verified against PostHog source commit `94dffaa4bfba0ab610c6ee03e447a5
 
 One authorized synthetic event, `colonial_zoc2_geo_test`, was ingested and its expanded stored non-null properties inspected. Missing/invalid lookup and disabled/erroring transformation were not exercised in the tenant; failure behavior above is based on the transformation's explicit field allowlist and independent IP-discard setting, not live fault-injection evidence. Do not disable privacy controls on the live project to test them. Keep any future authorized synthetic event names outside production report selections; do not use real visitors as test data.
 
-## Private owner dashboard recipe
+## Owner dashboard recipe
 
-Use free Trends and available Paths/SQL; no public sharing or paid lifecycle/group features. Always label counts as browsers, visits or clicks—not people, leads or completed calls.
+Use free Trends and available Paths/SQL; no paid lifecycle/group features. Public sharing is intentional and owner-approved as of 2026-10-10; preserve it. Always label counts as browsers, visits or clicks—not people, leads or completed calls.
 
 1. **Traffic:** `$pageview` unique browsers by `source`, `device`, `$geoip_country_name`, `$geoip_subdivision_1_name`, `$geoip_city_name`; direct/unknown included. Separate acquisition-source report.
 2. **Visits/returns:** count distinct `visit_id` over approved events; distinct browser IDs where `returning_browser=true`; separate `later_day_return=true`. Use selected weeks and US/Eastern timezone. Do not add pageview counts to infer repeat visits.
@@ -66,9 +66,9 @@ Use free Trends and available Paths/SQL; no public sharing or paid lifecycle/gro
 
 Approximate small city groups can still be identifying; they are not anonymous populations or individual dossiers. Owner accepts rolling one-year event retention on free plan and is responsible for stopping collection and deleting analytics after sale. No indefinite archive promised. Keep 1M/month analytics billing limit, no card/trial/paid toolbar; other product limits are separate. In-app heatmaps use two canonical URLs within free three-URL allowance.
 
-## Accepted private dashboard
+## Originally accepted dashboard (2026-10-06)
 
-US Cloud project **647943**, dashboard **2178189**, **323 Colonial --- buyer activity**; account-relative path `/dashboard/2178189`. Owner confirms public sharing **OFF**. On 2026-10-06 the owner supplied all saved SQL/Paths definitions and relayed successful execution of all 11 insights, including the four updated segment/Paths queries. The agent reviewed those definitions against `analytics-core.mjs`; it did not run authenticated account queries itself.
+US Cloud project **647943**, dashboard **2178189**, **323 Colonial --- buyer activity**; account-relative path `/dashboard/2178189`. Owner reported public sharing **OFF** at initial acceptance; it is now intentionally enabled (see updates below). On 2026-10-06 the owner supplied all saved SQL/Paths definitions and relayed successful execution of all 11 insights, including the four updated segment/Paths queries. The agent reviewed those definitions against `analytics-core.mjs`; it did not run authenticated account queries itself.
 
 | Insight ID | Report |
 | --- | --- |
@@ -89,6 +89,19 @@ SQL uses a rolling 28-day window and explicit event selections, excluding `^colo
 Paths excludes `engagement`, `$pageleave`, `colonial_zoc2_geo_test` and `$$heatmap` by exact name. The ineffective `properties.event` filter was removed. This covers the only synthetic event sent for this task; add any future test-event names before use rather than assuming wildcard coverage. `filterTestAccounts` is false; this is explicit event exclusion, not a global test-account filter.
 
 Photo reports executed successfully but had no matching rows. Opens/engagement returned gallery-open count 1, story 11.2 seconds and gallery 173.9 seconds; these are dated observations, not fixed expected totals. Gallery opens and gallery attention occupy separate categories. Earlier AI-memory flags describing query failures or a blank tile are stale. No title-capitalization change is required for acceptance.
+
+## Live insight corrections (colonial-3f8, 2026-10-10)
+
+Approval `colonial-dso` authorized five bounded insight updates on dashboard **2178189**. Public sharing remained enabled; eight other insight definitions were unchanged. No event history was rewritten, test events ingested, website deployed or code pushed.
+
+- **Outbound Clicks by Destination and Placement (28 Days)** (`fuaidnt9JpFb`): [saved SQL](analytics-queries/outbound.sql) preserves the eight recorded destination categories and four placements, with `unknown` for unrecognized/missing values. Columns report click events, distinct clicking visits and distinct clicking browsers. `other-external` stays unspecified; dates do not establish historical destinations. Groups overlap, so distinct counts are not additive. Named categories still depend on deploying the updated client module.
+- **Average Browsers and Visits by Eastern Hour (Complete Days)** (`TQPFqFmo`): [saved SQL](analytics-queries/time-of-day.sql) uses up to 28 complete America/New_York calendar days strictly after the first recorded approved-event day and before today. Every day contributes all 24 clock-hour bins, including zeros. `complete_days` exposes the common denominator; no eligible days produces no rows. DST's repeated hour combines distinct activity within that day; its skipped hour contributes zero. This assumes tracking stayed enabled: an instrumentation outage cannot be distinguished from inactivity.
+- **Recent Browsers and Visits (48 Hours)** (`LN960w7z`): title/description now match the unchanged 48-hour query and 49 hourly buckets. First/current buckets are partial; hourly distinct counts overlap.
+- **Engagement Time by Photo** (`SkdROn8X3CDr`) and **Opens and Engagement Time** (`zMJK7Of2Q_rd`): descriptions now say estimated active **seconds**, matching existing queries. No metric/query changes; story sections have no open event.
+
+Verified through authenticated API readback and fresh execution of all five saved SQL sources, not browser rendering. At verification: 7 outbound clicks, 7 distinct visits, 6 distinct browsers; 3 clicks remained `other-external`. All 24 hourly rows matched an independent sum of daily distinct counts divided by 3 complete days (October 7–9). These are dated observations, not fixed expected totals.
+
+Nine read-only inline-fixture HogQL checks covered categories, repeated clicks, unknown values, event exclusions, empty/no-complete-day inputs, zero activity, the 28-day cap, Eastern midnight and both DST transitions. Original queries failed the two core regression checks before repair. Private evidence and exact rollback fields: `.pi/artifacts/colonial-3f8/` (`check_queries.py`, `checks.json`, `before.json`, `changes.json`, `rollback.json`, `write-journal.json`, `saved-results.json`, `independent-saved-validation.json`, `verification.json`). Restore only after checking current fields still match the approved candidate; never overwrite concurrent edits. SQL files here are reference copies of saved insight sources, not website publication assets or automatic deployment inputs.
 
 ## Verification and publication
 
