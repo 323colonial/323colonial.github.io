@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Compact armillaries — 323 Colonial design study</title>
+<style>
+:root { color-scheme: dark; --paper: #f0ece2; --metal: #d1c7b8; --field: #593a32; --line: #95796d; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--field); color: var(--paper); font: 15px/1.5 Arial, sans-serif; }
+::selection { color: var(--field); background: var(--paper); }
+main { max-width: 1440px; margin: auto; padding: 36px 48px 28px; }
+header { display: flex; justify-content: space-between; align-items: baseline; gap: 32px; padding-bottom: 24px; border-bottom: 1px solid var(--line); }
+h1 { margin: 0; font: 400 clamp(30px, 3.5vw, 48px)/1.1 Georgia, serif; letter-spacing: -.025em; }
+header p { margin: 0; max-width: 38ch; color: var(--metal); font-size: 14px; }
+.comparison { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; padding-top: 28px; }
+article { min-width: 0; }
+h2 { margin: 0; font: 400 25px/1.2 Georgia, serif; }
+.character { margin: 6px 0 0; color: var(--metal); font-size: 13px; }
+.enlarged { width: 100%; max-width: 310px; aspect-ratio: 1; margin: 28px auto; }
+.instrument { display: block; width: 100%; height: 100%; }
+.caption { min-height: 66px; margin: 0 0 24px; max-width: 38ch; font-size: 14px; line-height: 1.55; }
+.actual { display: flex; justify-content: space-between; align-items: center; gap: 16px; min-height: 100px; padding: 20px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.address { margin: 0; font: 19px/1.3 Georgia, serif; }
+.address span { display: block; margin-top: 4px; font: 12px/1.5 Arial, sans-serif; color: var(--metal); }
+.actual .instrument { width: 52px; height: 52px; }
+.actual figure { margin: 0; text-align: center; }
+.actual figcaption { margin-top: 4px; font-size: 12px; color: var(--metal); }
+.controls { display: grid; grid-template-columns: auto minmax(130px, 1fr) 78px 140px; align-items: center; gap: 24px; margin: 28px 0 20px; }
+label { font-size: 13px; }
+input { width: 100%; min-width: 0; height: 44px; accent-color: var(--paper); cursor: pointer; }
+output { font: 19px Georgia, serif; }
+button { min-height: 44px; border: 1px solid var(--metal); background: transparent; color: var(--paper); padding: 8px 16px; font: 14px Arial, sans-serif; cursor: pointer; }
+button:hover { background: var(--paper); color: var(--field); }
+:focus-visible { outline: 3px solid var(--paper); outline-offset: 5px; }
+footer { display: flex; justify-content: space-between; gap: 32px; color: var(--metal); font-size: 12px; }
+footer p { margin: 0; max-width: 65ch; }
+</style>
+</head>
+<body>
+<main>
+<header>
+  <h1>Armillary, without the stand</h1>
+  <p>Three compact studies for 323 Colonial.<br>More presence. A moving pearl. A season at the centre.</p>
+</header>
+<div class="comparison">
+  <article>
+    <h2>Floating meridians</h2>
+    <p class="character">Steady cage · travelling pearl</p>
+    <div class="enlarged" data-model="meridians"></div>
+    <p class="caption">Closest to the original: three fixed, inclined rings. The bright pearl carries the motion around a small seasonal centre.</p>
+    <div class="actual"><p class="address">323 Colonial Dr<span>Berkeley Springs, WV</span></p><figure><div data-model="meridians"></div><figcaption>52px</figcaption></figure></div>
+  </article>
+  <article>
+    <h2>Gimbal</h2>
+    <p class="character">Turning bands · mechanical depth</p>
+    <div class="enlarged" data-model="gimbal"></div>
+    <p class="caption">A steady outer hoop holds two broader, turning bands. The cage changes shape as the pearl passes through its layers.</p>
+    <div class="actual"><p class="address">323 Colonial Dr<span>Berkeley Springs, WV</span></p><figure><div data-model="gimbal"></div><figcaption>52px</figcaption></figure></div>
+  </article>
+  <article>
+    <h2>Eclipse</h2>
+    <p class="character">Open arcs · larger seasonal centre</p>
+    <div class="enlarged" data-model="eclipse"></div>
+    <p class="caption">Two strong rings leave room for a larger seasonal symbol. A bright satellite sweeps past the centre, then behind it.</p>
+    <div class="actual"><p class="address">323 Colonial Dr<span>Berkeley Springs, WV</span></p><figure><div data-model="eclipse"></div><figcaption>52px</figcaption></figure></div>
+  </article>
+</div>
+<div class="controls">
+  <label for="phase">Seasonal progression</label>
+  <input id="phase" type="range" min="0" max="100" value="8" step="0.1">
+  <output for="phase">Spring</output>
+  <button type="button" id="motion">Play motion</button>
+</div>
+<noscript><p>Enable JavaScript to view these interactive vector studies.</p></noscript>
+<footer>
+  <p>Drag to compare, or play one 36-second year. Bud, sun, leaf, crystal.<br>Motion study, not an astronomical model. Final motion would follow the photo cycle.</p>
+  <p>Desktop preview only · mobile deferred.<br>Original preview and website unchanged.</p>
+</footer>
+</main>
+<script>
+const TAU = Math.PI * 2;
+const field = '#593a32', paper = '#f0ece2', metal = '#d1c7b8', dim = '#a68b7f';
+const hosts = [...document.querySelectorAll('[data-model]')];
+const slider = document.querySelector('input');
+const output = document.querySelector('output');
+const button = document.querySelector('button');
+const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+let playing = false, frame = 0, lastTime = 0, position = 8;
+
+function path(d, stroke = metal, width = 1) {
+  return `<path d="${d}" fill="none" stroke="${stroke}" stroke-width="${width}" stroke-linecap="round" stroke-linejoin="round"/>`;
+}
+function circle(x, y, r, fill = field, stroke = metal, width = 1) {
+  return `<circle cx="${x}" cy="${y}" r="${r}" fill="${fill}" stroke="${stroke}" stroke-width="${width}"/>`;
+}
+function glyph(season, size) {
+  const shapes = [
+    'M0 10V-2M0 3C-9 3-10-3-9-8-3-8 0-4 0 3M0-1C0-7 4-10 9-10 10-4 6 0 0-1',
+    'M0-13v3M0 10v3M-13 0h3M10 0h3M-9-9l2 2M7 7l2 2M-9 9l2-2M7-7l2-2',
+    'M-8 10 6-6M-5 6C-13-5-4-11 10-11 11 2 5 10-5 6M-3 4V-3M0 1h6',
+    'M0-12v24M-10.4-6 10.4 6M-10.4 6 10.4-6M-3-9l3 3 3-3M-3 9l3-3 3 3M-9-2l4-1-1-4M9 2l-4 1 1 4M-6 7l1-4-4-1M6-7 5-3l4 1'
+  ];
+  return `<g transform="translate(100 100) scale(${size})">${path(shapes[season], paper, 2)}${season === 1 ? circle(0, 0, 5.5, 'none', paper, 2) : ''}</g>`;
+}
+function defs(id) {
+  return `<defs>
+  <radialGradient id="pearl-${id}" cx="30%" cy="25%" r="78%"><stop stop-color="#f0ece2"/><stop offset=".46" stop-color="#d1c7b8"/><stop offset=".82" stop-color="#a68b7f"/><stop offset="1" stop-color="#68483e"/></radialGradient>
+  <radialGradient id="core-${id}" cx="30%" cy="25%" r="78%"><stop stop-color="#95796d"/><stop offset="1" stop-color="#593a32"/></radialGradient>
+  </defs>`;
+}
+// A tilted circle supplies a depth value for its rear and front halves.
+function ringPoint(radius, angle, tilt, turn) {
+  const x = radius * Math.cos(angle), y = radius * Math.sin(angle) * Math.cos(tilt);
+  return [100 + x*Math.cos(turn) - y*Math.sin(turn), 100 + x*Math.sin(turn) + y*Math.cos(turn), radius*Math.sin(angle)*Math.sin(tilt)];
+}
+function ring(radius, tilt, turn, front, width) {
+  let d = '';
+  const start = front ? 0 : Math.PI;
+  for (let i = 0; i <= 80; i++) {
+    const p = ringPoint(radius, start + i*Math.PI/80, tilt, turn);
+    d += `${i ? 'L' : 'M'}${p[0]} ${p[1]}`;
+  }
+  return path(d, front ? metal : dim, width) + (front ? path(d, paper, 1) : '');
+}
+function armillary(model, phase, id) {
+  const angle = phase*TAU;
+  let bands, core, glyphSize;
+  if (model === 'meridians') {
+    bands = [[91, .35, -.45, 3], [88, 1.15, -.75, 4], [85, 1.1, .9, 3]];
+    core = 25; glyphSize = 1.45;
+  } else if (model === 'gimbal') {
+    bands = [[91, .25, -.4, 4], [83, 1.05 + .35*Math.sin(angle), angle-.7, 7], [76, .9 + .35*Math.cos(angle), -angle+.8, 6]];
+    core = 26; glyphSize = 1.5;
+  } else {
+    bands = [[91, .3, -.5, 4], [83, 1.27, -.55, 6]];
+    core = 37; glyphSize = 2.1;
+  }
+  const orbit = bands[1];
+  const p = ringPoint(orbit[0], angle-Math.PI/2, orbit[1], orbit[2]);
+  const satellite = circle(p[0], p[1], 9, `url(#pearl-${id})`, paper, 1.2);
+  let body = bands.map(b => ring(b[0], b[1], b[2], false, b[3])).join('');
+  if (p[2] < 0) body += satellite;
+  body += circle(100, 100, core, `url(#core-${id})`, metal, 1.5);
+  body += glyph(Math.floor(phase*4)%4, glyphSize);
+  body += bands.map(b => ring(b[0], b[1], b[2], true, b[3])).join('');
+  if (p[2] >= 0) body += satellite;
+  return body;
+}
+function render(phase = Number(slider.value)/100) {
+  output.textContent = ['Spring', 'Summer', 'Autumn', 'Winter'][Math.floor(phase*4)%4];
+  slider.setAttribute('aria-valuetext', `${output.textContent}, ${Math.round(phase*100)} percent through cycle`);
+  hosts.forEach((host, i) => {
+    host.innerHTML = `<svg class="instrument" viewBox="0 0 200 200" aria-hidden="true" focusable="false">${defs(i)}<g>${armillary(host.dataset.model,phase,i)}</g></svg>`;
+  });
+}
+function stop() {
+  playing = false;
+  cancelAnimationFrame(frame);
+  button.textContent = 'Play motion';
+}
+function tick(time) {
+  if (!playing) return;
+  position = (position+(time-lastTime)/360)%100;
+  slider.value = position;
+  lastTime=time;
+  render(position/100);
+  frame=requestAnimationFrame(tick);
+}
+button.addEventListener('click', () => {
+  if (playing) return stop();
+  playing=true;
+  position=Number(slider.value);
+  button.textContent='Pause motion';
+  lastTime=performance.now();
+  frame=requestAnimationFrame(tick);
+});
+slider.addEventListener('input', () => { stop(); render(); });
+document.addEventListener('visibilitychange', () => { if(document.hidden) stop(); });
+reduced.addEventListener('change', stop);
+render();
+</script>
+</body>
+</html>
