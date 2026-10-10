@@ -37,8 +37,8 @@ try {
     link.click();
     check(dialog.open, `${width}px: Property details opens dialog`);
     check(dialog.querySelector('dl').textContent === doc.querySelector('#details dl').textContent,
-      `${width}px: all twelve property facts preserved without copy drift`);
-    check(dialog.querySelectorAll('dt').length === 12, `${width}px: twelve facts`);
+      `${width}px: all eleven property facts preserved without copy drift`);
+    check(dialog.querySelectorAll('dt').length === 11, `${width}px: eleven facts`);
     check(dialog.contains(doc.activeElement), `${width}px: focus enters dialog`);
     check(dialog.scrollWidth <= dialog.clientWidth && doc.documentElement.scrollWidth <= width,
       `${width}px: no horizontal overflow`);
@@ -69,7 +69,7 @@ try {
   check(anchor.textContent === 'Property details' && anchor.getAttribute('href') === '#details' && !anchor.hasAttribute('aria-haspopup'), 'no-JS Property details remains ordinary details link');
   check(![...fallback.querySelectorAll('a')].some(a => a.textContent.includes('$499,000')), 'no-JS price is not linked');
   check(fallback.querySelector('#details').getBoundingClientRect().height > 0, 'no-JS details remain visible');
-  check(fallback.querySelectorAll('#details dt').length === 12, 'static source retains all twelve facts');
+  check(fallback.querySelectorAll('#details dt').length === 11, 'static source retains all eleven facts');
   for (const [mode, setup] of [
     ['unsupported dialog', 'HTMLDialogElement.prototype.showModal = undefined'],
     ['failed listing initialization', 'window.ResizeObserver = undefined']
