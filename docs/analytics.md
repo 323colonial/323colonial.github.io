@@ -25,7 +25,7 @@ All events carry sanitized canonical page URL/path, browser/visit IDs, current/a
 | `photo_open` | `photo`: stable manifest position 1–73, matching existing `data-position`. Includes viewer arrow navigation. Manifest descriptive `id` values are not unique; positions are frozen by listing tests. |
 | `details_open`, `gallery_open` | Successful native dialog opening. |
 | `engagement` | `subject`: photo/details/gallery/story; photo or section 1–7; `active_ms`. Requires visible focused tab, loaded visible enlarged image or qualifying visible section. Stops after 30 seconds without interaction. Emits on subject change, hidden/blur, idle and exit, only for at least one second. Estimates attention, not exact reading. |
-| `outbound_click` | Destination category: brokerage-phone, agent-email, Zillow, other-phone/email/external; placement: header/contact/content/footer. No full destination URL. One delegated trusted-click handler; navigation is never prevented. Capture is best-effort, especially immediate document departure. |
+| `outbound_click` | Destination category: `brokerage-phone`, `agent-email`, `other-phone`, `other-email`, `brokerage-listing`, `zillow`, `redfin`, `other-external`; placement: header/contact/content/footer. No destination URL or hostname. The two new categories require deployment; see below. One delegated trusted-click handler; navigation is never prevented. Capture is best-effort, especially immediate document departure. |
 | `$$heatmap` | SDK batches every 60 seconds; sanitized URL-keyed coordinates only, at most 100 valid points per batch. `/index.html` normalizes to `/`, so only two URLs enter reporting. No arbitrary text or geographic coordinates. |
 
 ### Timed notice dismissal (colonial-6ma)
@@ -36,7 +36,11 @@ While the notice is onscreen, a **240ms fade-and-height collapse** reclaims the 
 
 `colonial_notice_dismissed=1` is a separate, host-only presentation cookie: **30 days from dismissal**, `Path=/`, `SameSite=Lax`, and `Secure` on HTTPS. Root path covers both buyer pages; there is no Domain attribute, identifier or analytics payload. Repeat visits do not renew it. Missing/expired flags show the notice again. Denied cookie reads leave it visible; failed writes restore it after animation. Without JavaScript the notice and disclosure remain visible. This change preserves the existing analytics policy; it is not a legal determination that notice-only analytics is sufficient in every jurisdiction.
 
-The header’s Questions & tours link goes to the public Dandridge listing and uses existing `other-external` / `header` categories. This measures outbound intent, not an inquiry or confirmed tour.
+### Named outbound destinations (colonial-5ik; not deployed by this change)
+
+The header’s Questions & tours link goes to the public Dandridge listing. After deployment, clicks handled by the updated module will use `brokerage-listing` / `header`. Exact `soldvawv.com` and its subdomains map to `brokerage-listing`; exact `redfin.com` and its subdomains map to `redfin`. Zillow keeps `zillow`; unknown external hosts remain `other-external`. Only category labels are sent, never destination URLs or hostnames. This measures outbound intent, not an inquiry or confirmed tour.
+
+Before deployment, the old classifier groups both listing hosts under `other-external`. Historical events stay unchanged; a code commit does not backfill them or establish a deployment date. The submitted patch attributes older clicks to the Dandridge and removed Redfin links by date, but those reporting windows are not verified here. Use independently verified deployment/link history for period-level interpretation; `other-external` alone cannot identify an individual historical destination.
 
 At most 400 accepted events per page instance; no network heartbeat. SDK fetch uses omitted credentials/no-referrer, with an abort signal that also blocks retries after opt-out. Previously delivered records are not erased by opting out.
 

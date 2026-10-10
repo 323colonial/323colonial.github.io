@@ -100,6 +100,24 @@ test('one outbound listener survives duplicate injection and expired visit keybo
   assert.equal(h.events.filter(e => e.event === 'outbound_click').length, 2);
 });
 
+test('listing clicks reach sanitized payloads as categories without destination details', async () => {
+  const h = harness(); await settle();
+  for (const [href, destination] of [
+    ['https://search.soldvawv.com/search/detail/270760671?recipient=secret#contact', 'brokerage-listing'],
+    ['https://www.redfin.com/WV/private?recipient=secret#contact', 'redfin'],
+    ['https://redfin.com.evil.example/private', 'other-external'],
+  ]) {
+    const link = { href, closest: selector => selector === 'header' ? {} : null };
+    h.emit('click', { isTrusted: true, target: { closest: () => link } }); await settle();
+    const event = h.events.at(-1);
+    assert.equal(event.event, 'outbound_click');
+    assert.equal(event.properties.destination, destination);
+    assert.equal(event.properties.placement, 'header');
+    assert.doesNotMatch(JSON.stringify(event), /soldvawv\.com|redfin\.com|evil\.example|270760671|private|recipient|secret|#contact/);
+  }
+  assert.equal(h.events.filter(event => event.event === 'outbound_click').length, 3);
+});
+
 test('photo attention excludes hidden and idle periods and stops on close', async () => {
   const h = harness(); await settle();
   h.dialog.open = true; h.mutate(); h.advance(10000);

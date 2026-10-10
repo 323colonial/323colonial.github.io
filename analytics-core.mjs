@@ -63,7 +63,12 @@ export function outbound(href, base) {
     if (url.protocol === 'tel:') return url.pathname === '+13048851547' ? 'brokerage-phone' : 'other-phone';
     if (url.protocol === 'mailto:') return url.pathname === 'liz@dandridgerealtygroup.com' ? 'agent-email' : 'other-email';
     if (!['http:', 'https:'].includes(url.protocol) || url.origin === new URL(base).origin) return null;
-    return url.hostname === 'zillow.com' || url.hostname.endsWith('.zillow.com') ? 'zillow' : 'other-external';
+    const host = url.hostname;
+    const on = domain => host === domain || host.endsWith('.' + domain);
+    if (on('soldvawv.com')) return 'brokerage-listing';
+    if (on('zillow.com')) return 'zillow';
+    if (on('redfin.com')) return 'redfin';
+    return 'other-external';
   } catch { return null; }
 }
 
@@ -110,7 +115,7 @@ export function sanitizeEvent(event, state, href, now) {
   if (Number.isInteger(input.section) && input.section >= 1 && input.section <= 7) properties.section = input.section;
   if (['photo', 'details', 'gallery', 'story'].includes(input.subject)) properties.subject = input.subject;
   if (Number.isInteger(input.active_ms) && input.active_ms >= 1000 && input.active_ms <= 1800000) properties.active_ms = input.active_ms;
-  if (['brokerage-phone', 'agent-email', 'other-phone', 'other-email', 'zillow', 'other-external'].includes(input.destination)) properties.destination = input.destination;
+  if (['brokerage-phone', 'agent-email', 'other-phone', 'other-email', 'brokerage-listing', 'zillow', 'redfin', 'other-external'].includes(input.destination)) properties.destination = input.destination;
   if (['header', 'contact', 'content', 'footer'].includes(input.placement)) properties.placement = input.placement;
   return { event: event.event, timestamp: event.timestamp, properties };
 }

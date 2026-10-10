@@ -58,6 +58,37 @@ test('sources and outbound destinations never preserve personal URLs or click ID
   assert.equal(outbound('javascript:alert(1)', origin), null);
 });
 
+test('listing destinations match only exact hosts and dot-delimited subdomains', () => {
+  const { outbound } = core();
+  for (const [host, destination] of [['soldvawv.com', 'brokerage-listing'], ['redfin.com', 'redfin'], ['zillow.com', 'zillow']]) {
+    for (const name of [host, `search.${host}`, `www.search.${host}`, host.toUpperCase()]) {
+      assert.equal(outbound(`https://${name}/private?recipient=secret#contact`, origin), destination, name);
+    }
+    for (const href of [`https://not${host}/`, `https://${host}.evil.example/`, `https://${host}@evil.example/`, `https://evil.example/${host}`]) {
+      assert.equal(outbound(href, origin), 'other-external', href);
+    }
+    assert.equal(outbound(`https://${host}/listing`, `https://${host}/`), null);
+    assert.equal(outbound(`ftp://${host}/listing`, origin), null);
+  }
+});
+
+test('outbound sanitizer keeps bounded categories but drops destination URLs and hostnames', () => {
+  const { nextVisit, sanitizeEvent } = core();
+  const state = nextVisit(null, now, source);
+  const click = destination => sanitizeEvent({ event: 'outbound_click', properties: {
+    destination, placement: 'header', href: 'https://search.soldvawv.com/private', hostname: 'redfin.com',
+  } }, state, origin, now);
+  for (const destination of ['brokerage-phone', 'agent-email', 'other-phone', 'other-email', 'brokerage-listing', 'zillow', 'redfin', 'other-external']) {
+    const event = click(destination);
+    assert.equal(event.properties.destination, destination);
+    assert.equal(event.properties.placement, 'header');
+    assert.doesNotMatch(JSON.stringify(event), /soldvawv\.com|redfin\.com|private|hostname|href/);
+  }
+  for (const destination of ['https://search.soldvawv.com/private', 'soldvawv.com', 'redfin.com', 'unknown']) {
+    assert.equal(click(destination).properties.destination, undefined);
+  }
+});
+
 test('event allowlist discards SDK enrichment, profile setters, URLs and arbitrary text', () => {
   const { nextVisit, sanitizeEvent } = core();
   const state = nextVisit(null, now, source);
