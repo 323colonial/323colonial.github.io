@@ -24,7 +24,7 @@ def one(job):
          'Do not brighten, darken, re-color or re-light the picture. Keep the watermark in the lower-left corner. Return ONE full-frame photograph.')
     raw, usage = pilot.call([{'text': P}, pilot.img_part(blend, pilot.CANVAS[aspect]), pilot.img_part(A), pilot.img_part(B)], aspect)
     open(s + '-raw.jpg', 'wb').write(raw); run('magick', s + '-raw.jpg', '-resize', f'{w}x{hh}!', s + '-full.png')
-    run(sys.executable, f'{pilot.HERE}/align.py', blend, s + '-full.png', s + '-a.png'); al = run(sys.executable, f'{pilot.HERE}/align.py', blend, s + '-a.png', s + '.png').strip(); os.remove(s + '-a.png')
+    _, al = pilot.align_twice(blend, s)
     tmpdir = s + '-tmp'; os.makedirs(tmpdir, exist_ok=True)
     j = json.loads(al) if al else {}; det, off, ab = smooth.score(A, s + '.png', B, tmp=tmpdir)
     json.dump({'id': pid, 'step': h, 'model': pilot.MODEL, 'prompt': P, 'usage': usage, 'align': j, 'detour': det, 'off': off}, open(s + '.json', 'w'), indent=1)

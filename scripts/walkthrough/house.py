@@ -770,7 +770,6 @@ def exterior(B):
     pk = ze + hw
     # gable face with the star
     B.poly("siding", [(px0 - 0.1, py + 0.02, ze), (xm, py + 0.02, pk - 0.1), (px1 + 0.1, py + 0.02, ze)])
-    B.cyl("extrim", (xm, py - 0.03), 0.0, 0, 0) if False else None
     star = []
     for i in range(10):
         r = 1.5 if i % 2 == 0 else 0.6

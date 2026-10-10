@@ -274,7 +274,7 @@ def build(B):
         gin = "in2" if level == "upper" else "in"
         k = rule["kind"]
         if k == "slider":
-            house.slider(B, w, s0, s1, 6.8, open_lo=rule["open_lo"]) if ins > 0 else slider_flipped(B, w, s0, s1, rule["open_lo"])
+            house.slider(B, w, s0, s1, 6.8, open_lo=rule["open_lo"])
         elif k == "garage":
             w.hole(s0, s1, -0.5, 6.4)
             off = -ins * (run.t / 2 - 0.05)
@@ -388,11 +388,6 @@ def build(B):
         w.build()
 
     floors_and_ceilings(B)
-
-
-def slider_flipped(B, w, s0, s1, open_lo):
-    """house.slider assumes the interior is on the wall's left; mirror the wall for the other case."""
-    house.slider(B, w, s0, s1, 6.8, open_lo=open_lo)
 
 
 def floors_and_ceilings(B):

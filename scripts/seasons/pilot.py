@@ -215,6 +215,12 @@ def call(parts, aspect, tries=3):
 
 CANVAS = {'3:2': '2528x1696', '4:3': '2400x1792', '16:9': '2752x1536'}
 
+def align_twice(master, stem):
+    first = subprocess.run((sys.executable, f'{HERE}/align.py', master, stem + '-full.png', stem + '-a.png'), capture_output=True, text=True).stdout.strip()
+    second = subprocess.run((sys.executable, f'{HERE}/align.py', master, stem + '-a.png', stem + '.png'), capture_output=True, text=True).stdout.strip()
+    os.remove(stem + '-a.png')
+    return first, second
+
 def img_part(path, fit=None):
     # fit: scale the master to the model's exact canvas shape so the model has nothing to crop
     data = subprocess.run(['magick', path] + (['-filter', 'Lanczos', '-resize', fit + '!'] if fit else []) + ['-quality', '93', 'jpg:-'], check=True, capture_output=True).stdout

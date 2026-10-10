@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Hot tub: lighting-only re-light of a geometry-locked frame with Nano Banana Pro. usage: tub_relight.py STEP 'time and light sentence'"""
 import base64, json, os, subprocess, sys, urllib.request, urllib.error
+from image_parts import png_part
 k = int(sys.argv[1]); when = sys.argv[2]; base = f'tub/{k:02d}-water.png'; out = f'tub/r{k:02d}' + os.environ.get('TAG', '')
 P = ('Perform a LIGHTING-ONLY re-light of IMAGE 1, a photograph of a hot tub on a snowy deck. Treat IMAGE 1 as a locked pixel canvas: the hot tub, its cover, the steps, the towels and side table, the deck boards, the railing, the cedar wall and every tree trunk and branch stay at exactly their coordinates, sizes and shapes. Do not zoom, widen or re-frame. Do not add or remove any object, snow or leaves. '
      'Keep the swirling, bubbling water exactly as it is in shape and texture.\n\n'
@@ -13,10 +14,7 @@ P = ('Perform a LIGHTING-ONLY re-light of IMAGE 1, a photograph of a hot tub on 
      'The forest keeps exactly the natural, photographic look it has in IMAGE 1: the same bare grey-brown trunks and twigs with a little snow, simply darker and cooler in the dusk. Do not stylize, smooth or repaint the trees. '
      'The sky is plain and natural, like a real long-exposure photograph: a real night sky under a new moon: very dark blue-black, with only the faintest lighter tone at the horizon, and many small, pin-sharp stars of varied brightness that also show between the upper branches. No large or glowing stars and no saturated color. No glowing or large stars and no saturated color. '
      'Overall it is night, photographed as a long exposure: the forest is dark, its trunks and snow-dusted branches faintly visible in starlight, and snow away from the lights is a deep dusky blue. The lit foreground stays warm and inviting and the tub is the brightest thing in the picture. Nothing is crushed to pure black. Still easy to read, nothing crushed to black.\n\nReturn ONE full-frame photograph.')
-def part(p):
-    d = subprocess.run(['magick', p, '-filter', 'Lanczos', '-resize', '2400x1792!', 'png:-'], check=True, capture_output=True).stdout
-    return {'inlineData': {'mimeType': 'image/png', 'data': base64.b64encode(d).decode()}}
-body = {'contents': [{'role': 'user', 'parts': [{'text': P}, part(base)]}], 'generationConfig': {'responseModalities': ['IMAGE'], 'imageConfig': {'aspectRatio': '4:3', 'imageSize': '2K'}, 'thinkingConfig': {'thinkingLevel': 'High'}}}
+body = {'contents': [{'role': 'user', 'parts': [{'text': P}, png_part(base, '2400x1792')]}], 'generationConfig': {'responseModalities': ['IMAGE'], 'imageConfig': {'aspectRatio': '4:3', 'imageSize': '2K'}, 'thinkingConfig': {'thinkingLevel': 'High'}}}
 req = urllib.request.Request('https://generativelanguage.googleapis.com/v1beta/models/gemini-3-pro-image-preview:generateContent', data=json.dumps(body).encode(), headers={'x-goog-api-key': os.environ['GEMINI_API_KEY'], 'Content-Type': 'application/json'})
 try: r = json.load(urllib.request.urlopen(req, timeout=400))
 except urllib.error.HTTPError as e: sys.exit(f'HTTP {e.code} {e.read().decode()[:300]}')

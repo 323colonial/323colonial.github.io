@@ -39,8 +39,6 @@ for floor, path in (("main", sys.argv[1]), ("upper", sys.argv[2])):
     for kind, a, b in (("walls", "walls", "doors"), ("doors", "doors", "windows"), ("windows", "windows", "footprint")):
         for gid, body in re.findall(r'<g id="([^"]+)"[^>]*>(.*?)</g>', section(v, a, b), re.S):
             p = re.findall(r'points="([^"]+)"', body)
-            if p and gid not in ("walls", "doors", "windows"):
-                out[kind].append({"floor": floor, "poly": pts(p[0], floor)})
-            elif p:
+            if p:
                 out[kind].append({"floor": floor, "poly": pts(p[0], floor)})
 json.dump(out, sys.stdout, separators=(",", ":"))

@@ -7,6 +7,7 @@ import os
 from pathlib import Path
 import shutil
 import subprocess
+import sys
 import tempfile
 from types import SimpleNamespace as NS
 import unittest
@@ -23,6 +24,28 @@ def definitions(name, names, **context):
 
 
 class PipelineTests(unittest.TestCase):
+    def test_plan_extraction_keeps_container_and_nested_polygons(self):
+        # Container IDs are included too; flattening must not introduce filtering.
+        svg = ('<svg><g id="roomShapes"><g id="abc"><polygon points="0,0 0.3048,0 0,0.3048"/></g></g>'
+               '<g id="spiralStaircases"></g>'
+               + ''.join(f'<g id="{kind}"><polygon points="0,0 0.3048,0"/>'
+                         '<g id="abc"><polygon points="0,0.3048 0.3048,0.3048"/></g>'
+                         '<g id="def"><polygon points="0,0.3048 0.3048,0.3048"/></g>'
+                         '<g id="ghi"><path d="M0,0"/></g></g>' for kind in ('walls', 'doors', 'windows'))
+               + '<g id="footprint"></g></svg>')
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp, 'plan.svg'); path.write_text(svg)
+            result = subprocess.run([sys.executable, str(TOOLS / 'plan_extract.py'), str(path), str(path)],
+                                    check=True, capture_output=True, text=True)
+        expected = {'rooms': [], 'walls': [], 'doors': [], 'windows': []}
+        for floor, ox, oy, dx in [('main', 28.8, 17.7, 1), ('upper', 40.4, 13.3, 69.1 / 67.2)]:
+            poly = [[ox, oy], [round(ox + dx, 2), oy]]
+            expected['rooms'].append({'floor': floor, 'name': '', 'poly': poly + [[ox, oy + 1]]})
+            for kind in ('walls', 'doors', 'windows'):
+                expected[kind].extend([{'floor': floor, 'poly': poly},
+                                       {'floor': floor, 'poly': [[x, y + 1] for x, y in poly]}])
+        self.assertEqual(result.stdout, json.dumps(expected, separators=(',', ':')))
+
     def test_bake_signature_tracks_geometry_and_lighting(self):
         with tempfile.TemporaryDirectory() as work:
             sky = Path(work) / 'sky.hdr'

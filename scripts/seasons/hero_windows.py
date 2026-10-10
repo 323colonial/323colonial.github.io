@@ -4,6 +4,7 @@ import base64, json, os, subprocess, sys, urllib.request, urllib.error
 from concurrent.futures import ThreadPoolExecutor
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import pilot
+from image_parts import png_part
 D = os.path.dirname(os.path.abspath(__file__)); ROOT = pilot.ROOT; MODEL = 'gemini-3-pro-image-preview'
 T = {3: (169, 128, 90), 6: (163, 141, 115), 9: (183, 149, 116)}      # photo 41 great-room glass, measured
 lerp = lambda a, b, t: tuple(a[i] + (b[i] - a[i]) * t for i in range(3))
@@ -13,9 +14,6 @@ T[2], T[10] = T[3], T[9]
 STRENGTH = {2: 0.5, 10: 0.5}                                          # glow fades in and out at the ends
 BOX = '130x110+565+378'                                               # front window, used to measure the glow
 def run(*a): return subprocess.run(a, capture_output=True, text=True)
-def part(p, fit=None):
-    d = subprocess.run(['magick', p] + (['-filter', 'Lanczos', '-resize', fit + '!'] if fit else []) + ['png:-'], check=True, capture_output=True).stdout
-    return {'inlineData': {'mimeType': 'image/png', 'data': base64.b64encode(d).decode()}}
 def glass_mean(img, mask):
     num = run('magick', img, mask, '-compose', 'Multiply', '-composite', '-crop', BOX, '+repage', '-resize', '1x1!', '-format', '%[fx:r] %[fx:g] %[fx:b]', 'info:').stdout.split()
     den = float(run('magick', mask, '-crop', BOX, '+repage', '-resize', '1x1!', '-format', '%[fx:mean]', 'info:').stdout or 0)
@@ -31,7 +29,7 @@ def one(k):
          'at the same warmth and the same moderate brightness as the large windows in IMAGE 2, which shows another side of this same house at a similar moment. '
          'The glass must not be a flat bright panel, must not be orange, must not be blown out and must not be mirror-like. Any reflection left in the glass is faint and shows the trees exactly as they look in IMAGE 1 at this season, never out-of-season foliage. '
          'Keep every frame, muntin and pane edge exactly in place. Return ONE full-frame photograph.')
-    body = {'contents': [{'role': 'user', 'parts': [{'text': P}, part(base, '2528x1696'), part(ref)]}],
+    body = {'contents': [{'role': 'user', 'parts': [{'text': P}, png_part(base, '2528x1696'), png_part(ref)]}],
             'generationConfig': {'responseModalities': ['IMAGE'], 'imageConfig': {'aspectRatio': '3:2', 'imageSize': '2K'}, 'thinkingConfig': {'thinkingLevel': 'High'}}}
     req = urllib.request.Request(f'https://generativelanguage.googleapis.com/v1beta/models/{MODEL}:generateContent', data=json.dumps(body).encode(),
                                  headers={'x-goog-api-key': os.environ['GEMINI_API_KEY'], 'Content-Type': 'application/json'})

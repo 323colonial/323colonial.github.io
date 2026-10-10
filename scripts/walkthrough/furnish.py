@@ -88,9 +88,8 @@ def cushion(B, mat, c, ax, ay, az, e=0.4, n=12, grp=None, dens=None):
             th = 2 * math.pi * i / m
             p = ax * (f(math.cos(ph)) * f(math.cos(th))) + ay * (f(math.cos(ph)) * f(math.sin(th))) + az * f(math.sin(ph))
             s.verts.append(c + p)
-            nn = Vector((p.dot(ax) / ax.length_squared, p.dot(ay) / ay.length_squared, 0)) if False else \
-                (ax.normalized() * (p.dot(ax) / ax.length_squared) + ay.normalized() * (p.dot(ay) / ay.length_squared)
-                 + az.normalized() * (p.dot(az) / az.length_squared))
+            nn = (ax.normalized() * (p.dot(ax) / ax.length_squared) + ay.normalized() * (p.dot(ay) / ay.length_squared)
+                  + az.normalized() * (p.dot(az) / az.length_squared))
             s.nrm.append(nn.normalized() if nn.length > 1e-9 else az.normalized())
             s.lm.append((W_ * i / m, H_ * j / n))
             # planar mapping across the two long axes, so a printed fabric lies flat on top
@@ -137,7 +136,7 @@ def sofa(B, x0, y0, x1, y1, back, mat="sofa", z=0.0, seat=1.3, top=2.5, arm=None
 def throw_pillow(B, x, y, z, lean, mat="pillow", size=0.72, grp=None):
     """Square throw pillow leaning back along the unit plan vector lean."""
     lx, ly = lean
-    cushion(B, mat, (x, y, z + size * 0.92), (-ly * size, lx * size, 0), (lx * 0.2, ly * 0.2, 0.07), (-lx * 0.3, -ly * 0.3, size * 0.95) if False else (lx * 0.3, ly * 0.3, size * 0.95), e=0.55, n=8, grp=grp)
+    cushion(B, mat, (x, y, z + size * 0.92), (-ly * size, lx * size, 0), (lx * 0.2, ly * 0.2, 0.07), (lx * 0.3, ly * 0.3, size * 0.95), e=0.55, n=8, grp=grp)
 
 
 def mums(B, x, y, z, r=0.62):
@@ -298,7 +297,6 @@ def furnish(B):
         for j in range(n_):
             yy_ = hy - half + 0.17 + j * (2 * half - 0.34) / max(1, n_ - 1) if n_ > 1 else hy
             B.tube("bark", (1.4 + rl.uniform(-0.05, 0.05), yy_, zc_), (2.6 + rl.uniform(-0.05, 0.05), yy_, zc_), 0.155, n=7)
-            B.cyl("chairwood", (0, 0), 0, 0, 0) if False else None
     # wall art
     art(B, "art_leaf", "y-", Y(1.02), 14.4, 16.6, 4.7, 6.1)
     art(B, "art_roots", "y-", Y(1.02), 3.0, 5.7, 3.9, 5.7)                  # Greg Dunn, Maki-e Neurons

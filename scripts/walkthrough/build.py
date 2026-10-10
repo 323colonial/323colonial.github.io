@@ -521,9 +521,8 @@ def check_shell(B):
         while x < 69.6:
             y = 0.7
             while y < 27.0:
-                name = planshell.room_at(floor, x, y)
                 on_floor = floor == "main" or (x > 20.5 and not (x < 24.2 and y < 13.2))
-                if on_floor and (floor == "main" or name is not None or True):
+                if on_floor:
                     if floor == "upper" and (planshell.is_open(x, y)):
                         y += 0.31
                         continue

@@ -1,5 +1,7 @@
 """Offline authoring checks. Requires ImageMagick; never calls generation APIs."""
 from concurrent.futures import ThreadPoolExecutor
+import ast
+import base64
 import contextlib
 import importlib.util
 import io
@@ -15,6 +17,7 @@ from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 TOOLS = ROOT / 'scripts/seasons'
+sys.path.insert(0, str(TOOLS))
 
 
 def load(name):
@@ -66,15 +69,129 @@ class PilotPaths(unittest.TestCase):
                     raise RuntimeError('offline stop')
                 with patch.object(pilot, 'img_part', return_value={}), patch.object(pilot, 'call', side_effect=stop), patch('urllib.request.urlopen', side_effect=stop):
                     if name == 'hero_relight':
-                        module.part = lambda *args: {}
+                        module.png_part = lambda *args: {}
                     with patch.dict(os.environ, GEMINI_API_KEY='offline-test-not-a-key'), self.assertRaisesRegex(RuntimeError, 'offline stop'):
                         module.one(9.5 if name == 'hero_half' else 6)
 
-    def test_scratch_consumers_keep_source_executable_path(self):
+
+class SharedRecipeTools(unittest.TestCase):
+    def test_tub_relight_imports_do_not_require_pilot_scratch_or_timezone(self):
+        # Execute imports only; the CLI body would generate an image.
+        tree = ast.parse((TOOLS / 'tub_relight.py').read_text())
+        tree.body = [n for n in tree.body if isinstance(n, (ast.Import, ast.ImportFrom))]
+        for scratch in (str(ROOT), tempfile.gettempdir()):
+            with self.subTest(scratch=scratch), patch.dict(sys.modules), patch.dict(os.environ, COLONIAL_SEASONS_WORK=scratch), patch('zoneinfo.ZoneInfo', side_effect=AssertionError('timezone lookup')), patch('urllib.request.urlopen', side_effect=AssertionError('network')), patch('subprocess.run', side_effect=AssertionError('process')):
+                sys.modules.pop('pilot', None)
+                exec(compile(tree, 'tub_relight.py', 'exec'), {})
+
+    def test_png_callers_keep_exact_encoding_commands(self):
+        cases = {
+            'hero_relight': [('base.png', '2528x1696'), ('ref.png', None)],
+            'hero_windows': [('base.png', '2528x1696'), ('ref.png', None)],
+            'tubfill': [('base.png', '2400x1792'), ('tub/WINTER.png', '2400x1792')],
+            'tub_relight': [('base.png', '2400x1792')],
+            'tubtween': [('base.png', '2400x1792')],
+        }
+        raw = b'\x89PNG\r\n\x1a\n\x00\xffunchanged'
+        for name, expected in cases.items():
+            tree = ast.parse((TOOLS / (name + '.py')).read_text())
+            ctx = dict(base='base.png', ref='ref.png')
+            # Import only the encoder, never the historical recipe's generation body.
+            imports = ast.Module(body=[n for n in tree.body if isinstance(n, ast.ImportFrom) and n.module == 'image_parts'], type_ignores=[])
+            exec(compile(imports, name, 'exec'), ctx)
+            calls = sorted([n for n in ast.walk(tree) if isinstance(n, ast.Call) and
+                            isinstance(n.func, ast.Name) and n.func.id == 'png_part'],
+                           key=lambda n: (n.lineno, n.col_offset))
+            self.assertEqual(len(calls), len(expected), name)
+            for call, (path, fit) in zip(calls, expected):
+                with self.subTest(name=name, path=path), patch('subprocess.run', return_value=subprocess.CompletedProcess([], 0, raw)) as run:
+                    result = eval(compile(ast.Expression(call), name, 'eval'), ctx)
+                    command = ['magick', path] + (['-filter', 'Lanczos', '-resize', fit + '!'] if fit else []) + ['png:-']
+                    run.assert_called_once_with(command, check=True, capture_output=True)
+                    self.assertEqual(result, {'inlineData': {'mimeType': 'image/png', 'data': base64.b64encode(raw).decode()}})
+
+    def test_shared_png_bytes_and_errors(self):
+        image_parts = load('image_parts')
+        with tempfile.TemporaryDirectory() as tmp:
+            image = Path(tmp, 'input.ppm')
+            image.write_bytes(b'P6\n2 1\n255\n\xff\x00\x00\x00\xff\x00')
+            real_run = subprocess.run
+            encoded = []
+            def capture(*args, **kwargs):
+                result = real_run(*args, **kwargs)
+                encoded.append(result.stdout)
+                return result
+            for fit in (None, '3x4', '2400x1792', '2528x1696'):
+                # Capture one real encoding: separate invocations carry different PNG timestamps.
+                with patch('subprocess.run', side_effect=capture):
+                    part = image_parts.png_part(str(image), fit)
+                self.assertEqual(part['inlineData']['mimeType'], 'image/png')
+                data = base64.b64decode(part['inlineData']['data'])
+                self.assertEqual(data, encoded[-1])
+                self.assertTrue(data.startswith(b'\x89PNG\r\n\x1a\n'))
+                self.assertEqual((int.from_bytes(data[16:20], 'big'), int.from_bytes(data[20:24], 'big')),
+                                 tuple(map(int, fit.split('x'))) if fit else (2, 1))
+            with self.assertRaises(subprocess.CalledProcessError):
+                image_parts.png_part(str(Path(tmp, 'missing.png')))
+
+    def test_two_pass_callers_keep_paths_summaries_and_json_failures(self):
         for name in ('hero_half', 'hero_relight', 'tween'):
-            text = (TOOLS / (name + '.py')).read_text()
-            self.assertNotIn("f'{D}/align.py'", text)
-            self.assertIn("f'{pilot.HERE}/align.py'", text)
+            for second in (' {"inliers":23,"patches":30,"max_shift_px":2} \n', ' \n', 'not JSON'):
+                with self.subTest(name=name, second=second), tempfile.TemporaryDirectory() as tmp, patch.dict(os.environ, COLONIAL_SEASONS_WORK=tmp, GEMINI_API_KEY='offline-test'):
+                    pilot = load('pilot'); smooth = load('smooth'); tmp = pilot.OUT
+                    with patch.dict(sys.modules, pilot=pilot, smooth=smooth):
+                        module = load(name)
+                    first = ' {"inliers":21} \n'
+                    commands = []
+                    def run(args, **kw):
+                        if len(args) > 1 and str(args[1]).endswith('/align.py'):
+                            commands.append((args, kw))
+                            Path(args[-1]).write_bytes(b'aligned')
+                            return subprocess.CompletedProcess(args, 1, first if len(commands) == 1 else second, 'diagnostic')
+                        if args[-1] == 'png:-':
+                            return subprocess.CompletedProcess(args, 0, b'png')
+                        value = '1280 848' if 'identify' in args else '0.5'
+                        return subprocess.CompletedProcess(args, 0, value, '')
+                    response = {'candidates': [{'content': {'parts': [{'inlineData': {'mimeType': 'image/png', 'data': base64.b64encode(b'raw').decode()}}]}}], 'usageMetadata': {'totalTokenCount': 3}}
+                    job = 9.5 if name == 'hero_half' else 6 if name == 'hero_relight' else ('between', '01', 9.5)
+                    stem = f'{tmp}/between/01/09h' if name == 'tween' else f'{tmp}/hero/' + ('06' if name == 'hero_relight' else '09h')
+                    master = stem + '-blend.png' if name == 'tween' else f'{tmp}/win/hero/06-after.png' if name == 'hero_relight' else f'{ROOT}/assets/listing/01.webp'
+                    with patch('subprocess.run', side_effect=run), patch.object(pilot, 'call', return_value=(b'raw', {})), patch.object(pilot, 'img_part', return_value={}), patch('urllib.request.urlopen', return_value=io.StringIO(json.dumps(response))), patch.object(smooth, 'score', return_value=(1, 2, 3)) as score:
+                        if second == 'not JSON':
+                            with self.assertRaises(json.JSONDecodeError): module.one(job)
+                        else:
+                            module.one(job)
+                            metadata = json.loads(Path(stem + '.json').read_text())
+                            if name == 'hero_relight':
+                                self.assertEqual((metadata['align_first'], metadata['align_second']), (first.strip(), second.strip()))
+                            else:
+                                self.assertEqual(metadata['align'], json.loads(second) if second.strip() else {})
+                            if name == 'tween': self.assertEqual(score.call_count, 1)
+                    self.assertEqual(commands, [
+                        ((sys.executable, str(TOOLS / 'align.py'), master, stem + '-full.png', stem + '-a.png'), {'capture_output': True, 'text': True}),
+                        ((sys.executable, str(TOOLS / 'align.py'), master, stem + '-a.png', stem + '.png'), {'capture_output': True, 'text': True}),
+                    ])
+                    self.assertFalse(Path(stem + '-a.png').exists())
+                    self.assertEqual(Path(stem + '.png').read_bytes(), b'aligned')
+
+    def test_two_pass_errors_preserve_intermediate_and_propagate(self):
+        pilot = load('pilot')
+        self.assertTrue(callable(getattr(pilot, 'align_twice', None)), 'shared two-pass helper missing')
+        for failure in ('first', 'second', 'missing', 'cleanup'):
+            with self.subTest(failure=failure), tempfile.TemporaryDirectory() as tmp:
+                stem = str(Path(tmp, 'frame')); calls = []
+                def run(args, **kw):
+                    calls.append(args)
+                    if failure == 'first' or failure == 'second' and len(calls) == 2:
+                        raise OSError('launch failed')
+                    if failure != 'missing': Path(args[-1]).write_bytes(b'keep')
+                    return subprocess.CompletedProcess(args, 0, '{}\n', '')
+                with contextlib.ExitStack() as stack:
+                    stack.enter_context(patch('subprocess.run', side_effect=run))
+                    if failure == 'cleanup': stack.enter_context(patch('os.remove', side_effect=PermissionError('cleanup failed')))
+                    with self.assertRaises(OSError): pilot.align_twice('master.png', stem)
+                self.assertEqual(len(calls), 1 if failure == 'first' else 2)
+                self.assertEqual(Path(stem + '-a.png').exists(), failure in ('second', 'cleanup'))
 
 
 class Alignment(unittest.TestCase):
