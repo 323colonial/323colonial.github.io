@@ -3,6 +3,7 @@ gallery.html
 listing.css
 gallery.js
 listing.js
+visitor-display.js
 analytics.mjs
 analytics-core.mjs
 vendor/posthog-1.438.1.mjs

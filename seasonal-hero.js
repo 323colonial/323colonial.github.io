@@ -2,6 +2,7 @@
 // Each original <img> stays first in its link and is never altered. Seasonal frames
 // sit in a two-layer stack above it, so every fallback is "remove the stack".
 (() => {
+  if (new URLSearchParams(location.search).get('display') === 'visitor') return;
   const manifestUrl = document.currentScript?.dataset.manifest;
   const toggle = document.querySelector('#hero-motion');
   if (!manifestUrl || !toggle || !Element.prototype.animate || navigator.connection?.saveData) return;

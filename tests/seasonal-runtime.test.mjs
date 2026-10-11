@@ -26,7 +26,7 @@ function runtime() {
     querySelector: name => name === '#hero-motion' ? toggle : null,
     timeline: { currentTime: 100 }, baseURI: 'http://localhost/' };
   const context = vm.createContext({ document, navigator: {}, Element: { prototype: { animate() {} } },
-    matchMedia: () => ({ matches: false }), scrollY: 0, sessionStorage: { getItem() {} }, URL,
+    matchMedia: () => ({ matches: false }), scrollY: 0, sessionStorage: { getItem() {} }, URL, URLSearchParams, location: {search: ''},
     performance: { now: () => 100, getEntriesByName: () => [] }, setTimeout() {}, clearTimeout() {},
     Image: class { decode() { return Promise.resolve(); } set src(value) { this.url = value; requests.push(this); } },
   });

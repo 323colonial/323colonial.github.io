@@ -78,7 +78,7 @@ test('publish allowlist contains exactly required buyer files, never repository/
     }
   }
   assert.ok(seasons.length > 0);
-  const expected = ['index.html', 'gallery.html', 'listing.css', 'gallery.js', 'listing.js', 'seasonal-hero.js', 'analytics.mjs', ...modules, manifestPath, ...seasons, ...emailAssets];
+  const expected = ['index.html', 'gallery.html', 'listing.css', 'gallery.js', 'listing.js', 'visitor-display.js', 'seasonal-hero.js', 'analytics.mjs', ...modules, manifestPath, ...seasons, ...emailAssets];
   const analytics = readFileSync('analytics.mjs', 'utf8');
   assert.ok(analytics.includes("from './analytics-core.mjs'"));
   assert.ok(analytics.includes("import('./vendor/posthog-1.438.1.mjs')"));
