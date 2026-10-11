@@ -1,4 +1,7 @@
 import { test, expect } from 'playwright/test';
+import { readFileSync } from 'node:fs';
+
+const seasonalPhotos = Object.keys(JSON.parse(readFileSync('assets/seasons-next/frames.json', 'utf8')).photos).map(Number);
 
 const panes = '.visitor-panes > figure';
 const ids = page => page.locator(panes).evaluateAll(nodes => nodes.map(n => Number(n.dataset.position)));
@@ -11,9 +14,9 @@ async function tick(page) {
   // Virtual time must not consume the seasonal hold budget while real images decode.
   await expect.poll(() => page.evaluate(current => {
     const state = window.seasonalClock?.state();
-    return !state || (state.running && !state.holding && !state.stalled
-      && current.every(id => state.joined.includes(id)));
-  }, before)).toBe(true);
+    return !state || (!state.holding && !state.stalled
+      && (!current.length || state.running) && current.every(id => state.joined.includes(id)));
+  }, before.filter(id => seasonalPhotos.includes(id)))).toBe(true);
   await page.clock.runFor(8100);
   await expect.poll(() => ids(page)).not.toEqual(before);
   return ids(page);
@@ -112,6 +115,24 @@ test('rotation stays unique with coherent metadata; pause, dialogs, hidden tab, 
     }
     await tick(page);
   }
+});
+
+test('expanded pools reach every outdoor view, hot tub in main, and originals without seasonal frames', async ({page}) => {
+  await ready(page);
+  const seen = [new Set([1]), new Set([4]), new Set([39])];
+  for (let step = 0; step < 99; step++) {
+    const current = await tick(page);
+    expect(new Set(current).size).toBe(3);
+    for (const [pane, id] of current.entries()) {
+      seen[pane].add(id);
+      const figure = page.locator(panes).nth(pane);
+      await expect(figure.locator('.caption-text')).toHaveText(await page.locator(`#photo-${id} .caption-text`).textContent());
+      expect(await figure.locator('.visitor-image > img').evaluate(img => img.complete && img.naturalWidth > 0)).toBe(true);
+      if (!seasonalPhotos.includes(id)) await expect(figure.locator('.season-stack')).toHaveCount(0);
+    }
+  }
+  expect([...seen[0]].sort((a,b) => a-b)).toEqual([1,3,6,9,11,26,28,39,41,64]);
+  for (const pane of [1,2]) expect([...seen[pane]].sort((a,b) => a-b)).toEqual([1,3,4,6,8,9,10,11,16,17,25,26,27,28,29,32,33,39,41,43,50,51,52,53,64,65,66,67]);
 });
 
 test('rotation ticks allow delayed seasonal frames to settle between clock advances', async ({page,context}) => {

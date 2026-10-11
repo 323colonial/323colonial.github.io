@@ -17,8 +17,8 @@ function selection() {
 
 test('reviewed pools contain only included distinct originals, never seasonal derivatives', () => {
   const {EXTERIORS, SMALL} = selection();
-  assert.deepEqual([...EXTERIORS], [1, 3, 28, 39, 41, 64]);
-  assert.deepEqual([...SMALL].sort((a,b) => a-b), [1,3,4,17,28,39,41,50,51,52,53,64]);
+  assert.deepEqual([...EXTERIORS].sort((a,b) => a-b), [1,3,6,9,11,26,28,39,41,64]);
+  assert.deepEqual([...SMALL].sort((a,b) => a-b), [1,3,4,6,8,9,10,11,16,17,25,26,27,28,29,32,33,39,41,43,50,51,52,53,64,65,66,67]);
   const catalog = selectAll('#all-photos figure', parseDocument(readFileSync('index.html', 'utf8')));
   const photos = JSON.parse(readFileSync('assets/listing/manifest.json', 'utf8')).photos;
   const hashes = new Set();
@@ -31,7 +31,7 @@ test('reviewed pools contain only included distinct originals, never seasonal de
   }
 });
 
-test('initial, repeated and wraparound changes exclude every current photo; both small panes visit porches', () => {
+test('initial, repeated and wraparound changes stay unique and reach every eligible photo in each pane', () => {
   const {EXTERIORS, SMALL, nextPhoto} = selection();
   let current = [1, 4, 39];
   const seen = [new Set(), new Set(), new Set()];
@@ -44,6 +44,8 @@ test('initial, repeated and wraparound changes exclude every current photo; both
     assert.equal(new Set(current).size, 3);
     seen[pane].add(next);
   }
-  assert.equal(seen[0].size, EXTERIORS.length);
-  for (const pane of [1, 2]) for (const id of [4,17,50,51,52,53]) assert.ok(seen[pane].has(id));
+  for (const pane of [0, 1, 2]) {
+    const pool = pane === 0 ? EXTERIORS : SMALL;
+    assert.deepEqual([...seen[pane]].sort((a,b) => a-b), [...pool].sort((a,b) => a-b));
+  }
 });
