@@ -2,7 +2,7 @@
 // Each original <img> stays first in its link and is never altered. Seasonal frames
 // sit in a two-layer stack above it, so every fallback is "remove the stack".
 (() => {
-  if (new URLSearchParams(location.search).get('display') === 'visitor') return;
+  const visitor = window.visitorDisplay;
   const manifestUrl = document.currentScript?.dataset.manifest;
   const toggle = document.querySelector('#hero-motion');
   if (!manifestUrl || !toggle || !Element.prototype.animate || navigator.connection?.saveData) return;
@@ -17,11 +17,11 @@
   let photos = [];                 // seasonal photos in page order
   let seg = 0, offset = 0;         // logical clock: timing-table segment and ms into it
   let startedAt = null;            // document.timeline time the segment began; null while frozen
-  let timer = 0, carry = null;
+  let timer = 0, carry = null, observer;
   let paused = false, stalled = false, shown = false, begun = false;
   let holdSince = null, holdTimer = 0;
   let direction = 1, lastY = scrollY, rate = 0, inflight = 0;
-  try { paused = sessionStorage.getItem(STORE) === '1'; } catch { /* Storage denied: start playing. */ }
+  try { paused = !visitor && sessionStorage.getItem(STORE) === '1'; } catch { /* Storage denied: start playing. */ }
 
   const now = () => document.timeline.currentTime ?? performance.now();
   const dialogOpen = () => Boolean(document.querySelector('dialog[open]'));
@@ -134,9 +134,9 @@
   // photos further away. Never a whole year for its own sake.
   function schedule() {
     // Nothing new is requested while the tab is hidden, printing or under a dialog.
-    if (document.hidden || dialogOpen() || still()) return;
+    if (document.hidden || dialogOpen() || still() || (visitor && !visitor.active)) return;
     const live = photos.filter(participating), wanted = new Map(), order = [];
-    const frozen = paused || stalled;
+    const frozen = paused || stalled || visitor?.paused;
     const want = (p, keys, keep) => keys.forEach(key => {
       let f = p.frames.get(key);
       if (!f) p.frames.set(key, f = {key, state: 'idle', img: null, tries: 0});
@@ -202,7 +202,7 @@
       p.stack = document.createElement('span');
       p.stack.className = 'season-stack';
       p.link.append(p.stack);
-      p.link.setAttribute('aria-description', DESCRIPTION);
+      p.link.setAttribute('aria-description', visitor && p.hero ? 'Animated seasonal concept.' : DESCRIPTION);
       // Photos already on screen fade in above their original; others join unseen.
       if (seen(p)) p.stack.animate({opacity: [0, 1]}, FADE);
       shown = true;
@@ -250,7 +250,7 @@
     photos.forEach(p => { if (p.stack && !live.includes(p)) leave(p); });
     // The stuck photo scrolling away, or its frame arriving, lifts a stall.
     if (stalled && live.every(p => have(p, needs(p, seg, offset, true)))) stalled = false;
-    const want = !paused && !stalled && !document.hidden && !print.matches && !dialogOpen() && live.length > 0;
+    const want = !paused && !stalled && !visitor?.paused && (!visitor || visitor.active) && !document.hidden && !print.matches && !dialogOpen() && live.length > 0;
     const blocked = live.filter(p => !have(p, needs(p, seg, offset, true)));
     if (want && startedAt != null) {
       // Running: a late arrival joins the dissolve in progress at the shared start time.
@@ -279,9 +279,10 @@
   // The dial shares the photos' finite segment animation, never an independent year.
   let dial = null, dialSegment = -1;
   function controls() {
-    toggle.hidden = !(shown || stalled) || still() || dialogOpen();
+    toggle.hidden = !(shown || stalled || visitor) || still() || dialogOpen() || Boolean(navigator.connection?.saveData);
     const action = toggle.querySelector('.motion-action');
-    const text = paused || stalled ? 'Resume' : 'Pause';
+    const text = paused || stalled || visitor?.paused ? 'Resume' : 'Pause';
+    visitor?.hold(paused || stalled);
     if (action.textContent !== text) action.textContent = text;
     const q = phase(), seasons = ['Summer', 'Fall', 'Winter', 'Spring'];
     const quarter = Math.floor((q % N) / (N / 4));
@@ -318,10 +319,41 @@
     try { paused ? sessionStorage.setItem(STORE, '1') : sessionStorage.removeItem(STORE); } catch { /* Preference lasts this page only. */ }
   }
   toggle.addEventListener('click', () => {
+    if (visitor && !M) return; // Visitor fallback owns the control until the manifest arrives.
     if (stalled) retry();
-    else { paused = !paused; remember(); }
+    else { paused = !(paused || visitor?.paused); if (!visitor) remember(); }
+    visitor?.resume();
     sync();
   });
+  function refreshPhotos() {
+    const figures = [...document.querySelectorAll('.hero-photo figure, .story-photos figure')]
+      .filter(figure => !visitor?.ready || !figure.matches('.hero-photo > figure'));
+    for (const p of photos) if (!figures.includes(p.figure)) {
+      leave(p);
+      observer.unobserve(p.link);
+      for (const f of p.frames.values()) {
+        if (f.state === 'loading') abandon(f);
+        else f.img = null;
+      }
+    }
+    photos = photos.filter(p => figures.includes(p.figure));
+    const manifest = M;
+    figures.forEach(figure => {
+      if (photos.some(p => p.figure === figure)) return;
+      const position = Number(figure.dataset.position), entry = manifest.photos[position];
+      const link = figure.querySelector('.visitor-image, a'), original = link?.querySelector('img');
+      if (!entry || !original) return;
+      const own = new Set(entry.original || []);
+      // Off-table keys would break the shared boundaries; all-original photos need nothing.
+      if (entry.keys.some(key => !KN.includes(key)) || entry.keys.every(key => own.has(key))) return;
+      const p = {figure, link, original, position, own, keys: entry.keys, hero: Boolean(figure.closest('.hero-photo')),
+        frames: new Map(), stack: null, near: false};
+      photos.push(p);
+      observer.observe(p.link);
+      if (!p.original.complete) p.original.addEventListener('load', sync, {once: true});
+    });
+    photos.sort((a, b) => figures.indexOf(a.figure) - figures.indexOf(b.figure));
+  }
   async function begin() {
     begun = true;
     let manifest;
@@ -336,29 +368,16 @@
     HOLD = (manifest.hold_seconds ?? 10) * 1000;
     FADE = manifest.fade_ms ?? 600;
     base = new URL('.', new URL(manifestUrl, document.baseURI)).href;
-    document.querySelectorAll('.hero-photo figure, .story-photos figure').forEach(figure => {
-      const position = Number(figure.dataset.position), entry = manifest.photos[position];
-      const link = figure.querySelector('a'), original = link?.querySelector('img');
-      if (!entry || !original) return;
-      const own = new Set(entry.original || []);
-      // Off-table keys would break the shared boundaries; all-original photos need nothing.
-      if (entry.keys.some(key => !KN.includes(key)) || entry.keys.every(key => own.has(key))) return;
-      photos.push({figure, link, original, position, own, keys: entry.keys, hero: Boolean(figure.closest('.hero-photo')),
-        frames: new Map(), stack: null, near: false});
-    });
-    if (!photos.length) return;
     M = manifest;
-    // The page already holds about 150 image entries; throughput needs the seasonal ones too.
     performance.setResourceTimingBufferSize?.(600);
-    // Only photos inside the viewport carry seasonal layers and animations.
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => { photos.find(p => p.link === entry.target).near = entry.isIntersecting; });
+    observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const p = photos.find(p => p.link === entry.target);
+        if (p) p.near = entry.isIntersecting;
+      });
       sync();
     }, {root: document});
-    photos.forEach(p => {
-      observer.observe(p.link);
-      if (!p.original.complete) p.original.addEventListener('load', sync, {once: true});
-    });
+    refreshPhotos();
     const watch = new MutationObserver(sync);
     document.querySelectorAll('dialog').forEach(dialog => watch.observe(dialog, {attributes: true, attributeFilter: ['open']}));
     // Stories fall back to inline originals on short or reduced layouts.
@@ -373,6 +392,7 @@
     print.addEventListener('change', sync);
     // Clock state for fixtures; seek freezes the year at a point.
     window.seasonalClock = {
+      refresh() { refreshPhotos(); sync(); },
       state: () => ({segment: seg, elapsed: elapsed(), phase: phase(), running: startedAt != null, paused, stalled,
         holding: holdSince != null, rate, reach: reach(), ahead: ahead(), joined: photos.filter(p => p.stack).map(p => p.position),
         decoded: Object.fromEntries(photos.map(p => [p.position, [...p.frames.values()].filter(f => f.img && f.state === 'ready').length]))}),

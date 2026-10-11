@@ -46,7 +46,6 @@ if (typeof viewer.showModal === 'function') {
   document.addEventListener('click', event => {
     const link = event.target.closest('[data-gallery-image], [data-photo]');
     if (!link || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-    // Resolve at click time: visitor panes change identity without replacing their links.
     const index = link.hasAttribute('data-photo')
       ? links.findIndex(item => item.closest('figure')?.id === `photo-${link.dataset.photo}`) : links.indexOf(link);
     if (index < 0) return;

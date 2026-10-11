@@ -15,6 +15,8 @@
   const hero = document.querySelector('.hero-photo');
   const toggle = document.querySelector('#hero-motion');
   if (!hero || !toggle) return;
+  hero.querySelector('a').inert = true;
+  document.body.classList.add('visitor-requested');
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const print = matchMedia('print');
   const connection = navigator.connection;
@@ -22,7 +24,7 @@
   panes.className = 'visitor-panes';
   let current = [1, 4, 39], pane = 0;
   let ready = false, paused = false, busy = false, away = false, printing = false;
-  let timer, generation = 0;
+  let timer, generation = 0, seasonalHeld = false;
   const pending = new Set();
   const still = () => reduced.matches || connection?.saveData;
   const available = () => {
@@ -31,7 +33,8 @@
       && !document.querySelector('dialog[open]') && box.bottom > document.querySelector('.masthead').offsetHeight && box.top < innerHeight;
   };
   function controls() {
-    toggle.textContent = paused ? 'Resume photos' : 'Pause photos';
+    if (window.seasonalClock) { window.seasonalClock.refresh(); return; }
+    toggle.querySelector('.motion-action').textContent = paused ? 'Resume' : 'Pause';
     toggle.setAttribute('aria-description', 'Exterior and porch photographs. One pane changes every eight seconds.');
     toggle.hidden = Boolean(still() || print.matches || printing || document.querySelector('dialog[open]'));
   }
@@ -56,14 +59,14 @@
     figure.removeAttribute('id');
     figure.querySelector('.photo-number')?.remove();
     const url = link.getAttribute('href');
-    link.removeAttribute('data-gallery-image');
-    link.href = `gallery.html#photo-${id}`;
-    link.dataset.photo = id;
+    const frame = document.createElement('div');
+    frame.className = 'visitor-image';
+    link.replaceWith(frame);
     image.alt = oldImage.alt;
     image.width = oldImage.width;
     image.height = oldImage.height;
     image.decoding = 'async';
-    oldImage.replaceWith(image);
+    frame.append(image);
     return new Promise((resolve, reject) => {
       let settled = false;
       const finish = ok => {
@@ -83,13 +86,13 @@
   }
   async function change() {
     timer = null;
-    if (!available() || paused || (ready && still()) || busy) return;
+    if (!available() || paused || seasonalHeld || (ready && still()) || busy) return;
     busy = true;
     const token = generation;
     const next = ready ? nextPhoto(current, pane) : null;
     try {
       const figures = await Promise.all((ready ? [next] : current).map(load));
-      if (token !== generation || !available() || paused) return;
+      if (token !== generation || !available() || paused || seasonalHeld) return;
       if (!ready) {
         panes.append(...figures);
         hero.append(panes);
@@ -98,13 +101,7 @@
         size();
       } else {
         // Atomic decoded cut: no duplicate identity even across outgoing/incoming pixels.
-        const target = panes.children[pane], link = target.querySelector('a'), fresh = figures[0];
-        target.dataset.position = next;
-        link.href = fresh.querySelector('a').getAttribute('href');
-        link.dataset.photo = next;
-        link.setAttribute('aria-label', fresh.querySelector('a').getAttribute('aria-label'));
-        link.replaceChildren(fresh.querySelector('img'));
-        target.querySelector('figcaption').replaceWith(fresh.querySelector('figcaption'));
+        panes.children[pane].replaceWith(figures[0]);
         current[pane] = next;
         pane = (pane + 1) % 3;
       }
@@ -115,14 +112,28 @@
       sync();
     }
   }
-  function sync() {
-    controls();
-    if (!available() || paused || (ready && still())) { cancel(); return; }
+  function schedule() {
+    if (!available() || paused || seasonalHeld || (ready && still())) { cancel(); return; }
     if (busy || timer) return;
     if (!ready) change();
     else timer = setTimeout(change, 8000);
   }
-  toggle.addEventListener('click', () => { paused = !paused; sync(); });
+  function sync() {
+    schedule();
+    controls();
+  }
+  // Seasonal runtime owns the dial; this adapter shares pause/lifecycle without a second seasonal clock.
+  window.visitorDisplay = {
+    get paused() { return paused; },
+    get ready() { return ready; },
+    get active() { return !away && !printing && !still(); },
+    resume() { paused = false; },
+    hold(value) { seasonalHeld = value; schedule(); },
+  };
+  toggle.addEventListener('click', () => {
+    if (window.seasonalClock) return;
+    paused = !paused; sync();
+  });
   hero.addEventListener('focusin', () => { paused = true; sync(); });
   document.addEventListener('visibilitychange', sync);
   new MutationObserver(sync).observe(document.body, {subtree: true, attributes: true, attributeFilter: ['open']});
