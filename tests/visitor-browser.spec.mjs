@@ -125,6 +125,90 @@ test('rotation ticks allow delayed seasonal frames to settle between clock advan
   expect(await page.evaluate(() => seasonalClock.state().stalled)).toBe(false);
 });
 
+test('incoming identity cuts at shared season without an original flash or load-induced pause', async ({page,context}) => {
+  let release;
+  const gate = new Promise(resolve => { release = resolve; });
+  let requested = false;
+  await context.route('**/assets/seasons-next/03/*.webp', async route => {
+    requested = true;
+    await gate;
+    await route.continue().catch(() => {});
+  });
+  await ready(page);
+  await expect.poll(() => page.evaluate(() => seasonalClock.state().joined.length)).toBe(3);
+  await page.evaluate(() => seasonalClock.seek(8, 500));
+  await page.getByRole('button', {name:'Resume animation', exact:true}).click();
+  await expect.poll(() => page.evaluate(() => seasonalClock.state().running)).toBe(true);
+  await page.evaluate(() => {
+    window.cuts = [];
+    new MutationObserver(records => {
+      for (const record of records) for (const figure of record.addedNodes) {
+        if (!figure.matches?.('.visitor-panes > figure')) continue;
+        const stack = figure.querySelector('.season-stack');
+        window.cuts.push({
+          id: Number(figure.dataset.position),
+          opacity: stack && getComputedStyle(stack).opacity,
+          entranceAnimations: stack?.getAnimations().length,
+          decoded: stack && [...stack.children].every(img => img.complete && img.naturalWidth > 0),
+          sources: stack && [...stack.children].map(img => new URL(img.src).pathname),
+          starts: [stack?.lastElementChild.getAnimations()[0]?.startTime,
+            document.querySelector('.season-hand').getAnimations()[0]?.startTime],
+        });
+      }
+    }).observe(document.querySelector('.visitor-panes'), {childList:true});
+  });
+  try {
+    await page.clock.runFor(8100);
+    await expect.poll(() => requested).toBe(true);
+    expect(await ids(page)).toEqual([1,4,39]);
+    await expect.poll(() => page.evaluate(() => {
+      const s = seasonalClock.state();
+      return s.running && !s.holding && !s.stalled;
+    })).toBe(true);
+    const phase = await page.evaluate(() => seasonalClock.state().phase);
+    await page.clock.runFor(500);
+    // document.timeline (WAAPI) advances in real time, unlike the installed timer clock.
+    await expect.poll(() => page.evaluate(() => seasonalClock.state().phase)).toBeGreaterThan(phase);
+    const segment = await page.evaluate(() => seasonalClock.state().segment);
+    await page.clock.resume();
+    await expect.poll(() => page.evaluate(() => seasonalClock.state().segment), {timeout:6500}).toBeGreaterThan(segment + 1);
+    expect(await ids(page)).toEqual([1,4,39]);
+  } finally { release(); }
+  await expect.poll(() => ids(page)).toEqual([3,4,39]);
+  const cuts = await page.evaluate(() => window.cuts);
+  expect(cuts).toHaveLength(1);
+  expect(cuts[0]).toMatchObject({id:3, opacity:'1', entranceAnimations:0, decoded:true});
+  expect(cuts[0].sources).toEqual(['/assets/seasons-next/03/09.webp', '/assets/seasons-next/03/06.webp']);
+  expect(cuts[0].starts[0]).toEqual(expect.any(Number));
+  expect(cuts[0].starts[0]).toBe(cuts[0].starts[1]);
+});
+
+for (const stop of ['pause', 'timeout', 'pagehide']) test(`pending seasonal identity retains composition on ${stop} and retries`, async ({page,context}) => {
+  let release, requested = false;
+  const gate = new Promise(resolve => { release = resolve; });
+  await context.route('**/assets/seasons-next/03/*.webp', async route => {
+    requested = true;
+    await gate;
+    await route.continue().catch(() => {});
+  });
+  await ready(page);
+  await expect.poll(() => page.evaluate(() => seasonalClock.state().running)).toBe(true);
+  try {
+    await page.clock.runFor(8100);
+    await expect.poll(() => requested).toBe(true);
+    expect(await ids(page)).toEqual([1,4,39]);
+    if (stop === 'pause') await page.getByRole('button', {name:'Pause animation', exact:true}).click();
+    if (stop === 'timeout') await page.clock.runFor(10100);
+    if (stop === 'pagehide') await page.evaluate(() => dispatchEvent(new Event('pagehide')));
+    else await expect(page.getByRole('button', {name:'Resume animation', exact:true})).toBeVisible();
+  } finally { release(); }
+  await page.clock.runFor(100);
+  expect(await ids(page)).toEqual([1,4,39]);
+  if (stop === 'pagehide') await page.evaluate(() => dispatchEvent(new Event('pageshow')));
+  else await page.getByRole('button', {name:'Resume animation', exact:true}).click();
+  expect(await tick(page)).toEqual([3,4,39]);
+});
+
 test('failed or stalled loads retain composition; resume retries and pause cancels pending change', async ({page,context}) => {
   await ready(page);
   const before = await ids(page);

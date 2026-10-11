@@ -36,8 +36,8 @@ function runtime() {
   vm.runInContext(source.replace(marker, `
     M = {}; KN = [0, 1, 2, 3]; DUR = [1000, 1000, 1000]; N = S = 3; HOLD = 1000; base = 'http://localhost/';
     sync = () => {};
-    globalThis.runtime = { schedule, decode, retry, giveUp, controls,
-      setup(value) { photos = value; rate = 1; },
+    globalThis.runtime = { schedule, load, decode, retry, giveUp, controls,
+      setup(value, staged = null) { photos = value; rate = 1; incoming = staged && {photo: staged}; },
       clock(s, start, ms = 0) { seg = s; startedAt = start; offset = ms; shown = true; },
       state: () => ({inflight, stalled}),
     };
@@ -68,6 +68,26 @@ test('two slots serve every participating current pair before any speculative fr
   await flush();
   r.schedule();
   assert.deepEqual(urls().slice(4), ['01/02.webp', '02/02.webp'], 'lookahead retained after current readiness');
+});
+
+test('visible seasonal lookahead preempts incoming identity requests on a two-slot link', () => {
+  const r = runtime(), visible = photo(1), incoming = photo(3);
+  r.setup([visible], incoming);
+  for (const key of [0, 1]) {
+    visible.frames.set(key, {key, state:'ready', img:{}, tries:0});
+    const frame = {key, state:'idle', img:null, tries:0};
+    incoming.frames.set(key, frame);
+    r.load(incoming, frame, true);
+  }
+  expectRequests(['03/00.webp', '03/01.webp']);
+  r.schedule();
+  assert.equal(visible.frames.get(2).state, 'loading', 'visible next frame must get a slot before incoming settles');
+  assert.equal(r.state().inflight, 2, 'preemption preserves request cap');
+  assert.equal([...incoming.frames.values()].filter(f => f.state === 'loading').length, 1);
+  expectRequests(['03/01.webp', '01/02.webp']);
+  function expectRequests(expected) {
+    assert.deepEqual(r.requests.filter(img => img.url).map(img => img.url.replace('http://localhost/', '')), expected);
+  }
 });
 
 test('Resume replaces unresolved decode without releasing its network slot twice; late result ignored', async () => {

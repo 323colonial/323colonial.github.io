@@ -93,6 +93,13 @@
     try {
       const figures = await Promise.all((ready ? [next] : current).map(load));
       if (token !== generation || !available() || paused || seasonalHeld) return;
+      if (ready && window.seasonalClock) {
+        const controller = new AbortController(), abort = () => controller.abort();
+        pending.add(abort);
+        try { await window.seasonalClock.prepare(figures[0], controller.signal); }
+        finally { pending.delete(abort); }
+        if (token !== generation || !available() || paused || seasonalHeld) return;
+      }
       if (!ready) {
         panes.append(...figures);
         hero.append(panes);

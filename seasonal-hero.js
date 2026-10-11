@@ -14,6 +14,7 @@
   const RETRIES = 2;
 
   let M, KN, DUR, N, S, base, HOLD, FADE;
+  let incoming = null;            // detached visitor photo, outside the visible clock barrier
   let photos = [];                 // seasonal photos in page order
   let seg = 0, offset = 0;         // logical clock: timing-table segment and ms into it
   let startedAt = null;            // document.timeline time the segment began; null while frozen
@@ -109,7 +110,12 @@
     if (f.state === 'ready' || f.state === 'loading' || f.state === 'decoding') return;
     if (f.state === 'cached') { if (keep) decode(f, f.img); return; }
     if (f.state === 'error' && (f.tries > RETRIES || performance.now() < f.retryAt)) return;
-    if (inflight >= limit()) return;
+    if (inflight >= limit()) {
+      // Detached replacements must not starve the visible year or its lookahead.
+      const yielding = p !== incoming?.photo && [...(incoming?.photo.frames.values() || [])].find(f => f.state === 'loading');
+      if (!yielding) return;
+      abandon(yielding);
+    }
     const img = new Image(), url = source(p, f.key);
     img.alt = '';
     img.decoding = 'async';
@@ -160,8 +166,9 @@
           targets.forEach(p => want(p, at(p, s), s === 0 && d <= 1));
         }
       }
+      if (incoming && !frozen) want(incoming.photo, needs(incoming.photo, seg, elapsed(), true), true);
     }
-    for (const p of photos) for (const f of p.frames.values()) {
+    for (const p of [...photos, ...(incoming ? [incoming.photo] : [])]) for (const f of p.frames.values()) {
       if (wanted.get(f) || f.img?.isConnected) continue;
       // Still in the fetch window but outside the decoded one: the browser may drop its bitmap.
       if (wanted.has(f)) { if (f.state === 'ready') f.state = 'cached'; continue; }
@@ -273,6 +280,7 @@
     carry = null;
     schedule();
     controls();
+    if (incoming && startedAt != null && have(incoming.photo, needs(incoming.photo, seg, elapsed(), true))) incoming.finish(true);
   }
 
   // --- Controls -----------------------------------------------------------------
@@ -325,29 +333,62 @@
     visitor?.resume();
     sync();
   });
+  function photo(figure, hero = Boolean(figure.closest('.hero-photo'))) {
+    const position = Number(figure.dataset.position), entry = M.photos[position];
+    const link = figure.querySelector('.visitor-image, a'), original = link?.querySelector('img');
+    if (!entry || !original) return;
+    const own = new Set(entry.original || []);
+    // Off-table keys would break the shared boundaries; all-original photos need nothing.
+    if (entry.keys.some(key => !KN.includes(key)) || entry.keys.every(key => own.has(key))) return;
+    return {figure, link, original, position, own, keys: entry.keys, hero,
+      frames: new Map(), stack: null, near: false};
+  }
+  function release(p) {
+    leave(p);
+    observer.unobserve(p.link);
+    for (const f of p.frames.values()) {
+      if (f.state === 'loading') abandon(f);
+      else f.img = null;
+    }
+  }
+  function prepare(figure, signal) {
+    const p = photo(figure, true);
+    if (!p || still() || !visitor?.active) return Promise.resolve();
+    return new Promise((resolve, reject) => {
+      const abort = () => finish(false);
+      const timeout = setTimeout(abort, HOLD);
+      const finish = ok => {
+        signal.removeEventListener('abort', abort);
+        clearTimeout(timeout);
+        incoming = null;
+        if (ok) {
+          // Paint while detached: no original-to-season entrance fade at the cut.
+          show(p);
+          p.near = true;
+          photos.push(p);
+          observer.observe(p.link);
+          resolve();
+        } else {
+          release(p);
+          reject(new Error('Seasonal photo unavailable'));
+        }
+      };
+      incoming = {photo: p, finish};
+      signal.addEventListener('abort', abort, {once: true});
+      if (signal.aborted) abort(); else sync();
+    });
+  }
   function refreshPhotos() {
     const figures = [...document.querySelectorAll('.hero-photo figure, .story-photos figure')]
       .filter(figure => !visitor?.ready || !figure.matches('.hero-photo > figure'));
     for (const p of photos) if (!figures.includes(p.figure)) {
-      leave(p);
-      observer.unobserve(p.link);
-      for (const f of p.frames.values()) {
-        if (f.state === 'loading') abandon(f);
-        else f.img = null;
-      }
+      release(p);
     }
     photos = photos.filter(p => figures.includes(p.figure));
-    const manifest = M;
     figures.forEach(figure => {
       if (photos.some(p => p.figure === figure)) return;
-      const position = Number(figure.dataset.position), entry = manifest.photos[position];
-      const link = figure.querySelector('.visitor-image, a'), original = link?.querySelector('img');
-      if (!entry || !original) return;
-      const own = new Set(entry.original || []);
-      // Off-table keys would break the shared boundaries; all-original photos need nothing.
-      if (entry.keys.some(key => !KN.includes(key)) || entry.keys.every(key => own.has(key))) return;
-      const p = {figure, link, original, position, own, keys: entry.keys, hero: Boolean(figure.closest('.hero-photo')),
-        frames: new Map(), stack: null, near: false};
+      const p = photo(figure);
+      if (!p) return;
       photos.push(p);
       observer.observe(p.link);
       if (!p.original.complete) p.original.addEventListener('load', sync, {once: true});
@@ -392,6 +433,7 @@
     print.addEventListener('change', sync);
     // Clock state for fixtures; seek freezes the year at a point.
     window.seasonalClock = {
+      prepare,
       refresh() { refreshPhotos(); sync(); },
       state: () => ({segment: seg, elapsed: elapsed(), phase: phase(), running: startedAt != null, paused, stalled,
         holding: holdSince != null, rate, reach: reach(), ahead: ahead(), joined: photos.filter(p => p.stack).map(p => p.position),
