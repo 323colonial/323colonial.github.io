@@ -114,16 +114,6 @@ window.crossfade = {
       references.append(swatch);
       probes.push({name, x, y, rgb: rgb.map(Math.round), reference: {x: probes.length * 20 + 10, y: 30}});
     }
-    if (hover) {
-      if (t !== 0 && t !== 1) throw Error('Hover probes need one fully visible photo');
-      const rgb = win.getComputedStyle(doc.documentElement).getPropertyValue('--mahogany').trim();
-      for (const [name, x, y] of [['hover-left', box.left + 1, box.top + box.height / 2], ['hover-top', box.left + box.width / 2, box.top + 1]]) {
-        const swatch = document.createElement('span');
-        swatch.style.cssText = `width:20px;height:20px;background:${rgb}`;
-        references.append(swatch);
-        probes.push({name, x: Math.floor(outer.left + x), y: Math.floor(outer.top + y), rgb, reference: {x: (probes.length * 20) + 10, y: 30}});
-      }
-    }
     const label = `${width}px ${shape} progress=${progress} ${direction}${season ? ` + seasonal ${seasonProgress}` : ''}${hover ? ' + hover' : ''}`;
     document.querySelector('#status').textContent = `Ready: ${label}`;
     return {label, viewport: [innerWidth, innerHeight], probes, hoverPoint: {x: outer.left + box.left + box.width / 2, y: outer.top + box.top + box.height / 2}};

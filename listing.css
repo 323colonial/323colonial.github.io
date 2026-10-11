@@ -69,7 +69,6 @@ main { padding: 0; }
   .visitor-image { position: relative; isolation: isolate; overflow: hidden; }
   .visitor-panes img { object-fit: cover; }
   .visitor-requested .hero-photo a { pointer-events: none; }
-  .visitor-requested .hero-photo a::after { display: none; }
   .visitor-mode .listing-summary { bottom: auto; }
 }
 @media screen and (orientation: portrait) {
@@ -80,8 +79,6 @@ main { padding: 0; }
   .season-stack, #hero-motion { display: none !important; }
 }
 .media-record > a { display: block; position: relative; }
-/* Keep hover feedback above every fading image, outside the seasonal animation. */
-.media-record > a:hover::after { content: ''; position: absolute; inset: 0; z-index: 1; border: 2px solid var(--mahogany); pointer-events: none; }
 figcaption { padding-top: 10px; font: 13px/1.5 Arial, sans-serif; }
 .caption-text, .photo-note { display: block; }
 .photo-note { color: var(--muted); font-size: 13px; margin-top: 6px; }
