@@ -8,6 +8,12 @@ async function ready(page) {
 }
 async function tick(page) {
   const before = await ids(page);
+  // Virtual time must not consume the seasonal hold budget while real images decode.
+  await expect.poll(() => page.evaluate(current => {
+    const state = window.seasonalClock?.state();
+    return !state || (state.running && !state.holding && !state.stalled
+      && current.every(id => state.joined.includes(id)));
+  }, before)).toBe(true);
   await page.clock.runFor(8100);
   await expect.poll(() => ids(page)).not.toEqual(before);
   return ids(page);
@@ -106,6 +112,17 @@ test('rotation stays unique with coherent metadata; pause, dialogs, hidden tab, 
     }
     await tick(page);
   }
+});
+
+test('rotation ticks allow delayed seasonal frames to settle between clock advances', async ({page,context}) => {
+  await context.route('**/assets/seasons-next/03/*.webp', async route => {
+    await new Promise(resolve => setTimeout(resolve, 250));
+    await route.continue();
+  });
+  await ready(page);
+  expect(await tick(page)).toEqual([3,4,39]);
+  expect(await tick(page)).toEqual([3,17,39]);
+  expect(await page.evaluate(() => seasonalClock.state().stalled)).toBe(false);
 });
 
 test('failed or stalled loads retain composition; resume retries and pause cancels pending change', async ({page,context}) => {
