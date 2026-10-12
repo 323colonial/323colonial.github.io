@@ -241,6 +241,11 @@ body:has(dialog[open]) { overflow: hidden; }
   .masthead { position: static; }
   html { scroll-padding-top: 24px; }
 }
+@media (pointer: coarse) and (max-width: 800px) and (min-height: 501px) {
+  .price a, .summary-actions .text-link { min-height: 44px; }
+}
+.reading-space-limited .masthead, .reading-space-limited .listing-summary { position: static; }
+html.reading-space-limited { scroll-padding-top: 24px; }
 /* Short screens keep the scrolling header; reserve an edge dock and focus clearance. */
 @media screen and (max-height: 500px) {
   html:has(#hero-motion:not([hidden])) { scroll-padding-bottom: calc(60px + env(safe-area-inset-bottom)); }

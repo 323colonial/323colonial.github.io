@@ -195,6 +195,8 @@ function layoutStories() {
   const summaryHeight = summary?.getBoundingClientRect().height || 0;
   document.documentElement.style.setProperty('--header-height', `${headerHeight}px`);
   document.documentElement.style.setProperty('--summary-height', `${summaryHeight}px`);
+  // Enlarged text must leave reading room, not pin controls beyond the viewport.
+  document.documentElement.classList.toggle('reading-space-limited', headerHeight + summaryHeight > innerHeight - 160);
   // Batch each geometry phase across stories instead of forcing layout per story.
   const sections = stories.map(story => {
     story.classList.remove('is-scrolling');

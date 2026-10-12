@@ -37,7 +37,7 @@ for (const width of [1440, 390]) {
   });
 }
 
-for (const fixture of ['rendering-layout', 'gallery-viewer', 'resize-reading', 'seasonal-runtime']) {
+for (const fixture of ['rendering-layout', 'gallery-viewer', 'resize-reading', 'seasonal-runtime', 'buyer-audit', 'buyer-harden', 'buyer-typography', 'property-details', 'listing-fallbacks']) {
   test(fixture, async ({ page, context, baseURL }, testInfo) => {
     // Buyer pages contain analytics tags; nothing may leave this isolated origin.
     await context.route('**/*', route => new URL(route.request().url()).origin === baseURL
@@ -52,7 +52,8 @@ for (const fixture of ['rendering-layout', 'gallery-viewer', 'resize-reading', '
       expect(results).toContain('PASS');
       expect(results).not.toMatch(/FAIL|Running…/);
       await expect(page).toHaveTitle(/^PASS:/);
-      expect(errors).toEqual([]);
+      // The details fixture deliberately disables ResizeObserver to prove failed-init fallback.
+      expect(errors).toEqual(fixture === 'property-details' ? ['ResizeObserver is not a constructor'] : []);
     } finally {
       await testInfo.attach('fixture-results', {
         body: await page.locator('#results').innerText(), contentType: 'text/plain',
