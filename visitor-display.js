@@ -13,6 +13,15 @@
     }
   }
 
+  function movement(step, width, height) {
+    const vertical = height / 2, horizontal = width * 2 / 3;
+    const pane = step % 3 === 2 ? 0 : 1;
+    // Four vertical and two horizontal moves average one second each.
+    const speed = (4 * vertical + 2 * horizontal) / 6 / 1000;
+    return {pane, x: pane ? 0 : (step === 2 ? -horizontal : horizontal),
+      y: pane ? vertical : 0, duration: (pane ? vertical : horizontal) / speed};
+  }
+
   const hero = document.querySelector('.hero-photo');
   const toggle = document.querySelector('#hero-motion');
   if (!hero || !toggle) return;
@@ -23,11 +32,11 @@
   const connection = navigator.connection;
   const panes = document.createElement('div');
   panes.className = 'visitor-panes';
-  let current = [1, 4, 39], pane = 0;
+  let current = [1, 4, 39], step = 0;
   let ready = false, paused = false, busy = false, away = false, printing = false;
   let timer, generation = 0, seasonalHeld = false;
   const pending = new Set();
-  const still = () => reduced.matches || connection?.saveData;
+  const still = () => reduced.matches || connection?.saveData || !Element.prototype.animate;
   const available = () => {
     const box = hero.getBoundingClientRect();
     return !away && !printing && !print.matches && !document.hidden
@@ -36,7 +45,7 @@
   function controls() {
     if (window.seasonalClock) { window.seasonalClock.refresh(); return; }
     toggle.querySelector('.motion-action').textContent = paused ? 'Resume' : 'Pause';
-    toggle.setAttribute('aria-description', 'Exterior and porch photographs. One pane changes every eight seconds.');
+    toggle.setAttribute('aria-description', 'Exterior and porch photographs. Two downward photo changes, then a sideways main-photo change.');
     toggle.hidden = Boolean(still() || print.matches || printing || document.querySelector('dialog[open]'));
   }
   function cancel() {
@@ -49,7 +58,9 @@
   function size() {
     const height = ['.masthead', '.listing-summary', '.analytics-notice'].reduce((sum, selector) =>
       sum + (document.querySelector(selector)?.getBoundingClientRect().height || 0), 0);
-    hero.style.setProperty('--visitor-chrome', `${height}px`);
+    const chrome = `${height}px`;
+    if (panes.dataset.slide && hero.style.getPropertyValue('--visitor-chrome') !== chrome) cancel();
+    hero.style.setProperty('--visitor-chrome', chrome);
   }
   function load(id) {
     // Clone authored metadata, not provenance; generator changes flow through the catalog.
@@ -85,12 +96,49 @@
       image.decode().then(() => finish(true), abort);
     });
   }
+  function slide(figure) {
+    const box = panes.getBoundingClientRect();
+    const move = movement(step, box.width, box.height);
+    const originals = [...panes.children];
+    panes.dataset.slide = move.pane ? 'aux' : 'main';
+    panes.append(figure);
+    const moving = move.pane ? [...originals.slice(1), figure] : [...originals, figure];
+    const animations = moving.map(node => node.animate(
+      {transform: ['translate(0px, 0px)', `translate(${move.x}px, ${move.y}px)`]},
+      {duration: move.duration, easing: 'linear', fill: 'both'}));
+    return new Promise((resolve, reject) => {
+      let settled = false;
+      const finish = ok => {
+        if (settled) return;
+        settled = true;
+        pending.delete(abort);
+        if (ok) {
+          if (move.pane) {
+            originals[2].remove();
+            panes.insertBefore(figure, originals[1]);
+            current = [current[0], Number(figure.dataset.position), current[1]];
+          } else {
+            originals[0].replaceWith(figure);
+            current[0] = Number(figure.dataset.position);
+            panes.classList.toggle('aux-left');
+          }
+          step = (step + 1) % 6;
+        } else figure.remove();
+        animations.forEach(animation => animation.cancel());
+        delete panes.dataset.slide;
+        if (ok) resolve(); else reject(new Error('Photo movement cancelled'));
+      };
+      const abort = () => finish(false);
+      pending.add(abort);
+      Promise.all(animations.map(animation => animation.finished)).then(() => finish(true), abort);
+    });
+  }
   async function change() {
     timer = null;
     if (!available() || paused || seasonalHeld || (ready && still()) || busy) return;
     busy = true;
     const token = generation;
-    const next = ready ? nextPhoto(current, pane) : null;
+    const next = ready ? nextPhoto(current, step % 3 === 2 ? 0 : 1) : null;
     try {
       const figures = await Promise.all((ready ? [next] : current).map(load));
       if (token !== generation || !available() || paused || seasonalHeld) return;
@@ -108,10 +156,7 @@
         ready = true;
         size();
       } else {
-        // Atomic decoded cut: no duplicate identity even across outgoing/incoming pixels.
-        panes.children[pane].replaceWith(figures[0]);
-        current[pane] = next;
-        pane = (pane + 1) % 3;
+        await slide(figures[0]);
       }
     } catch {
       if (token === generation) { cancel(); paused = true; }
@@ -151,7 +196,7 @@
     if (element) observer.observe(element);
   }
   addEventListener('scroll', sync, {passive: true});
-  addEventListener('resize', () => { size(); sync(); });
+  addEventListener('resize', () => { cancel(); size(); sync(); });
   addEventListener('pagehide', () => { away = true; sync(); });
   addEventListener('pageshow', () => { away = false; sync(); });
   addEventListener('beforeprint', () => { printing = true; sync(); });

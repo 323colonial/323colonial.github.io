@@ -59,21 +59,24 @@ main { padding: 0; }
   .hero-photo figcaption { display: none; }
   .visitor-mode .hero-photo > figure { display: none; }
   .visitor-mode .visitor-panes {
-    display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
-    grid-template-rows: repeat(2, minmax(0, 1fr));
+    display: block; position: relative; overflow: hidden;
+    --main-width: calc(200% / 3); --aux-width: calc(100% / 3);
+    --main-left: 0%; --aux-left: var(--main-width);
     height: max(240px, calc(100vh - var(--visitor-chrome)));
     height: max(240px, calc(100dvh - var(--visitor-chrome)));
   }
-  .visitor-panes > figure:first-child { grid-row: 1 / 3; }
-  .visitor-panes figure, .visitor-image, .visitor-panes img { min-height: 0; height: 100%; }
+  .visitor-panes.aux-left { --main-left: var(--aux-width); --aux-left: 0%; }
+  .visitor-panes > figure { position: absolute; top: 0; left: var(--aux-left); width: var(--aux-width); height: 50%; }
+  .visitor-panes > figure:first-child { left: var(--main-left); width: var(--main-width); height: 100%; }
+  .visitor-panes > figure:nth-child(3) { top: 50%; }
+  .visitor-panes[data-slide="aux"] > figure:last-child { top: -50%; }
+  .visitor-panes[data-slide="main"] > figure:last-child { left: 100%; width: var(--main-width); height: 100%; }
+  .visitor-panes.aux-left[data-slide="main"] > figure:last-child { left: calc(-200% / 3); }
+  .visitor-image, .visitor-panes img { min-height: 0; height: 100%; }
   .visitor-image { position: relative; isolation: isolate; overflow: hidden; }
   .visitor-panes img { object-fit: cover; }
   .visitor-requested .hero-photo a { pointer-events: none; }
   .visitor-mode .listing-summary { bottom: auto; }
-}
-@media screen and (orientation: portrait) {
-  .visitor-mode .visitor-panes { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: minmax(0, 2fr) minmax(0, 1fr); }
-  .visitor-panes > figure:first-child { grid-column: 1 / 3; grid-row: 1; }
 }
 @media (prefers-reduced-motion: reduce), print {
   .season-stack, #hero-motion { display: none !important; }

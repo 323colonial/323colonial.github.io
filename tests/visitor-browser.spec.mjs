@@ -8,6 +8,9 @@ const ids = page => page.locator(panes).evaluateAll(nodes => nodes.map(n => Numb
 async function ready(page) {
   await page.goto('/?display=visitor');
   await expect(page.locator(panes)).toHaveCount(3);
+  // Virtual time jumps past the notice's real-time collapse; keep motion geometry stable.
+  await page.locator('.analytics-notice').evaluate(node => node.remove());
+  await page.clock.runFor(100);
 }
 async function tick(page) {
   const before = await ids(page);
@@ -18,7 +21,13 @@ async function tick(page) {
       && (!current.length || state.running) && current.every(id => state.joined.includes(id)));
   }, before.filter(id => seasonalPhotos.includes(id)))).toBe(true);
   await page.clock.runFor(8100);
-  await expect.poll(() => ids(page)).not.toEqual(before);
+  await expect.poll(() => page.evaluate(before => {
+    for (const figure of document.querySelectorAll('.visitor-panes > figure')) {
+      figure.getAnimations().forEach(animation => animation.finish());
+    }
+    const ids = [...document.querySelectorAll('.visitor-panes > figure')].map(n => Number(n.dataset.position));
+    return ids.length === 3 && ids.some((id, i) => id !== before[i]);
+  }, before)).toBe(true);
   return ids(page);
 }
 
@@ -43,13 +52,8 @@ test('visitor composition fits flush landscape/portrait with noninteractive phot
       const r = n.getBoundingClientRect(); return {left:r.left,right:r.right,top:r.top,bottom:r.bottom};
     }));
     const [a,b,c] = edges;
-    if (size.width > size.height) {
-      expect(a.top).toBeCloseTo(b.top); expect(a.bottom).toBeCloseTo(c.bottom);
-      expect(a.right).toBeCloseTo(b.left); expect(b.bottom).toBeCloseTo(c.top);
-    } else {
-      expect(a.left).toBeCloseTo(b.left); expect(a.right).toBeCloseTo(c.right);
-      expect(a.bottom).toBeCloseTo(b.top); expect(b.right).toBeCloseTo(c.left);
-    }
+    expect(a.top).toBeCloseTo(b.top); expect(a.bottom).toBeCloseTo(c.bottom);
+    expect(a.right).toBeCloseTo(b.left); expect(b.bottom).toBeCloseTo(c.top);
     for (const figure of await page.locator(panes).all()) {
       const box = await figure.boundingBox();
       expect(box.height).toBeGreaterThan(100);
@@ -60,7 +64,7 @@ test('visitor composition fits flush landscape/portrait with noninteractive phot
   await expect(page.locator('#hero-motion svg.season-dial')).toBeVisible();
   await expect(page.locator(`${panes} a`)).toHaveCount(0);
   const next = await tick(page);
-  expect(next[0]).not.toBe(1);
+  expect(next).toEqual([1,3,4]);
   await page.locator(panes).first().click();
   await expect(page.locator('#photo-viewer')).not.toBeVisible();
   await page.getByRole('link', {name:'View all 65 photos', exact:true}).click();
@@ -80,7 +84,7 @@ test('rotation stays unique with coherent metadata; pause, dialogs, hidden tab, 
   for (let i = 0; i < 15; i++) {
     const before = await ids(page), after = await tick(page);
     expect(new Set(after).size).toBe(3);
-    expect(after.filter((n,j) => n !== before[j])).toHaveLength(1);
+    expect(after.filter((n,j) => n !== before[j])).toHaveLength(i % 3 === 2 ? 1 : 2);
     for (const figure of await page.locator(panes).all()) {
       const id = await figure.getAttribute('data-position');
       await expect(figure.locator('a')).toHaveCount(0);
@@ -141,12 +145,12 @@ test('rotation ticks allow delayed seasonal frames to settle between clock advan
     await route.continue();
   });
   await ready(page);
-  expect(await tick(page)).toEqual([3,4,39]);
-  expect(await tick(page)).toEqual([3,17,39]);
+  expect(await tick(page)).toEqual([1,3,4]);
+  expect(await tick(page)).toEqual([1,17,3]);
   expect(await page.evaluate(() => seasonalClock.state().stalled)).toBe(false);
 });
 
-test('incoming identity cuts at shared season without an original flash or load-induced pause', async ({page,context}) => {
+test('incoming identity enters at shared season without an original flash or load-induced pause', async ({page,context}) => {
   let release;
   const gate = new Promise(resolve => { release = resolve; });
   let requested = false;
@@ -195,9 +199,13 @@ test('incoming identity cuts at shared season without an original flash or load-
     await expect.poll(() => page.evaluate(() => seasonalClock.state().segment), {timeout:6500}).toBeGreaterThan(segment + 1);
     expect(await ids(page)).toEqual([1,4,39]);
   } finally { release(); }
-  await expect.poll(() => ids(page)).toEqual([3,4,39]);
+  await expect.poll(() => page.evaluate(() => {
+    document.querySelectorAll('.visitor-panes > figure').forEach(f => f.getAnimations().forEach(a => a.finish()));
+    return [...document.querySelectorAll('.visitor-panes > figure')].map(f => Number(f.dataset.position));
+  })).toEqual([1,3,4]);
   const cuts = await page.evaluate(() => window.cuts);
-  expect(cuts).toHaveLength(1);
+  expect(cuts).toHaveLength(2); // Offscreen insertion, then settled auxiliary order.
+  expect(cuts[1]).toMatchObject({id:3, opacity:'1', entranceAnimations:0, decoded:true});
   expect(cuts[0]).toMatchObject({id:3, opacity:'1', entranceAnimations:0, decoded:true});
   expect(cuts[0].sources).toEqual(['/assets/seasons-next/03/09.webp', '/assets/seasons-next/03/06.webp']);
   expect(cuts[0].starts[0]).toEqual(expect.any(Number));
@@ -227,7 +235,7 @@ for (const stop of ['pause', 'timeout', 'pagehide']) test(`pending seasonal iden
   expect(await ids(page)).toEqual([1,4,39]);
   if (stop === 'pagehide') await page.evaluate(() => dispatchEvent(new Event('pageshow')));
   else await page.getByRole('button', {name:'Resume animation', exact:true}).click();
-  expect(await tick(page)).toEqual([3,4,39]);
+  expect(await tick(page)).toEqual([1,3,4]);
 });
 
 test('failed or stalled loads retain composition; resume retries and pause cancels pending change', async ({page,context}) => {
@@ -397,4 +405,125 @@ test('pause works while seasonal manifest loads or is unavailable', async ({page
   expect(await ids(page)).toEqual(before);
   await page.getByRole('button', {name:'Resume animation', exact:true}).click();
   await tick(page);
+});
+
+for (const viewport of [{width:1180,height:820}, {width:820,height:1180}, {width:390,height:844}]) {
+  test(`movement cycles share speed and clip at ${viewport.width}x${viewport.height}`, async ({page,context}) => {
+    await context.route('**/assets/seasons-next/frames.json', route => route.abort());
+    await page.setViewportSize(viewport);
+    await ready(page);
+    let speed;
+    for (let step = 0; step < 12; step++) {
+      const before = await ids(page);
+      await page.clock.runFor(8100);
+      await expect(page.locator(panes)).toHaveCount(4);
+      const motion = await page.locator(panes).evaluateAll(figures => {
+        const active = figures.flatMap(f => f.getAnimations());
+        active.forEach(a => a.pause());
+        const duration = active[0]?.effect.getTiming().duration;
+        active.forEach(a => { a.currentTime = duration / 2; });
+        return {
+          count: active.length, duration,
+          easing: active.map(a => a.effect.getTiming().easing),
+          vectors: active.map(a => a.effect.getKeyframes().at(-1).transform),
+          opacity: figures.map(f => getComputedStyle(f).opacity),
+          boxes: figures.map(f => { const r = f.getBoundingClientRect(); return {x:r.x,y:r.y,w:r.width,h:r.height}; }),
+          clip: getComputedStyle(figures[0].parentElement).overflow,
+          overflow: document.documentElement.scrollWidth > innerWidth,
+        };
+      });
+      const horizontal = step % 3 === 2, leftward = step % 6 === 2;
+      expect(motion.count).toBe(horizontal ? 4 : 3);
+      expect(motion.easing.every(e => e === 'linear')).toBe(true);
+      expect(motion.opacity).toEqual(['1','1','1','1']);
+      expect(motion.clip).toBe('hidden');
+      expect(motion.overflow).toBe(false);
+      const [main, top, bottom, incoming] = motion.boxes;
+      const distance = horizontal ? main.w : top.h;
+      // DOM boxes round to layout subpixels; velocity uses exact animation travel.
+      const travel = motion.vectors[0].match(/-?[\d.]+/g).map(Number);
+      const velocity = Math.hypot(...travel) / motion.duration;
+      if (speed == null) speed = velocity;
+      expect(velocity).toBeCloseTo(speed, 5);
+      const vector = `translate(${horizontal ? (leftward ? -distance : distance) : 0}px, ${horizontal ? 0 : distance}px)`;
+      for (const transform of motion.vectors) {
+        const [x,y] = transform.match(/-?[\d.]+/g).map(Number);
+        const [wantedX,wantedY] = vector.match(/-?[\d.]+/g).map(Number);
+        expect(x).toBeCloseTo(wantedX, 1); expect(y).toBeCloseTo(wantedY, 1);
+      }
+      if (horizontal) {
+        const strip = leftward ? [main, top, incoming] : [incoming, top, main];
+        expect(strip[0].x + strip[0].w).toBeCloseTo(strip[1].x, 1);
+        expect(strip[1].x + strip[1].w).toBeCloseTo(strip[2].x, 1);
+      } else {
+        expect(incoming.y + incoming.h).toBeCloseTo(top.y, 3);
+        expect(top.y + top.h).toBeCloseTo(bottom.y, 3);
+      }
+      await page.locator(panes).evaluateAll(figures => figures.forEach(f => f.getAnimations().forEach(a => a.finish())));
+      await expect(page.locator(panes)).toHaveCount(3);
+      const after = await ids(page);
+      expect(new Set([...before, ...after]).size).toBe(4);
+      if (horizontal) expect(after.slice(1)).toEqual(before.slice(1));
+      else { expect(after[0]).toBe(before[0]); expect(after[2]).toBe(before[1]); }
+      const onLeft = step % 6 >= 2 && step % 6 < 5;
+      const bounds = await page.locator(panes).evaluateAll(figures => figures.map(f => f.getBoundingClientRect().x));
+      expect(bounds[1] < bounds[0]).toBe(onLeft);
+    }
+  });
+}
+
+for (const target of [0, 2, 5]) for (const interruption of ['pause', 'resize', 'reduced-motion', 'dialog', 'pagehide', 'chrome']) {
+  test(`in-flight step ${target} rolls back on ${interruption}`, async ({page,context}) => {
+    await context.route('**/assets/seasons-next/frames.json', route => route.abort());
+    await ready(page);
+    for (let step = 0; step < target; step++) await tick(page);
+    const before = await ids(page);
+    await page.clock.runFor(8100);
+    await expect(page.locator(panes)).toHaveCount(4);
+    await page.locator(panes).evaluateAll(figures => figures.forEach(f => f.getAnimations().forEach(a => { a.pause(); a.currentTime = 100; })));
+    if (interruption === 'pause') await page.getByRole('button', {name:'Pause animation',exact:true}).click();
+    if (interruption === 'resize') await page.setViewportSize({width:820,height:1180});
+    if (interruption === 'chrome') await page.locator('.masthead').evaluate(node => { node.style.height = '180px'; });
+    if (interruption === 'reduced-motion') await page.emulateMedia({reducedMotion:'reduce'});
+    if (interruption === 'dialog') await page.getByRole('link', {name:'Property details',exact:true}).click();
+    if (interruption === 'pagehide') await page.evaluate(() => dispatchEvent(new Event('pagehide')));
+    await expect(page.locator(panes)).toHaveCount(3);
+    expect(await ids(page)).toEqual(before);
+    expect(await page.locator(panes).evaluateAll(figures => figures.every(f => f.getAnimations().length === 0))).toBe(true);
+  });
+}
+
+test('unsupported Web Animations retains static triptych', async ({page}) => {
+  await page.addInitScript(() => { Element.prototype.animate = undefined; });
+  await ready(page);
+  await page.clock.runFor(30000);
+  expect(await ids(page)).toEqual([1,4,39]);
+  await expect(page.locator('#hero-motion')).toBeHidden();
+});
+
+test('real-time movements retain prepared seasonal frames through auxiliary and main travel', async ({page}) => {
+  await ready(page);
+  for (let step = 0; step < 3; step++) {
+    const before = await ids(page);
+    await expect.poll(() => page.evaluate(() => seasonalClock.state().running)).toBe(true);
+    await page.clock.runFor(8100);
+    await expect(page.locator(panes)).toHaveCount(4);
+    const incoming = page.locator(panes).last();
+    await expect(incoming.locator('.season-stack')).toHaveCount(1);
+    await expect.poll(() => incoming.evaluate(node => node.getAnimations()[0]?.currentTime ?? -1)).toBeGreaterThan(150);
+    const state = await incoming.evaluate(node => {
+      const stack = node.querySelector('.season-stack');
+      return {entrances:stack?.getAnimations().length, opacity:stack && getComputedStyle(stack).opacity,
+        photoStart:stack?.lastElementChild.getAnimations()[0]?.startTime,
+        dialStart:document.querySelector('.season-hand').getAnimations()[0]?.startTime,
+        transform:getComputedStyle(node).transform};
+    });
+    expect(state.entrances).toBe(0);
+    expect(state.opacity).toBe('1');
+    expect(state.photoStart).toEqual(expect.any(Number));
+    expect(state.photoStart).toBe(state.dialStart);
+    expect(state.transform).not.toBe('none');
+    await expect(page.locator(panes)).toHaveCount(3);
+    expect(await ids(page)).not.toEqual(before);
+  }
 });
