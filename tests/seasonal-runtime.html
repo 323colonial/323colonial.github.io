@@ -132,8 +132,10 @@ try {
   check(doc.querySelector('.masthead').getBoundingClientRect().height === 86, 'desktop device fits original masthead height without changing sticky geometry');
   check(dialAgrees(clock.state().phase) && !toggle().hasAttribute('aria-live')
     && toggle().querySelector('svg')?.getAttribute('aria-hidden') === 'true', 'dial follows shared phase without a live announcement');
+  // Joining can show only the original while seasonal requests are still pending.
+  check(await until(() => clock.state().running), 'seasonal clock starts after frames load');
   const early = new Set(frameRequests().filter(src => src.includes('/01/')));
-  check(early.size > 0 && early.size <= 6, `hero starts with a few frames, not its year (${early.size} of 17 requested at join)`);
+  check(early.size > 0 && early.size <= 6, `hero starts with a few frames, not its year (${early.size} of 17 completed at startup)`);
   const stack = stackOf(1);
   check(heroLink.firstElementChild === original && original.getAttribute('src') === 'assets/listing/01.webp'
     && original.nextElementSibling === stack && !original.getAnimations().length && win.getComputedStyle(original).opacity === '1',

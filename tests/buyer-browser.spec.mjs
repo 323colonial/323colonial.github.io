@@ -37,6 +37,28 @@ for (const width of [1440, 390]) {
   });
 }
 
+test('seasonal startup measurement waits for pending frames', async ({ page, context, baseURL }) => {
+  let release;
+  const pending = new Promise(resolve => { release = resolve; });
+  await context.route('**/*', async route => {
+    const url = new URL(route.request().url());
+    if (url.origin !== baseURL) return route.abort();
+    if (url.pathname.includes('/fixtures/seasons/') && url.pathname.endsWith('.webp')) await pending;
+    await route.continue();
+  });
+  try {
+    await page.goto('/tests/seasonal-runtime.html');
+    const results = page.locator('#results');
+    await expect(results).toContainText('PASS: dial follows shared phase');
+    expect(await page.frames()[1].evaluate(() => seasonalClock.state().running)).toBe(false);
+    await expect(results).not.toContainText('FAIL: hero starts');
+    release();
+    await expect(results).toContainText('PASS: hero starts with a few frames');
+  } finally {
+    release();
+  }
+});
+
 for (const fixture of ['rendering-layout', 'gallery-viewer', 'resize-reading', 'seasonal-runtime', 'buyer-audit', 'buyer-harden', 'buyer-typography', 'property-details', 'listing-fallbacks']) {
   test(fixture, async ({ page, context, baseURL }, testInfo) => {
     // Buyer pages contain analytics tags; nothing may leave this isolated origin.
