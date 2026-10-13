@@ -14,6 +14,9 @@ __pycache__/
 
 # Generated local output; keep plans, skills, and design assets visible
 /.pi/artifacts/
+# Private watermark trials: model weights, isolated runtime and image evidence
+/.pi/research/colonial-meb-lama/
+/.pi/research/colonial-meb-photocraft/
 /.impeccable/critique/
 
 # Nix-linked development dependencies
