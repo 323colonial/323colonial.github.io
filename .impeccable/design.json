@@ -230,7 +230,7 @@
       "kind": "custom",
       "refersTo": "docking-facts",
       "description": "Price/status excerpt from the docking facts bar; static panel preview.",
-      "html": "<div class=\"ds-facts\"><p class=\"ds-price\">$499,000</p><p class=\"ds-status\">Active</p></div>",
+      "html": "<div class=\"ds-facts\"><p class=\"ds-price\">$499,000</p><p class=\"ds-status\">Under Contract</p></div>",
       "css": ".ds-facts { padding: 10px 40px; background: var(--paper, #f0ece2); color: var(--ink, #252d29); border-bottom: 1px solid var(--cedar, #8b523c); font-family: Arial, sans-serif; } .ds-price { font-size: 30px; line-height: 1.2; font-weight: 700; margin: 0 0 4px; font-variant-numeric: tabular-nums; } .ds-status { font-size: 13px; line-height: 1.35; margin: 0; color: var(--mahogany, #593a32); } @media (max-width: 800px) { .ds-facts { padding: 8px 20px; } .ds-price { font-size: 25px; } }"
     },
     {

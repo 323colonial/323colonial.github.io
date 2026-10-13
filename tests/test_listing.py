@@ -334,7 +334,12 @@ class Listing(unittest.TestCase):
         self.assertLess(price.text().index('$499,000'), price.text().index('Property details'))
         actions = next(d for d in page.all('div') if d.cls('summary-actions'))
         status = next(p for p in actions.all('p') if p.cls('listing-status'))
-        self.assertEqual(status.text(), 'Active')
+        self.assertEqual(status.text(), 'Under Contract')
+        details = next(dl for dl in page.all('dl') if dl.cls('detail-grid'))
+        values = dict(zip((dt.text() for dt in details.all('dt')),
+                          (dd.text() for dd in details.all('dd'))))
+        self.assertEqual(values['Listing status'], 'Under Contract')
+        self.assertNotIn('Active', page.text())
         self.assertNotIn('Open house', page.text())
         self.assertNotIn('October 10', page.text())
         self.assertFalse([p for p in page.all('p') if p.cls('open-house')])
