@@ -32,7 +32,7 @@ try {
       const story = doc.querySelector('.story');
       story.scrollIntoView();
       await settle(win);
-      const next = story.querySelectorAll('.story-photos img')[1];
+      const next = story.querySelectorAll('.story-photos figure')[1].querySelector('img');
       check(next.loading === 'eager', 'nearby sequence preloads its next photo');
       await next.decode();
       check(next.naturalWidth > 0, 'next photo is loadable before transition');
