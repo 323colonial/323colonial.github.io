@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import YAML from 'yaml';
+import browserConfig from '../playwright.config.mjs';
 
 const pkg = JSON.parse(readFileSync('package.json', 'utf8'));
 const workflow = YAML.parse(readFileSync('.github/workflows/publish.yml', 'utf8'));
@@ -17,6 +18,13 @@ test('buyer release checks include Python and Chromium, without unpublished tool
   assert.doesNotMatch(pkg.scripts['test:buyer:node'], /walkthrough|impeccable-tooling|\*/);
   assert.match(pkg.scripts['test:tooling'] || '', /engine-probe.*node --test tests\/\*.test.mjs/);
   assert.equal(pkg.devDependencies.playwright, '1.64.0');
+});
+
+test('parallel Chromium keeps coverage and gives the local server connection headroom', () => {
+  assert.equal(browserConfig.workers, 2);
+  assert.equal(browserConfig.retries, 0);
+  assert.match(browserConfig.webServer.command, /socketserver\.TCPServer\.request_queue_size = 128/);
+  assert.match(browserConfig.webServer.command, /18765 --bind 127\.0\.0\.1$/);
 });
 
 test('PRs validate, only main pushes/manual runs stage and deploy', () => {

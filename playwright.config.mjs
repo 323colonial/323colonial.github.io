@@ -3,7 +3,7 @@ import { defineConfig } from 'playwright/test';
 export default defineConfig({
   testDir: './tests',
   testMatch: ['buyer-browser.spec.mjs', 'buyer-accessibility.spec.mjs', 'visitor-browser.spec.mjs'],
-  workers: 1,
+  workers: 2,
   retries: 0,
   timeout: 180_000,
   reporter: 'list',
@@ -15,7 +15,8 @@ export default defineConfig({
     serviceWorkers: 'block',
   },
   webServer: {
-    command: 'python3 -m http.server 18765 --bind 127.0.0.1',
+    // Python's default backlog of 5 resets asset requests from parallel browsers.
+    command: `python3 -c "import runpy, socketserver; socketserver.TCPServer.request_queue_size = 128; runpy.run_module('http.server', run_name='__main__')" 18765 --bind 127.0.0.1`,
     url: 'http://127.0.0.1:18765',
     reuseExistingServer: false,
     timeout: 15_000,
