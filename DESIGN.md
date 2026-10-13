@@ -250,7 +250,7 @@ No shadows or blur. Tonal fields and 1px rules provide separation. The header la
 
 ## Shapes
 
-Square controls and image frames, without rounded cards or decorative clipping. Hero and inline photos retain natural proportions; sequenced and enlarged images use contain-fit. Source watermarks remain pixels, not new UI decoration. Confirmed solid outer photo margins are trimmed per `assets/listing/margin-review.md`; ambiguous edge pixels and photographic content remain intact.
+Square controls and image frames, without rounded cards or decorative clipping. Hero and inline photos retain natural proportions; sequenced and enlarged images use contain-fit. Owner-authorized watermark exception (colonial-6nu): active marked listing and seasonal images use local LaMa corner removal; clean images and non-watermark annotations remain unchanged. Preserve complete framing and dimensions. Only reviewed mask pixels are generated in lossless masters; delivery WebP encoding is lossy. Retain pre-removal originals, masks and provenance outside published paths; `docs/watermark-conversion.md` records accepted small-corner artifacts and synthetic-detail limits. Runtime “original” now means the cleaned non-seasonal listing image, not the archived watermarked source. Confirmed solid outer photo margins are trimmed per `assets/listing/margin-review.md`; ambiguous edge pixels and photographic content remain intact.
 
 ## Components
 
@@ -268,7 +268,7 @@ Square controls and image frames, without rounded cards or decorative clipping. 
 
 ## Do's and Don'ts
 
-- Do preserve the seven approved paragraphs, exact captions, watermarks and conceptual-plan disclosure.
+- Do preserve the seven approved paragraphs, exact captions, non-watermark annotations and conceptual-plan disclosure; remove only owner-authorized watermarks under the recorded colonial-6nu exception.
 - Do keep contact access, visible keyboard focus and ordinary links available.
 - Do use the existing system fonts, static assets and dependency-free enhancement.
 - Do keep buyer styling and retained historical image assets intact when pruning unrelated routes.

@@ -1,6 +1,8 @@
 """Approved listing copy, gallery, asset and preservation contract. No dependencies."""
 import hashlib
 import json
+import subprocess
+import sys
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
@@ -20,6 +22,9 @@ REDFIN = json.loads((ROOT / 'tests/fixtures/redfin-refresh.json').read_text())
 def before_redfin(photo):
     """Recover frozen historical record; replacement provenance never rewrites it."""
     original = dict(photo)
+    removal = original.pop('watermark_removal', None)
+    if removal:
+        original['derivatives'] = removal['previous_derivatives']
     replacement = original.pop('redfin_source', None)
     if replacement:
         original['derivatives'] = replacement['previous_derivatives']
@@ -67,6 +72,60 @@ class Page(HTMLParser):
 
 
 class Listing(unittest.TestCase):
+    def test_conversion_scripts_reject_disabled_safety_checks(self):
+        for script in ('remove-watermarks.py', 'build-watermark-previews.py'):
+            result = subprocess.run([sys.executable, '-O', str(ROOT / 'scripts' / script)],
+                                    capture_output=True, text=True)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn('Optimized Python disables required integrity checks', result.stderr)
+
+    def test_authorized_watermark_conversion_covers_active_assets(self):
+        photos = json.loads((ROOT / 'assets/listing/manifest.json').read_text())['photos']
+        marked = set(REMAINING) - {5, 6, 7, 20, 25, 30, 31, 73}
+        self.assertEqual({p['position'] for p in photos if 'watermark_removal' in p}, marked)
+        report = json.loads((ROOT / 'docs/watermark-conversion.json').read_text())
+        self.assertEqual(len(report['previews']), 2)
+        self.assertEqual({p['path'] for p in report['previews']}, {
+            'assets/email/323-colonial-hero.gif', 'assets/email/323-colonial-hero-small.gif'})
+        frames = json.loads((ROOT / 'assets/seasons-next/frames.json').read_text())
+        expected = {f'assets/listing/{n:02}.webp' for n in REMAINING}
+        for n, photo in frames['photos'].items():
+            for key in photo['keys']:
+                if key not in photo.get('original', []):
+                    label = f'{int(key):02}' + ('h' if key % 1 else '')
+                    expected.add(f'assets/seasons-next/{int(n):02}/{label}.webp')
+        self.assertEqual({r['path'] for r in report['images']}, expected)
+        self.assertEqual(len(report['images']), 470)
+        self.assertEqual(sum(r['mask_xyxy'] is not None for r in report['images']), 426)
+        self.assertEqual(report['checkpoint_sha256'], '7ba7aa7ac37a4d41fdbbeba3a2af7ead18058552997e3a3cd1a3b2210c9e6b4c')
+        for r in report['images']:
+            self.assertEqual(hashlib.sha256((ROOT / r['path']).read_bytes()).hexdigest(), r['output_sha256'])
+            self.assertEqual(hashlib.sha256((ROOT / r['small']['path']).read_bytes()).hexdigest(), r['small']['output_sha256'])
+            if r['mask_xyxy'] is None:
+                self.assertEqual(r['source_sha256'], r['output_sha256'])
+                self.assertEqual(r['small']['source_sha256'], r['small']['output_sha256'])
+            else:
+                x0, y0, x1, y1 = r['mask_xyxy']
+                w, h = r['size']
+                self.assertTrue(0 <= x0 < x1 <= w and 0 <= y0 < y1 <= h)
+                self.assertTrue(r['outside_mask_equal_before_encoding'])
+                self.assertEqual(r['device'], 'mps:0')
+                self.assertFalse(r['cpu_fallback'])
+                for key in ('mask_sha256', 'master_sha256'):
+                    self.assertRegex(r[key], r'^[0-9a-f]{64}$')
+        by_path = {r['path']: r for r in report['images']}
+        for p in photos:
+            if p['position'] not in marked:
+                continue
+            record = p['watermark_removal']
+            self.assertEqual(record['approval'], 'colonial-6nu')
+            self.assertEqual(record['report'], 'docs/watermark-conversion.json')
+            self.assertEqual(record['previous_derivatives'][0]['sha256'], by_path[p['derivatives'][0]['path']]['source_sha256'])
+        for gif in report['previews']:
+            self.assertEqual(hashlib.sha256((ROOT / gif['path']).read_bytes()).hexdigest(), gif['output_sha256'])
+            self.assertEqual(gif['frames'], 120)
+            self.assertEqual(gif['duration_ms'], 24000)
+
     def test_exact_seven_paragraphs_and_inline_images(self):
         page = Page('index.html').root
         copy = [p for p in page.all('p') if p.cls('listing-copy')]
