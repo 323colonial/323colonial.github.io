@@ -7,7 +7,10 @@
 <iframe title="Seasonal homepage" style="width:1440px;height:1000px;border:0"></iframe>
 <script type="module">
 const frame = document.querySelector('iframe');
-const source = await fetch('../index.html').then(r => r.text());
+// Isolate single-hero seasonal coverage; default triptych integration lives in visitor-browser.
+const page = new DOMParser().parseFromString(await fetch('../index.html').then(r => r.text()), 'text/html');
+page.querySelector('script[src="visitor-display.js"]').remove();
+const source = '<!doctype html>' + page.documentElement.outerHTML;
 const M = await fetch('fixtures/seasons/delivery.json').then(r => r.json());
 const DUR = M.durations[0] * 1000;
 const results = [];

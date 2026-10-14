@@ -1,6 +1,6 @@
-// Opt-in visitor display. Catalog IDs name originals, never seasonal frames or sizes.
+// Default visitor display. Catalog IDs name originals, never seasonal frames or sizes.
 (() => {
-  if (new URLSearchParams(location.search).get('display') !== 'visitor') return;
+  if (new URLSearchParams(location.search).get('variant') === 'singlehero') return;
   // Main pane favors house exteriors; hot-tub photo 6 is the owner-requested exception.
   const EXTERIORS = [1, 3, 28, 39, 41, 64, 6, 9, 11, 26];
   const SMALL = [1, 4, 3, 17, 28, 50, 39, 51, 41, 52, 64, 53, 6, 8, 9, 10, 11, 16, 25, 26, 27, 29, 32, 33, 43, 65, 66, 67];

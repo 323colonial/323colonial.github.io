@@ -14,7 +14,7 @@ for (const route of ['index', 'gallery']) {
     frame.style.height = '844px';
     await new Promise(resolve => {
       frame.onload = resolve;
-      frame.src = `../${route}.html?media-test=${width}`;
+      frame.src = `../${route}.html?variant=singlehero&media-test=${width}`;
     });
     const doc = frame.contentDocument;
     const failures = [];

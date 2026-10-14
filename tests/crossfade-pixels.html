@@ -18,7 +18,7 @@ const source = new DOMParser().parseFromString(await fetch('../index.html').then
 const base = source.createElement('base');
 base.href = new URL('../', location.href);
 source.head.prepend(base);
-source.querySelectorAll('script[src="seasonal-hero.js"], script[src="analytics.mjs"], .analytics-notice').forEach(el => el.remove());
+source.querySelectorAll('script[src="seasonal-hero.js"], script[src="visitor-display.js"], script[src="analytics.mjs"], .analytics-notice').forEach(el => el.remove());
 const colors = [[220, 40, 40], [40, 60, 220]];
 const nextColors = [[40, 180, 60], [200, 180, 60]];
 function image(color, width, height) {

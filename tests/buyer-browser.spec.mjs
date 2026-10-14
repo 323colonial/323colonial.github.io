@@ -1,7 +1,7 @@
 import { test, expect } from 'playwright/test';
 
-for (const width of [1440, 390]) {
-  test(`image hover preserves keyboard focus at ${width}px`, async ({ page, context, baseURL }) => {
+for (const width of [1440, 390]) for (const route of ['/', '/?variant=singlehero']) {
+  test(`${route} image hover preserves keyboard focus at ${width}px`, async ({ page, context, baseURL }) => {
     await context.route('**/*', route => new URL(route.request().url()).origin === baseURL
       ? route.continue() : route.abort());
     await page.setViewportSize({ width, height: 1040 });
@@ -16,9 +16,12 @@ for (const width of [1440, 390]) {
         return [element.matches(':focus-visible'), css.outlineStyle, css.outlineWidth, css.outlineOffset];
       })).toEqual([true, 'solid', '3px', '4px']);
     }
-    await page.goto('/');
-    await expect(page.locator('.hero-photo .season-stack')).toBeVisible();
-    await checkImage(page.locator('#seasonal-hero'));
+    await page.goto(route);
+    if (route === '/') await expect(page.locator('.visitor-panes > figure')).toHaveCount(3);
+    else {
+      await expect(page.locator('#seasonal-hero .season-stack')).toBeVisible();
+      await checkImage(page.locator('#seasonal-hero'));
+    }
     await checkImage(page.locator('.story .media-record > a').first());
     await page.locator('[data-all-photos]').click();
     await checkImage(page.locator('#all-photos [data-gallery-image]').first());
@@ -74,8 +77,8 @@ for (const fixture of ['rendering-layout', 'gallery-viewer', 'resize-reading', '
       expect(results).toContain('PASS');
       expect(results).not.toMatch(/FAIL|Running…/);
       await expect(page).toHaveTitle(/^PASS:/);
-      // The details fixture deliberately disables ResizeObserver to prove failed-init fallback.
-      expect(errors).toEqual(fixture === 'property-details' ? ['ResizeObserver is not a constructor'] : []);
+      // The details fixture disables ResizeObserver; listing and visitor initialization both fail.
+      expect(errors).toEqual(fixture === 'property-details' ? Array(2).fill('ResizeObserver is not a constructor') : []);
     } finally {
       await testInfo.attach('fixture-results', {
         body: await page.locator('#results').innerText(), contentType: 'text/plain',

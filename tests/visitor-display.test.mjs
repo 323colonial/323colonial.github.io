@@ -5,15 +5,24 @@ import vm from 'node:vm';
 import { parseDocument } from 'htmlparser2';
 import { selectAll } from 'css-select';
 
-function selection() {
+function selection(search = '') {
   assert.ok(existsSync('visitor-display.js'), 'visitor display runtime missing');
   const source = readFileSync('visitor-display.js', 'utf8');
   const marker = "  const hero = document.querySelector('.hero-photo');";
   assert.ok(source.includes(marker));
-  const context = vm.createContext({ URLSearchParams, location: {search: '?display=visitor'} });
+  const context = vm.createContext({ URLSearchParams, location: {search} });
   vm.runInContext(source.replace(marker, 'globalThis.selection = { EXTERIORS, SMALL, nextPhoto, movement: typeof movement === "function" ? movement : null }; return;\n' + marker), context);
   return context.selection;
 }
+
+test('triptych is default and singlehero is the explicit opt-out', () => {
+  for (const search of ['', '?utm_source=listing', '?display=visitor', '?variant=unknown']) {
+    assert.ok(selection(search), `triptych should start for ${search || 'default URL'}`);
+  }
+  for (const search of ['?variant=singlehero', '?display=visitor&variant=singlehero']) {
+    assert.equal(selection(search), undefined, `single hero should remain for ${search}`);
+  }
+});
 
 test('reviewed pools contain only included distinct originals, never seasonal derivatives', () => {
   const {EXTERIORS, SMALL} = selection();

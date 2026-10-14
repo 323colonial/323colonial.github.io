@@ -5,8 +5,8 @@ const seasonalPhotos = Object.keys(JSON.parse(readFileSync('assets/seasons-next/
 
 const panes = '.visitor-panes > figure';
 const ids = page => page.locator(panes).evaluateAll(nodes => nodes.map(n => Number(n.dataset.position)));
-async function ready(page) {
-  await page.goto('/?display=visitor');
+async function ready(page, route = '/') {
+  await page.goto(route);
   await expect(page.locator(panes)).toHaveCount(3);
   // Virtual time jumps past the notice's real-time collapse; keep motion geometry stable.
   await page.locator('.analytics-notice').evaluate(node => node.remove());
@@ -36,6 +36,23 @@ test.beforeEach(async ({page, context, baseURL}) => {
   await page.setViewportSize({width:1180,height:820});
   await page.clock.install();
 });
+
+for (const route of ['/index.html', '/?display=visitor']) {
+  test(`triptych entry point ${route}`, async ({page}) => {
+    await ready(page, route);
+    expect(await ids(page)).toEqual([1,4,39]);
+  });
+}
+
+for (const route of ['/?variant=singlehero', '/index.html?variant=singlehero', '/?display=visitor&variant=singlehero']) {
+  test(`single hero opt-out ${route}`, async ({page}) => {
+    await page.goto(route);
+    await expect(page.locator('#seasonal-hero .season-stack')).toBeVisible();
+    await expect(page.locator('.visitor-panes')).toHaveCount(0);
+    await page.locator('#seasonal-hero').click();
+    await expect(page.locator('#photo-viewer')).toBeVisible();
+  });
+}
 
 test('visitor composition fits flush landscape/portrait with noninteractive photos', async ({page}) => {
   await ready(page);
@@ -262,7 +279,7 @@ test('failed or stalled loads retain composition; resume retries and pause cance
 test('initial loading keeps hero inert and preserves control focus', async ({page,context}) => {
   let release;
   await context.route('**/assets/listing/04.webp', async route => { await new Promise(resolve => { release = resolve; }); await route.continue().catch(() => {}); });
-  await page.goto('/?display=visitor', {waitUntil:'domcontentloaded'});
+  await page.goto('/', {waitUntil:'domcontentloaded'});
   await expect.poll(() => Boolean(release)).toBe(true);
   await expect(page.locator('#seasonal-hero')).toHaveAttribute('inert', '');
   await page.locator('#hero-motion').focus();
@@ -273,7 +290,7 @@ test('initial loading keeps hero inert and preserves control focus', async ({pag
 
 test('initial load failure and rotation timeout preserve valid originals', async ({page,context}) => {
   await context.route('**/assets/listing/04.webp', route => route.abort());
-  await page.goto('/?display=visitor');
+  await page.goto('/');
   await expect(page.getByRole('button',{name:'Resume animation',exact:true})).toBeVisible();
   await expect(page.locator('#seasonal-hero')).toBeVisible();
   await expect(page.locator(panes)).toHaveCount(0);
@@ -291,7 +308,7 @@ test('initial load failure and rotation timeout preserve valid originals', async
   expect(await ids(page)).toEqual(before);
 });
 
-test('reduced motion and save-data are static; no-JS and normal mode retain original links', async ({page,context}) => {
+test('reduced motion and save-data are static; no-JS and singlehero retain original links', async ({page,context}) => {
   await page.emulateMedia({reducedMotion:'reduce'});
   await ready(page);
   const original = await ids(page);
@@ -301,12 +318,13 @@ test('reduced motion and save-data are static; no-JS and normal mode retain orig
   await page.emulateMedia({reducedMotion:'no-preference'});
   await page.getByRole('button', {name:'Resume animation', exact:true}).click();
   await tick(page);
-  await page.goto('/');
+  await page.goto('/?variant=singlehero');
+  await expect(page.locator('#seasonal-hero .season-stack')).toBeVisible();
   await expect(page.locator('.visitor-panes')).toHaveCount(0);
   await expect(page.locator('#seasonal-hero')).toHaveAttribute('data-photo','1');
   const nojs = await context.browser().newContext({javaScriptEnabled:false});
   const fallback = await nojs.newPage();
-  await fallback.goto('http://127.0.0.1:18765/?display=visitor');
+  await fallback.goto('http://127.0.0.1:18765/');
   await expect(fallback.locator('#seasonal-hero')).toHaveAttribute('href','gallery.html#photo-1');
   await expect(fallback.locator('.visitor-panes')).toHaveCount(0);
   await nojs.close();
@@ -391,7 +409,7 @@ test('pause works while seasonal manifest loads or is unavailable', async ({page
     await new Promise(resolve => { release = resolve; });
     await route.continue().catch(() => {});
   });
-  await page.goto('/?display=visitor', {waitUntil:'domcontentloaded'});
+  await page.goto('/', {waitUntil:'domcontentloaded'});
   await expect(page.locator(panes)).toHaveCount(3);
   await expect.poll(() => Boolean(release)).toBe(true);
   await page.getByRole('button', {name:'Pause animation', exact:true}).click();
