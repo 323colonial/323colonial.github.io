@@ -96,15 +96,17 @@ figcaption { padding-top: 10px; font: 13px/1.5 Arial, sans-serif; }
 .quick-facts strong { font-size: 20px; font-weight: 400; }
 .summary-actions { text-align: right; }
 .summary-actions .text-link { color: var(--mahogany); min-height: 24px; font: 13px/1.35 Arial, sans-serif; }
-.story { --border-lines: 0; padding: 56px 40px; background: var(--sea-salt); }
-.story + .story { --border-lines: 1.25; }
-.story:nth-child(2), .story:nth-child(5) { background: var(--paper); }
-.story:nth-child(3), .story:nth-child(7) { background: var(--accessible-beige); }
-.story:nth-child(4), .story:nth-child(6) { background: var(--debonair); }
+.story { --border-lines: 0; --story-color: var(--sea-salt); padding: 56px 40px; background: var(--story-color); }
+.story-slot { display: flow-root; --border-lines: 0; --story-color: var(--sea-salt); }
+.story-slot > .story { --border-lines: inherit; --story-color: inherit; }
+.story + .story, .story-slot + .story-slot { --border-lines: 1.25; }
+:is(.story, .story-slot):nth-child(2), :is(.story, .story-slot):nth-child(5) { --story-color: var(--paper); }
+:is(.story, .story-slot):nth-child(3), :is(.story, .story-slot):nth-child(7) { --story-color: var(--accessible-beige); }
+:is(.story, .story-slot):nth-child(4), :is(.story, .story-slot):nth-child(6) { --story-color: var(--debonair); }
 .story-stage { display: grid; grid-template-columns: minmax(0, .45fr) minmax(0, .55fr); gap: 64px; align-items: center; }
-.story:nth-child(even) .story-stage { grid-template-columns: minmax(0, .55fr) minmax(0, .45fr); }
-.story:nth-child(even) .story-copy { grid-column: 2; grid-row: 1; }
-.story:nth-child(even) .story-photos { grid-column: 1; grid-row: 1; }
+:is(.story, .story-slot):nth-child(even) .story-stage { grid-template-columns: minmax(0, .55fr) minmax(0, .45fr); }
+:is(.story, .story-slot):nth-child(even) .story-copy { grid-column: 2; grid-row: 1; }
+:is(.story, .story-slot):nth-child(even) .story-photos { grid-column: 1; grid-row: 1; }
 .story-copy { max-width: 65ch; }
 .story-copy .listing-copy { font-size: clamp(18px, 1.48vw, 23px); line-height: 1.65; margin: 0; }
 .story-copy a { text-decoration-color: var(--mahogany); text-decoration-thickness: 1px; }
@@ -112,8 +114,12 @@ figcaption { padding-top: 10px; font: 13px/1.5 Arial, sans-serif; }
 .story-extra a { display: inline-flex; align-items: center; min-height: 44px; }
 .story-photos { min-width: 0; display: grid; gap: 28px; }
 .story.is-scrolling { height: var(--story-height); }
-.story.is-scrolling + .story { translate: 0 var(--story-shift, 0px); }
-.story + .story.is-scrolling::before { content: ''; display: block; position: sticky; top: calc(var(--header-height) + var(--summary-height)); height: calc(var(--border-lines) * 1lh); margin: -56px -40px 56px; background: var(--previous-story-color); z-index: 2; pointer-events: none; }
+/* The spacer and negative margin cancel in flow; the carrier bounds native
+   upward preview travel without a scroll-event transform/catch-up frame. */
+.story-slot.has-preview { margin-top: calc(-1 * var(--preview-travel)); }
+.story-slot.has-preview::before { content: ''; display: block; height: var(--preview-travel); }
+.story-slot.has-preview > .story { position: sticky; bottom: var(--preview-bottom); }
+.story + .story.is-scrolling::before, .story-slot + .story-slot > .story.is-scrolling::before { content: ''; display: block; position: sticky; top: calc(var(--header-height) + var(--summary-height)); height: calc(var(--border-lines) * 1lh); margin: -56px -40px 56px; background: var(--previous-story-color); z-index: 2; pointer-events: none; }
 .is-scrolling .story-stage { position: sticky; top: calc(var(--header-height) + var(--summary-height) + var(--border-lines) * 1lh + 24px); }
 /* Add complementary photo weights on transparency, not on the section background. */
 .is-scrolling .story-photos { position: relative; isolation: isolate; grid-template-rows: var(--frame-height, auto); gap: 0; }
@@ -204,11 +210,11 @@ body:has(dialog[open]) { overflow: hidden; }
   .quick-facts strong { display: inline-block; min-width: 2.4em; font-size: 16px; text-align: right; }
   .summary-actions { flex: 1 1 90px; min-width: 0; }
   .story { padding: 40px 20px; }
-  .story-stage, .story:nth-child(even) .story-stage { display: flex; flex-direction: column; align-items: stretch; gap: 28px; }
+  .story-stage, :is(.story, .story-slot):nth-child(even) .story-stage { display: flex; flex-direction: column; align-items: stretch; gap: 28px; }
   .story-copy .listing-copy { font-size: 18px; }
   .story-photos { width: 100%; }
   .story.is-scrolling .story-stage { position: static; }
-  .story + .story.is-scrolling::before { margin: -40px -20px 40px; }
+  .story + .story.is-scrolling::before, .story-slot + .story-slot > .story.is-scrolling::before { margin: -40px -20px 40px; }
   .story.is-scrolling .story-photos { position: sticky; top: calc(var(--header-height) + var(--summary-height) + var(--border-lines) * 1lh + 16px); }
   .story.is-scrolling .story-stage { display: contents; }
   .is-scrolling .story-copy { margin-bottom: 28px; }
@@ -262,8 +268,9 @@ html.reading-space-limited { scroll-padding-top: 24px; }
   .skip-link, .header-contact, dialog, .scroll-cue, .photo-dots { display: none !important; }
   .gallery-grid figure { break-inside: avoid; }
   .site-footer { padding-block: 8px; break-inside: avoid; }
-  .story { height: auto !important; translate: none !important; }
-  .story::before { display: none !important; }
+  .story-slot { display: contents; }
+  .story { position: static !important; height: auto !important; translate: none !important; }
+  .story::before, .story-slot::before { display: none !important; }
   .story-stage { display: block !important; }
   .story figure[hidden] { display: block !important; }
   .story-photos { display: block !important; }
@@ -277,7 +284,7 @@ html.reading-space-limited { scroll-padding-top: 24px; }
   .listing-page { page: listing-sheet; font-size: 11pt; overflow: visible !important; }
   .listing-page a { text-decoration: none; }
   .listing-page .price-label, .listing-page .summary-actions,
-  .listing-page .story-photos, .listing-page .story:not(:first-child) { display: none !important; }
+  .listing-page .story-photos, .listing-page :is(.story, .story-slot):not(:first-child) { display: none !important; }
   .listing-page .masthead { min-height: 0; padding: 0 0 12pt; background: none; color: inherit; border-bottom: 1pt solid; }
   .listing-page .property-identity h1 { font-size: 26pt; }
   .listing-page .property-identity h1 a { min-height: 0; }

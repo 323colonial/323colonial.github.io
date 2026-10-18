@@ -28,7 +28,8 @@ function geometry(story = section) {
   const sticky = story.querySelector(mobile ? '.story-photos' : '.story-stage');
   const offset = parseFloat(style.paddingTop) + parseFloat(style.getPropertyValue('--border-lines')) * parseFloat(style.lineHeight)
     + (mobile ? story.querySelector('.story-copy').getBoundingClientRect().height + 28 : 0);
-  return {start: story.offsetTop + offset - parseFloat(win.getComputedStyle(sticky).top), step: Math.max(240, win.innerHeight * .5)};
+  const flowTop = story.parentElement.getBoundingClientRect().bottom + win.scrollY - story.getBoundingClientRect().height;
+  return {start: flowTop + offset - parseFloat(win.getComputedStyle(sticky).top), step: Math.max(240, win.innerHeight * .5)};
 }
 const position = () => { const {start, step} = geometry(); return (win.scrollY - start) / step; };
 const seek = async value => { const {start, step} = geometry(); win.scrollTo(0, start + value * step); await settle(); };

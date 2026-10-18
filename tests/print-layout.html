@@ -22,7 +22,8 @@ try {
     await new Promise(resolve => { frame.onload = resolve; frame.src = `../${route}.html`; });
     const doc = frame.contentDocument, win = frame.contentWindow;
     await doc.fonts.ready;
-    const figures = [...doc.querySelectorAll('main .media-record')];
+    // Visitor panes initialize asynchronously; count authored originals, not clones.
+    const figures = [...doc.querySelectorAll('main .media-record')].filter(figure => !figure.closest('.visitor-panes'));
     await Promise.all(figures.map(async figure => {
       const img = figure.querySelector('img');
       img.loading = 'eager';

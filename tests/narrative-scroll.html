@@ -6,7 +6,7 @@
 <iframe title="Listing under test" style="width:1440px;height:1000px;border:0"></iframe>
 <script type="module">
 const frame = document.querySelector('iframe');
-await new Promise(resolve => { frame.onload = resolve; frame.src = '../index.html'; });
+await new Promise(resolve => { frame.onload = resolve; frame.src = '../index.html?variant=singlehero'; });
 const doc = frame.contentDocument, win = frame.contentWindow;
 const results = [];
 const check = (ok, name) => results.push(`${ok ? 'PASS' : 'FAIL'}: ${name}`);
@@ -121,7 +121,9 @@ try {
       const padding = parseFloat(win.getComputedStyle(section).paddingTop);
       const borderHeight = parseFloat(win.getComputedStyle(section, '::before').height) || 0;
       const offset = padding + borderHeight + (width > 800 ? 0 : section.querySelector('.story-copy').getBoundingClientRect().height + 28);
-      const beginning = section.offsetTop + offset - inset;
+      const slot = section.parentElement;
+      const flowTop = slot.getBoundingClientRect().bottom + win.scrollY - section.getBoundingClientRect().height;
+      const beginning = flowTop + offset - inset;
       const step = Math.max(240, height * .5);
       const seek = async position => {
         win.scrollTo(0, beginning + step * position);
@@ -208,11 +210,18 @@ try {
       await settle();
       check(doc.activeElement === link && opacity(photos[1]) === 1,
         `${label}: viewer restores scroll-displaced photo focus`);
+      const beforeBlur = win.scrollY;
       link.blur();
       await settle();
-      check(opacity(photos[0]) === 1, `${label}: leaving focus resumes scroll state without another scroll`);
+      // Native dialog focus restoration can move the viewport (notably Firefox).
+      // Blur must resume the current scroll blend, not a pre-dialog photo index.
+      const position = Math.max(0, Math.min(photos.length - 1, (beforeBlur - beginning) / step));
+      const progress = Math.floor(position) + Math.max(0, (position % 1 - .5) * 2);
+      check(Math.abs(win.scrollY - beforeBlur) < 1 && photos.every((photo, i) =>
+        Math.abs(opacity(photo) - Math.max(0, 1 - Math.abs(i - progress))) < .01),
+        `${label}: leaving focus resumes scroll state without another scroll`);
       } // single-photo stories have no blend to check
-      const nextSection = section.nextElementSibling;
+      const nextSection = section.parentElement.nextElementSibling?.querySelector('.story');
       if (nextSection) {
         const gap = () => nextSection.getBoundingClientRect().top - sticky.getBoundingClientRect().bottom;
         for (const positions of [[.1, photos.length - .1], [photos.length - .1, .1]]) {
@@ -241,12 +250,13 @@ try {
         nextLink.blur();
       }
       await seek(photos.length - 1);
-      if (section.previousElementSibling) {
+      const previousSection = section.parentElement.previousElementSibling?.querySelector('.story');
+      if (previousSection) {
         const border = win.getComputedStyle(section, '::before');
         const lineHeight = parseFloat(win.getComputedStyle(section).lineHeight);
         check(border.content !== 'none' && border.position === 'sticky'
           && Math.abs(parseFloat(border.height) - lineHeight * 1.25) < 1
-          && border.backgroundColor === win.getComputedStyle(section.previousElementSibling).backgroundColor
+          && border.backgroundColor === win.getComputedStyle(previousSection).backgroundColor
           && Math.abs(parseFloat(border.top) - facts.getBoundingClientRect().bottom) < 2
           && sticky.getBoundingClientRect().top >= facts.getBoundingClientRect().bottom + parseFloat(border.height),
           `${label}: previous section color stays visible as a1.25-line border above content`);
@@ -266,7 +276,7 @@ try {
         && Math.abs(sticky.getBoundingClientRect().height - finalHeight) < 2,
         `${label}: final photo has at least 90% of a scroll step pinned before exit`);
       await seek(photos.length + .3);
-      if (section === doc.querySelector('.story:last-child')) {
+      if (section === [...doc.querySelectorAll('.story')].at(-1)) {
         const footer = doc.querySelector('.site-footer').getBoundingClientRect();
         check(opacity(photos.at(-1)) === 1 && sticky.getBoundingClientRect().bottom <= footer.top
           && footer.bottom <= height + 1 && footer.top >= 0,

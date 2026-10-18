@@ -76,6 +76,19 @@ const masthead = document.querySelector('.masthead');
 const summary = document.querySelector('.listing-summary');
 const heroImage = document.querySelector('.hero-photo img');
 const stories = [...document.querySelectorAll('.story')];
+// Each carrier bounds the following preview's native bottom-sticky travel.
+// A spacer preserves the section's original flow position (and nested stage timing).
+const storySlots = stories.map(story => {
+  const slot = document.createElement('div');
+  slot.className = 'story-slot';
+  story.before(slot);
+  slot.append(story);
+  return slot;
+});
+function storyTop(story) {
+  const slot = story.parentElement;
+  return slot.offsetTop + (parseFloat(slot.style.getPropertyValue('--preview-travel')) || 0);
+}
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 const narrow = matchMedia('(max-width: 800px)');
 let tracks = [];
@@ -99,7 +112,7 @@ function rememberReadingPoint() {
     readingPoint = {edge: 'bottom', hash}; return;
   }
   for (const track of tracks) {
-    const start = track.story.offsetTop + track.offset - track.stickyTop;
+    const start = storyTop(track.story) + track.offset - track.stickyTop;
     const position = (scrollY - start) / track.step;
     if (position < 0 || position >= track.photos.length) continue;
     const index = Math.min(track.photos.length - 1, Math.floor(position) + (position % 1 >= .75 ? 1 : 0));
@@ -124,11 +137,11 @@ function restoreReadingPoint(point) {
   else if (point.element) {
     const track = tracks.find(track => track.story === point.element.closest('.story'));
     if (track && (point.story || point.element.matches('figure'))) {
-      top = track.story.offsetTop + track.offset - track.stickyTop
+      top = storyTop(track.story) + track.offset - track.stickyTop
         + (point.position ?? track.photos.indexOf(point.element)) * track.step;
     } else if (track && !narrow.matches) {
       // Mobile prose becomes the desktop pinned paragraph/photo pair.
-      top = track.story.offsetTop + track.offset - track.stickyTop;
+      top = storyTop(track.story) + track.offset - track.stickyTop;
     } else {
       const box = point.element.getBoundingClientRect();
       const line = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop);
@@ -153,12 +166,8 @@ function updatePhotos() {
   const canPreload = !heroImage || heroImage.complete || heroImage.getBoundingClientRect().bottom <= 0;
   for (const track of tracks) {
     const bounds = track.story.getBoundingClientRect();
-    const start = track.story.offsetTop + track.offset - track.stickyTop;
+    const start = storyTop(track.story) + track.offset - track.stickyTop;
     const distance = scrollY - start;
-    // Keep the next section at its exit spacing while this photo sequence is pinned.
-    const remaining = Math.max(0, Math.min(track.photos.length * track.step,
-      track.photos.length * track.step - distance));
-    track.story.nextElementSibling?.style.setProperty('--story-shift', `${-remaining}px`);
     const position = Math.max(0, Math.min(track.photos.length - 1, distance / track.step));
     // Hold each photo for half a step, then blend directly with scroll (no timed easing).
     const focused = track.photos.indexOf(focusedPhoto);
@@ -198,9 +207,13 @@ function layoutStories() {
   // Enlarged text must leave reading room, not pin controls beyond the viewport.
   document.documentElement.classList.toggle('reading-space-limited', headerHeight + summaryHeight > innerHeight - 160);
   // Batch each geometry phase across stories instead of forcing layout per story.
+  storySlots.forEach(slot => {
+    slot.classList.remove('has-preview');
+    slot.style.removeProperty('--preview-travel');
+    slot.style.removeProperty('--preview-bottom');
+  });
   const sections = stories.map(story => {
     story.classList.remove('is-scrolling');
-    story.style.removeProperty('--story-shift');
     const photos = [...story.querySelectorAll('.story-photos figure')];
     story.style.removeProperty('--frame-height');
     photos.forEach(photo => {
@@ -213,10 +226,10 @@ function layoutStories() {
     cue.hidden = true;
     return {story, photos, cue};
   });
-  const measured = sections.map(({story, photos, cue}) => {
+  const measured = sections.map(({story, photos, cue}, i) => {
     const style = getComputedStyle(story);
     const borderHeight = parseFloat(style.getPropertyValue('--border-lines')) * parseFloat(style.lineHeight);
-    const previousColor = story.previousElementSibling && getComputedStyle(story.previousElementSibling).backgroundColor;
+    const previousColor = i > 0 && getComputedStyle(stories[i - 1]).backgroundColor;
     const stickyTop = headerHeight + summaryHeight + borderHeight + (narrow.matches ? 16 : 24);
     const available = innerHeight - stickyTop - 32;
     const copyHeight = story.querySelector('.story-copy').getBoundingClientRect().height;
@@ -248,7 +261,26 @@ function layoutStories() {
     // The final photo gets a full viewing step after its blend has finished.
     return offset + stage.getBoundingClientRect().height + padding + photos.length * step;
   });
+  const sectionHeights = new Map(sections.map(({story}) => {
+    const index = tracks.findIndex(track => track.story === story);
+    return [story, index < 0 ? story.getBoundingClientRect().height : heights[index]];
+  }));
+  // Native sticky positioning stays synchronized with compositor scrolling, even
+  // while image decoding or other main-thread work delays the photo updates.
+  const previews = tracks.flatMap(({story, offset, stickyTop, photos, step}) => {
+    const next = stories[stories.indexOf(story) + 1];
+    if (!next) return [];
+    const travel = photos.length * step;
+    const previewTop = stickyTop + sectionHeights.get(story) - offset - travel;
+    return [{slot: next.parentElement, travel,
+      bottom: innerHeight - previewTop - sectionHeights.get(next)}];
+  });
   tracks.forEach(({story}, i) => story.style.setProperty('--story-height', `${heights[i]}px`));
+  previews.forEach(({slot, travel, bottom}) => {
+    slot.style.setProperty('--preview-travel', `${travel}px`);
+    slot.style.setProperty('--preview-bottom', `${bottom}px`);
+    slot.classList.add('has-preview');
+  });
   restoreReadingPoint(point);
   layoutWidth = innerWidth;
   layoutHeight = innerHeight;
@@ -272,7 +304,7 @@ addEventListener('scroll', () => {
 document.addEventListener('focusin', event => {
   updatePhotos();
   const story = event.target.closest('.story');
-  const shift = parseFloat(story?.style.getPropertyValue('--story-shift')) || 0;
+  const shift = story ? story.getBoundingClientRect().top + scrollY - storyTop(story) : 0;
   const bounds = event.target.getBoundingClientRect();
   // Native focus scrolling cannot reach an offscreen link in a pinned preview.
   if (shift < 0 && bounds.bottom > innerHeight) {

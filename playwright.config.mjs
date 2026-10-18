@@ -8,7 +8,7 @@ export default defineConfig({
   timeout: 180_000,
   reporter: 'list',
   use: {
-    browserName: 'chromium',
+    browserName: process.env.PLAYWRIGHT_BROWSER || 'chromium',
     headless: true,
     viewport: { width: 1440, height: 1040 },
     baseURL: 'http://127.0.0.1:18765',
